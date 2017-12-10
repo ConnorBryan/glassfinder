@@ -1,6 +1,7 @@
 import React from "react";
 import Yup from "yup";
 
+import * as Validators from "../../validators";
 import AbstractForm from "../AbstractForm";
 
 const props = {
@@ -14,9 +15,7 @@ const props = {
       label: "Email",
       placeholder: "Enter email",
       value: "",
-      validation: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required.")
+      validation: Validators.email
     },
     {
       name: "password",
@@ -24,10 +23,7 @@ const props = {
       label: "Password",
       placeholder: "Enter password",
       value: "",
-      validation: Yup.string()
-        .min(6, "Password must be at least 6 characters.")
-        .max(128, "Password cannot exceed 128 characters.")
-        .required("Password is required.")
+      validation: Validators.password
     }
   ],
   onSubmit: values => {
