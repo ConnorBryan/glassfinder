@@ -13,7 +13,6 @@ import { Form, Container, Header } from "semantic-ui-react";
 }
 
 */
-
 export const errorCondition = (errors, touched, field) =>
   touched[field] && errors[field];
 
@@ -42,52 +41,54 @@ function SignUpForm(props) {
   const passwordAgainError = condition("passwordAgain");
 
   return (
-    <Form size='tiny'>
-      <Header as="h2" content="Sign up" />
+    <Container>
+      <Form>
+        <Header as="h2" content="Sign up" />
 
-      <Form.Input
-        label="Email"
-        type="email"
-        name="email"
-        size='tiny'
-        value={values.email}
-        {...handlers}
-      />
-      {emailError && <div>{errors.email}</div>}
+        <Form.Input
+          label="Email"
+          type="email"
+          name="email"
+          size='tiny'
+          value={values.email}
+          {...handlers}
+        />
+        {emailError && <div>{errors.email}</div>}
 
-      <Form.Input
-        label="Email, again"
-        type="email"
-        name="emailAgain"
-        size='tiny'
-        value={values.emailAgain}
-        {...handlers}
-      />
-      {emailAgainError && <div>{errors.emailAgain}</div>}
+        <Form.Input
+          label="Email, again"
+          type="email"
+          name="emailAgain"
+          size='tiny'
+          value={values.emailAgain}
+          {...handlers}
+        />
+        {emailAgainError && <div>{errors.emailAgain}</div>}
 
-      <Form.Input
-        label="Password"
-        type="password"
-        name="password"
-        size='tiny'
-        value={values.password}
-        {...handlers}
-      />
-      {passwordError && <div>{errors.password}</div>}
+        <Form.Input
+          label="Password"
+          type="password"
+          name="password"
+          size='tiny'
+          value={values.password}
+          {...handlers}
+        />
+        {passwordError && <div>{errors.password}</div>}
 
-      <Form.Input
-        label="Password, again"
-        type="password"
-        size='tiny'
-        name="passwordAgain"
-        value={values.passwordAgain}
-        {...handlers}
-      />
-      {passwordAgainError && <div>{errors.passwordAgain}</div>}
+        <Form.Input
+          label="Password, again"
+          type="password"
+          size='tiny'
+          name="passwordAgain"
+          value={values.passwordAgain}
+          {...handlers}
+        />
+        {passwordAgainError && <div>{errors.passwordAgain}</div>}
 
-      <Form.Button content="Submit" onClick={handleSubmit} />
-      <Form.Button content="Reset" onClick={handleReset} />
-    </Form>
+        <Form.Button content="Submit" onClick={handleSubmit} />
+        <Form.Button content="Reset" onClick={handleReset} />
+      </Form>
+    </Container>
   );
 }
 
