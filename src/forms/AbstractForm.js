@@ -61,27 +61,34 @@ function AbstractForm(props) {
               </Header>
               <p>{description}</p>
             </Segment>
-            {fields.map(field => (
-              <Aux key={field.name}>
-                <Segment attached="bottom" key={field.name}>
-                  <Form.Input
-                    {...field}
-                    key={field.name}
-                    error={!!(touched[field.name] && errors[field.name])}
-                    value={values[field.name]}
-                    onChange={handleChange}
-                  />
-                  {touched[field.name] &&
-                  errors[field.name] && (
-                    <Message
-                      icon="warning sign"
-                      header={errors[field.name]}
-                      negative
-                    />
-                  )}
-                </Segment>
-              </Aux>
-            ))}
+            {fields.map(field => {
+              const inputProps = {
+                ...field,
+                error: !!(touched[field.name] && errors[field.name]),
+                value: values[field.name],
+                onChange: handleChange
+              };
+
+              return (
+                <Aux key={field.name}>
+                  <Segment attached="bottom" key={field.name}>
+                    {field.type === "textarea" ? (
+                      <Form.Field control="textarea" {...inputProps} />
+                    ) : (
+                      <Form.Input {...inputProps} />
+                    )}
+                    {touched[field.name] &&
+                    errors[field.name] && (
+                      <Message
+                        icon="warning sign"
+                        header={errors[field.name]}
+                        negative
+                      />
+                    )}
+                  </Segment>
+                </Aux>
+              );
+            })}
             <Segment attached="bottom">
               <Button.Group fluid>
                 <FancyButton
