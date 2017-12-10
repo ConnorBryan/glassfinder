@@ -10,7 +10,8 @@ import {
   Segment,
   Button,
   Icon,
-  Message
+  Message,
+  Dropdown
 } from "semantic-ui-react";
 
 const Aux = ({ children }) => children;
@@ -48,6 +49,7 @@ function AbstractForm(props) {
         values,
         errors,
         touched,
+        setFieldValue,
         handleChange,
         handleSubmit,
         handleReset,
@@ -69,11 +71,32 @@ function AbstractForm(props) {
                 onChange: handleChange
               };
 
+              const handleSelect = (event, { value }) =>
+                setFieldValue(inputProps.name, value);
+
+              const inputTypes = {
+                textarea: () => (
+                  <Form.Field control="textarea" {...inputProps} />
+                ),
+                select: () => (
+                  <Form.Field>
+                    <label>{inputProps.label}</label>
+                    <Dropdown
+                      placeholder={inputProps.placeholder}
+                      search
+                      selection
+                      options={inputProps.options}
+                      onChange={handleSelect}
+                    />
+                  </Form.Field>
+                )
+              };
+
               return (
                 <Aux key={field.name}>
                   <Segment attached="bottom" key={field.name}>
-                    {field.type === "textarea" ? (
-                      <Form.Field control="textarea" {...inputProps} />
+                    {inputTypes[field.type] ? (
+                      inputTypes[field.type]()
                     ) : (
                       <Form.Input {...inputProps} />
                     )}
