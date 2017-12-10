@@ -1,94 +1,127 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withFormik } from "formik";
-import styled from 'styled-components';
+import { Formik } from "formik";
+import Yup from "yup";
+import styled from "styled-components";
 import {
   Form,
   Container,
   Header,
   Segment,
   Button,
-  Icon
+  Icon,
+  Message
 } from "semantic-ui-react";
 
-const i = '!important';
+const Aux = ({ children }) => children;
+
+const i = "!important";
 
 const Fancy = styled.div`
   text-transform: uppercase ${i};
   letter-spacing: 0.33rem ${i};
 `;
 
-const FancyButton = props => <Button as={Fancy} {...props} />
+const FancyButton = props => <Button as={Fancy} {...props} />;
 
-function BaseAbstractForm(props) {
-  const {
-    /* Custom */
-    icon,
-    header,
+function AbstractForm(props) {
+  const { icon, header, description, fields, onSubmit } = props;
 
-    /* Formik */
-    values,
-    touched,
-    errors,
-    dirty,
-    isSubmitting,
-    handleChange,
-    setFieldValue,
-    handleBlur,
-    handleSubmit,
-    handleReset
-  } = props;
+  const initialValues = fields.reduce(
+    (values, field) => ({ ...values, [field.name]: field.value }),
+    {}
+  );
+
+  const validationSchema = Yup.object().shape(
+    fields.reduce(
+      (schema, field) => ({ ...schema, [field.name]: field.validation }),
+      {}
+    )
+  );
 
   return (
-    <Form as={Container}>
-      <Segment.Group stacked>
-        <Segment attached="top">
-          <Header as="h2">
-            <Icon name={icon} /> {header}
-          </Header>
-        </Segment>
-        <Segment attached="bottom">Form</Segment>
-        <Segment attached="bottom">
-          <Button.Group fluid>
-            <FancyButton onClick={handleReset} content="Reset" negative />
-            <Button.Or />
-            <FancyButton onClick={handleSubmit} content="Send" positive />
-          </Button.Group>
-        </Segment>
-      </Segment.Group>
-    </Form>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+      render={({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleSubmit,
+        handleReset,
+        isSubmitting
+      }) => (
+        <Form as={Container}>
+          <Segment.Group stacked>
+            <Segment attached="top">
+              <Header as={Fancy} size="medium">
+                <Icon name={icon} /> {header}
+              </Header>
+              <p>{description}</p>
+            </Segment>
+            {fields.map(field => (
+              <Aux key={field.name}>
+                <Segment attached="bottom" key={field.name}>
+                  <Form.Input
+                    {...field}
+                    key={field.name}
+                    error={!!(touched[field.name] && errors[field.name])}
+                    value={values[field.name]}
+                    onChange={handleChange}
+                  />
+                  {touched[field.name] &&
+                  errors[field.name] && (
+                    <Message
+                      icon="warning sign"
+                      header={errors[field.name]}
+                      negative
+                    />
+                  )}
+                </Segment>
+              </Aux>
+            ))}
+            <Segment attached="bottom">
+              <Button.Group fluid>
+                <FancyButton
+                  onClick={handleReset}
+                  content="Reset"
+                  disabled={isSubmitting}
+                  negative
+                />
+                <Button.Or />
+                <FancyButton
+                  onClick={handleSubmit}
+                  content="Send"
+                  disabled={isSubmitting}
+                  positive
+                />
+              </Button.Group>
+            </Segment>
+          </Segment.Group>
+        </Form>
+      )}
+    />
   );
 }
 
-AbstractForm.propTypes = {};
-
-function AbstractForm(props) {
-  const { validationSchema, handleSubmit } = props;
-  const Instance = withFormik({
-    mapPropsToValues: props => {
-      return Object.keys(props).reduce(
-        (values, prop) => ({ ...values, [prop]: props[prop] }),
-        {}
-      );
-    },
-    validationSchema,
-    handleSubmit
-  })(BaseAbstractForm);
-
-  return <Instance {...props} />;
-}
-
 AbstractForm.propTypes = {
+  icon: PropTypes.string,
   header: PropTypes.string,
-  validationSchema: PropTypes.object,
-  handleSubmit: PropTypes.func
+  description: PropTypes.string,
+  fields: PropTypes.arrayOf(PropTypes.object),
+  validate: PropTypes.func,
+  onSubmit: PropTypes.func
 };
 
 AbstractForm.defaultProps = {
-  icon: "question circle",
-  header: "Abstract Form",
-  validationSchema: {},
-  handleSubmit: () => {}
+  icon: "",
+  header: "",
+  description: "",
+  fields: [],
+  validate: values => true,
+  onSubmit: values => alert(JSON.stringify(values, null, 2))
 };
 
 export default AbstractForm;
