@@ -24,9 +24,15 @@ const props = {
       label: "Description",
       placeholder: "Tell the world about what your business has to offer",
       value: "",
-      validation: Yup.string().required(
-        "Come on, people want to know what you're all about!"
-      )
+      validation: Validators.description
+    },
+    {
+      name: "email",
+      type: "email",
+      label: "Email",
+      placeholder: "Enter email",
+      value: "",
+      validation: Validators.email
     },
     {
       name: "phone",

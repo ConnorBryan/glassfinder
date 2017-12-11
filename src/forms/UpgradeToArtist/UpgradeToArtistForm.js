@@ -24,9 +24,7 @@ const props = {
       label: "Description",
       placeholder: "Tell the world about what you have to offer",
       value: "",
-      validation: Yup.string().required(
-        "Come on, people want to know what you're all about!"
-      )
+      validation: Validators.description
     },
     {
       name: "from",

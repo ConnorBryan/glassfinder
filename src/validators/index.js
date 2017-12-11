@@ -1,8 +1,8 @@
 import Yup from "yup";
 
 export const email = Yup.string()
-  .email("Invalid email address")
-  .required("Email is required.");
+  .email("A valid email is required.")
+  .required("A valid email is required.");
 
 export const password = Yup.string()
   .min(6, "Password must be at least 6 characters.")
@@ -23,3 +23,7 @@ export const phone = Yup.string()
     "A valid phone number is required."
   )
   .required("A valid phone number is required.");
+
+export const description = Yup.string().required(
+  "Come on, people want to know what you're all about!"
+);
