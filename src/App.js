@@ -2,20 +2,24 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Container, Segment } from "semantic-ui-react";
 
-import Home from './screens/Home';
+import Navigation from './partials/Navigation';
+import Footer from './partials/Footer';
 
-const Mid = styled.div`min-height: 50vh;`;
+import Home from "./screens/Home";
 
 class App extends Component {
   render() {
     return (
       <Container>
         <Segment.Group>
-          <Segment attached="top">1</Segment>
+          <Segment attached="top">
+            <Navigation />
+          </Segment>
           <Segment as={Mid} attached="bottom">
             <Home />
           </Segment>
           <Segment attached="bottom">
+            <Footer />
           </Segment>
         </Segment.Group>
       </Container>
@@ -24,3 +28,7 @@ class App extends Component {
 }
 
 export default App;
+
+/* Styling */
+
+const Mid = styled.main`min-height: 50vh;`;
