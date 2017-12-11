@@ -1,10 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Yup from "yup";
 
 import config from "../../config";
 import * as Validators from "../../validators";
-import AbstractForm from "../AbstractForm";
+import AbstractUpdateForm from "../AbstractUpdateForm";
 
 const props = {
   icon: config.iconSet.shop,
@@ -91,21 +90,8 @@ const props = {
   }
 };
 
-function UpdateShopInfoForm({ currentValues }) {
-  props.fields = props.fields.map(field => ({
-    ...field,
-    value: currentValues[field.name] || field.value
-  }));
-
-  return <AbstractForm {...props} />;
+export default function UpdateShopInfoForm({ currentValues }) {
+  return (
+    <AbstractUpdateForm originalProps={props} currentValues={currentValues} />
+  );
 }
-
-UpdateShopInfoForm.propTypes = {
-  currentValues: PropTypes.objectOf(PropTypes.string)
-};
-
-UpdateShopInfoForm.defaultProps = {
-  currentValues: {}
-};
-
-export default UpdateShopInfoForm;

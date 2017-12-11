@@ -1,10 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Yup from "yup";
 
 import config from "../../config";
 import * as Validators from "../../validators";
-import AbstractForm from "../AbstractForm";
+import AbstractUpdateForm from "../AbstractUpdateForm";
 
 const props = {
   icon: config.iconSet.brand,
@@ -54,21 +53,8 @@ const props = {
   }
 };
 
-function UpdateBrandInfoForm({ currentValues }) {
-  props.fields = props.fields.map(field => ({
-    ...field,
-    value: currentValues[field.name] || field.value
-  }));
-
-  return <AbstractForm {...props} />;
+export default function UpdateBrandInfoForm({ currentValues }) {
+  return (
+    <AbstractUpdateForm originalProps={props} currentValues={currentValues} />
+  );
 }
-
-UpdateBrandInfoForm.propTypes = {
-  currentValues: PropTypes.objectOf(PropTypes.string)
-};
-
-UpdateBrandInfoForm.defaultProps = {
-  currentValues: {}
-};
-
-export default UpdateBrandInfoForm;
