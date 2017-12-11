@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Container, Segment } from "semantic-ui-react";
-import UpdateBrandInfoForm from './forms/UpdateBrandInfo';
+
+import Home from './screens/Home';
+
 const Mid = styled.div`min-height: 50vh;`;
 
 class App extends Component {
@@ -11,11 +13,7 @@ class App extends Component {
         <Segment.Group>
           <Segment attached="top">1</Segment>
           <Segment as={Mid} attached="bottom">
-            <UpdateBrandInfoForm currentValues={{
-              name: 'My shop',
-              description: 'derp',
-              from: 'Hell'
-            }} />
+            <Home />
           </Segment>
           <Segment attached="bottom">
           </Segment>
