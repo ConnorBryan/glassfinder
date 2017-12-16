@@ -24,8 +24,29 @@ export default {
       header: "Explore brands",
       content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
     },
-    
+    help: {
+      icon: "question",
+      header: "Help",
+      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
+    }
   },
+  helpTopics: [
+    {
+      key: "1",
+      title: "Foo",
+      content: "Bar"
+    },
+    {
+      key: "2",
+      title: "Foo",
+      content: "Bar"
+    },
+    {
+      key: "3",
+      title: "Foo",
+      content: "Bar"
+    }
+  ],
   updates: [
     {
       key: "87c98c0f-00f7-45a3-97db-eccb1b7277ee",

@@ -6,6 +6,7 @@ import Navigation from "./partials/Navigation";
 import Footer from "./partials/Footer";
 
 import Home from "./screens/Home";
+import Help from "./screens/Help";
 
 import UpgradeToShop from "./forms/UpgradeToShop";
 import ExploreShops from "./screens/ExploreShops";
@@ -22,6 +23,7 @@ class App extends Component {
           </Segment>
           <Segment as={Mid}>
             <Home />
+            <Help />
             <UpgradeToShop />
             <ExploreShops />
             <UpgradeToBrand />
