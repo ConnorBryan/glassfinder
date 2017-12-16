@@ -7,7 +7,7 @@ import config from "../../config";
 
 function Footer(props) {
   return (
-    <Container as={Segment}>
+    <Container fluid>
       <List divided horizontal>
         {config.footerItems.map(item => (
           <List.Item description={item.title} key={item.key} />

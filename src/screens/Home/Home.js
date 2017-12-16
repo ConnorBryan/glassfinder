@@ -20,7 +20,9 @@ function HeroCard({ image, title }) {
       <Image src={image} />
       <Card.Content>
         <TextAlign align="center">
-          <Card.Header>{title}</Card.Header>
+          <Card.Header as="h3" className="fancy">
+            {title}
+          </Card.Header>
         </TextAlign>
       </Card.Content>
     </Card>
@@ -42,7 +44,9 @@ function Update(props) {
     <Item>
       <Item.Image circular size="small" src={props.image} />
       <Item.Content>
-        <Item.Header size="medium">{props.header}</Item.Header>
+        <Item.Header className="fancy" size="medium">
+          {props.header}
+        </Item.Header>
         <Item.Meta>{props.meta}</Item.Meta>
         <Item.Description>{props.description}</Item.Description>
         <TextAlign align="right">
@@ -74,13 +78,17 @@ function Home(props) {
           </Message.List>
         </Message.Content>
       </Message>
-      <Card.Group itemsPerRow={3}>
-        <HeroCard image={config.placeholderImage} title="Example" />
-        <HeroCard image={config.placeholderImage} title="Example" />
-        <HeroCard image={config.placeholderImage} title="Example" />
+      <Card.Group stackable itemsPerRow={3}>
+        <HeroCard image={config.placeholderImage} title="Shops" />
+        <HeroCard image={config.placeholderImage} title="Pieces" />
+        <HeroCard image={config.placeholderImage} title="Brands" />
       </Card.Group>
       <Item.Group as={Segment} divided relaxed="very">
-        <Item className="fancy" header="Updates" />
+        <Item>
+          <Item.Header as="h3" className="fancy">
+            <Icon name="newspaper" /> Updates
+          </Item.Header>
+        </Item>
         {config.updates.map(update => (
           <Update
             key={update.key}

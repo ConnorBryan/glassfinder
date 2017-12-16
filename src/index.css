@@ -2,3 +2,8 @@ body {
   background: url(/bg.png);
   padding: 2rem 0 2rem 0;
 }
+
+.fancy {
+  letter-spacing: 0.33rem !important;
+  text-transform: uppercase !important;
+}

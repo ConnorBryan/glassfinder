@@ -6,20 +6,22 @@ import Navigation from "./partials/Navigation";
 import Footer from "./partials/Footer";
 
 import Home from "./screens/Home";
+import ExploreShops from "./screens/ExploreShops";
 
 class App extends Component {
   render() {
     return (
       <Container>
-        <Segment.Group>
           <Segment>
             <Navigation />
           </Segment>
           <Segment as={Mid}>
-            <Home />
+            {/*<Home />*/}
+            <ExploreShops />
           </Segment>
-          <Footer />
-        </Segment.Group>
+          <Segment>
+            <Footer />
+          </Segment>
       </Container>
     );
   }
