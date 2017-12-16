@@ -13,6 +13,7 @@ import {
 import styled from "styled-components";
 
 import config from "../../config";
+import withPageHeader from "../../atomic/withPageHeader";
 
 function HeroCard({ image, title }) {
   return (
@@ -68,16 +69,6 @@ Update.propTypes = {
 function Home(props) {
   return (
     <Container>
-      <Message>
-        <Message.Content>
-          <Message.Header>{config.welcomeMessage.header}</Message.Header>
-          <Message.List>
-            {config.welcomeMessage.content.map((content, index) => (
-              <Message.Item key={index}>{content}</Message.Item>
-            ))}
-          </Message.List>
-        </Message.Content>
-      </Message>
       <Card.Group stackable itemsPerRow={3}>
         <HeroCard image={config.placeholderImage} title="Shops" />
         <HeroCard image={config.placeholderImage} title="Pieces" />
@@ -106,7 +97,7 @@ function Home(props) {
 
 Home.propTypes = {};
 
-export default Home;
+export default withPageHeader(config.pageHeaders.home, Home);
 
 // Styling
 

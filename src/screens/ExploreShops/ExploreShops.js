@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Card, Icon, Image, Segment } from "semantic-ui-react";
 
 import config from "../../config";
+import withPageHeader from "../../atomic/withPageHeader";
 
 function Map(props) {
   return (
@@ -19,7 +20,7 @@ function Map(props) {
 
 function ShopCard(props) {
   return (
-    <Card key={props.key}>
+    <Card>
       <Image src={props.image} />
       <Card.Content>
         <Card.Header as="h3" className="fancy">
@@ -81,4 +82,4 @@ function ExploreShops(props) {
 
 ExploreShops.propTypes = {};
 
-export default ExploreShops;
+export default withPageHeader(config.pageHeaders.exploreShops, ExploreShops);

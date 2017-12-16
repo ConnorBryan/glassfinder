@@ -8,12 +8,23 @@ export default {
   },
   usStates,
   placeholderImage: "https://placehold.it/400x400",
-  welcomeMessage: {
-    header: "Welcome to Glassfinder!",
-    content: [
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
-    ]
+  pageHeaders: {
+    home: {
+      icon: "home",
+      header: "Glassfinder",
+      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
+    },
+    exploreShops: {
+      icon: "cart",
+      header: "Explore shops",
+      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
+    },
+    exploreBrands: {
+      icon: "building",
+      header: "Explore brands",
+      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
+    },
+    
   },
   updates: [
     {
@@ -96,6 +107,35 @@ export default {
       city: "Terrell",
       state: "TX",
       zip: 75160
+    }
+  ],
+  brands: [
+    {
+      key: "1",
+      image: "https://placehold.it/400x400",
+      name: "Connor Inc.",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+      from: "Dallas, TX",
+      site: "https://www.connorbryan.com/"
+    },
+    {
+      key: "2",
+      image: "https://placehold.it/400x400",
+      name: "Connor Inc.",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+      from: "Dallas, TX",
+      site: "https://www.connorbryan.com/"
+    },
+    {
+      key: "3",
+      image: "https://placehold.it/400x400",
+      name: "Connor Inc.",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+      from: "Dallas, TX",
+      site: "https://www.connorbryan.com/"
     }
   ],
   footerItems: [

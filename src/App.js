@@ -6,7 +6,12 @@ import Navigation from "./partials/Navigation";
 import Footer from "./partials/Footer";
 
 import Home from "./screens/Home";
+
+import UpgradeToShop from "./forms/UpgradeToShop";
 import ExploreShops from "./screens/ExploreShops";
+
+import UpgradeToBrand from "./forms/UpgradeToBrand";
+import ExploreBrands from "./screens/ExploreBrands";
 
 class App extends Component {
   render() {
@@ -16,8 +21,11 @@ class App extends Component {
             <Navigation />
           </Segment>
           <Segment as={Mid}>
-            {/*<Home />*/}
+            <Home />
+            <UpgradeToShop />
             <ExploreShops />
+            <UpgradeToBrand />
+            <ExploreBrands />
           </Segment>
           <Segment>
             <Footer />
