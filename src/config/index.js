@@ -1,4 +1,4 @@
-import { statesArray as usStates } from "./us-states";
+import { usStates } from "./us-states";
 
 export default {
   appName: "Glassfinder",

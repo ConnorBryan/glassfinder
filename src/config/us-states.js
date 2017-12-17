@@ -60,4 +60,4 @@ export const statesHash = {
   WY: "Wyoming"
 };
 
-export const statesArray = Object.keys(statesHash).sort();
+export const usStates = Object.keys(statesHash).sort();

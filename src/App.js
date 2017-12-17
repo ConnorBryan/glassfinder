@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Container, Segment } from "semantic-ui-react";
 
 import Navigation from "./partials/Navigation";
+import AccountBar from "./partials/AccountBar";
 import Footer from "./partials/Footer";
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
       <Container>
           <Segment>
             <Navigation />
+            <AccountBar />
           </Segment>
           <Segment as={Mid}>
             {renderRoutes(route.routes)}
