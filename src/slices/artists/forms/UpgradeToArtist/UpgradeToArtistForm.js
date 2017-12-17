@@ -1,8 +1,8 @@
 import React from "react";
 import Yup from "yup";
 
-import config from "../../config";
-import AbstractForm from "../AbstractForm";
+import config from "../../../../config";
+import AbstractForm from "../../../forms/AbstractForm";
 
 const props = {
   icon: config.iconSet.artist,

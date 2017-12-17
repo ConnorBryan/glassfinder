@@ -1,9 +1,9 @@
 import React from "react";
 import Yup from "yup";
 
-import config from "../../config";
-import * as Validators from "../../validators";
-import AbstractUpdateForm from "../AbstractUpdateForm";
+import config from "../../../../config";
+import * as Validators from "../../../../validators";
+import AbstractUpdateForm from "../../../forms/AbstractUpdateForm";
 
 const props = {
   icon: config.iconSet.artist,

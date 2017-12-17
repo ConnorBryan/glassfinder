@@ -4,11 +4,13 @@ import Updates from "../screens/Updates";
 import Help from "../screens/Help";
 import About from "../screens/About";
 import Contact from "../screens/Contact";
-import MyAccount from "../screens/MyAccount";
 import TermsAndConditions from "../screens/TermsAndConditions";
 import PrivacyPolicy from "../screens/PrivacyPolicy";
 
 import { Signin, Signup } from "../screens/formscreens";
+
+// Account
+import MyAccount from "../slices/account/MyAccount";
 
 // Shops
 import ExploreShops from "../slices/shops/explore";

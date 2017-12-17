@@ -1,13 +1,13 @@
 import React from "react";
 import Yup from "yup";
 
-import config from "../../config";
-import * as Validators from "../../validators";
-import AbstractForm from "../AbstractForm";
+import config from "../../../../config";
+import * as Validators from "../../../../validators";
+import AbstractUpdateForm from "../../../forms/AbstractUpdateForm";
 
 const props = {
   icon: config.iconSet.brand,
-  header: "Upgrade to brand",
+  header: "Update brand",
   fields: [
     {
       name: "name",
@@ -41,14 +41,19 @@ const props = {
       label: "Web site",
       placeholder: "Where are you based out of?",
       value: "",
-      validation: Yup.string().matches(/[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/, "A brand website must be a valid URL.")
+      validation: Yup.string().matches(
+        /[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/,
+        "A brand website must be a valid URL."
+      )
     }
   ],
   onSubmit: values => {
-    alert(`Upgrading to brand with ${JSON.stringify(values, null, 2)}`);
+    alert(`Updating shop with ${JSON.stringify(values, null, 2)}`);
   }
 };
 
-export default function UpgradeToBrandForm() {
-  return <AbstractForm {...props} />;
+export default function UpdateBrandInfoForm({ currentValues }) {
+  return (
+    <AbstractUpdateForm originalProps={props} currentValues={currentValues} />
+  );
 }

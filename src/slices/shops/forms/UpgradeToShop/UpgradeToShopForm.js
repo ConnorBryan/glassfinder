@@ -1,13 +1,13 @@
 import React from "react";
 import Yup from "yup";
 
-import config from "../../config";
-import * as Validators from "../../validators";
-import AbstractUpdateForm from "../AbstractUpdateForm";
+import config from "../../../../config";
+import * as Validators from "../../../../validators";
+import AbstractForm from "../../../forms/AbstractForm";
 
 const props = {
   icon: config.iconSet.shop,
-  header: "Update shop",
+  header: "Upgrade to shop",
   fields: [
     {
       name: "name",
@@ -85,12 +85,10 @@ const props = {
     }
   ],
   onSubmit: values => {
-    alert(`Updating shop with ${JSON.stringify(values, null, 2)}`);
+    alert(`Upgrading to shop with ${JSON.stringify(values, null, 2)}`);
   }
 };
 
-export default function UpdateShopInfoForm({ currentValues }) {
-  return (
-    <AbstractUpdateForm originalProps={props} currentValues={currentValues} />
-  );
+export default function UpgradeToShopForm() {
+  return <AbstractForm {...props} />;
 }

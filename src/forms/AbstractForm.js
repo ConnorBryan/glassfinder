@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import Yup from "yup";
 import styled from "styled-components";
 import {
+  Icon,
   Form,
   Container,
   Segment,
@@ -105,17 +106,20 @@ function AbstractForm(props) {
             <Segment attached="bottom" color="blue">
               <Button.Group fluid>
                 <FancyButton
+                  icon="refresh"
                   onClick={handleReset}
                   content="Reset"
                   disabled={isSubmitting}
                 />
                 <Button.Or />
                 <FancyButton
+                  icon="send outline"
                   onClick={handleSubmit}
-                  content="Send"
                   disabled={isSubmitting}
                   primary
-                />
+                >
+                  Send <Icon name="send outline" />
+                </FancyButton>
               </Button.Group>
             </Segment>
           </Segment.Group>

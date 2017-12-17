@@ -1,7 +1,7 @@
 import React from "react";
 
-import config from "../../config";
-import withPageHeader from "../../atomic/withPageHeader";
+import config from "../../../config";
+import withPageHeader from "../../../atomic/withPageHeader";
 
 function MyAccount(props) {
   return <div>My Account</div>;
