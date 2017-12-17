@@ -10,6 +10,7 @@ import {
   UpdateBrandInfo
 } from "../../formscreens";
 import MyAccount from "./screens/MyAccount";
+import ViewMyPieces from "./screens/ViewMyPieces";
 
 export default [
   {
@@ -61,5 +62,10 @@ export default [
     path: "/my-account/update-password",
     exact: true,
     component: UpdatePassword
+  },
+  {
+    path: "/my-account/view-my-pieces",
+    exact: true,
+    component: ViewMyPieces
   }
 ];
