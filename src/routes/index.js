@@ -7,7 +7,7 @@ import Contact from "../screens/Contact";
 import TermsAndConditions from "../screens/TermsAndConditions";
 import PrivacyPolicy from "../screens/PrivacyPolicy";
 
-import { Signin, Signup } from "../screens/formscreens";
+import { Signin, Signup, UpdatePassword } from "../screens/formscreens";
 
 // Account
 import MyAccount from "../slices/account/MyAccount";
@@ -85,6 +85,11 @@ export default [
         path: "/my-account",
         exact: true,
         component: MyAccount
+      },
+      {
+        path: "/update-password",
+        exact: true,
+        component: UpdatePassword
       },
       {
         path: "/purchase",

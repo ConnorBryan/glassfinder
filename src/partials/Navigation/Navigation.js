@@ -30,7 +30,7 @@ function Navigation(props) {
         <Menu.Item key={icon} as="a" href={to} icon={icon} />
       ))}
       <Menu.Menu position="right">
-        {config.navigationItems.map(item => (
+        {config.navigation.map(item => (
           <NavigationItem
             key={item.key}
             match={props.location.pathname}

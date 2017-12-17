@@ -1,0 +1,54 @@
+[
+  {
+    "key": "87c98c0f-00f7-45a3-97db-eccb1b7277ee",
+    "image": "https://placehold.it/400x400",
+    "name": "Connor's Corner",
+    "description":
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+    "email": "cchromium@gmail.com",
+    "phone": "(214) 677-6265",
+    "street": "3 Haynes Circle",
+    "city": "Terrell",
+    "state": "TX",
+    "zip": "75160"
+  },
+  {
+    "key": "2",
+    "image": "https://placehold.it/400x400",
+    "name": "Connor's Corner",
+    "description":
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+    "email": "cchromium@gmail.com",
+    "phone": "(214) 677-6265",
+    "street": "3 Haynes Circle",
+    "city": "Terrell",
+    "state": "TX",
+    "zip": "75160"
+  },
+  {
+    "key": "3",
+    "image": "https://placehold.it/400x400",
+    "name": "Connor's Corner",
+    "description":
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+    "email": "cchromium@gmail.com",
+    "phone": "(214) 677-6265",
+    "street": "3 Haynes Circle",
+    "city": "Terrell",
+    "state": "TX",
+    "zip": "75160"
+  },
+  {
+    "key": "4",
+    "image": "https://placehold.it/400x400",
+    "name": "Connor's Corner",
+    "description":
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+    "email": "cchromium@gmail.com",
+    "phone": "(214) 677-6265",
+    "street": "3 Haynes Circle",
+    "city": "Terrell",
+    "state": "TX",
+    "zip": "75160"
+  }
+]

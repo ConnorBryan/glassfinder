@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
 
 import registerServiceWorker from "./registerServiceWorker";
-import routes from "./config/routes";
+import routes from "./routes";
 import "./index.css";
 
 ReactDOM.render((

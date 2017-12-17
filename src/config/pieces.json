@@ -1,0 +1,32 @@
+[
+  {
+    "key": "A",
+    "image": "https://placehold.it/400x400",
+    "name": "Old Blue",
+    "maker": "Bob Dole",
+    "price": 3.2,
+    "description":
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+    "location": "Dallas, TX"
+  },
+  {
+    "key": "B",
+    "image": "https://placehold.it/400x400",
+    "name": "Old Yellow",
+    "maker": "Bob Dole",
+    "price": 3.2,
+    "description":
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+    "location": "Dallas, TX"
+  },
+  {
+    "key": "C",
+    "image": "https://placehold.it/400x400",
+    "name": "Green Monster",
+    "maker": "Bob Dole",
+    "price": 3.2,
+    "description":
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+    "location": "Dallas, TX"
+  }
+]

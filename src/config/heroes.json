@@ -1,0 +1,20 @@
+[
+  {
+    "icon": "cart",
+    "link": "/explore-shops",
+    "image": "https://placehold.it/400x400",
+    "title": "Shops"
+  },
+  {
+    "icon": "puzzle",
+    "link": "/explore-pieces",
+    "image": "https://placehold.it/400x400",
+    "title": "Pieces"
+  },
+  {
+    "icon": "building",
+    "link": "/explore-brands",
+    "image": "https://placehold.it/400x400",
+    "title": "Brands"
+  }
+]

@@ -8,7 +8,7 @@ function Footer(props) {
   return (
     <Container fluid>
       <List divided horizontal>
-        {config.footerItems.map(item => (
+        {config.footer.map(item => (
           <List.Item as={Link} to={item.to} key={item.key}>
             {item.title}
           </List.Item>

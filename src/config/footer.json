@@ -1,0 +1,12 @@
+[
+  {
+    "key": "A",
+    "title": "Terms & Conditions",
+    "to": "/terms-and-conditions"
+  },
+  {
+    "key": "B",
+    "title": "Privacy Policy",
+    "to": "/privacy-policy"
+  }
+]
