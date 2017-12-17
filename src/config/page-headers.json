@@ -112,5 +112,17 @@
     "header": "Update shop information",
     "content":
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
+  },
+  "updateArtistInfo": {
+    "icon": "paintbrush",
+    "header": "Update artist information",
+    "content":
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
+  },
+  "updateBrandInfo": {
+    "icon": "building",
+    "header": "Update brand information",
+    "content":
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
   }
 }

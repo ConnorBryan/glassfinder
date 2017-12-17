@@ -6,7 +6,9 @@ import {
   BecomeAShop,
   UpdateShopInfo,
   BecomeAnArtist,
-  BecomeABrand
+  UpdateArtistInfo,
+  BecomeABrand,
+  UpdateBrandInfo
 } from "../../screens/formscreens";
 
 export default [
@@ -41,9 +43,19 @@ export default [
     component: BecomeAnArtist
   },
   {
+    path: "/my-account/update-artist-information",
+    exact: true,
+    component: UpdateArtistInfo
+  },
+  {
     path: "/my-account/become-a-brand",
     exact: true,
     component: BecomeABrand
+  },
+  {
+    path: "/my-account/update-brand-information",
+    exact: true,
+    component: UpdateBrandInfo
   },
   {
     path: "/my-account/update-password",

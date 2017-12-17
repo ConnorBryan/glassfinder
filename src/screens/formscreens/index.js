@@ -5,14 +5,13 @@ import SignupForm from "../../slices/account/forms/Signup";
 import UpdatePasswordForm from "../../slices/account/forms/UpdatePassword";
 
 import UpgradeToShopForm from "../../slices/account/forms/UpgradeToShop";
-import UpgradeToArtistForm from "../../slices/account/forms/UpgradeToArtist";
-import UpgradeToBrandForm from "../../slices/account/forms/UpgradeToBrand";
-
 import UpdateShopInfoForm from "../../slices/shops/forms/UpdateShopInfo";
 
-// import UpdateArtistInfoForm from "../../slices/artists/forms/UpdateShopInfo";
+import UpgradeToArtistForm from "../../slices/account/forms/UpgradeToArtist";
+import UpdateArtistInfoForm from "../../slices/artists/forms/UpdateArtistInfo";
 
-// import UpdateBrandInfoForm from "../../slices/brands/forms/UpdateBrandInfo";
+import UpgradeToBrandForm from "../../slices/account/forms/UpgradeToBrand";
+import UpdateBrandInfoForm from "../../slices/brands/forms/UpdateBrandInfo";
 
 export const Signin = withPageHeader(config.pageHeaders.signin, SigninForm);
 export const Signup = withPageHeader(config.pageHeaders.signup, SignupForm);
@@ -20,16 +19,30 @@ export const UpdatePassword = withPageHeader(
   config.pageHeaders.updatePassword,
   UpdatePasswordForm
 );
+
 export const BecomeAShop = withPageHeader(
   config.pageHeaders.becomeAShop,
   UpgradeToShopForm
 );
-export const UpdateShopInfo = withPageHeader(config.pageHeaders.updateShopInfo, UpdateShopInfoForm);
+export const UpdateShopInfo = withPageHeader(
+  config.pageHeaders.updateShopInfo,
+  UpdateShopInfoForm
+);
+
 export const BecomeAnArtist = withPageHeader(
   config.pageHeaders.becomeAnArtist,
   UpgradeToArtistForm
 );
+export const UpdateArtistInfo = withPageHeader(
+  config.pageHeaders.updateArtistInfo,
+  UpdateArtistInfoForm
+);
+
 export const BecomeABrand = withPageHeader(
   config.pageHeaders.becomeABrand,
   UpgradeToBrandForm
+);
+export const UpdateBrandInfo = withPageHeader(
+  config.pageHeaders.updateBrandInfo,
+  UpdateBrandInfoForm
 );

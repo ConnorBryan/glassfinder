@@ -24,7 +24,6 @@ function MyAccountItem(props) {
 function MyAccount(props) {
   return (
     <Segment.Group>
-      
       <Segment attached="top" color={config.color}>
         <MyAccountHeaderItem icon="book" title="Basics" />
       </Segment>
@@ -33,7 +32,6 @@ function MyAccount(props) {
           <MyAccountItem to="/my-account/update-password" title="Update password" />
         </Menu>
       </Segment>
-
       <Segment attached="top" color={config.color}>
         <MyAccountHeaderItem icon="chain" title="Link your account" />
       </Segment>
@@ -44,7 +42,6 @@ function MyAccount(props) {
           <MyAccountItem to="/my-account/become-a-brand" title="Become a brand" />
         </Menu>
       </Segment>
-
       <Segment attached="top" color={config.color}>
         <MyAccountHeaderItem icon="shop" title="Manage your shop" />
       </Segment>
@@ -55,7 +52,25 @@ function MyAccount(props) {
           <MyAccountItem to="/my-account/view-my-pieces" title="View my pieces" />
         </Menu>
       </Segment>
-
+      <Segment attached="top" color={config.color}>
+        <MyAccountHeaderItem icon="shop" title="Manage your artist profile" />
+      </Segment>
+      <Segment attached="bottom">
+        <Menu color={config.color} vertical fluid>
+          <MyAccountItem to="/my-account/update-artist-information" title="Update artist information" />
+          <MyAccountItem to="/my-account/upload-piece" title="Upload a piece" />
+          <MyAccountItem to="/my-account/view-my-pieces" title="View my pieces" />
+        </Menu>
+      </Segment>
+      <Segment attached="top" color={config.color}>
+        <MyAccountHeaderItem icon="shop" title="Manage your brand" />
+      </Segment>
+      <Segment attached="bottom">
+        <Menu color={config.color} vertical fluid>
+          <MyAccountItem to="/my-account/update-brand-information" title="Update brand information" />
+          <MyAccountItem to="/my-account/upload-catalog" title="Upload a catalog" />
+        </Menu>
+      </Segment>
     </Segment.Group>
   );
 }
