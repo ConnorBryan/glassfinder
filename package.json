@@ -13,6 +13,7 @@
     "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.77.0",
     "styled-components": "^2.2.4",
+    "uuid": "^3.1.0",
     "yup": "^0.23.0"
   },
   "scripts": {

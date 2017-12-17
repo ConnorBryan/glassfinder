@@ -7,3 +7,7 @@ body {
   letter-spacing: 0.33rem !important;
   text-transform: uppercase !important;
 }
+
+.invisible {
+  display: none !important;
+}

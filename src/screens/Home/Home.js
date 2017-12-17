@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   Card,
+  Form,
   Item,
   Icon,
   Message,
@@ -14,13 +15,21 @@ import config from "../../config";
 import Update from "../../components/Update";
 import withPageHeader from "../../providers/withPageHeader";
 import HeroCard from "./components/HeroCard";
+import UploadField from "../../components/UploadField";
 
 function Home(props) {
   return (
     <Container>
-      <Segment>Yo</Segment>
+      <Segment>
+        <Form>
+          <UploadField
+            label="Test upload"
+            onUpload={file => console.log(file)}
+          />
+        </Form>
+      </Segment>
       <Card.Group stackable itemsPerRow={3}>
-        {config.heroes.map(hero => <HeroCard {...hero} />)}
+        {config.heroes.map(hero => <HeroCard key={hero.key} {...hero} />)}
       </Card.Group>
       <Item.Group as={Segment} divided relaxed="very" attached="top">
         <Item>
@@ -32,14 +41,8 @@ function Home(props) {
       </Item.Group>
       <Message attached="bottom">
         <Button.Group fluid>
-          <Button
-            as={Link}
-            className="fancy"
-            to="/updates"
-            icon="arrow circle right"
-            primary
-          >
-            View all <Icon name="arrow circle right" />
+          <Button as={Link} className="fancy" to="/updates" primary>
+            View all <Icon name="chevron right" />
           </Button>
         </Button.Group>
       </Message>
