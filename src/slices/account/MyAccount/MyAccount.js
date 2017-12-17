@@ -43,7 +43,7 @@ function MyAccount(props) {
         </Menu>
       </Segment>
       <Segment attached="top" color={config.color}>
-        <MyAccountHeaderItem icon="shop" title="Manage your shop" />
+        <MyAccountHeaderItem icon={config.iconSet.shop} title="Manage your shop" />
       </Segment>
       <Segment attached="bottom">
         <Menu color={config.color} vertical fluid>
@@ -53,7 +53,7 @@ function MyAccount(props) {
         </Menu>
       </Segment>
       <Segment attached="top" color={config.color}>
-        <MyAccountHeaderItem icon="shop" title="Manage your artist profile" />
+        <MyAccountHeaderItem icon={config.iconSet.artist} title="Manage your artist profile" />
       </Segment>
       <Segment attached="bottom">
         <Menu color={config.color} vertical fluid>
@@ -63,7 +63,7 @@ function MyAccount(props) {
         </Menu>
       </Segment>
       <Segment attached="top" color={config.color}>
-        <MyAccountHeaderItem icon="shop" title="Manage your brand" />
+        <MyAccountHeaderItem icon={config.iconSet.brand} title="Manage your brand" />
       </Segment>
       <Segment attached="bottom">
         <Menu color={config.color} vertical fluid>
