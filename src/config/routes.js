@@ -4,6 +4,7 @@ import Help from "../screens/Help";
 import About from "../screens/About";
 import Contact from "../screens/Contact";
 import ExploreShops from "../screens/ExploreShops";
+import ExplorePieces from "../screens/ExplorePieces";
 import ExploreBrands from "../screens/ExploreBrands";
 
 export default [
@@ -34,6 +35,11 @@ export default [
         path: "/explore-shops",
         exact: true,
         component: ExploreShops
+      },
+      {
+        path: "/explore-pieces",
+        exact: true,
+        component: ExplorePieces
       },
       {
         path: "/explore-brands",

@@ -5,7 +5,8 @@ export default {
   iconSet: {
     shop: "cart",
     artist: "paint brush",
-    brand: "building"
+    brand: "building",
+    piece: "puzzle"
   },
   usStates,
   placeholderImage: "https://placehold.it/400x400",
@@ -35,6 +36,12 @@ export default {
       title: "Shops"
     },
     {
+      key: "F",
+      icon: "puzzle",
+      to: "/explore-pieces",
+      title: "Pieces"
+    },
+    {
       key: "D",
       icon: "building",
       to: "/explore-brands",
@@ -51,6 +58,12 @@ export default {
     exploreShops: {
       icon: "cart",
       header: "Explore shops",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
+    },
+    explorePieces: {
+      icon: "puzzle",
+      header: "Explore pieces",
       content:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
     },
@@ -163,7 +176,7 @@ export default {
       street: "3 Haynes Circle",
       city: "Terrell",
       state: "TX",
-      zip: 75160
+      zip: "75160"
     },
     {
       key: "2",
@@ -176,7 +189,7 @@ export default {
       street: "3 Haynes Circle",
       city: "Terrell",
       state: "TX",
-      zip: 75160
+      zip: "75160"
     },
     {
       key: "3",
@@ -189,7 +202,7 @@ export default {
       street: "3 Haynes Circle",
       city: "Terrell",
       state: "TX",
-      zip: 75160
+      zip: "75160"
     },
     {
       key: "4",
@@ -202,7 +215,39 @@ export default {
       street: "3 Haynes Circle",
       city: "Terrell",
       state: "TX",
-      zip: 75160
+      zip: "75160"
+    }
+  ],
+  pieces: [
+    {
+      key: "A",
+      image: "https://placehold.it/400x400",
+      name: "Old Blue",
+      maker: "Bob Dole",
+      price: 3.2,
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+      location: "Dallas, TX"
+    },
+    {
+      key: "B",
+      image: "https://placehold.it/400x400",
+      name: "Old Yellow",
+      maker: "Bob Dole",
+      price: 3.2,
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+      location: "Dallas, TX"
+    },
+    {
+      key: "C",
+      image: "https://placehold.it/400x400",
+      name: "Green Monster",
+      maker: "Bob Dole",
+      price: 3.2,
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
+      location: "Dallas, TX"
     }
   ],
   brands: [
