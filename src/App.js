@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 import styled from "styled-components";
-import { Container, Segment } from "semantic-ui-react";
+import { Container, Message, Segment } from "semantic-ui-react";
 
 import config from "./config";
 import Navigation from "./partials/Navigation";
@@ -19,7 +19,17 @@ class App extends Component {
           <Navigation />
           <AccountBar />
         </Segment>
-        <Segment color={config.color}>{renderRoutes(route.routes)}</Segment>
+        <Message
+          attached="top"
+          onDismiss={() => {}}
+          negative
+          icon="warning sign"
+          header="Error"
+          content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, aut totam, corporis amet dolores, labore doloribus, recusandae eaque maiores quaerat officia incidunt soluta sit architecto numquam dolorum repudiandae a. Architecto!"
+        />
+        <Segment attached="bottom" color={config.color}>
+          {renderRoutes(route.routes)}
+        </Segment>
         <Segment color={config.color}>
           <Footer />
         </Segment>
