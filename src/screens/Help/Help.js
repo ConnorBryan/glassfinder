@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Accordion, Header, Icon, Segment } from "semantic-ui-react";
+import Aux from "react-aux";
 
 import config from "../../config";
 import withPageHeader from "../../providers/withPageHeader";
-
-const Aux = ({ children }) => children;
 
 class Help extends Component {
   static propTypes = {};

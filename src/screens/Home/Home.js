@@ -18,6 +18,7 @@ import HeroCard from "./components/HeroCard";
 function Home(props) {
   return (
     <Container>
+      <Segment>Yo</Segment>
       <Card.Group stackable itemsPerRow={3}>
         {config.heroes.map(hero => <HeroCard {...hero} />)}
       </Card.Group>

@@ -1,9 +1,8 @@
 import React from "react";
 import { Message, Icon } from "semantic-ui-react";
+import Aux from "react-aux";
 
 import config from "../../config";
-
-const Aux = ({ children }) => children;
 
 function withPageHeader(headerConfig, WrappedComponent) {
   return function PageHeaderProvider(props) {
