@@ -3,7 +3,7 @@ import Yup from "yup";
 
 import config from "../../../../config";
 import * as Validators from "../../../../validators";
-import AbstractForm from "../../../forms/AbstractForm";
+import AbstractForm from "../../../../forms/AbstractForm";
 
 const props = {
   icon: config.iconSet.shop,
@@ -65,7 +65,7 @@ const props = {
       value: "",
       options: [
         { key: "select", value: "", text: "Select a state" },
-        ...config.usStates.map(state => ({
+        ...config.states.map(state => ({
           key: state,
           value: state,
           text: state

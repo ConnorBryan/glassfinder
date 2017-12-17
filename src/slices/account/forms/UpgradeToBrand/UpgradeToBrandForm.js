@@ -3,7 +3,7 @@ import Yup from "yup";
 
 import config from "../../../../config";
 import * as Validators from "../../../../validators";
-import AbstractForm from "../../../forms/AbstractForm";
+import AbstractForm from "../../../../forms/AbstractForm";
 
 const props = {
   icon: config.iconSet.brand,

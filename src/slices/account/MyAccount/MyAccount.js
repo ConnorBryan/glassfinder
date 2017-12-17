@@ -30,7 +30,7 @@ function MyAccount(props) {
       </Segment>
       <Segment attached="bottom">
         <Menu color={config.color} vertical fluid>
-          <MyAccountItem to="/update-password" title="Update password" />
+          <MyAccountItem to="/my-account/update-password" title="Update password" />
         </Menu>
       </Segment>
 
@@ -39,9 +39,9 @@ function MyAccount(props) {
       </Segment>
       <Segment attached="bottom">
         <Menu color={config.color} vertical fluid>
-          <MyAccountItem to="/" title="Become a shop" />
-          <MyAccountItem to="/" title="Become an artist" />
-          <MyAccountItem to="/" title="Become a brand" />
+          <MyAccountItem to="/my-account/become-a-shop" title="Become a shop" />
+          <MyAccountItem to="/my-account/become-an-artist" title="Become an artist" />
+          <MyAccountItem to="/my-account/become-a-brand" title="Become a brand" />
         </Menu>
       </Segment>
 
@@ -50,9 +50,9 @@ function MyAccount(props) {
       </Segment>
       <Segment attached="bottom">
         <Menu color={config.color} vertical fluid>
-          <MyAccountItem to="/" title="Update shop information" />
-          <MyAccountItem to="/" title="Upload a piece" />
-          <MyAccountItem to="/" title="View my pieces" />
+          <MyAccountItem to="/my-account/update-shop-information" title="Update shop information" />
+          <MyAccountItem to="/my-account/upload-piece" title="Upload a piece" />
+          <MyAccountItem to="/my-account/view-my-pieces" title="View my pieces" />
         </Menu>
       </Segment>
 
