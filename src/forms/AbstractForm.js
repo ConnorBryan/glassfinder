@@ -6,10 +6,8 @@ import styled from "styled-components";
 import {
   Form,
   Container,
-  Header,
   Segment,
   Button,
-  Icon,
   Message,
   Dropdown
 } from "semantic-ui-react";
@@ -26,7 +24,7 @@ const Fancy = styled.div`
 const FancyButton = props => <Button as={Fancy} {...props} />;
 
 function AbstractForm(props) {
-  const { icon, header, description, fields, onSubmit } = props;
+  const { fields, onSubmit } = props;
 
   const initialValues = fields.reduce(
     (values, field) => ({ ...values, [field.name]: field.value }),

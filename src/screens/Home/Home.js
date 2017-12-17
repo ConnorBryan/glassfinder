@@ -11,16 +11,19 @@ function Home(props) {
     <Container>
       <Card.Group stackable itemsPerRow={3}>
         <HeroCard
+          icon={config.iconSet.shop}
           link="/explore-shops"
           image={config.placeholderImage}
           title="Shops"
         />
         <HeroCard
+          icon={config.iconSet.piece}
           link="/explore-pieces"
           image={config.placeholderImage}
           title="Pieces"
         />
         <HeroCard
+          icon={config.iconSet.brand}
           link="/explore-brands"
           image={config.placeholderImage}
           title="Brands"
