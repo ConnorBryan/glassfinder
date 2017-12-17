@@ -55,7 +55,7 @@ function AbstractForm(props) {
       }) => (
         <Form as={Container}>
           <Segment.Group stacked>
-            {fields.map(field => {
+            {fields.map((field, index) => {
               const inputProps = {
                 ...field,
                 error: !!(touched[field.name] && errors[field.name]),
@@ -85,39 +85,36 @@ function AbstractForm(props) {
               };
 
               return (
-                <Aux key={field.name}>
-                  <Segment attached="bottom" key={field.name}>
-                    {inputTypes[field.type] ? (
-                      inputTypes[field.type]()
-                    ) : (
-                      <Form.Input {...inputProps} />
-                    )}
-                    {touched[field.name] &&
-                    errors[field.name] && (
-                      <Message
-                        icon="warning sign"
-                        header={errors[field.name]}
-                        negative
-                      />
-                    )}
-                  </Segment>
-                </Aux>
+                <Segment attached="bottom" color="blue" key={field.name}>
+                  {inputTypes[field.type] ? (
+                    inputTypes[field.type]()
+                  ) : (
+                    <Form.Input {...inputProps} />
+                  )}
+                  {touched[field.name] &&
+                  errors[field.name] && (
+                    <Message
+                      icon="warning sign"
+                      header={errors[field.name]}
+                      negative
+                    />
+                  )}
+                </Segment>
               );
             })}
-            <Segment attached="bottom">
+            <Segment attached="bottom" color="blue">
               <Button.Group fluid>
                 <FancyButton
                   onClick={handleReset}
                   content="Reset"
                   disabled={isSubmitting}
-                  negative
                 />
                 <Button.Or />
                 <FancyButton
                   onClick={handleSubmit}
                   content="Send"
                   disabled={isSubmitting}
-                  positive
+                  primary
                 />
               </Button.Group>
             </Segment>

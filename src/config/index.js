@@ -1,6 +1,7 @@
 import { usStates } from "./us-states";
 
 export default {
+  usStates,
   appName: "Glassfinder",
   iconSet: {
     shop: "cart",
@@ -8,7 +9,26 @@ export default {
     brand: "building",
     piece: "puzzle"
   },
-  usStates,
+  heroes: [
+    {
+      icon: "cart",
+      link: "/explore-shops",
+      image: "https://placehold.it/400x400",
+      title: "Shops"
+    },
+    {
+      icon: "puzzle",
+      link: "/explore-pieces",
+      image: "https://placehold.it/400x400",
+      title: "Pieces"
+    },
+    {
+      icon: "building",
+      link: "/explore-brands",
+      image: "https://placehold.it/400x400",
+      title: "Brands"
+    }
+  ],
   placeholderImage: "https://placehold.it/400x400",
   navigationItems: [
     {
@@ -80,6 +100,12 @@ export default {
     exploreBrands: {
       icon: "building",
       header: "Explore brands",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
+    },
+    updates: {
+      icon: "newspaper",
+      header: "Updates",
       content:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
     },

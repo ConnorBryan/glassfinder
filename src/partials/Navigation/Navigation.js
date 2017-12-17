@@ -19,7 +19,7 @@ function NavigationItem(props) {
 
 function Navigation(props) {
   return (
-    <Menu attached="top">
+    <Menu attached="top" compact stackable color="blue">
       <NavigationItem
         fancy
         match={props.location.pathname}

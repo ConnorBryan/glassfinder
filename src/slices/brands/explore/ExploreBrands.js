@@ -6,7 +6,7 @@ import withPageHeader from "../../../atomic/withPageHeader";
 
 function BrandCard(props) {
   return (
-    <Card>
+    <Card color="blue">
       <Image src={props.image} />
       <Card.Content>
         <Card.Header as="h3" className="fancy">
@@ -21,12 +21,12 @@ function BrandCard(props) {
       </Card.Content>
       <Card.Content extra>
         <Button className="fancy" fluid>
-          <Icon name="download" /> Download catalog
+          <Icon name="globe" /> Visit this brand
         </Button>
       </Card.Content>
       <Card.Content extra>
-        <Button className="fancy" fluid>
-          <Icon name="globe" /> Visit this brand
+        <Button className="fancy" primary fluid>
+          <Icon name="download" /> Download catalog
         </Button>
       </Card.Content>
     </Card>

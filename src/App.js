@@ -14,16 +14,14 @@ class App extends Component {
 
     return (
       <Container>
-          <Segment>
-            <Navigation />
-            <AccountBar />
-          </Segment>
-          <Segment as={Mid}>
-            {renderRoutes(route.routes)}
-          </Segment>
-          <Segment>
-            <Footer />
-          </Segment>
+        <Segment color="blue">
+          <Navigation />
+          <AccountBar />
+        </Segment>
+        <Segment color="blue">{renderRoutes(route.routes)}</Segment>
+        <Segment color="blue">
+          <Footer />
+        </Segment>
       </Container>
     );
   }

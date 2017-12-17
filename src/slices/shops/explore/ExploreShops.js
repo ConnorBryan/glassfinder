@@ -9,7 +9,7 @@ function Map(props) {
     <Card fluid>
       <Card.Content>Map</Card.Content>
       <Card.Content extra>
-        <Button className="fancy" fluid>
+        <Button className="fancy" primary fluid>
           <Icon name="map pin" /> Find my location
         </Button>
       </Card.Content>
@@ -19,7 +19,7 @@ function Map(props) {
 
 function ShopCard(props) {
   return (
-    <Card>
+    <Card color="blue">
       <Image src={props.image} />
       <Card.Content>
         <Card.Header as="h3" className="fancy">
@@ -43,7 +43,7 @@ function ShopCard(props) {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button className="fancy" fluid>
+        <Button className="fancy" primary fluid>
           <Icon name="send" /> Visit this shop
         </Button>
       </Card.Content>

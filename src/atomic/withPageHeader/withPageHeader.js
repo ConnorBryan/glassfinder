@@ -7,7 +7,7 @@ function withPageHeader(headerConfig, WrappedComponent) {
   return function PageHeaderProvider(props) {
     return (
       <Aux>
-        <Message icon>
+        <Message color="blue" icon>
           <Icon name={headerConfig.icon} />
           <Message.Content>
             <Message.Header className="fancy">

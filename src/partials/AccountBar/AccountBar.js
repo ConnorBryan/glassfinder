@@ -4,7 +4,7 @@ import { Menu, Icon } from "semantic-ui-react";
 
 function AccountBar(props) {
   return (
-    <Menu attached="bottom">
+    <Menu attached="bottom" stackable>
       <Menu.Menu position="right">
         <Menu.Item>
           <em>Signed in as Connor Bryan</em>

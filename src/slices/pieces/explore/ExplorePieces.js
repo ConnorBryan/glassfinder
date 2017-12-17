@@ -30,7 +30,7 @@ function PieceCard(props) {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button className="fancy" fluid>
+        <Button className="fancy" primary fluid>
           <Icon name="download" /> Purchase
         </Button>
       </Card.Content>

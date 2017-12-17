@@ -1,5 +1,14 @@
 import React from "react";
-import { Container, Card, Item, Icon, Segment } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import {
+  Button,
+  Container,
+  Card,
+  Item,
+  Icon,
+  Message,
+  Segment
+} from "semantic-ui-react";
 
 import config from "../../config";
 import withPageHeader from "../../atomic/withPageHeader";
@@ -10,33 +19,29 @@ function Home(props) {
   return (
     <Container>
       <Card.Group stackable itemsPerRow={3}>
-        <HeroCard
-          icon={config.iconSet.shop}
-          link="/explore-shops"
-          image={config.placeholderImage}
-          title="Shops"
-        />
-        <HeroCard
-          icon={config.iconSet.piece}
-          link="/explore-pieces"
-          image={config.placeholderImage}
-          title="Pieces"
-        />
-        <HeroCard
-          icon={config.iconSet.brand}
-          link="/explore-brands"
-          image={config.placeholderImage}
-          title="Brands"
-        />
+        {config.heroes.map(hero => <HeroCard {...hero} />)}
       </Card.Group>
-      <Item.Group as={Segment} divided relaxed="very">
+      <Item.Group as={Segment} divided relaxed="very" attached="top">
         <Item>
           <Item.Header as="h3" className="fancy">
-            <Icon name="newspaper" /> Updates
+            <Icon name="newspaper" /> Latest Updates
           </Item.Header>
         </Item>
         {config.updates.map(update => <Update key={update.key} {...update} />)}
       </Item.Group>
+      <Message attached="bottom">
+        <Button.Group fluid>
+          <Button
+            as={Link}
+            className="fancy"
+            to="/updates"
+            icon="arrow circle right"
+            primary
+          >
+            View all <Icon name="arrow circle right" />
+          </Button>
+        </Button.Group>
+      </Message>
     </Container>
   );
 }
