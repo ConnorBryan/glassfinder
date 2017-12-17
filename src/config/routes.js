@@ -6,6 +6,9 @@ import Contact from "../screens/Contact";
 import ExploreShops from "../screens/ExploreShops";
 import ExplorePieces from "../screens/ExplorePieces";
 import ExploreBrands from "../screens/ExploreBrands";
+import MyAccount from "../screens/MyAccount";
+
+import { Signin, Signup } from "../screens/formscreens";
 
 export default [
   {
@@ -45,6 +48,21 @@ export default [
         path: "/explore-brands",
         exact: true,
         component: ExploreBrands
+      },
+      {
+        path: "/sign-in",
+        exact: true,
+        component: Signin
+      },
+      {
+        path: "/sign-up",
+        exact: true,
+        component: Signup
+      },
+      {
+        path: "/my-account",
+        exact: true,
+        component: MyAccount
       }
     ]
   }
