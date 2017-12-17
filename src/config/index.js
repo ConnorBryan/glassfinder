@@ -33,24 +33,30 @@ export default {
   navigationItems: [
     {
       key: "A",
+      icon: "newspaper",
+      to: "/updates",
+      title: "Updates"
+    },
+    {
+      key: "B",
       icon: "question",
       to: "/help",
       title: "Help"
     },
     {
-      key: "B",
+      key: "C",
       icon: "users",
       to: "/about",
       title: "About"
     },
     {
-      key: "E",
+      key: "D",
       icon: "envelope",
       to: "/contact",
       title: "Contact"
     },
     {
-      key: "C",
+      key: "E",
       icon: "cart",
       to: "/explore-shops",
       title: "Shops"
@@ -62,7 +68,7 @@ export default {
       title: "Pieces"
     },
     {
-      key: "D",
+      key: "G",
       icon: "building",
       to: "/explore-brands",
       title: "Brands"

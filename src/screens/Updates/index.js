@@ -1,3 +1,3 @@
-import About from "./About";
+import Updates from "./Updates";
 
-export default About;
+export default Updates;
