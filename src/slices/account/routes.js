@@ -1,4 +1,3 @@
-import MyAccount from "./MyAccount";
 import {
   Signin,
   Signup,
@@ -10,6 +9,7 @@ import {
   BecomeABrand,
   UpdateBrandInfo
 } from "../../screens/formscreens";
+import MyAccount from "./screens/MyAccount";
 
 export default [
   {

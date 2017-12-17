@@ -15,15 +15,6 @@ import {
 
 import config from "../config";
 
-const Aux = ({ children }) => children;
-
-const i = "!important";
-
-const Fancy = styled.div`
-  text-transform: uppercase ${i};
-  letter-spacing: 0.33rem ${i};
-`;
-
 const FancyButton = props => <Button as={Fancy} {...props} />;
 
 function AbstractForm(props) {
@@ -88,7 +79,11 @@ function AbstractForm(props) {
               };
 
               return (
-                <Segment attached="bottom" color={config.color} key={field.name}>
+                <Segment
+                  attached="bottom"
+                  color={config.color}
+                  key={field.name}
+                >
                   {inputTypes[field.type] ? (
                     inputTypes[field.type]()
                   ) : (
@@ -149,3 +144,12 @@ AbstractForm.defaultProps = {
 };
 
 export default AbstractForm;
+
+/* Styling */
+
+const I = "!important";
+
+const Fancy = styled.div`
+  text-transform: uppercase ${I};
+  letter-spacing: 0.33rem ${I};
+`;

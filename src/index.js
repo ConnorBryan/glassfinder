@@ -8,9 +8,8 @@ import registerServiceWorker from "./registerServiceWorker";
 import routes from "./routes";
 import "./index.css";
 
-ReactDOM.render((
-  <BrowserRouter>
-    {renderRoutes(routes)}
-  </BrowserRouter>
-), document.getElementById("root"));
+ReactDOM.render(
+  <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>,
+  document.getElementById("root")
+);
 registerServiceWorker();

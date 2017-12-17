@@ -1,5 +1,5 @@
 import ExploreShops from "./explore";
-import ShopDetail from "./detail";
+// import ShopDetail from "./detail";
 
 export default [
   {

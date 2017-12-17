@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
-import styled from "styled-components";
 import { Container, Message, Segment } from "semantic-ui-react";
 
 import config from "./config";
@@ -39,7 +38,3 @@ class App extends Component {
 }
 
 export default withRouter(App);
-
-/* Styling */
-const I = "!important";
-const Mid = styled.main`min-height: 50vh ${I};`;

@@ -41,7 +41,10 @@ const props = {
       label: "Web site",
       placeholder: "Where are you based out of?",
       value: "",
-      validation: Yup.string().matches(/[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/, "A brand website must be a valid URL.")
+      validation: Yup.string().matches(
+        /[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/,
+        "A brand website must be a valid URL."
+      )
     }
   ],
   onSubmit: values => {

@@ -21,7 +21,10 @@ function HeroCard(props) {
       </Card.Content>
       <Card.Content extra>
         <Message color={config.color}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam quidem beatae voluptatem eum magni, id asperiores, tenetur voluptate voluptatibus, distinctio quasi illum. Maxime optio impedit voluptas labore nihil animi rerum!
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam quidem
+          beatae voluptatem eum magni, id asperiores, tenetur voluptate
+          voluptatibus, distinctio quasi illum. Maxime optio impedit voluptas
+          labore nihil animi rerum!
         </Message>
       </Card.Content>
     </Card>
