@@ -22,6 +22,7 @@ import ExploreBrands from "../slices/brands/explore";
 // Pieces
 import ExplorePieces from "../slices/pieces/explore";
 import PieceDetail from "../slices/pieces/detail";
+import PurchasePiece from "../slices/pieces/purchase";
 
 export default [
   {
@@ -76,6 +77,11 @@ export default [
         path: "/my-account",
         exact: true,
         component: MyAccount
+      },
+      {
+        path: "/purchase",
+        exact: true,
+        component: PurchasePiece
       },
       {
         path: "/terms-and-conditions",
