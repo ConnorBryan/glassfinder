@@ -1,7 +1,7 @@
 import React from "react";
 
 import config from "../../config";
-import withPageHeader from "../../atomic/withPageHeader";
+import withPageHeader from "../../providers/withPageHeader";
 
 function TermsAndConditions(props) {
   return <div>Terms and Conditions</div>;

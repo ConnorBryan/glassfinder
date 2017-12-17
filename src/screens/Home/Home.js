@@ -11,9 +11,9 @@ import {
 } from "semantic-ui-react";
 
 import config from "../../config";
-import withPageHeader from "../../atomic/withPageHeader";
-import HeroCard from "../../atomic/HeroCard";
-import Update from "../../atomic/Update";
+import Update from "../../components/Update";
+import withPageHeader from "../../providers/withPageHeader";
+import HeroCard from "./components/HeroCard";
 
 function Home(props) {
   return (

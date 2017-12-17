@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Header, Icon, Segment, Menu } from "semantic-ui-react";
 
 import config from "../../../../config";
-import withPageHeader from "../../../../atomic/withPageHeader";
+import withPageHeader from "../../../../providers/withPageHeader";
 
 function MyAccountHeaderItem(props) {
   return (

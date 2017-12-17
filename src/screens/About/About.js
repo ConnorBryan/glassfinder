@@ -2,7 +2,7 @@ import React from "react";
 import { Item, Segment } from "semantic-ui-react";
 
 import config from "../../config";
-import withPageHeader from "../../atomic/withPageHeader";
+import withPageHeader from "../../providers/withPageHeader";
 
 function AboutItem(props) {
   return (

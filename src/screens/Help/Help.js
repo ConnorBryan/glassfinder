@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Accordion, Header, Icon, Segment } from "semantic-ui-react";
 
 import config from "../../config";
-import withPageHeader from "../../atomic/withPageHeader";
+import withPageHeader from "../../providers/withPageHeader";
 
 const Aux = ({ children }) => children;
 

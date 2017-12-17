@@ -1,5 +1,6 @@
 import config from "../../config";
-import withPageHeader from "../../atomic/withPageHeader";
+import withPageHeader from "../../providers/withPageHeader";
+
 import SigninForm from "../../slices/account/forms/Signin";
 import SignupForm from "../../slices/account/forms/Signup";
 import UpdatePasswordForm from "../../slices/account/forms/UpdatePassword";
