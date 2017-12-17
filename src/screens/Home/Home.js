@@ -80,16 +80,7 @@ function Home(props) {
             <Icon name="newspaper" /> Updates
           </Item.Header>
         </Item>
-        {config.updates.map(update => (
-          <Update
-            key={update.key}
-            image={update.image}
-            header={update.header}
-            meta={update.meta}
-            description={update.description}
-            author={update.author}
-          />
-        ))}
+        {config.updates.map(update => <Update key={update.key} {...update} />)}
       </Item.Group>
     </Container>
   );

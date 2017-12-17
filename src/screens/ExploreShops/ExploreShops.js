@@ -60,20 +60,7 @@ function ExploreShops(props) {
       </Segment>
       <Segment attached="bottom">
         <Card.Group stackable itemsPerRow={3}>
-          {config.shops.map(shop => (
-            <ShopCard
-              key={shop.key}
-              image={shop.image}
-              name={shop.name}
-              description={shop.description}
-              phone={shop.phone}
-              email={shop.email}
-              street={shop.street}
-              city={shop.city}
-              state={shop.state}
-              zip={shop.zip}
-            />
-          ))}
+          {config.shops.map(shop => <ShopCard key={shop.key} {...shop} />)}
         </Card.Group>
       </Segment>
     </Segment.Group>

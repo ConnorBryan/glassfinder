@@ -39,15 +39,7 @@ function ExploreBrands(props) {
     <Segment.Group>
       <Segment>
         <Card.Group stackable itemsPerRow={3}>
-          {config.brands.map(brand => (
-            <BrandCard
-              key={brand.key}
-              image={brand.image}
-              name={brand.name}
-              description={brand.description}
-              from={brand.from}
-            />
-          ))}
+          {config.brands.map(brand => <BrandCard key={brand.key} {...brand} />)}
         </Card.Group>
       </Segment>
     </Segment.Group>
