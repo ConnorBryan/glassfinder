@@ -1,7 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Container, List, Segment } from "semantic-ui-react";
+import { Container, List } from "semantic-ui-react";
 
 import config from "../../config";
 

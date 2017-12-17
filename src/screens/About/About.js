@@ -1,15 +1,5 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import {
-  Accordion,
-  Button,
-  Card,
-  Header,
-  Icon,
-  Image,
-  Item,
-  Segment
-} from "semantic-ui-react";
+import React from "react";
+import { Item, Segment } from "semantic-ui-react";
 
 import config from "../../config";
 import withPageHeader from "../../atomic/withPageHeader";
@@ -34,9 +24,7 @@ function AboutItem(props) {
 function About(props) {
   return (
     <Item.Group as={Segment} divided relaxed="very">
-      {config.about.map(about => (
-        <AboutItem key={about.key} {...about} />
-      ))}
+      {config.about.map(about => <AboutItem key={about.key} {...about} />)}
     </Item.Group>
   );
 }

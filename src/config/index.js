@@ -1,6 +1,7 @@
 import { statesArray as usStates } from "./us-states";
 
 export default {
+  appName: "Glassfinder",
   iconSet: {
     shop: "cart",
     artist: "paint brush",
@@ -8,6 +9,32 @@ export default {
   },
   usStates,
   placeholderImage: "https://placehold.it/400x400",
+  navigationItems: [
+    {
+      key: "A",
+      icon: "question",
+      to: "/help",
+      title: "Help"
+    },
+    {
+      key: "B",
+      icon: "users",
+      to: "/about",
+      title: "About"
+    },
+    {
+      key: "C",
+      icon: "cart",
+      to: "/explore-shops",
+      title: "Shops"
+    },
+    {
+      key: "D",
+      icon: "building",
+      to: "/explore-brands",
+      title: "Brands"
+    }
+  ],
   pageHeaders: {
     home: {
       icon: "home",

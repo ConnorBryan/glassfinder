@@ -1,12 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import {
   Accordion,
-  Button,
-  Card,
   Header,
   Icon,
-  Image,
   Segment
 } from "semantic-ui-react";
 
@@ -41,7 +37,7 @@ class Help extends Component {
         <Segment attached="bottom">
           <Accordion styled fluid>
             {config.helpTopics.map((topic, index) => (
-              <Aux>
+              <Aux key={topic.key}>
                 <Accordion.Title
                   active={activeIndex === index}
                   index={index}

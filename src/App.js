@@ -1,35 +1,23 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { renderRoutes } from "react-router-config";
 import styled from "styled-components";
 import { Container, Segment } from "semantic-ui-react";
 
 import Navigation from "./partials/Navigation";
 import Footer from "./partials/Footer";
 
-import Home from "./screens/Home";
-import Help from "./screens/Help";
-import About from "./screens/About";
-
-import UpgradeToShop from "./forms/UpgradeToShop";
-import ExploreShops from "./screens/ExploreShops";
-
-import UpgradeToBrand from "./forms/UpgradeToBrand";
-import ExploreBrands from "./screens/ExploreBrands";
-
 class App extends Component {
   render() {
+    const { route } = this.props;
+
     return (
       <Container>
           <Segment>
             <Navigation />
           </Segment>
           <Segment as={Mid}>
-            <Home />
-            <Help />
-            <About />
-            <UpgradeToShop />
-            <ExploreShops />
-            <UpgradeToBrand />
-            <ExploreBrands />
+            {renderRoutes(route.routes)}
           </Segment>
           <Segment>
             <Footer />
@@ -39,7 +27,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
 
 /* Styling */
 const I = "!important";

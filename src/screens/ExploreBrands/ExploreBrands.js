@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Button, Card, Icon, Image, Segment } from "semantic-ui-react";
 
 import config from "../../config";
@@ -45,7 +44,5 @@ function ExploreBrands(props) {
     </Segment.Group>
   );
 }
-
-ExploreBrands.propTypes = {};
 
 export default withPageHeader(config.pageHeaders.exploreBrands, ExploreBrands);
