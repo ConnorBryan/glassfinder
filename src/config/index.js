@@ -304,18 +304,13 @@ export default {
   footerItems: [
     {
       key: "A",
-      title: "Lorem",
-      href: "https://www.google.com/"
+      title: "Terms & Conditions",
+      to: "/terms-and-conditions"
     },
     {
       key: "B",
-      title: "Lorem",
-      href: "https://www.google.com/"
-    },
-    {
-      key: "C",
-      title: "Lorem",
-      href: "https://www.google.com/"
+      title: "Privacy Policy",
+      to: "/privacy-policy"
     }
   ]
 };

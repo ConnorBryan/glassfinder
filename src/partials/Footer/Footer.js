@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Container, List } from "semantic-ui-react";
 
 import config from "../../config";
@@ -8,7 +9,9 @@ function Footer(props) {
     <Container fluid>
       <List divided horizontal>
         {config.footerItems.map(item => (
-          <List.Item description={item.title} key={item.key} />
+          <List.Item as={Link} to={item.to} key={item.key}>
+            {item.title}
+          </List.Item>
         ))}
       </List>
     </Container>

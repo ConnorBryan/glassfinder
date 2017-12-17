@@ -3,12 +3,24 @@ import Home from "../screens/Home";
 import Help from "../screens/Help";
 import About from "../screens/About";
 import Contact from "../screens/Contact";
-import ExploreShops from "../screens/ExploreShops";
-import ExplorePieces from "../screens/ExplorePieces";
-import ExploreBrands from "../screens/ExploreBrands";
 import MyAccount from "../screens/MyAccount";
 
 import { Signin, Signup } from "../screens/formscreens";
+
+// Shops
+import ExploreShops from "../slices/shops/explore";
+import ShopDetail from "../slices/shops/detail";
+
+// Artists
+import ArtistDetail from "../slices/artists/detail";
+
+// Brands
+import ExploreBrands from "../slices/brands/explore";
+
+// Pieces
+import ExplorePieces from "../slices/pieces/explore";
+import PieceDetail from "../slices/pieces/detail";
+
 
 export default [
   {

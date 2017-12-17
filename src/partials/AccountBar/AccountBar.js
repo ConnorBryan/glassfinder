@@ -18,7 +18,7 @@ function AccountBar(props) {
         <Menu.Item as={Link} to="/my-account">
           <Icon name="settings" /> My account
         </Menu.Item>
-        <Menu.Item as={Link} to="/sign-out">
+        <Menu.Item as={Link} to="/">
           <Icon name="sign out" /> Sign out
         </Menu.Item>
       </Menu.Menu>

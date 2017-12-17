@@ -1,10 +1,10 @@
 import React from "react";
 import { Button, Card, Icon, Image, Segment } from "semantic-ui-react";
 
-import config from "../../config";
-import withPageHeader from "../../atomic/withPageHeader";
+import config from "../../../config";
+import withPageHeader from "../../../atomic/withPageHeader";
 
-function BrandCard(props) {
+function PieceCard(props) {
   return (
     <Card>
       <Image src={props.image} />
@@ -16,33 +16,38 @@ function BrandCard(props) {
       </Card.Content>
       <Card.Content extra>
         <Card.Description>
-          <Icon name="map pin" /> From {props.from}
+          <Icon name="user" /> Made by {props.maker}
+        </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <Card.Description>
+          <Icon name="dollar" /> ${props.price}
+        </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <Card.Description>
+          <Icon name="map pin" /> Located at {props.location}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
         <Button className="fancy" fluid>
-          <Icon name="download" /> Download catalog
-        </Button>
-      </Card.Content>
-      <Card.Content extra>
-        <Button className="fancy" fluid>
-          <Icon name="globe" /> Visit this brand
+          <Icon name="download" /> Purchase
         </Button>
       </Card.Content>
     </Card>
   );
 }
 
-function ExploreBrands(props) {
+function ExplorePieces(props) {
   return (
     <Segment.Group>
       <Segment>
         <Card.Group stackable itemsPerRow={3}>
-          {config.brands.map(brand => <BrandCard key={brand.key} {...brand} />)}
+          {config.pieces.map(piece => <PieceCard key={piece.key} {...piece} />)}
         </Card.Group>
       </Segment>
     </Segment.Group>
   );
 }
 
-export default withPageHeader(config.pageHeaders.exploreBrands, ExploreBrands);
+export default withPageHeader(config.pageHeaders.explorePieces, ExplorePieces);
