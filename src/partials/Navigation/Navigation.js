@@ -26,6 +26,9 @@ function Navigation(props) {
         to="/"
         title={config.appName}
       />
+      {config.socialMedia.map(({ to, icon }) => (
+        <Menu.Item key={icon} as="a" href={to} icon={icon} />
+      ))}
       <Menu.Menu position="right">
         {config.navigationItems.map(item => (
           <NavigationItem

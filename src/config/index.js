@@ -48,6 +48,16 @@ export default {
       title: "Brands"
     }
   ],
+  socialMedia: [
+    {
+      icon: "facebook",
+      to: "https://facebook.com"
+    },
+    {
+      icon: "twitter",
+      to: "https://twitter.com"
+    }
+  ],
   pageHeaders: {
     home: {
       icon: "home",
