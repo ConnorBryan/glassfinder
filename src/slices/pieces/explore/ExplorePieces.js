@@ -36,7 +36,17 @@ function PieceCard(props) {
         </Button>
       </Card.Content>
       <Card.Content extra>
-        <Button className="fancy" primary fluid>
+        <Button as={Link} to="/artist/1" className="fancy" fluid>
+          <Icon name={config.iconSet.artist} /> View artist
+        </Button>
+      </Card.Content>
+      <Card.Content extra>
+        <Button as={Link} to="/shop/1" className="fancy" fluid>
+          <Icon name={config.iconSet.shop} /> View shop
+        </Button>
+      </Card.Content>
+      <Card.Content extra>
+        <Button as={Link} to="/purchase/1" className="fancy" primary fluid>
           <Icon name="download" /> Purchase
         </Button>
       </Card.Content>

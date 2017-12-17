@@ -16,7 +16,7 @@ export default [
     component: PieceDetail
   },
   {
-    path: "/purchase",
+    path: "/purchase/:id?",
     exact: true,
     component: PurchasePiece
   },
