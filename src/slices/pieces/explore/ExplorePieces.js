@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Card, Icon, Image, Segment } from "semantic-ui-react";
 
 import config from "../../../config";
@@ -28,6 +29,11 @@ function PieceCard(props) {
         <Card.Description>
           <Icon name="map pin" /> Located at {props.location}
         </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <Button as={Link} to="/piece/1" className="fancy" fluid>
+          <Icon name="picture" /> View more pics
+        </Button>
       </Card.Content>
       <Card.Content extra>
         <Button className="fancy" primary fluid>

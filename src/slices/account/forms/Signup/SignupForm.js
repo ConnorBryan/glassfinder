@@ -2,7 +2,7 @@ import React from "react";
 import Yup from "yup";
 
 import * as Validators from "../../../../validators";
-import AbstractForm from "../../../../forms/AbstractForm";
+import AbstractForm from "../../../../abstracts/AbstractForm";
 
 const props = {
   icon: "user plus",

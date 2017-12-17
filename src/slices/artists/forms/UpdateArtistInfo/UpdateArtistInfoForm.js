@@ -3,7 +3,7 @@ import Yup from "yup";
 
 import config from "../../../../config";
 import * as Validators from "../../../../validators";
-import AbstractUpdateForm from "../../../../forms/AbstractUpdateForm";
+import AbstractUpdateForm from "../../../../abstracts/AbstractUpdateForm";
 
 const props = {
   icon: config.iconSet.artist,

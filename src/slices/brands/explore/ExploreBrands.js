@@ -20,7 +20,7 @@ function BrandCard(props) {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button className="fancy" fluid>
+        <Button as="a" href="https://www.google.com/" className="fancy" fluid>
           <Icon name="globe" /> Visit this brand
         </Button>
       </Card.Content>

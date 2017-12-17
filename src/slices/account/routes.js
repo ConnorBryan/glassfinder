@@ -8,7 +8,7 @@ import {
   UpdateArtistInfo,
   BecomeABrand,
   UpdateBrandInfo
-} from "../../screens/formscreens";
+} from "../../formscreens";
 import MyAccount from "./screens/MyAccount";
 
 export default [

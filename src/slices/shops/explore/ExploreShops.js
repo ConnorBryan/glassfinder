@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Card, Icon, Image, Segment } from "semantic-ui-react";
 
 import config from "../../../config";
@@ -43,7 +44,7 @@ function ShopCard(props) {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button className="fancy" primary fluid>
+        <Button as={Link} to="/shop/1" className="fancy" primary fluid>
           <Icon name="send" /> Visit this shop
         </Button>
       </Card.Content>

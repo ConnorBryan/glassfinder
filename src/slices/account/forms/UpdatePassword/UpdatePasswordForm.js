@@ -1,7 +1,7 @@
 import React from "react";
 
 import * as Validators from "../../../../validators";
-import AbstractForm from "../../../../forms/AbstractForm";
+import AbstractForm from "../../../../abstracts/AbstractForm";
 
 const props = {
   icon: "lock",
