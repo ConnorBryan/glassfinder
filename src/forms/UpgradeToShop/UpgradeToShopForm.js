@@ -8,7 +8,6 @@ import AbstractForm from "../AbstractForm";
 const props = {
   icon: config.iconSet.shop,
   header: "Upgrade to shop",
-  description: "List your pieces on your shop page and show up on the map.",
   fields: [
     {
       name: "name",

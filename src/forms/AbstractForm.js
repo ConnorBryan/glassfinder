@@ -57,12 +57,6 @@ function AbstractForm(props) {
       }) => (
         <Form as={Container}>
           <Segment.Group stacked>
-            <Segment attached="top">
-              <Header as={Fancy} size="medium">
-                <Icon name={icon} /> {header}
-              </Header>
-              <p>{description}</p>
-            </Segment>
             {fields.map(field => {
               const inputProps = {
                 ...field,
@@ -139,7 +133,6 @@ function AbstractForm(props) {
 AbstractForm.propTypes = {
   icon: PropTypes.string,
   header: PropTypes.string,
-  description: PropTypes.string,
   fields: PropTypes.arrayOf(PropTypes.object),
   validate: PropTypes.func,
   onSubmit: PropTypes.func

@@ -8,7 +8,6 @@ import AbstractUpdateForm from "../AbstractUpdateForm";
 const props = {
   icon: config.iconSet.brand,
   header: "Update brand",
-  description: "Make changes to a brand's basic information.",
   fields: [
     {
       name: "name",

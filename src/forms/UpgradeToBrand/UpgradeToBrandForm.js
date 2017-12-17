@@ -8,7 +8,6 @@ import AbstractForm from "../AbstractForm";
 const props = {
   icon: config.iconSet.brand,
   header: "Upgrade to brand",
-  description: "Upload a catalog of your products for easy access to enthusiasts.",
   fields: [
     {
       name: "name",

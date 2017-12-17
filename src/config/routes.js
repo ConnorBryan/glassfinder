@@ -2,6 +2,7 @@ import App from "../App";
 import Home from "../screens/Home";
 import Help from "../screens/Help";
 import About from "../screens/About";
+import Contact from "../screens/Contact";
 import ExploreShops from "../screens/ExploreShops";
 import ExploreBrands from "../screens/ExploreBrands";
 
@@ -23,6 +24,11 @@ export default [
         path: "/about",
         exact: true,
         component: About
+      },
+      {
+        path: "/contact",
+        exact: true,
+        component: Contact
       },
       {
         path: "/explore-shops",

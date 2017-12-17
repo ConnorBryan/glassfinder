@@ -7,7 +7,6 @@ import AbstractForm from "../AbstractForm";
 const props = {
   icon: "sign in",
   header: "Sign in",
-  description: "Welcome back.",
   fields: [
     {
       name: "email",

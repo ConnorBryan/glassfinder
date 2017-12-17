@@ -7,7 +7,6 @@ import AbstractForm from "../AbstractForm";
 const props = {
   icon: "lock",
   header: "Update password",
-  description: "Good for you for making sure your information stays safe.",
   fields: [
     {
       name: "password",

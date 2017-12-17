@@ -7,8 +7,6 @@ import AbstractForm from "../AbstractForm";
 const props = {
   icon: "user plus",
   header: "Sign up",
-  description:
-    "To fully enjoy all of the benefits of Glassfinder, create your free account today!",
   fields: [
     {
       name: "email",

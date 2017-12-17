@@ -7,8 +7,6 @@ import AbstractForm from "../AbstractForm";
 const props = {
   icon: config.iconSet.artist,
   header: "Upgrade to artist",
-  description:
-    "Upload pieces you're selling and show the world what you have to offer.",
   fields: [
     {
       name: "name",

@@ -8,7 +8,6 @@ import AbstractUpdateForm from "../AbstractUpdateForm";
 const props = {
   icon: config.iconSet.artist,
   header: "Update artist",
-  description: "Make changes to an artist's basic information.",
   fields: [
     {
       name: "name",
