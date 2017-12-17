@@ -4,6 +4,8 @@ import Help from "../screens/Help";
 import About from "../screens/About";
 import Contact from "../screens/Contact";
 import MyAccount from "../screens/MyAccount";
+import TermsAndConditions from "../screens/TermsAndConditions";
+import PrivacyPolicy from "../screens/PrivacyPolicy";
 
 import { Signin, Signup } from "../screens/formscreens";
 
@@ -20,7 +22,6 @@ import ExploreBrands from "../slices/brands/explore";
 // Pieces
 import ExplorePieces from "../slices/pieces/explore";
 import PieceDetail from "../slices/pieces/detail";
-
 
 export default [
   {
@@ -75,6 +76,16 @@ export default [
         path: "/my-account",
         exact: true,
         component: MyAccount
+      },
+      {
+        path: "/terms-and-conditions",
+        exact: true,
+        component: TermsAndConditions
+      },
+      {
+        path: "/privacy-policy",
+        exact: true,
+        component: PrivacyPolicy
       }
     ]
   }
