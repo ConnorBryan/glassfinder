@@ -8,7 +8,7 @@ import config from "../../config";
 
 function HeroCard(props) {
   return (
-    <Card as={Link} color="blue" to={props.link} raised>
+    <Card as={Link} color={config.color} to={props.link} raised>
       <Image src={props.image} />
       <Card.Content>
         <TextAlign align="center">
@@ -20,7 +20,7 @@ function HeroCard(props) {
         </TextAlign>
       </Card.Content>
       <Card.Content extra>
-        <Message color="blue">
+        <Message color={config.color}>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam quidem beatae voluptatem eum magni, id asperiores, tenetur voluptate voluptatibus, distinctio quasi illum. Maxime optio impedit voluptas labore nihil animi rerum!
         </Message>
       </Card.Content>

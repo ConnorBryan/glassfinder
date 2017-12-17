@@ -13,6 +13,8 @@ import {
   Dropdown
 } from "semantic-ui-react";
 
+import config from "../config";
+
 const Aux = ({ children }) => children;
 
 const i = "!important";
@@ -86,7 +88,7 @@ function AbstractForm(props) {
               };
 
               return (
-                <Segment attached="bottom" color="blue" key={field.name}>
+                <Segment attached="bottom" color={config.color} key={field.name}>
                   {inputTypes[field.type] ? (
                     inputTypes[field.type]()
                   ) : (
@@ -103,7 +105,7 @@ function AbstractForm(props) {
                 </Segment>
               );
             })}
-            <Segment attached="bottom" color="blue">
+            <Segment attached="bottom" color={config.color}>
               <Button.Group fluid>
                 <FancyButton
                   icon="refresh"

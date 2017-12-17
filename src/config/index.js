@@ -19,6 +19,7 @@ export default {
     brand: "building",
     piece: "puzzle"
   },
+  color: "green",
   placeholderImage: "https://placehold.it/400x400",
   about,
   brands,

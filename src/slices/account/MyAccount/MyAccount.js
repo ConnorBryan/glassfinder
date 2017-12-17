@@ -25,31 +25,31 @@ function MyAccount(props) {
   return (
     <Segment.Group>
       
-      <Segment attached="top" color="blue">
+      <Segment attached="top" color={config.color}>
         <MyAccountHeaderItem icon="book" title="Basics" />
       </Segment>
       <Segment attached="bottom">
-        <Menu color="blue" vertical fluid>
+        <Menu color={config.color} vertical fluid>
           <MyAccountItem to="/update-password" title="Update password" />
         </Menu>
       </Segment>
 
-      <Segment attached="top" color="blue">
+      <Segment attached="top" color={config.color}>
         <MyAccountHeaderItem icon="chain" title="Link your account" />
       </Segment>
       <Segment attached="bottom">
-        <Menu color="blue" vertical fluid>
+        <Menu color={config.color} vertical fluid>
           <MyAccountItem to="/" title="Become a shop" />
           <MyAccountItem to="/" title="Become an artist" />
           <MyAccountItem to="/" title="Become a brand" />
         </Menu>
       </Segment>
 
-      <Segment attached="top" color="blue">
+      <Segment attached="top" color={config.color}>
         <MyAccountHeaderItem icon="shop" title="Manage your shop" />
       </Segment>
       <Segment attached="bottom">
-        <Menu color="blue" vertical fluid>
+        <Menu color={config.color} vertical fluid>
           <MyAccountItem to="/" title="Update shop information" />
           <MyAccountItem to="/" title="Upload a piece" />
           <MyAccountItem to="/" title="View my pieces" />

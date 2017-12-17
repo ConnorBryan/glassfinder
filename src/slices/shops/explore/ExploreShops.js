@@ -19,7 +19,7 @@ function Map(props) {
 
 function ShopCard(props) {
   return (
-    <Card color="blue">
+    <Card color={config.color}>
       <Image src={props.image} />
       <Card.Content>
         <Card.Header as="h3" className="fancy">
