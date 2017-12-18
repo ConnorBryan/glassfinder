@@ -20,6 +20,7 @@ export default {
     piece: "puzzle"
   },
   color: "blue",
+  warningFlashTimeout: 5000,
   placeholderImage: "https://placehold.it/400x400",
   about,
   brands,

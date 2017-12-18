@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 import { Container, Message, Segment } from "semantic-ui-react";
+import styled from "styled-components";
 
 import config from "./config";
 import { hideWarning } from "./redux/actions";
@@ -23,6 +24,7 @@ class App extends Component {
         </Segment>
         {warning && (
           <Message
+            as={Redlined}
             attached="top"
             onDismiss={hideWarning}
             negative
@@ -31,7 +33,11 @@ class App extends Component {
             content={warning.content}
           />
         )}
-        <Segment attached="bottom" color={config.color}>
+        <Segment
+          as={warning ? Redlined : Segment}
+          attached="bottom"
+          color={config.color}
+        >
           {renderRoutes(route.routes)}
         </Segment>
         <Segment color={config.color}>
@@ -56,3 +62,10 @@ export default connect(
     hideWarning: () => dispatch(hideWarning())
   })
 )(withRouter(App));
+
+// Styling
+
+const Redlined = styled.div`
+  border: 1px solid red !important;
+  box-shadow: none !important;
+`;

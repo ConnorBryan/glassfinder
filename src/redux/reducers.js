@@ -6,6 +6,9 @@ export const createReducer = (initialState, handlers) => (
 ) => (handlers[action.type] ? handlers[action.type](state, action) : state);
 
 export const warning = createReducer(null, {
-  [DISPLAY_WARNING]: (state, { header, content }) => ({ header, content }),
+  [DISPLAY_WARNING]: (state, { payload: { header, content } }) => ({
+    header,
+    content
+  }),
   [HIDE_WARNING]: () => null
 });
