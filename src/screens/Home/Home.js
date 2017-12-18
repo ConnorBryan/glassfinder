@@ -15,19 +15,10 @@ import config from "../../config";
 import Update from "../../components/Update";
 import withPageHeader from "../../providers/withPageHeader";
 import HeroCard from "./components/HeroCard";
-import UploadField from "../../components/UploadField";
 
 function Home(props) {
   return (
     <Container>
-      <Segment>
-        <Form>
-          <UploadField
-            label="Test upload"
-            onUpload={file => console.log(file)}
-          />
-        </Form>
-      </Segment>
       <Card.Group stackable itemsPerRow={3}>
         {config.heroes.map(hero => <HeroCard key={hero.key} {...hero} />)}
       </Card.Group>
