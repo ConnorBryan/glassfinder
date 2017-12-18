@@ -4,7 +4,6 @@ import {
   Button,
   Container,
   Card,
-  Form,
   Item,
   Icon,
   Message,
@@ -28,7 +27,10 @@ function Home(props) {
             <Icon name="newspaper" /> Latest Updates
           </Item.Header>
         </Item>
-        {config.updates.map(update => <Update key={update.key} {...update} />)}
+        {config.updates.map(
+          (update, index) =>
+            index < 4 && <Update key={update.key} {...update} />
+        )}
       </Item.Group>
       <Message attached="bottom">
         <Button.Group fluid>

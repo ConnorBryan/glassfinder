@@ -5,11 +5,14 @@ import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
 
 import registerServiceWorker from "./registerServiceWorker";
+import ScrollToTop from "./components/ScrollToTop";
 import routes from "./routes";
 import "./index.css";
 
 ReactDOM.render(
-  <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>,
+  <BrowserRouter>
+    <ScrollToTop>{renderRoutes(routes)}</ScrollToTop>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 registerServiceWorker();
