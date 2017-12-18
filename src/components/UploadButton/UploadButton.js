@@ -11,7 +11,7 @@ function UploadButton(props) {
   return (
     <span>
       <label htmlFor={id} className="ui icon button fancy fluid primary">
-        <i className="upload icon" /> {label}
+        <i className="upload icon" /> Upload {label}
       </label>
       <input
         type="file"

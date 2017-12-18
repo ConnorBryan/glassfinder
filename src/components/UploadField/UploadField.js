@@ -1,19 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Form, Segment } from "semantic-ui-react";
+import { Form } from "semantic-ui-react";
 
-import config from "../../config";
 import UploadButton from "../UploadButton";
 
 function UploadField(props) {
   const { label, onUpload } = props;
 
   return (
-    <Segment color={config.color}>
-      <Form.Field>
-        <UploadButton label={label} onUpload={onUpload} />
-      </Form.Field>
-    </Segment>
+    <Form.Field>
+      <label>{label}</label>
+      <UploadButton label={label} onUpload={onUpload} />
+    </Form.Field>
   );
 }
 

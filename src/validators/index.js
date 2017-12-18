@@ -27,3 +27,5 @@ export const phone = Yup.string()
 export const description = Yup.string().required(
   "Come on, people want to know what you're all about!"
 );
+
+export const picture = Yup.object().required("An image is required.");

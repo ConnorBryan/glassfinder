@@ -1,6 +1,7 @@
 import React from "react";
 import Yup from "yup";
 
+import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../abstracts/AbstractForm";
 
 const props = {
@@ -14,6 +15,13 @@ const props = {
       placeholder: "Enter name",
       value: "",
       validation: Yup.string().required("A name is required.")
+    },
+    {
+      name: "picture",
+      type: "file",
+      label: "Picture",
+      value: "",
+      validation: Validators.picture
     },
     {
       name: "maker",

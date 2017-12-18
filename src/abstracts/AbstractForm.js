@@ -14,6 +14,7 @@ import {
 } from "semantic-ui-react";
 
 import config from "../config";
+import UploadField from "../components/UploadField";
 
 const FancyButton = props => <Button as={Fancy} {...props} />;
 
@@ -60,6 +61,8 @@ function AbstractForm(props) {
               const handleSelect = (event, { value }) =>
                 setFieldValue(inputProps.name, value);
 
+              const handleUpload = file => setFieldValue(inputProps.name, file);
+
               const inputTypes = {
                 textarea: () => (
                   <Form.Field control="textarea" {...inputProps} />
@@ -75,6 +78,12 @@ function AbstractForm(props) {
                       onChange={handleSelect}
                     />
                   </Form.Field>
+                ),
+                file: () => (
+                  <UploadField
+                    label={inputProps.label}
+                    onUpload={handleUpload}
+                  />
                 )
               };
 
@@ -110,7 +119,6 @@ function AbstractForm(props) {
                 />
                 <Button.Or />
                 <FancyButton
-                  icon="send outline"
                   onClick={handleSubmit}
                   disabled={isSubmitting}
                   primary
