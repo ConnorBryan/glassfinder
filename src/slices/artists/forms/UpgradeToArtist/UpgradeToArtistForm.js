@@ -12,7 +12,7 @@ const props = {
     {
       name: "name",
       type: "text",
-      label: "Artist name",
+      label: "Name",
       placeholder: "What do you prefer to go by?",
       value: "",
       validation: Yup.string().required("An artist name is required.")

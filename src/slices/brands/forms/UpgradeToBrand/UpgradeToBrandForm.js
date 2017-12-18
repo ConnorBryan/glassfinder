@@ -12,7 +12,7 @@ const props = {
     {
       name: "name",
       type: "text",
-      label: "Brand name",
+      label: "Name",
       placeholder: "Enter the name of your brand",
       value: "",
       validation: Yup.string().required("A brand name is required.")
@@ -45,8 +45,8 @@ const props = {
     {
       name: "site",
       type: "text",
-      label: "Web site",
-      placeholder: "Where are you based out of?",
+      label: "Site",
+      placeholder: "Where can we find you on the web?",
       value: "",
       validation: Yup.string().matches(
         /[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/,

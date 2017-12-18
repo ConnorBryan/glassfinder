@@ -12,7 +12,7 @@ const props = {
     {
       name: "name",
       type: "text",
-      label: "Business name",
+      label: "Name",
       placeholder: "Enter the name of your establishment",
       value: "",
       validation: Yup.string().required("A business name is required.")
