@@ -4,10 +4,10 @@ import { Link, withRouter } from "react-router-dom";
 import { Menu, Icon } from "semantic-ui-react";
 import Aux from "react-aux";
 
-import { signout } from "../../slices/account/redux/actions";
+import { attemptSignout } from "../../slices/account/redux/actions";
 
 function AccountBar(props) {
-  const { account, signout } = props;
+  const { account, router, attemptSignout } = props;
 
   return (
     <Menu attached="bottom" stackable>
@@ -20,11 +20,11 @@ function AccountBar(props) {
             <Menu.Item
               as={Link}
               to="/my-account"
-              active={props.location.pathname === "/my-account"}
+              active={router.location.pathname === "/my-account"}
             >
               <Icon name="settings" /> My account
             </Menu.Item>
-            <Menu.Item onClick={signout}>
+            <Menu.Item onClick={attemptSignout}>
               <Icon name="sign out" /> Sign out
             </Menu.Item>
           </Aux>
@@ -33,14 +33,14 @@ function AccountBar(props) {
             <Menu.Item
               as={Link}
               to="/sign-in"
-              active={props.location.pathname === "/sign-in"}
+              active={router.location.pathname === "/sign-in"}
             >
               <Icon name="sign in" /> Sign in
             </Menu.Item>
             <Menu.Item
               as={Link}
               to="/sign-up"
-              active={props.location.pathname === "/sign-up"}
+              active={router.location.pathname === "/sign-up"}
             >
               <Icon name="user plus" /> Sign up
             </Menu.Item>
@@ -53,9 +53,10 @@ function AccountBar(props) {
 
 export default connect(
   state => ({
-    account: state.account
+    account: state.account,
+    router: state.router
   }),
   dispatch => ({
-    signout: () => dispatch(signout())
+    attemptSignout: () => dispatch(attemptSignout())
   })
 )(withRouter(AccountBar));

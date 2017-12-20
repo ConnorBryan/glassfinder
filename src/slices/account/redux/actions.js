@@ -1,3 +1,5 @@
+import { push } from "react-router-redux";
+
 // Actions
 export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 export const SIGNIN_FAILURE = "SIGNIN_FAILURE";
@@ -19,8 +21,14 @@ export const attemptSignin = (username, password) => async dispatch => {
     };
 
     dispatch(signinSuccess(account));
+    dispatch(push("/my-account"));
   } catch (e) {
-    console.error(e);
     dispatch(signinFailure());
+    dispatch(push("/"));
   }
+};
+
+export const attemptSignout = () => dispatch => {
+  dispatch(signout());
+  dispatch(push("/"));
 };

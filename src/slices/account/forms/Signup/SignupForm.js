@@ -1,10 +1,12 @@
 import React from "react";
 import Yup from "yup";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../abstracts/AbstractForm";
 
-const props = {
+const formProps = {
   icon: "user plus",
   header: "Sign up",
   fields: [
@@ -50,6 +52,16 @@ const props = {
   }
 };
 
-export default function SignupForm() {
-  return <AbstractForm {...props} />;
+function SignupForm(props) {
+  const { account } = props;
+
+  return account ? (
+    <Redirect to="/my-account" />
+  ) : (
+    <AbstractForm {...formProps} />
+  );
 }
+
+export default connect(state => ({
+  account: state.account
+}))(SignupForm);

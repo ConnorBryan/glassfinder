@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../abstracts/AbstractForm";
@@ -29,12 +30,21 @@ const formProps = {
 };
 
 function SigninForm(props) {
-  const { attemptSignin } = props;
+  const { account, attemptSignin } = props;
   const onSubmit = ({ email, password }) => attemptSignin(email, password);
 
-  return <AbstractForm onSubmit={onSubmit} {...formProps} />;
+  return account ? (
+    <Redirect to="/my-account" />
+  ) : (
+    <AbstractForm onSubmit={onSubmit} {...formProps} />
+  );
 }
 
-export default connect(null, dispatch => ({
-  attemptSignin: (email, password) => dispatch(attemptSignin(email, password))
-}))(SigninForm);
+export default connect(
+  state => ({
+    account: state.account
+  }),
+  dispatch => ({
+    attemptSignin: (email, password) => dispatch(attemptSignin(email, password))
+  })
+)(SigninForm);

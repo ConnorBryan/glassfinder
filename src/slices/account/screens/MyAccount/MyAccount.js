@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
 import { Header, Icon, Segment, Menu } from "semantic-ui-react";
 
 import config from "../../../../config";
@@ -22,7 +23,9 @@ function MyAccountItem(props) {
 }
 
 function MyAccount(props) {
-  return (
+  const { account } = props;
+
+  return account ? (
     <Segment.Group>
       <Segment attached="top" color={config.color}>
         <MyAccountHeaderItem icon="book" title="Basics" />
@@ -108,7 +111,14 @@ function MyAccount(props) {
         </Menu>
       </Segment>
     </Segment.Group>
+  ) : (
+    <Redirect to="/sign-in" />
   );
 }
 
-export default withPageHeader(config.pageHeaders.myAccount, MyAccount);
+export default connect(
+  state => ({
+    account: state.account
+  }),
+  null
+)(withPageHeader(config.pageHeaders.myAccount, MyAccount));

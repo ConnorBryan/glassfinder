@@ -1,13 +1,11 @@
-import { combineReducers, createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
+import { combineReducers } from "redux";
+import { routerReducer } from "react-router-redux";
 
 import * as accountReducers from "../slices/account/redux/reducers";
 import * as mainReducers from "./reducers";
 
-const reducer = combineReducers(accountReducers, mainReducers);
-
-export default createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunk)
-);
+export default combineReducers({
+  ...accountReducers,
+  ...mainReducers,
+  router: routerReducer
+});
