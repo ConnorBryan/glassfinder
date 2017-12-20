@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
-import { Container, Message, Segment } from "semantic-ui-react";
+import { Container, Message, Segment, Loader } from "semantic-ui-react";
 import styled from "styled-components";
 
 import config from "./config";
@@ -14,7 +14,7 @@ import Footer from "./partials/Footer";
 
 class App extends Component {
   render() {
-    const { route, warning, hideWarning } = this.props;
+    const { route, warning, loading, hideWarning } = this.props;
 
     return (
       <Container>
@@ -38,7 +38,15 @@ class App extends Component {
           attached="bottom"
           color={config.color}
         >
-          {renderRoutes(route.routes)}
+          {loading ? (
+            <TextCenter>
+              <Loader active inline size="large">
+                Loading...
+              </Loader>
+            </TextCenter>
+          ) : (
+            renderRoutes(route.routes)
+          )}
         </Segment>
         <Segment color={config.color}>
           <Footer />
@@ -56,7 +64,8 @@ App.propTypes = {
 
 export default connect(
   state => ({
-    warning: state.warning
+    warning: state.warning,
+    loading: state.loading
   }),
   dispatch => ({
     hideWarning: () => dispatch(hideWarning())
@@ -69,3 +78,5 @@ const Redlined = styled.div`
   border: 1px solid red !important;
   box-shadow: none !important;
 `;
+
+const TextCenter = styled.div`text-align: center;`;

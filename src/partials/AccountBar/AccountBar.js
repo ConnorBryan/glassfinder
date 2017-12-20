@@ -15,7 +15,7 @@ function AccountBar(props) {
         {account ? (
           <Aux>
             <Menu.Item>
-              <em>Signed in as Connor Bryan</em>
+              <em>Signed in as {account.name}.</em>
             </Menu.Item>
             <Menu.Item
               as={Link}

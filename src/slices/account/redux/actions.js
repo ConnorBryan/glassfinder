@@ -17,7 +17,8 @@ export const signout = () => ({ type: SIGNOUT });
 export const attemptSignin = (username, password) => async dispatch => {
   try {
     const account = {
-      email: "cchromium@gmail.com"
+      email: "cchromium@gmail.com",
+      name: "Connor Bryan"
     };
 
     dispatch(signinSuccess(account));
