@@ -1,9 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../abstracts/AbstractForm";
+import { attemptSignin } from "../../../../slices/account/redux/actions";
 
-const props = {
+const formProps = {
   icon: "sign in",
   header: "Sign in",
   fields: [
@@ -23,12 +25,16 @@ const props = {
       value: "",
       validation: Validators.password
     }
-  ],
-  onSubmit: values => {
-    alert(`Signing in with ${JSON.stringify(values, null, 2)}`);
-  }
+  ]
 };
 
-export default function SigninForm() {
-  return <AbstractForm {...props} />;
+function SigninForm(props) {
+  const { attemptSignin } = props;
+  const onSubmit = ({ email, password }) => attemptSignin(email, password);
+
+  return <AbstractForm onSubmit={onSubmit} {...formProps} />;
 }
+
+export default connect(null, dispatch => ({
+  attemptSignin: (email, password) => dispatch(attemptSignin(email, password))
+}))(SigninForm);
