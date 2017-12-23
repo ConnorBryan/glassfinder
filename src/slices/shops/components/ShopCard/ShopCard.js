@@ -7,7 +7,7 @@ import config from "../../../../config";
 
 function ShopCard(props) {
   return (
-    <Card color={config.color}>
+    <Card color={config.color} fluid={props.fluid}>
       <Image src={props.image} />
       <Card.Content>
         <Card.Header as="h3" className="fancy">
@@ -30,17 +30,19 @@ function ShopCard(props) {
           {props.street}, {props.city}, {props.state} {props.zip}
         </Card.Description>
       </Card.Content>
-      <Card.Content extra>
-        <Button
-          as={Link}
-          to={`/shop/${props.id}`}
-          className="fancy"
-          primary
-          fluid
-        >
-          <Icon name="send" /> Visit this shop
-        </Button>
-      </Card.Content>
+      {props.linked && (
+        <Card.Content extra>
+          <Button
+            as={Link}
+            to={`/shop/${props.id}`}
+            className="fancy"
+            primary
+            fluid
+          >
+            <Icon name="send" /> Visit this shop
+          </Button>
+        </Card.Content>
+      )}
     </Card>
   );
 }
@@ -55,7 +57,8 @@ ShopCard.propTypes = {
   street: PropTypes.string,
   city: PropTypes.string,
   state: PropTypes.string,
-  zip: PropTypes.string
+  zip: PropTypes.string,
+  linked: PropTypes.bool
 };
 
 export default ShopCard;
