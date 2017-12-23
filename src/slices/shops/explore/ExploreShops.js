@@ -1,56 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Card, Icon, Image, Segment } from "semantic-ui-react";
+import { Card, Segment } from "semantic-ui-react";
 
 import config from "../../../config";
 import withPageHeader from "../../../providers/withPageHeader";
-
-function Map(props) {
-  return (
-    <Card fluid>
-      <Card.Content>Map</Card.Content>
-      <Card.Content extra>
-        <Button className="fancy" primary fluid>
-          <Icon name="map pin" /> Find my location
-        </Button>
-      </Card.Content>
-    </Card>
-  );
-}
-
-function ShopCard(props) {
-  return (
-    <Card color={config.color}>
-      <Image src={props.image} />
-      <Card.Content>
-        <Card.Header as="h3" className="fancy">
-          {props.name}
-        </Card.Header>
-        <Card.Description>{props.description}</Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <Card.Description>
-          <Icon name="phone" /> {props.phone}
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <Card.Description>
-          <Icon name="envelope" /> {props.email}
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <Card.Description>
-          {props.street}, {props.city}, {props.state} {props.zip}
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <Button as={Link} to="/shop/1" className="fancy" primary fluid>
-          <Icon name="send" /> Visit this shop
-        </Button>
-      </Card.Content>
-    </Card>
-  );
-}
+import Map from "../components/Map";
+import ShopCard from "../components/ShopCard";
 
 function ExploreShops(props) {
   return (
@@ -66,5 +20,7 @@ function ExploreShops(props) {
     </Segment.Group>
   );
 }
+
+ExploreShops.propTypes = {};
 
 export default withPageHeader(config.pageHeaders.exploreShops, ExploreShops);
