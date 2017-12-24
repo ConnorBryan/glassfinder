@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
-import styled from "styled-components";
 
 import config from "../../../config";
 import { NoPadding, Flex } from "../../../styled";

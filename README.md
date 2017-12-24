@@ -28,6 +28,9 @@ _Basic pages that don't contain any gated content_
 * __slices/__
 
 _Grouped directories containing the various aspects of the application_
+* __styled/__
+
+_Reusable styled-components_
 * __validators/__
 
 _Reusable isomorphic validation logic for the simplification of forms_
