@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Button, Card, Icon, Image } from "semantic-ui-react";
+import accounting from "accounting";
 
 import config from "../../config";
 
@@ -22,7 +23,7 @@ function PieceCard(props) {
       </Card.Content>
       <Card.Content extra>
         <Card.Description>
-          <Icon name="dollar" /> ${props.price}
+          <Icon name="dollar" /> {accounting.formatMoney(props.price)}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
