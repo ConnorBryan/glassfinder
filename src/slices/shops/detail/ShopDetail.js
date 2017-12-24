@@ -3,7 +3,7 @@ import { Grid } from "semantic-ui-react";
 
 import config from "../../../config";
 import withPageHeader from "../../../providers/withPageHeader";
-import PieceGrid from "../../../components/PieceGrid";
+import PieceViewer from "../../../components/PieceViewer";
 import ShopCard from "../components/ShopCard";
 
 function ShopDetail(props) {
@@ -14,7 +14,7 @@ function ShopDetail(props) {
           <ShopCard fluid {...config.shops[0]} />
         </Grid.Column>
         <Grid.Column width={10}>
-          <PieceGrid pieces={config.shops[0].pieces} />
+          <PieceViewer pieces={config.shops[0].pieces} />
         </Grid.Column>
       </Grid.Row>
     </Grid>
