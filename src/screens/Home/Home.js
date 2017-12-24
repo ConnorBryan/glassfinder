@@ -1,14 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  Button,
-  Container,
-  Card,
-  Item,
-  Icon,
-  Message,
-  Segment
-} from "semantic-ui-react";
+import { Button, Card, Item, Icon, Message, Segment } from "semantic-ui-react";
+import styled from "styled-components";
 
 import config from "../../config";
 import Update from "../../components/Update";
@@ -17,8 +10,8 @@ import HeroCard from "./components/HeroCard";
 
 function Home(props) {
   return (
-    <Container>
-      <Card.Group stackable itemsPerRow={3}>
+    <Segment>
+      <Card.Group as={GimmeSomeSpace} stackable itemsPerRow={3}>
         {config.heroes.map(hero => <HeroCard key={hero.key} {...hero} />)}
       </Card.Group>
       <Item.Group as={Segment} divided relaxed="very" attached="top">
@@ -39,8 +32,12 @@ function Home(props) {
           </Button>
         </Button.Group>
       </Message>
-    </Container>
+    </Segment>
   );
 }
 
 export default withPageHeader(config.pageHeaders.home, Home);
+
+/* Styling */
+
+const GimmeSomeSpace = styled.div`margin-top: 0.5rem !important;`;
