@@ -10,6 +10,7 @@ import "semantic-ui-css/semantic.min.css";
 
 import reducer from "./redux";
 import registerServiceWorker from "./registerServiceWorker";
+import SidebarDaemon from "./components/SidebarDaemon";
 import ScrollToTop from "./components/ScrollToTop";
 import routes from "./routes";
 import "./index.css";
@@ -25,7 +26,9 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <ScrollToTop>{renderRoutes(routes)}</ScrollToTop>
+      <SidebarDaemon>
+        <ScrollToTop>{renderRoutes(routes)}</ScrollToTop>
+      </SidebarDaemon>
     </ConnectedRouter>
   </Provider>,
   document.getElementById("root")

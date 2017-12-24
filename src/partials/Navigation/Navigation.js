@@ -1,24 +1,16 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { Responsive, Menu, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 
 import config from "../../config";
-
-function NavigationItem(props) {
-  return (
-    <Menu.Item
-      icon={props.icon}
-      as={Link}
-      active={props.match === props.to}
-      to={props.to}
-      content={props.title}
-      className={props.fancy && "fancy"}
-    />
-  );
-}
+import { showSidebar, hideSidebar } from "../../redux/actions";
+import NavigationItem from "../../components/NavigationItem";
 
 function Navigation(props) {
+  const { sidebar, showSidebar, hideSidebar } = props;
+
   return (
     <Menu attached="top" compact color={config.color}>
       <NavigationItem
@@ -35,7 +27,11 @@ function Navigation(props) {
         maxWidth={Responsive.onlyMobile.maxWidth}
         position="right"
       >
-        <Menu.Item as={SemiFancy}>
+        <Menu.Item
+          as={SemiFancy}
+          active={sidebar}
+          onClick={sidebar ? hideSidebar : showSidebar}
+        >
           <Icon name="bars" /> Menu
         </Menu.Item>
       </Responsive>
@@ -56,7 +52,15 @@ function Navigation(props) {
   );
 }
 
-export default withRouter(Navigation);
+export default connect(
+  state => ({
+    sidebar: state.sidebar
+  }),
+  dispatch => ({
+    showSidebar: () => dispatch(showSidebar()),
+    hideSidebar: () => dispatch(hideSidebar())
+  })
+)(withRouter(Navigation));
 
 /* Styling */
 

@@ -2,7 +2,9 @@ import {
   DISPLAY_WARNING,
   HIDE_WARNING,
   START_LOADING,
-  STOP_LOADING
+  STOP_LOADING,
+  SHOW_SIDEBAR,
+  HIDE_SIDEBAR
 } from "./actions";
 
 export const createReducer = (initialState, handlers) => (
@@ -21,4 +23,9 @@ export const warning = createReducer(null, {
 export const loading = createReducer(false, {
   [START_LOADING]: () => true,
   [STOP_LOADING]: () => false
+});
+
+export const sidebar = createReducer(false, {
+  [SHOW_SIDEBAR]: () => true,
+  [HIDE_SIDEBAR]: () => false
 });

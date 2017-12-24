@@ -3,13 +3,20 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
-import { Container, Message, Segment, Loader } from "semantic-ui-react";
+import {
+  Container,
+  Message,
+  Segment,
+  Loader,
+  Sidebar
+} from "semantic-ui-react";
 import styled from "styled-components";
 
 import config from "./config";
 import { hideWarning } from "./redux/actions";
 import Navigation from "./partials/Navigation";
 import AccountBar from "./partials/AccountBar";
+import Slider from "./partials/Slider";
 import Footer from "./partials/Footer";
 
 class App extends Component {
@@ -33,21 +40,24 @@ class App extends Component {
             content={warning.content}
           />
         )}
-        <Segment
-          as={warning ? Redlined : Segment}
-          attached="bottom"
-          color={config.color}
-        >
-          {loading ? (
-            <TextCenter>
-              <Loader active inline size="large">
-                Loading...
-              </Loader>
-            </TextCenter>
-          ) : (
-            renderRoutes(route.routes)
-          )}
-        </Segment>
+        <Slider />
+        <Sidebar.Pusher>
+          <Segment
+            as={warning ? Redlined : Segment}
+            attached="bottom"
+            color={config.color}
+          >
+            {loading ? (
+              <TextCenter>
+                <Loader active inline size="large">
+                  Loading...
+                </Loader>
+              </TextCenter>
+            ) : (
+              renderRoutes(route.routes)
+            )}
+          </Segment>
+        </Sidebar.Pusher>
         <Segment color={config.color}>
           <Footer />
         </Segment>
