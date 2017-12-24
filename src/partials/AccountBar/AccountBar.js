@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import { Menu, Icon } from "semantic-ui-react";
+import { Responsive, Menu, Icon } from "semantic-ui-react";
 import Aux from "react-aux";
 
 import { attemptSignout } from "../../slices/account/redux/actions";
@@ -10,7 +10,11 @@ function AccountBar(props) {
   const { account, router, attemptSignout } = props;
 
   return (
-    <Menu attached="bottom" stackable>
+    <Responsive
+      as={Menu}
+      minWidth={Responsive.onlyMobile.maxWidth}
+      attached="bottom"
+    >
       <Menu.Menu position="right">
         {account ? (
           <Aux>
@@ -47,7 +51,7 @@ function AccountBar(props) {
           </Aux>
         )}
       </Menu.Menu>
-    </Menu>
+    </Responsive>
   );
 }
 

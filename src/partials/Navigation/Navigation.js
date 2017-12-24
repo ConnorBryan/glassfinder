@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Menu } from "semantic-ui-react";
+import { Responsive, Menu, Icon } from "semantic-ui-react";
+import styled from "styled-components";
 
 import config from "../../config";
 
@@ -19,7 +20,7 @@ function NavigationItem(props) {
 
 function Navigation(props) {
   return (
-    <Menu attached="top" compact stackable color={config.color}>
+    <Menu attached="top" compact color={config.color}>
       <NavigationItem
         fancy
         match={props.location.pathname}
@@ -29,7 +30,20 @@ function Navigation(props) {
       {config.socialMedia.map(({ to, icon }) => (
         <Menu.Item key={icon} as="a" href={to} icon={icon} />
       ))}
-      <Menu.Menu position="right">
+      <Responsive
+        as={Menu.Menu}
+        maxWidth={Responsive.onlyMobile.maxWidth}
+        position="right"
+      >
+        <Menu.Item as={SemiFancy}>
+          <Icon name="bars" /> Menu
+        </Menu.Item>
+      </Responsive>
+      <Responsive
+        as={Menu.Menu}
+        minWidth={Responsive.onlyMobile.maxWidth}
+        position="right"
+      >
         {config.navigation.map(item => (
           <NavigationItem
             key={item.key}
@@ -37,9 +51,13 @@ function Navigation(props) {
             {...item}
           />
         ))}
-      </Menu.Menu>
+      </Responsive>
     </Menu>
   );
 }
 
 export default withRouter(Navigation);
+
+/* Styling */
+
+const SemiFancy = styled.div`letter-spacing: 0.1rem;`;
