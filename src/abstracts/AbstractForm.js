@@ -6,7 +6,6 @@ import styled from "styled-components";
 import {
   Icon,
   Form,
-  Container,
   Segment,
   Button,
   Message,
@@ -48,7 +47,7 @@ function AbstractForm(props) {
         handleReset,
         isSubmitting
       }) => (
-        <Form as={Container}>
+        <Form>
           <Segment.Group stacked>
             {fields.map((field, index) => {
               const inputProps = {

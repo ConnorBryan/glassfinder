@@ -17,7 +17,7 @@ function NavigationItem(props) {
 }
 
 NavigationItem.propTypes = {
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   match: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

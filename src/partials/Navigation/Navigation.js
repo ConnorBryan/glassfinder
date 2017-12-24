@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Responsive, Menu, Icon } from "semantic-ui-react";
 import styled from "styled-components";

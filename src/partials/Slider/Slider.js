@@ -9,7 +9,6 @@ import config from "../../config";
 import { hideSidebar } from "../../redux/actions";
 import { attemptSignout } from "../../slices/account/redux/actions";
 import NavigationItem from "../../components/NavigationItem";
-import AccountBar from "../AccountBar";
 
 function Slider(props) {
   const { account, router, attemptSignout, sidebar, hideSidebar } = props;
