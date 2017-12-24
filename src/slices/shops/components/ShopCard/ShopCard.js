@@ -30,6 +30,18 @@ function ShopCard(props) {
           {props.street}, {props.city}, {props.state} {props.zip}
         </Card.Description>
       </Card.Content>
+      {props.mapLinked && (
+        <Card.Content extra>
+          <Button
+            as={Link}
+            to={`/explore-shops/${props.id}`}
+            className="fancy"
+            fluid
+          >
+            <Icon name="map pin" /> View on map
+          </Button>
+        </Card.Content>
+      )}
       {props.linked && (
         <Card.Content extra>
           <Button
@@ -58,7 +70,8 @@ ShopCard.propTypes = {
   city: PropTypes.string,
   state: PropTypes.string,
   zip: PropTypes.string,
-  linked: PropTypes.bool
+  linked: PropTypes.bool,
+  mapLinked: PropTypes.bool
 };
 
 export default ShopCard;

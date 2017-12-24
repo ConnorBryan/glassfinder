@@ -3,7 +3,7 @@ import ShopDetail from "./detail";
 
 export default [
   {
-    path: "/explore-shops",
+    path: "/explore-shops/:id?",
     exact: true,
     component: ExploreShops
   },

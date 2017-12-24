@@ -15,7 +15,7 @@ function ExploreShops(props) {
       <Segment attached="bottom">
         <Card.Group stackable itemsPerRow={3}>
           {config.shops.map(shop => (
-            <ShopCard key={shop.key} linked {...shop} />
+            <ShopCard key={shop.key} mapLinked linked {...shop} />
           ))}
         </Card.Group>
       </Segment>
