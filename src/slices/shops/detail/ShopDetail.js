@@ -3,7 +3,7 @@ import { Grid } from "semantic-ui-react";
 import styled from "styled-components";
 
 import config from "../../../config";
-import { NoPadding } from "../../../styled";
+import { NoPadding, Flex } from "../../../styled";
 import withPageHeader from "../../../providers/withPageHeader";
 import PieceViewer from "../../../components/PieceViewer";
 import ShopCard from "../components/ShopCard";
@@ -38,7 +38,3 @@ function ShopDetail(props) {
 }
 
 export default withPageHeader(config.pageHeaders.shopDetail, ShopDetail);
-
-/* Styling */
-
-const Flex = styled.div`display: flex !important;`;

@@ -8,6 +8,7 @@ import socialMedia from "./social-media.json";
 import states from "./states.json";
 import updates from "./updates.json";
 import shops from "../slices/shops/config.json";
+import artists from "../slices/artists/config.json";
 import brands from "../slices/brands/config.json";
 import pieces from "../slices/pieces/config.json";
 
@@ -23,6 +24,7 @@ export default {
   warningFlashTimeout: 5000,
   placeholderImage: "https://placehold.it/400x400",
   about,
+  artists,
   brands,
   footer,
   helpTopics,
