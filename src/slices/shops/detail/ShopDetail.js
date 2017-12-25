@@ -1,8 +1,9 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
+import styled from "styled-components";
 
 import config from "../../../config";
-import { NoPadding, Flex } from "../../../styled";
+import { NoPadding } from "../../../styled";
 import withPageHeader from "../../../providers/withPageHeader";
 import PieceViewer from "../../../components/PieceViewer";
 import ShopCard from "../components/ShopCard";
@@ -37,3 +38,10 @@ function ShopDetail(props) {
 }
 
 export default withPageHeader(config.pageHeaders.shopDetail, ShopDetail);
+
+/* Styling */
+
+export const Flex = styled(NoPadding)`
+  display: flex !important;
+  border: 1px solid black !important;
+`;

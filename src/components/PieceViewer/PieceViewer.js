@@ -11,7 +11,7 @@ import PieceCard from "../../components/PieceCard";
 function PieceViewerMenu(props) {
   return (
     <Aux>
-      <Menu attached="top">
+      <Menu attached="top" inverted>
         <Menu.Item header className="fancy" onClick={props.reset}>
           <Icon name={config.iconSet.piece} /> Piece Viewer
         </Menu.Item>
@@ -25,6 +25,12 @@ function PieceViewerMenu(props) {
           </em>
         </Responsive>
       </Menu>
+      <Segment attached="bottom">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias
+        doloribus atque, nisi hic at. Assumenda voluptate nisi commodi aliquid
+        incidunt deleniti, quibusdam animi impedit velit, ea, cupiditate aperiam
+        itaque nemo.
+      </Segment>
       <Responsive
         as={Menu}
         attached="bottom"
