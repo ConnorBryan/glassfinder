@@ -14,6 +14,11 @@ module.exports = {
     },
     async (req, email, password, done) => {
       try {
+        const emailExists = await checkForExistingEmail(email);
+
+        if (emailExists)
+          return done(new Error(`A user already exists with email ${email}`));
+
         const newUser = await User.create({
           email: email.trim(),
           password: password.trim(),
@@ -54,3 +59,9 @@ module.exports = {
     }
   )
 };
+
+/* === */
+
+async function checkForExistingEmail(email) {
+  return !!await User.findOne({ where: { email } });
+}

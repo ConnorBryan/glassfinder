@@ -2,14 +2,17 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { hideSidebar } from "../../redux/actions";
+import { hideSidebar, hideWarning } from "../../redux/actions";
 
 class SidebarDaemon extends Component {
   componentDidUpdate(prevProps) {
-    const { hideSidebar, router, sidebar } = this.props;
+    const { hideSidebar, router, sidebar, warning } = this.props;
 
-    if (sidebar && router.location !== prevProps.router.location) {
-      hideSidebar();
+    const isNewLocation = router.location !== prevProps.router.location;
+
+    if (isNewLocation) {
+      sidebar && hideSidebar();
+      warning && hideWarning();
     }
   }
 
@@ -23,8 +26,13 @@ SidebarDaemon.propTypes = {
 };
 
 export default connect(
-  state => ({ router: state.router, sidebar: state.sidebar }),
+  state => ({
+    router: state.router,
+    sidebar: state.sidebar,
+    warning: state.warning
+  }),
   dispatch => ({
-    hideSidebar: () => dispatch(hideSidebar())
+    hideSidebar: () => dispatch(hideSidebar()),
+    hideWarning: () => dispatch(hideWarning())
   })
 )(SidebarDaemon);

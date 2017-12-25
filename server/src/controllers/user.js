@@ -6,7 +6,7 @@ const { User } = require("../models");
 module.exports = {
   signup: async (req, res, next) => {
     return passport.authenticate("local-signup", err => {
-      if (err) return res.json({ success: false, error: err });
+      if (err) return res.json({ success: false, error: err.toString() });
 
       return res.status(200).json({
         success: true,

@@ -22,22 +22,29 @@ export const signout = () => ({ type: SIGNOUT });
 
 // Action Handlers
 export const attemptSignup = (email, password) => async dispatch => {
-  const potentialWarning = displayWarning({
-    header: "Unable to sign up",
-    content: "There was an error while communicating with the server."
-  });
-
   try {
     const {
-      data: wasSuccessful
+      data: { success, error }
     } = await axios.post("http://localhost:6166/signup", {
       email,
       password
     });
 
-    wasSuccessful ? dispatch(push("/")) : dispatch(potentialWarning);
+    success
+      ? dispatch(push("/"))
+      : dispatch(
+          displayWarning({
+            header: "Unable to sign up",
+            content: error
+          })
+        );
   } catch (e) {
-    dispatch(potentialWarning);
+    dispatch(
+      displayWarning({
+        header: "Unable to sign up",
+        content: "There was an issue communicating with the server."
+      })
+    );
   }
 };
 
