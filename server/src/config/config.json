@@ -1,10 +1,13 @@
 {
-  "development": {
-    "username": "development",
-    "password": "1Qazmlp01!",
-    "database": "development",
-    "host": "165.227.183.212",
-    "port": 5432,
-    "dialect": "postgres"
+  "JWT_SECRET": "boobslol",
+  "DATABASE": {
+    "development": {
+      "username": "development",
+      "password": "1Qazmlp01!",
+      "database": "development",
+      "host": "165.227.183.212",
+      "port": 5432,
+      "dialect": "postgres"
+    }
   }
 }

@@ -1,13 +1,25 @@
 const express = require("express");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
+const passport = require("passport");
 const jwt = require("jsonwebtoken");
+
+const {
+  localSignupStrategy,
+  localLoginStrategy
+} = require("./src/config/passport");
+const authCheckMiddleware = require("./src/middlewares/auth-check");
 
 const app = express();
 
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize());
+
+passport.use("local-signup", localSignupStrategy);
+passport.use("local-login", localLoginStrategy);
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -17,6 +29,8 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
   next();
 });
+
+app.use("/api", authCheckMiddleware);
 
 require("./src/routes")(app);
 
