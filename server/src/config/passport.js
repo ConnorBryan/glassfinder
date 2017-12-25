@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
 const LocalStrategy = require("passport-local").Strategy;
 
@@ -80,7 +80,7 @@ async function createSafePassword(password) {
     return bcrypt.genSalt(config.SALT_ROUNDS, (err, salt) => {
       if (err) return reject(err);
 
-      return bcrypt.hash(password, salt, (err, hash) => {
+      return bcrypt.hash(password, salt, null, (err, hash) => {
         return err ? reject(err) : resolve(hash);
       });
     });
