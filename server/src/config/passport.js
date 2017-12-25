@@ -49,6 +49,14 @@ module.exports = {
         if (!existingUser)
           return done(new Error("Incorrect email or password"));
 
+        const passwordsMatch = await confirmPassword(
+          password,
+          existingUser.password
+        );
+
+        if (!passwordsMatch)
+          return done(new Error("Incorrect email or password"));
+
         const payload = { sub: existingUser.id };
         const token = jwt.sign(payload, config.JWT_SECRET);
         const data = { email: existingUser.email };

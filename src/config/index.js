@@ -21,6 +21,7 @@ export default {
     piece: "puzzle"
   },
   color: "blue",
+  localApi: "http://localhost:6166",
   warningFlashTimeout: 5000,
   placeholderImage: "https://placehold.it/400x400",
   about,

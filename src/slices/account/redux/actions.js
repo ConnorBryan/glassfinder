@@ -1,6 +1,7 @@
 import { push } from "react-router-redux";
 import axios from "axios";
 
+import config from "../../../config";
 import { displayWarning } from "../../../redux/actions";
 
 // Actions
@@ -25,7 +26,7 @@ export const attemptSignup = (email, password) => async dispatch => {
   try {
     const {
       data: { success, error }
-    } = await axios.post("http://localhost:6166/signup", {
+    } = await axios.post(`${config.localApi}/signup`, {
       email,
       password
     });
@@ -50,13 +51,26 @@ export const attemptSignup = (email, password) => async dispatch => {
 
 export const attemptSignin = (email, password) => async dispatch => {
   try {
-    const account = {
-      email: "cchromium@gmail.com",
-      name: "Connor Bryan"
-    };
+    const {
+      data: { success, error, data: account }
+    } = await axios.post(`${config.localApi}/signin`, {
+      email,
+      password
+    });
 
-    dispatch(signinSuccess(account));
-    dispatch(push("/my-account"));
+    if (success) {
+      dispatch(signinSuccess(account));
+      dispatch(push("/my-account"));
+    } else {
+      dispatch(signinFailure());
+      dispatch(
+        displayWarning({
+          header: "Unable to sign up",
+          content: error
+        })
+      );
+      dispatch(push("/"));
+    }
   } catch (e) {
     dispatch(signinFailure());
     dispatch(push("/"));
