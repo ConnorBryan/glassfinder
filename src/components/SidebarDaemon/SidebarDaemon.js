@@ -6,9 +6,9 @@ import { hideSidebar } from "../../redux/actions";
 
 class SidebarDaemon extends Component {
   componentDidUpdate(prevProps) {
-    const { hideSidebar, router } = this.props;
+    const { hideSidebar, router, sidebar } = this.props;
 
-    if (router.location !== prevProps.location) {
+    if (sidebar && router.location !== prevProps.router.location) {
       hideSidebar();
     }
   }
@@ -23,7 +23,7 @@ SidebarDaemon.propTypes = {
 };
 
 export default connect(
-  state => ({ router: state.router }),
+  state => ({ router: state.router, sidebar: state.sidebar }),
   dispatch => ({
     hideSidebar: () => dispatch(hideSidebar())
   })

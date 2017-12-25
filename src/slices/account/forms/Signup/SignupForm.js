@@ -1,10 +1,12 @@
 import React from "react";
 import Yup from "yup";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../abstracts/AbstractForm";
+import { attemptSignup } from "../../redux/actions";
 
 const formProps = {
   icon: "user plus",
@@ -46,22 +48,28 @@ const formProps = {
       value: "",
       validation: Validators.passwordAgain
     }
-  ],
-  onSubmit: values => {
-    alert(`Signing up with ${JSON.stringify(values, null, 2)}`);
-  }
+  ]
 };
 
 function SignupForm(props) {
-  const { account } = props;
+  const { account, history, attemptSignup } = props;
+  const onSubmit = ({ email, password }) => {
+    attemptSignup(email, password);
+    history.push("/");
+  };
 
   return account ? (
     <Redirect to="/my-account" />
   ) : (
-    <AbstractForm {...formProps} />
+    <AbstractForm onSubmit={onSubmit} {...formProps} />
   );
 }
 
-export default connect(state => ({
-  account: state.account
-}))(SignupForm);
+export default connect(
+  state => ({
+    account: state.account
+  }),
+  dispatch => ({
+    attemptSignup: (email, password) => dispatch(attemptSignup(email, password))
+  })
+)(withRouter(SignupForm));
