@@ -2,7 +2,7 @@ import React from "react";
 import { Item, Icon, Segment } from "semantic-ui-react";
 
 import config from "../../config";
-import withPageHeader from "../../providers/withPageHeader";
+import withPageHeader from "../../components/withPageHeader";
 import Update from "../../components/Update";
 
 function Updates(props) {

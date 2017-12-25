@@ -1,7 +1,7 @@
 import React from "react";
 
 import config from "../../../../config";
-import withPageHeader from "../../../../providers/withPageHeader";
+import withPageHeader from "../../../../components/withPageHeader";
 
 function ViewMyPieces(props) {
   return <div>ViewMyPieces</div>;

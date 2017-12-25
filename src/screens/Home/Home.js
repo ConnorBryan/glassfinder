@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import config from "../../config";
 import Update from "../../components/Update";
-import withPageHeader from "../../providers/withPageHeader";
+import withPageHeader from "../../components/withPageHeader";
 import HeroCard from "./components/HeroCard";
 
 function Home(props) {

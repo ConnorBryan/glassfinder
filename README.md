@@ -16,9 +16,6 @@ _Wrappers for pure forms that provide a page header and other content_
 * __partials/__
 
 _Pieces of the overall layout that complement injected screens_
-* __providers/__
-
-_Higher-order-Components that provide functionality to screens and slices_
 * __routes/__
 
 _The routing system for `react-router-dom`_

@@ -3,7 +3,7 @@ import { Accordion, Header, Icon, Segment } from "semantic-ui-react";
 import Aux from "react-aux";
 
 import config from "../../config";
-import withPageHeader from "../../providers/withPageHeader";
+import withPageHeader from "../../components/withPageHeader";
 
 class Help extends Component {
   static propTypes = {};

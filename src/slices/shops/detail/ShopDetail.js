@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import config from "../../../config";
 import { NoPadding } from "../../../styled";
-import withPageHeader from "../../../providers/withPageHeader";
+import withPageHeader from "../../../components/withPageHeader";
 import PieceViewer from "../../../components/PieceViewer";
 import ShopCard from "../components/ShopCard";
 

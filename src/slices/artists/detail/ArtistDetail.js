@@ -3,7 +3,7 @@ import { Grid } from "semantic-ui-react";
 
 import config from "../../../config";
 import { NoPadding, Flex } from "../../../styled";
-import withPageHeader from "../../../providers/withPageHeader";
+import withPageHeader from "../../../components/withPageHeader";
 import PieceViewer from "../../../components/PieceViewer";
 import ArtistCard from "../components/ArtistCard";
 

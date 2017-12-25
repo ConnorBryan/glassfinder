@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Segment } from "semantic-ui-react";
 
 import config from "../../../config";
-import withPageHeader from "../../../providers/withPageHeader";
+import withPageHeader from "../../../components/withPageHeader";
 import PieceCard from "../../../components/PieceCard";
 
 function ExplorePieces(props) {

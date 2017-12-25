@@ -1,5 +1,5 @@
 import config from "../config";
-import withPageHeader from "../providers/withPageHeader";
+import withPageHeader from "../components/withPageHeader";
 
 // Account
 import SigninForm from "../slices/account/forms/Signin";
