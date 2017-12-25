@@ -9,5 +9,6 @@
       "port": 5432,
       "dialect": "postgres"
     }
-  }
+  },
+  "SALT_ROUNDS": 12
 }

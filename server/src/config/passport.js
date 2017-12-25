@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const LocalStrategy = require("passport-local").Strategy;
 
@@ -21,7 +22,7 @@ module.exports = {
 
         const newUser = await User.create({
           email: email.trim(),
-          password: password.trim(),
+          password: await createSafePassword(password),
           verified: false,
           verificationCode: null,
           linked: false,
@@ -64,4 +65,24 @@ module.exports = {
 
 async function checkForExistingEmail(email) {
   return !!await User.findOne({ where: { email } });
+}
+
+async function createSafePassword(password) {
+  return new Promise((resolve, reject) => {
+    return bcrypt.genSalt(config.SALT_ROUNDS, (err, salt) => {
+      if (err) return reject(err);
+
+      return bcrypt.hash(password, salt, (err, hash) => {
+        return err ? reject(err) : resolve(hash);
+      });
+    });
+  });
+}
+
+async function confirmPassword(incomingPassword, correctPassword) {
+  return new Promise((resolve, reject) => {
+    return bcrypt.compare(incomingPassword, correctPassword, (err, result) => {
+      return err ? reject(err) : resolve(result);
+    });
+  });
 }
