@@ -2,7 +2,11 @@ import { push } from "react-router-redux";
 import axios from "axios";
 
 import config from "../../../config";
-import { displayWarning } from "../../../redux/actions";
+import {
+  displayWarning,
+  startLoading,
+  stopLoading
+} from "../../../redux/actions";
 
 // Actions
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
@@ -10,6 +14,7 @@ export const SIGNUP_FAILURE = "SIGNUP_FAILURE";
 export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 export const SIGNIN_FAILURE = "SIGNIN_FAILURE";
 export const SIGNOUT = "SIGNOUT";
+export const SET_TOKEN = "SET_TOKEN";
 
 // Action Creators
 export const signupSuccess = () => ({ type: SIGNUP_SUCCESS });
@@ -20,16 +25,22 @@ export const signinSuccess = account => ({
 });
 export const signinFailure = () => ({ type: SIGNIN_FAILURE });
 export const signout = () => ({ type: SIGNOUT });
+export const setToken = token => ({ type: SET_TOKEN, payload: { token } });
+export const clearToken = () => setToken(null);
 
 // Action Handlers
 export const attemptSignup = (email, password) => async dispatch => {
   try {
+    dispatch(startLoading());
+
     const {
       data: { success, error }
     } = await axios.post(`${config.localApi}/signup`, {
       email,
       password
     });
+
+    dispatch(stopLoading());
 
     success
       ? dispatch(push("/"))
@@ -40,6 +51,8 @@ export const attemptSignup = (email, password) => async dispatch => {
           })
         );
   } catch (e) {
+    dispatch(stopLoading());
+
     dispatch(
       displayWarning({
         header: "Unable to sign up",
@@ -51,15 +64,20 @@ export const attemptSignup = (email, password) => async dispatch => {
 
 export const attemptSignin = (email, password) => async dispatch => {
   try {
+    dispatch(startLoading());
+
     const {
-      data: { success, error, data: account }
+      data: { success, error, token, data: account }
     } = await axios.post(`${config.localApi}/signin`, {
       email,
       password
     });
 
+    dispatch(stopLoading());
+
     if (success) {
       dispatch(signinSuccess(account));
+      dispatch(setToken(token));
       dispatch(push("/my-account"));
     } else {
       dispatch(signinFailure());
@@ -72,6 +90,7 @@ export const attemptSignin = (email, password) => async dispatch => {
       dispatch(push("/"));
     }
   } catch (e) {
+    dispatch(stopLoading());
     dispatch(signinFailure());
     dispatch(push("/"));
   }
@@ -79,5 +98,6 @@ export const attemptSignin = (email, password) => async dispatch => {
 
 export const attemptSignout = () => dispatch => {
   dispatch(signout());
+  dispatch(clearToken());
   dispatch(push("/"));
 };
