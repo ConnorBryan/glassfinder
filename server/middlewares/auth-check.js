@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const config = require("../config/config.json");
+const constants = require("../config/constants.json");
 const { User } = require("../models");
 
 module.exports = (req, res, next) => {
@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
 
   const token = req.headers.authorization;
 
-  return jwt.verify(token, config.JWT_SECRET, async (err, decoded) => {
+  return jwt.verify(token, constants.JWT_SECRET, async (err, decoded) => {
     try {
       if (err) return res.status(401).end();
 

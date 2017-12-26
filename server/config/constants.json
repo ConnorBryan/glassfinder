@@ -1,0 +1,4 @@
+{
+  "JWT_SECRET": "boobslol",
+  "SALT_ROUNDS": 12
+}

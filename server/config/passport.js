@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
 const LocalStrategy = require("passport-local").Strategy;
 
-const config = require("../config/config.json");
+const constants = require("../config/constants.json");
 const { User } = require("../models");
 
 module.exports = {
@@ -58,7 +58,7 @@ module.exports = {
           return done(new Error("Incorrect email or password"));
 
         const payload = { sub: existingUser.id };
-        const token = jwt.sign(payload, config.JWT_SECRET);
+        const token = jwt.sign(payload, constants.JWT_SECRET);
         const data = { email: existingUser.email };
 
         return done(null, token, data);
@@ -66,7 +66,8 @@ module.exports = {
         return done(e);
       }
     }
-  )
+  ),
+  createSafePassword
 };
 
 /* === */
@@ -77,7 +78,7 @@ async function checkForExistingEmail(email) {
 
 async function createSafePassword(password) {
   return new Promise((resolve, reject) => {
-    return bcrypt.genSalt(config.SALT_ROUNDS, (err, salt) => {
+    return bcrypt.genSalt(constants.SALT_ROUNDS, (err, salt) => {
       if (err) return reject(err);
 
       return bcrypt.hash(password, salt, null, (err, hash) => {

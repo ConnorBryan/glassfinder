@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken");
 const {
   localSignupStrategy,
   localLoginStrategy
-} = require("./src/config/passport");
-const authCheckMiddleware = require("./src/middlewares/auth-check");
+} = require("./config/passport");
+const authCheckMiddleware = require("./middlewares/auth-check");
 
 const app = express();
 
@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 
 app.use("/api", authCheckMiddleware);
 
-require("./src/routes")(app);
+require("./routes")(app);
 
 app.get("*", (req, res) =>
   res.status(200).send({
