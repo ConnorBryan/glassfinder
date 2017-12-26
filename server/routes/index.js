@@ -1,9 +1,22 @@
-const { user: UserController } = require("../controllers");
-const { User } = require("../models");
-const authCheckMiddleware = require("../middlewares/auth-check");
+const {
+  user: UserController,
+  shop: ShopController,
+  artist: ArtistController,
+  brand: BrandController,
+  piece: PieceController
+} = require("../controllers");
 
 module.exports = app => {
   app.post("/signup", UserController.signup);
   app.post("/signin", UserController.signin);
-  app.get("/api/test", (req, res) => res.json({ success: true }));
+
+  app.get("/users", UserController.read);
+
+  app.get("/shops", ShopController.read);
+
+  app.get("/artists", ArtistController.read);
+
+  app.get("/brands", BrandController.read);
+
+  app.get("/pieces", PieceController.read);
 };

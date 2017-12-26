@@ -1,4 +1,3 @@
-const router = require("express").Router;
 const passport = require("passport");
 
 const { User } = require("../models");
@@ -25,5 +24,22 @@ module.exports = {
         data
       });
     })(req, res, next);
+  },
+  read: async (req, res) => {
+    try {
+      const users = await User.all();
+
+      res.json({
+        success: true,
+        users
+      });
+    } catch (e) {
+      console.error(e);
+
+      res.json({
+        success: false,
+        error: e.toString()
+      });
+    }
   }
 };

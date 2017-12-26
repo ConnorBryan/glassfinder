@@ -22,7 +22,7 @@ module.exports = async function({ User, Shop, Artist, Brand, Piece }) {
       email: chance.email(),
       password: await createSafePassword(constants.DEFAULT_PASSWORD),
       verified: false,
-      verificationCode: null,
+      verificationCode: chance.string({ length: 64 }),
       linked: false,
       type: null,
       createdAt: new Date(),
