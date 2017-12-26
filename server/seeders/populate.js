@@ -4,7 +4,7 @@ const _ = require("lodash");
 
 const constants = require("../config/constants.json");
 
-module.exports = async function({ User, Shop, Artist, Brand }) {
+module.exports = async function({ User, Shop, Artist, Brand, Piece }) {
   /*
     Generate each type of user:
       * Unverified users.        [user@user.com / 111111]
@@ -13,7 +13,7 @@ module.exports = async function({ User, Shop, Artist, Brand }) {
       * Users linked as artist.  [artist@artist.com / 111111]
       * Users linked as brand.   [brand@brand.com / 111111]
 
-    For each user, generate pieces.
+    For each linked user, generate pieces.
   */
 
   // Unverified.
@@ -78,7 +78,17 @@ module.exports = async function({ User, Shop, Artist, Brand }) {
       Shop
     );
 
-    // Add pieces.
+    _.times(constants.PIECE_COUNT, async () => {
+      await Piece.create({
+        name: chance.word(),
+        image: constants.PLACEHOLDER_IMAGE,
+        description: chance.paragraph(),
+        maker: shop.name,
+        price: chance.floating({ min: 5, max: 5000, fixed: 2 }),
+        location: `${chance.city()}, ${chance.state()}`,
+        userId: user.id
+      });
+    });
   });
 
   // Artists
@@ -105,7 +115,17 @@ module.exports = async function({ User, Shop, Artist, Brand }) {
       Artist
     );
 
-    // Add pieces.
+    _.times(constants.PIECE_COUNT, async () => {
+      await Piece.create({
+        name: chance.word(),
+        image: constants.PLACEHOLDER_IMAGE,
+        description: chance.paragraph(),
+        maker: artist.name,
+        price: chance.floating({ min: 5, max: 5000, fixed: 2 }),
+        location: `${chance.city()}, ${chance.state()}`,
+        userId: user.id
+      });
+    });
   });
 
   // Brands
