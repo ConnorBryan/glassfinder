@@ -15,14 +15,20 @@ module.exports = (sequelize, DataTypes) => {
     if (!constants.LINK_TYPES[type])
       throw Error(`Type ${type} is an invalid link type.`);
 
+    let associate = () => {};
+
     switch (type) {
       case constants.LINK_TYPES.SHOP:
-        const associate = associateShop.bind(this);
-
-        return await associate(config, model);
+        associate = associateShop.bind(this);
+        break;
+      case constants.LINK_TYPES.ARTIST:
+        associate = associateArtist.bind(this);
+        break;
       default:
         break;
     }
+
+    return await associate(config, model);
   };
 
   return User;
@@ -39,6 +45,24 @@ async function associateShop(config, Shop) {
     await this.save();
 
     return shop;
+  } catch (e) {
+    console.error(e);
+
+    return false;
+  }
+}
+
+async function associateArtist(config, Artist) {
+  try {
+    const artist = await Artist.create(
+      Object.assign(config, { userId: this.id })
+    );
+    this.linked = true;
+    this.type = constants.LINK_TYPES.ARTIST;
+
+    await this.save();
+
+    return artist;
   } catch (e) {
     console.error(e);
 

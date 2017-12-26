@@ -7,7 +7,7 @@ const constants = require("../config/constants.json");
 const TOTAL_TIMES = 10;
 const DEFAULT_PASSWORD = "111111";
 
-module.exports = async function({ User, Shop }) {
+module.exports = async function({ User, Shop, Artist }) {
   /*
     Generate each type of user:
       * Unverified users.        [user@user.com / 111111]
@@ -85,6 +85,31 @@ module.exports = async function({ User, Shop }) {
   });
 
   // Artists
+  _.times(TOTAL_TIMES, async () => {
+    const user = await User.create({
+      email: chance.email(),
+      password: await createSafePassword(DEFAULT_PASSWORD),
+      verified: true,
+      verificationCode: null,
+      linked: false,
+      type: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    const artist = await user.linkAs(
+      constants.LINK_TYPES.ARTIST,
+      {
+        name: chance.name(),
+        image: constants.PLACEHOLDER_IMAGE,
+        description: chance.paragraph(),
+        from: `${chance.city()}, ${chance.state()}`
+      },
+      Artist
+    );
+
+    // Add pieces.
+  });
 
   // Brands
 };
