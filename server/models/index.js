@@ -6,6 +6,7 @@ const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
+const populate = require("../seeders/populate");
 const db = {};
 
 const sequelize = new Sequelize(
@@ -35,6 +36,9 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-sequelize.sync({ force: true });
+(async () => {
+  await sequelize.sync({ force: true });
+  await populate(db);
+})();
 
 module.exports = db;

@@ -1,4 +1,10 @@
 {
   "JWT_SECRET": "boobslol",
-  "SALT_ROUNDS": 12
+  "SALT_ROUNDS": 12,
+  "LINK_TYPES": {
+    "SHOP": "SHOP",
+    "ARTIST": "ARTIST",
+    "BRAND": "BRAND"
+  },
+  "PLACEHOLDER_IMAGE": "https://placehold.it/400x400"
 }
