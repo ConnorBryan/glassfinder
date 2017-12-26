@@ -4,10 +4,7 @@ const _ = require("lodash");
 
 const constants = require("../config/constants.json");
 
-const TOTAL_TIMES = 10;
-const DEFAULT_PASSWORD = "111111";
-
-module.exports = async function({ User, Shop, Artist }) {
+module.exports = async function({ User, Shop, Artist, Brand }) {
   /*
     Generate each type of user:
       * Unverified users.        [user@user.com / 111111]
@@ -20,10 +17,10 @@ module.exports = async function({ User, Shop, Artist }) {
   */
 
   // Unverified.
-  _.times(TOTAL_TIMES, async () => {
+  _.times(constants.POPULATION_COUNT, async () => {
     const user = await User.create({
       email: chance.email(),
-      password: await createSafePassword(DEFAULT_PASSWORD),
+      password: await createSafePassword(constants.DEFAULT_PASSWORD),
       verified: false,
       verificationCode: null,
       linked: false,
@@ -34,10 +31,10 @@ module.exports = async function({ User, Shop, Artist }) {
   });
 
   // Verified.
-  _.times(TOTAL_TIMES, async () => {
+  _.times(constants.POPULATION_COUNT, async () => {
     const user = await User.create({
       email: chance.email(),
-      password: await createSafePassword(DEFAULT_PASSWORD),
+      password: await createSafePassword(constants.DEFAULT_PASSWORD),
       verified: true,
       verificationCode: null,
       linked: false,
@@ -48,10 +45,10 @@ module.exports = async function({ User, Shop, Artist }) {
   });
 
   // Shops
-  _.times(TOTAL_TIMES, async () => {
+  _.times(constants.POPULATION_COUNT, async () => {
     const user = await User.create({
       email: chance.email(),
-      password: await createSafePassword(DEFAULT_PASSWORD),
+      password: await createSafePassword(constants.DEFAULT_PASSWORD),
       verified: true,
       verificationCode: null,
       linked: false,
@@ -63,7 +60,7 @@ module.exports = async function({ User, Shop, Artist }) {
     const shop = await user.linkAs(
       constants.LINK_TYPES.SHOP,
       {
-        name: chance.name(),
+        name: chance.word(),
         image: constants.PLACEHOLDER_IMAGE,
         description: chance.paragraph(),
         email: chance.email(),
@@ -85,10 +82,10 @@ module.exports = async function({ User, Shop, Artist }) {
   });
 
   // Artists
-  _.times(TOTAL_TIMES, async () => {
+  _.times(constants.POPULATION_COUNT, async () => {
     const user = await User.create({
       email: chance.email(),
-      password: await createSafePassword(DEFAULT_PASSWORD),
+      password: await createSafePassword(constants.DEFAULT_PASSWORD),
       verified: true,
       verificationCode: null,
       linked: false,
@@ -112,6 +109,30 @@ module.exports = async function({ User, Shop, Artist }) {
   });
 
   // Brands
+  _.times(constants.POPULATION_COUNT, async () => {
+    const user = await User.create({
+      email: chance.email(),
+      password: await createSafePassword(constants.DEFAULT_PASSWORD),
+      verified: true,
+      verificationCode: null,
+      linked: false,
+      type: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    await user.linkAs(
+      constants.LINK_TYPES.BRAND,
+      {
+        name: chance.word(),
+        image: constants.PLACEHOLDER_IMAGE,
+        description: chance.paragraph(),
+        from: `${chance.city()}, ${chance.state()}`,
+        site: constants.PLACEHOLDER_SITE
+      },
+      Brand
+    );
+  });
 };
 
 async function createSafePassword(password) {

@@ -24,6 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       case constants.LINK_TYPES.ARTIST:
         associate = associateArtist.bind(this);
         break;
+      case constants.LINK_TYPES.BRAND:
+        associate = associateBrand.bind(this);
       default:
         break;
     }
@@ -63,6 +65,24 @@ async function associateArtist(config, Artist) {
     await this.save();
 
     return artist;
+  } catch (e) {
+    console.error(e);
+
+    return false;
+  }
+}
+
+async function associateBrand(config, Brand) {
+  try {
+    const brand = await Brand.create(
+      Object.assign(config, { userId: this.id })
+    );
+    this.linked = true;
+    this.type = constants.LINK_TYPES.BRAND;
+
+    await this.save();
+
+    return brand;
   } catch (e) {
     console.error(e);
 

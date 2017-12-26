@@ -6,5 +6,8 @@
     "ARTIST": "ARTIST",
     "BRAND": "BRAND"
   },
-  "PLACEHOLDER_IMAGE": "https://placehold.it/400x400"
+  "PLACEHOLDER_IMAGE": "https://placehold.it/400x400",
+  "PLACEHOLDER_SITE": "https://google.com",
+  "POPULATION_COUNT": 3,
+  "DEFAULT_PASSWORD": "111111"
 }
