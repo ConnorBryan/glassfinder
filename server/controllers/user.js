@@ -1,6 +1,7 @@
 const passport = require("passport");
 
 const { User } = require("../models");
+const { genericPaginatedRead } = require("./common");
 
 module.exports = {
   signup: async (req, res, next) => {
@@ -25,21 +26,6 @@ module.exports = {
       });
     })(req, res, next);
   },
-  read: async (req, res) => {
-    try {
-      const users = await User.all();
-
-      res.json({
-        success: true,
-        users
-      });
-    } catch (e) {
-      console.error(e);
-
-      res.json({
-        success: false,
-        error: e.toString()
-      });
-    }
-  }
+  read: async (req, res) =>
+    await genericPaginatedRead(req, res, User, "user", "users")
 };

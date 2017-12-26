@@ -1,21 +1,7 @@
 const { Artist } = require("../models");
+const { genericPaginatedRead } = require("./common");
 
 module.exports = {
-  read: async (req, res) => {
-    try {
-      const artists = await Artist.all();
-
-      res.json({
-        success: true,
-        artists
-      });
-    } catch (e) {
-      console.error(e);
-
-      res.json({
-        success: false,
-        error: e.toString()
-      });
-    }
-  }
+  read: async (req, res) =>
+    await genericPaginatedRead(req, res, Artist, "artist", "artists")
 };
