@@ -1,6 +1,6 @@
 const passport = require("passport");
 
-const { User } = require("../models");
+const { User, Piece } = require("../models");
 const { genericPaginatedRead } = require("./common");
 
 module.exports = {
@@ -27,5 +27,33 @@ module.exports = {
     })(req, res, next);
   },
   read: async (req, res) =>
-    await genericPaginatedRead(req, res, User, "user", "users")
+    await genericPaginatedRead(req, res, User, "user", "users"),
+  getPiecesForId: async (req, res) => {
+    try {
+      const id = req.params.id;
+
+      if (!id) {
+        return res.status(400).json({
+          success: false,
+          error:
+            "An id is required as a req.params property for User#getPiecesforId "
+        });
+      }
+
+      const userId = +id;
+      const pieces = await Piece.findAll({ where: { userId } });
+
+      return res.status(200).json({
+        success: true,
+        pieces
+      });
+    } catch (e) {
+      console.error(e);
+
+      return res.status(500).json({
+        success: false,
+        error: e.toString()
+      });
+    }
+  }
 };
