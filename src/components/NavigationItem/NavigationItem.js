@@ -8,7 +8,7 @@ function NavigationItem(props) {
     <Menu.Item
       icon={props.icon}
       as={Link}
-      active={props.match === props.to}
+      active={props.active}
       to={props.to}
       content={props.title}
       className={props.fancy && "fancy"}
@@ -18,7 +18,7 @@ function NavigationItem(props) {
 
 NavigationItem.propTypes = {
   icon: PropTypes.string,
-  match: PropTypes.string.isRequired,
+  active: PropTypes.bool,
   to: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   className: PropTypes.bool

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Responsive, Sidebar, Menu, Icon } from "semantic-ui-react";
 import Aux from "react-aux";
 
@@ -11,7 +11,13 @@ import { attemptSignout } from "../../slices/account/redux/actions";
 import NavigationItem from "../../components/NavigationItem";
 
 function Slider(props) {
-  const { account, router, attemptSignout, sidebar, hideSidebar } = props;
+  const {
+    account,
+    attemptSignout,
+    sidebar,
+    hideSidebar,
+    activePathname
+  } = props;
 
   return (
     <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
@@ -26,7 +32,7 @@ function Slider(props) {
         {config.navigation.map(item => (
           <NavigationItem
             key={item.key}
-            match={props.location.pathname}
+            match={activePathname === item.to}
             {...item}
           />
         ))}
@@ -38,7 +44,7 @@ function Slider(props) {
             <Menu.Item
               as={Link}
               to="/my-account"
-              active={router.location.pathname === "/my-account"}
+              active={activePathname === "/my-account"}
             >
               <Icon name="settings" /> My account
             </Menu.Item>
@@ -51,14 +57,14 @@ function Slider(props) {
             <Menu.Item
               as={Link}
               to="/sign-in"
-              active={router.location.pathname === "/sign-in"}
+              active={activePathname === "/sign-in"}
             >
               <Icon name="sign in" /> Sign in
             </Menu.Item>
             <Menu.Item
               as={Link}
               to="/sign-up"
-              active={router.location.pathname === "/sign-up"}
+              active={activePathname === "/sign-up"}
             >
               <Icon name="user plus" /> Sign up
             </Menu.Item>
@@ -79,11 +85,11 @@ Slider.propTypes = {
 export default connect(
   state => ({
     account: state.account,
-    router: state.router,
+    activePathname: state.router.location.pathname,
     sidebar: state.sidebar
   }),
   dispatch => ({
     attemptSignout: () => dispatch(attemptSignout()),
     hideSidebar: () => dispatch(hideSidebar())
   })
-)(withRouter(Slider));
+)(Slider);

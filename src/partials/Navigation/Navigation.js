@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Responsive, Menu, Icon } from "semantic-ui-react";
 import styled from "styled-components";
@@ -9,13 +8,13 @@ import { showSidebar, hideSidebar } from "../../redux/actions";
 import NavigationItem from "../../components/NavigationItem";
 
 function Navigation(props) {
-  const { sidebar, showSidebar, hideSidebar } = props;
+  const { sidebar, showSidebar, hideSidebar, activePathname } = props;
 
   return (
     <Menu attached="top" compact color={config.color}>
       <NavigationItem
         fancy
-        match={props.location.pathname}
+        active={activePathname === "/"}
         to="/"
         title={config.appName}
       />
@@ -43,7 +42,7 @@ function Navigation(props) {
         {config.navigation.map(item => (
           <NavigationItem
             key={item.key}
-            match={props.location.pathname}
+            active={activePathname === item.to}
             {...item}
           />
         ))}
@@ -54,13 +53,14 @@ function Navigation(props) {
 
 export default connect(
   state => ({
-    sidebar: state.sidebar
+    sidebar: state.sidebar,
+    activePathname: state.router.location.pathname
   }),
   dispatch => ({
     showSidebar: () => dispatch(showSidebar()),
     hideSidebar: () => dispatch(hideSidebar())
   })
-)(withRouter(Navigation));
+)(Navigation);
 
 /* Styling */
 
