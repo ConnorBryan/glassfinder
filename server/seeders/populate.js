@@ -56,12 +56,12 @@ module.exports = async function({ User, Shop, Artist, Brand, Piece }) {
       createdAt: new Date(),
       updatedAt: new Date()
     });
-
+    const imageSeed = chance.integer({ min: 1, max: 5 });
     const shop = await user.linkAs(
       constants.LINK_TYPES.SHOP,
       {
         name: chance.word(),
-        image: constants.PLACEHOLDER_IMAGE,
+        image: `/examples/shop${imageSeed}.jpg`,
         description: chance.paragraph(),
         email: chance.email(),
         phone: `${chance.integer({ min: 100, max: 999 })}-${chance.integer({
@@ -79,9 +79,11 @@ module.exports = async function({ User, Shop, Artist, Brand, Piece }) {
     );
 
     _.times(constants.PIECE_COUNT, async () => {
+      const imageSeed = chance.integer({ min: 1, max: 5 });
+
       await Piece.create({
         name: chance.word(),
-        image: constants.PLACEHOLDER_IMAGE,
+        image: `/examples/piece${imageSeed}.jpg`,
         description: chance.paragraph(),
         maker: shop.name,
         price: chance.floating({ min: 5, max: 5000, fixed: 2 }),
