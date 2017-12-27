@@ -16,6 +16,7 @@ module.exports = app => {
 
   app.get("/shops/", ShopController.read);
   app.get("/shops/:id", ShopController.read);
+  app.get("/shops/:id/pieces", ShopController.getPiecesForId);
 
   app.get("/artists/", ArtistController.read);
   app.get("/artists/:id", ArtistController.read);

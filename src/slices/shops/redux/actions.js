@@ -8,6 +8,8 @@ export const SET_FETCH_SHOPS_PAGE = "SET_FETCH_SHOPS_PAGE";
 export const SET_SHOPS_FETCHING = "SET_SHOPS_FETCHING";
 export const FETCH_SHOP_SUCCESS = "FETCH_SHOP_SUCCESS";
 export const FETCH_SHOP_FAILURE = "FETCH_SHOP_FAILURE";
+export const FETCH_PIECES_SUCCESS = "FETCH_PIECES_SUCCESS";
+export const FETCH_PIECES_FAILURE = "FETCH_PIECES_FAILURE";
 
 // Action Creators
 export const fetchShopsSuccess = shops => ({
@@ -30,6 +32,13 @@ export const fetchShopSuccess = shop => ({
 export const fetchShopFailure = () => ({
   type: FETCH_SHOP_FAILURE
 });
+export const fetchPiecesSuccess = pieces => ({
+  type: FETCH_PIECES_SUCCESS,
+  payload: { pieces }
+});
+export const fetchPiecesFailure = () => ({
+  type: FETCH_PIECES_FAILURE
+});
 
 // Action Handlers
 export const fetchShops = () => async (dispatch, getState) => {
@@ -51,7 +60,7 @@ export const fetchShops = () => async (dispatch, getState) => {
   }
 };
 
-export const fetchShop = id => async (dispatch, getState) => {
+export const fetchShop = id => async dispatch => {
   try {
     dispatch(setShopsFetching(true));
 
@@ -63,6 +72,22 @@ export const fetchShop = id => async (dispatch, getState) => {
     dispatch(
       displayWarning({
         header: "Unable to fetch shop",
+        content: e.toString()
+      })
+    );
+  }
+};
+
+export const fetchPieces = id => async dispatch => {
+  try {
+    const pieces = await services.fetchPieces(id);
+
+    dispatch(fetchPiecesSuccess(pieces));
+  } catch (e) {
+    dispatch(fetchPiecesFailure());
+    dispatch(
+      displayWarning({
+        header: "Unable to fetch pieces for shop",
         content: e.toString()
       })
     );

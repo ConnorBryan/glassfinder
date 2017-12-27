@@ -7,27 +7,31 @@ import config from "../../../config";
 import { NoPadding } from "../../../styled";
 import withPageHeader from "../../../components/withPageHeader";
 import PieceViewer from "../../../components/PieceViewer";
-import { fetchShop } from "../redux/actions";
+import { fetchShop, fetchPieces } from "../redux/actions";
 import ShopCard from "../components/ShopCard";
 
 class ShopDetail extends Component {
   componentDidMount() {
     this.fetchShop();
+    this.fetchPieces();
   }
 
   fetchShop = () => {
-    const {
-      router: { location: { pathname } },
-      shops: { shop },
-      fetchShop
-    } = this.props;
-    const id = +pathname.split("/")[2];
+    const { activePathname, shop, fetchShop } = this.props;
+    const id = +activePathname.split("/")[2];
 
     if (!shop || shop.id !== id) fetchShop(id);
   };
 
+  fetchPieces = () => {
+    const { activePathname, shop, fetchPieces } = this.props;
+    const id = +activePathname.split("/")[2];
+
+    if (!shop || shop.id !== id) fetchPieces(id);
+  };
+
   render() {
-    const { shops: { shop, fetching } } = this.props;
+    const { shop, fetching, pieces } = this.props;
 
     return (
       <Grid celled divided container>
@@ -59,7 +63,7 @@ class ShopDetail extends Component {
               largeScreen={10}
               widescreen={10}
             >
-              {/*<PieceViewer pieces={config.shops[0].pieces} />*/}
+              <PieceViewer pieces={pieces} />
             </Grid.Column>
           </Grid.Row>
         )}
@@ -70,11 +74,16 @@ class ShopDetail extends Component {
 
 export default connect(
   state => ({
-    router: state.router,
-    shops: state.shops
+    activePathname: state.router.location.pathname,
+    shop: state.shops.shop,
+    fetching: state.shops.fetching,
+    pieces: state.shops.shop
+      ? state.shops.pieceMap[state.shops.shop.id] || []
+      : []
   }),
   dispatch => ({
-    fetchShop: id => dispatch(fetchShop(id))
+    fetchShop: id => dispatch(fetchShop(id)),
+    fetchPieces: id => dispatch(fetchPieces(id))
   })
 )(withPageHeader(config.pageHeaders.shopDetail, ShopDetail));
 
