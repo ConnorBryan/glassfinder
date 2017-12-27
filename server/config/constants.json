@@ -8,8 +8,8 @@
   },
   "PLACEHOLDER_IMAGE": "https://placehold.it/400x400",
   "PLACEHOLDER_SITE": "https://google.com",
-  "POPULATION_COUNT": 3,
-  "PIECE_COUNT": 3,
+  "POPULATION_COUNT": 10,
+  "PIECE_COUNT": 10,
   "DEFAULT_PASSWORD": "111111",
   "MODEL_READ_LIMIT": 10
 }

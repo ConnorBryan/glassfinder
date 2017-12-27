@@ -64,9 +64,9 @@ module.exports = async function({ User, Shop, Artist, Brand, Piece }) {
         image: constants.PLACEHOLDER_IMAGE,
         description: chance.paragraph(),
         email: chance.email(),
-        phone: `${chance.integer({ min: 1000, max: 9999 })}-${chance.integer({
-          min: 1000,
-          max: 9999
+        phone: `${chance.integer({ min: 100, max: 999 })}-${chance.integer({
+          min: 100,
+          max: 999
         })}-${chance.integer({ min: 1000, max: 9999 })}`,
         street: chance.street(),
         city: chance.city(),

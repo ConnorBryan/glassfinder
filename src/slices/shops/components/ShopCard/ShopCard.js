@@ -60,7 +60,7 @@ function ShopCard(props) {
 }
 
 ShopCard.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   color: PropTypes.string,
   image: PropTypes.string,
   description: PropTypes.string,

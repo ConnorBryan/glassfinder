@@ -36,7 +36,7 @@ class ExploreShops extends Component {
         {fetching ? (
           <Segment attached="bottom" textAlign="center">
             <Loader active={true} inline size="huge">
-              Loading shops...
+              Loading...
             </Loader>
           </Segment>
         ) : (
