@@ -27,7 +27,8 @@ function ShopCard(props) {
       </Card.Content>
       <Card.Content extra>
         <Card.Description>
-          {props.street}, {props.city}, {props.state} {props.zip}
+          <Icon name="map pin" /> {props.street}, {props.city}, {props.state}{" "}
+          {props.zip}
         </Card.Description>
       </Card.Content>
       {props.mapLinked && (
@@ -38,7 +39,7 @@ function ShopCard(props) {
             className="fancy"
             fluid
           >
-            <Icon name="map pin" /> View on map
+            <Icon name="globe" /> View on map
           </Button>
         </Card.Content>
       )}

@@ -7,13 +7,15 @@ import {
   FETCH_SHOP_SUCCESS,
   FETCH_SHOP_FAILURE,
   FETCH_PIECES_SUCCESS,
-  FETCH_PIECES_FAILURE
+  FETCH_PIECES_FAILURE,
+  SET_SHOPS_TOTAL_PAGES
 } from "./actions";
 
 export const shops = createReducer(
   {
     fetching: false,
     page: 0,
+    totalPages: 0,
     shops: [],
     shop: null,
     pieceMap: {}
@@ -55,6 +57,10 @@ export const shops = createReducer(
     [FETCH_PIECES_FAILURE]: state => ({
       ...state,
       fetching: false
+    }),
+    [SET_SHOPS_TOTAL_PAGES]: (state, { payload: { totalPages } }) => ({
+      ...state,
+      totalPages
     })
   }
 );

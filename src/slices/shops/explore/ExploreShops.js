@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Card, Segment, Loader } from "semantic-ui-react";
+import { Card, Icon, Segment, Loader, Menu } from "semantic-ui-react";
 
 import config from "../../../config";
 import withPageHeader from "../../../components/withPageHeader";
-import { fetchShops } from "../redux/actions";
+import { fetchShops, regressShopPage, advanceShopPage } from "../redux/actions";
 import Map from "../components/Map";
 import ShopCard from "../components/ShopCard";
 
@@ -20,19 +20,50 @@ class ExploreShops extends Component {
   }
 
   fetchShops = () => {
-    const { shops: { shops }, fetchShops } = this.props;
+    const { shops, fetchShops } = this.props;
 
     if (shops.length === 0) fetchShops();
   };
 
   render() {
-    const { shops: { shops, fetching } } = this.props;
+    const {
+      page,
+      totalPages,
+      shops,
+      fetching,
+      regressShopPage,
+      advanceShopPage
+    } = this.props;
+
+    const Transporter = () => (
+      <Menu attached="bottom" inverted>
+        <Menu.Item className="fancy" onClick={() => {}}>
+          <Icon name="map pin" /> Find my location
+        </Menu.Item>
+        <Menu.Menu position="right">
+          <Menu.Item
+            icon="chevron left"
+            onClick={regressShopPage}
+            disabled={page === 0}
+          />
+          <Menu.Item>
+            <em>
+              Viewing page {page + 1} of {totalPages}.
+            </em>
+          </Menu.Item>
+          <Menu.Item
+            icon="chevron right"
+            onClick={advanceShopPage}
+            disabled={page + 1 >= totalPages}
+          />
+        </Menu.Menu>
+      </Menu>
+    );
 
     return (
       <Segment.Group>
-        <Segment attached="top">
-          <Map />
-        </Segment>
+        <Map />
+        <Transporter />
         {fetching ? (
           <Segment attached="bottom" textAlign="center">
             <Loader active={true} inline size="huge">
@@ -48,6 +79,7 @@ class ExploreShops extends Component {
             </Card.Group>
           </Segment>
         )}
+        <Transporter />
       </Segment.Group>
     );
   }
@@ -55,9 +87,14 @@ class ExploreShops extends Component {
 
 export default connect(
   state => ({
-    shops: state.shops
+    page: state.shops.page,
+    totalPages: state.shops.totalPages,
+    shops: state.shops.shops,
+    fetching: state.shops.fetching
   }),
   dispatch => ({
-    fetchShops: () => dispatch(fetchShops())
+    fetchShops: () => dispatch(fetchShops()),
+    regressShopPage: () => dispatch(regressShopPage()),
+    advanceShopPage: () => dispatch(advanceShopPage())
   })
 )(withPageHeader(config.pageHeaders.exploreShops, ExploreShops));

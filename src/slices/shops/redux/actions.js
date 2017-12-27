@@ -10,6 +10,7 @@ export const FETCH_SHOP_SUCCESS = "FETCH_SHOP_SUCCESS";
 export const FETCH_SHOP_FAILURE = "FETCH_SHOP_FAILURE";
 export const FETCH_PIECES_SUCCESS = "FETCH_PIECES_SUCCESS";
 export const FETCH_PIECES_FAILURE = "FETCH_PIECES_FAILURE";
+export const SET_SHOPS_TOTAL_PAGES = "SET_SHOPS_TOTAL_PAGES";
 
 // Action Creators
 export const fetchShopsSuccess = shops => ({
@@ -39,16 +40,20 @@ export const fetchPiecesSuccess = pieces => ({
 export const fetchPiecesFailure = () => ({
   type: FETCH_PIECES_FAILURE
 });
+export const setShopsTotalPages = totalPages => ({
+  type: SET_SHOPS_TOTAL_PAGES,
+  payload: { totalPages }
+});
 
 // Action Handlers
-export const fetchShops = () => async (dispatch, getState) => {
+export const fetchShops = page => async (dispatch, getState) => {
   try {
     dispatch(setShopsFetching(true));
 
-    const { page } = getState();
-    const shops = await services.fetchShops(page);
+    const { shops, totalPages } = await services.fetchShops(page);
 
     dispatch(fetchShopsSuccess(shops));
+    dispatch(setShopsTotalPages(totalPages));
   } catch (e) {
     dispatch(fetchShopsFailure());
     dispatch(
@@ -91,5 +96,25 @@ export const fetchPieces = id => async dispatch => {
         content: e.toString()
       })
     );
+  }
+};
+
+export const regressShopPage = () => (dispatch, getState) => {
+  const { shops: { page } } = getState();
+  const nextPage = page - 1;
+
+  if (nextPage > -1) {
+    dispatch(setFetchShopsPage(nextPage));
+    dispatch(fetchShops(nextPage));
+  }
+};
+
+export const advanceShopPage = () => (dispatch, getState) => {
+  const { shops: { page, totalPages } } = getState();
+  const nextPage = page + 1;
+
+  if (nextPage < totalPages) {
+    dispatch(setFetchShopsPage(nextPage));
+    dispatch(fetchShops(nextPage));
   }
 };

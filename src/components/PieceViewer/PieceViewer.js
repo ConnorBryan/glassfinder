@@ -21,7 +21,7 @@ function PieceViewerMenu(props) {
           position="right"
         >
           <em>
-            Viewing {props.currentPiece} of {props.totalPieces}
+            Viewing piece {props.currentPiece} of {props.totalPieces}
           </em>
         </Responsive>
       </Menu>
