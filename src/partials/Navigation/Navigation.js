@@ -31,7 +31,7 @@ function Navigation(props) {
           active={sidebar}
           onClick={sidebar ? hideSidebar : showSidebar}
         >
-          <Icon name="bars" /> Menu
+          <Icon name="bars" />
         </Menu.Item>
       </Responsive>
       <Responsive

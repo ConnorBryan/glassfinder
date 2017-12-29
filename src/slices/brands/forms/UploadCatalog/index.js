@@ -1,3 +1,1 @@
-import UploadCatalogForm from "./UploadCatalogForm";
-
-export default UploadCatalogForm;
+export { default } from "./UploadCatalogForm";

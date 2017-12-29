@@ -33,7 +33,7 @@ function PieceCard(props) {
       </Card.Content>
       {props.linked && (
         <Card.Content extra>
-          <Button as={Link} to="/piece/1" className="fancy" fluid>
+          <Button as={Link} to={`/piece/${props.id}`} className="fancy" fluid>
             <Icon name="picture" /> View more pics
           </Button>
         </Card.Content>

@@ -1,3 +1,1 @@
-import UpgradeToBrandForm from "./UpgradeToBrandForm";
-
-export default UpgradeToBrandForm;
+export { default } from "./UpgradeToBrandForm";

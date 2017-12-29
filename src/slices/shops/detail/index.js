@@ -1,3 +1,1 @@
-import ShopDetail from "./ShopDetail";
-
-export default ShopDetail;
+export { default } from "./ShopDetail";

@@ -1,3 +1,1 @@
-import UploadField from "./UploadField";
-
-export default UploadField;
+export { default } from "./UploadField";

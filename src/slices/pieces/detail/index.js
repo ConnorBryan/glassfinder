@@ -1,3 +1,1 @@
-import PieceDetail from "./PieceDetail";
-
-export default PieceDetail;
+export { default } from "./PieceDetail";

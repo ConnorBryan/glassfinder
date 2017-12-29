@@ -1,3 +1,1 @@
-import AccountBar from "./AccountBar";
-
-export default AccountBar;
+export { default } from "./AccountBar";

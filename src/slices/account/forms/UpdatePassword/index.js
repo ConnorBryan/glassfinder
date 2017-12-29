@@ -1,3 +1,1 @@
-import UpdatePasswordForm from "./UpdatePasswordForm";
-
-export default UpdatePasswordForm;
+export { default } from "./UpdatePasswordForm";

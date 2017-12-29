@@ -1,3 +1,1 @@
-import TermsAndConditions from "./TermsAndConditions";
-
-export default TermsAndConditions;
+export { default } from "./TermsAndConditions";

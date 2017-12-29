@@ -1,3 +1,1 @@
-import PurchasePiece from "./PurchasePiece";
-
-export default PurchasePiece;
+export { default } from "./PurchasePiece";

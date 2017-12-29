@@ -1,3 +1,1 @@
-import UpdateShopInfoForm from "./UpdateShopInfoForm";
-
-export default UpdateShopInfoForm;
+export { default } from "./UpdateShopInfoForm";

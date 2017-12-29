@@ -1,3 +1,1 @@
-import PieceViewer from "./PieceViewer";
-
-export default PieceViewer;
+export { default } from "./PieceViewer";

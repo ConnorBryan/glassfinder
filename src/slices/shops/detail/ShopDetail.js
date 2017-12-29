@@ -7,13 +7,13 @@ import config from "../../../config";
 import { NoPadding } from "../../../styled";
 import withPageHeader from "../../../components/withPageHeader";
 import PieceViewer from "../../../components/PieceViewer";
-import { fetchShop, fetchPieces } from "../redux/actions";
+import { fetchShop, fetchShopPieces } from "../redux/actions";
 import ShopCard from "../components/ShopCard";
 
 class ShopDetail extends Component {
   componentDidMount() {
     this.fetchShop();
-    this.fetchPieces();
+    this.fetchShopPieces();
   }
 
   fetchShop = () => {
@@ -23,11 +23,11 @@ class ShopDetail extends Component {
     if (!shop || shop.id !== id) fetchShop(id);
   };
 
-  fetchPieces = () => {
-    const { activePathname, shop, fetchPieces } = this.props;
+  fetchShopPieces = () => {
+    const { activePathname, shop, fetchShopPieces } = this.props;
     const id = +activePathname.split("/")[2];
 
-    if (!shop || shop.id !== id) fetchPieces(id);
+    if (!shop || shop.id !== id) fetchShopPieces(id);
   };
 
   render() {
@@ -83,7 +83,7 @@ export default connect(
   }),
   dispatch => ({
     fetchShop: id => dispatch(fetchShop(id)),
-    fetchPieces: id => dispatch(fetchPieces(id))
+    fetchShopPieces: id => dispatch(fetchShopPieces(id))
   })
 )(withPageHeader(config.pageHeaders.shopDetail, ShopDetail));
 

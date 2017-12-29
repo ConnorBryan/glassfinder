@@ -1,3 +1,1 @@
-import UpdateArtistInfoForm from "./UpdateArtistInfoForm";
-
-export default UpdateArtistInfoForm;
+export { default } from "./UpdateArtistInfoForm";

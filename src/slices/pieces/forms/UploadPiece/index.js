@@ -1,3 +1,1 @@
-import UploadPiece from "./UploadPiece";
-
-export default UploadPiece;
+export { default } from "./UploadPiece";

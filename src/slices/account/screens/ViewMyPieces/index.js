@@ -1,3 +1,1 @@
-import ViewMyPieces from "./ViewMyPieces";
-
-export default ViewMyPieces;
+export { default } from "./ViewMyPieces";

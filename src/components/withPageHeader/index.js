@@ -1,3 +1,1 @@
-import withPageHeader from "./withPageHeader";
-
-export default withPageHeader;
+export { default } from "./withPageHeader";

@@ -1,3 +1,1 @@
-import ExplorePieces from "./ExplorePieces";
-
-export default ExplorePieces;
+export { default } from "./ExplorePieces";

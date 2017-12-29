@@ -1,3 +1,1 @@
-import ArtistCard from "./ArtistCard";
-
-export default ArtistCard;
+export { default } from "./ArtistCard";

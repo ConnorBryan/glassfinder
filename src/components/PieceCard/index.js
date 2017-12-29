@@ -1,3 +1,1 @@
-import PieceCard from "./PieceCard";
-
-export default PieceCard;
+export { default } from "./PieceCard";

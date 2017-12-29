@@ -1,3 +1,1 @@
-import ExploreBrands from "./ExploreBrands";
-
-export default ExploreBrands;
+export { default } from "./ExploreBrands";

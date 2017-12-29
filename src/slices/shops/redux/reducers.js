@@ -2,12 +2,12 @@ import { createReducer } from "../../../redux/reducers";
 import {
   FETCH_SHOPS_SUCCESS,
   FETCH_SHOPS_FAILURE,
-  SET_FETCH_SHOPS_PAGE,
+  SET_SHOPS_PAGE,
   SET_SHOPS_FETCHING,
   FETCH_SHOP_SUCCESS,
   FETCH_SHOP_FAILURE,
-  FETCH_PIECES_SUCCESS,
-  FETCH_PIECES_FAILURE,
+  FETCH_SHOP_PIECES_SUCCESS,
+  FETCH_SHOP_PIECES_FAILURE,
   SET_SHOPS_TOTAL_PAGES
 } from "./actions";
 
@@ -31,7 +31,7 @@ export const shops = createReducer(
       fetching: false,
       shops: []
     }),
-    [SET_FETCH_SHOPS_PAGE]: (state, { payload: { page } }) => ({
+    [SET_SHOPS_PAGE]: (state, { payload: { page } }) => ({
       ...state,
       page
     }),
@@ -49,12 +49,12 @@ export const shops = createReducer(
       fetching: false,
       shop: null
     }),
-    [FETCH_PIECES_SUCCESS]: (state, { payload: { pieces } }) => ({
+    [FETCH_SHOP_PIECES_SUCCESS]: (state, { payload: { pieces } }) => ({
       ...state,
       fetching: false,
-      pieceMap: { ...state.pieceMap, [state.shop.id]: pieces }
+      pieceMap: { ...state.pieceMap, [state.shop && state.shop.id]: pieces }
     }),
-    [FETCH_PIECES_FAILURE]: state => ({
+    [FETCH_SHOP_PIECES_FAILURE]: state => ({
       ...state,
       fetching: false
     }),

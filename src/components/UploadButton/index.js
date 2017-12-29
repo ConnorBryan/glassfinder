@@ -1,3 +1,1 @@
-import UploadButton from "./UploadButton";
-
-export default UploadButton;
+export { default } from "./UploadButton";

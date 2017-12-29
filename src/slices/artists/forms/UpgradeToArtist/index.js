@@ -1,3 +1,1 @@
-import UpgradeToArtistForm from "./UpgradeToArtistForm";
-
-export default UpgradeToArtistForm;
+export { default } from "./UpgradeToArtistForm";

@@ -1,3 +1,1 @@
-import UpgradeToShopForm from "./UpgradeToShopForm";
-
-export default UpgradeToShopForm;
+export { default } from "./UpgradeToShopForm";

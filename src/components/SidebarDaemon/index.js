@@ -1,3 +1,1 @@
-import SidebarDaemon from "./SidebarDaemon";
-
-export default SidebarDaemon;
+export { default } from "./SidebarDaemon";

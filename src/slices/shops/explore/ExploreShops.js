@@ -15,13 +15,17 @@ import Aux from "react-aux";
 
 import config from "../../../config";
 import withPageHeader from "../../../components/withPageHeader";
-import { fetchShops, regressShopPage, advanceShopPage } from "../redux/actions";
+import {
+  fetchShops,
+  regressShopsPage,
+  advanceShopsPage
+} from "../redux/actions";
 import Map from "../components/Map";
 import ShopCard from "../components/ShopCard";
 
 class ExploreShops extends Component {
   static propTypes = {
-    shops: PropTypes.object.isRequired,
+    shops: PropTypes.array.isRequired,
     fetchShops: PropTypes.func.isRequired
   };
 
@@ -46,8 +50,8 @@ class ExploreShops extends Component {
       shops,
       fetching,
       fetchShops,
-      regressShopPage,
-      advanceShopPage
+      regress,
+      advance
     } = this.props;
 
     const Transporter = () => (
@@ -58,7 +62,7 @@ class ExploreShops extends Component {
         <Menu.Menu position="right">
           <Menu.Item
             icon="chevron left"
-            onClick={regressShopPage}
+            onClick={regress}
             disabled={page === 0}
           />
           <Menu.Item>
@@ -68,7 +72,7 @@ class ExploreShops extends Component {
           </Menu.Item>
           <Menu.Item
             icon="chevron right"
-            onClick={advanceShopPage}
+            onClick={advance}
             disabled={page + 1 >= totalPages}
           />
         </Menu.Menu>
@@ -128,8 +132,8 @@ export default connect(
   dispatch => ({
     fetchShops: (page, artificialWait) =>
       dispatch(fetchShops(page, artificialWait)),
-    regressShopPage: () => dispatch(regressShopPage()),
-    advanceShopPage: () => dispatch(advanceShopPage())
+    regress: () => dispatch(regressShopsPage()),
+    advance: () => dispatch(advanceShopsPage())
   })
 )(withPageHeader(config.pageHeaders.exploreShops, ExploreShops));
 

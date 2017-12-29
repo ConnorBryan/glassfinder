@@ -1,5 +1,5 @@
 import fetchShops from "./fetchShops";
 import fetchShop from "./fetchShop";
-import fetchPieces from "./fetchPieces";
+import fetchShopPieces from "./fetchShopPieces";
 
-export default { fetchShops, fetchShop, fetchPieces };
+export default { fetchShops, fetchShop, fetchShopPieces };

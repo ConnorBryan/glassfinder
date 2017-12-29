@@ -1,3 +1,1 @@
-import SigninForm from "./SigninForm";
-
-export default SigninForm;
+export { default } from "./SigninForm";
