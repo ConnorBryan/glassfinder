@@ -1,4 +1,5 @@
 import { displayWarning } from "../../../redux/actions";
+import { sleep } from "../../../util";
 import services from "../services";
 
 // Actions
@@ -46,9 +47,14 @@ export const setShopsTotalPages = totalPages => ({
 });
 
 // Action Handlers
-export const fetchShops = page => async (dispatch, getState) => {
+export const fetchShops = (page, artificialWait) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch(setShopsFetching(true));
+
+    if (artificialWait) await sleep(artificialWait);
 
     const { shops, totalPages } = await services.fetchShops(page);
 

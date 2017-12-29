@@ -1,7 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Card, Icon, Segment, Loader, Menu } from "semantic-ui-react";
+import {
+  Button,
+  Card,
+  Icon,
+  Segment,
+  Loader,
+  Menu,
+  Header
+} from "semantic-ui-react";
+import styled from "styled-components";
+import Aux from "react-aux";
 
 import config from "../../../config";
 import withPageHeader from "../../../components/withPageHeader";
@@ -13,6 +23,10 @@ class ExploreShops extends Component {
   static propTypes = {
     shops: PropTypes.object.isRequired,
     fetchShops: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    shops: []
   };
 
   componentDidMount() {
@@ -31,6 +45,7 @@ class ExploreShops extends Component {
       totalPages,
       shops,
       fetching,
+      fetchShops,
       regressShopPage,
       advanceShopPage
     } = this.props;
@@ -48,7 +63,7 @@ class ExploreShops extends Component {
           />
           <Menu.Item>
             <em>
-              Viewing page {page + 1} of {totalPages}.
+              Viewing page {page + 1} of {totalPages < 1 ? 1 : totalPages}.
             </em>
           </Menu.Item>
           <Menu.Item
@@ -71,12 +86,30 @@ class ExploreShops extends Component {
             </Loader>
           </Segment>
         ) : (
-          <Segment attached="bottom">
-            <Card.Group stackable itemsPerRow={3}>
-              {shops.map(shop => (
-                <ShopCard key={shop.name} mapLinked linked {...shop} />
-              ))}
-            </Card.Group>
+          <Segment attached="bottom" clearing>
+            {shops.length > 0 ? (
+              <Card.Group stackable itemsPerRow={3}>
+                {shops.map(shop => (
+                  <ShopCard key={shop.name} mapLinked linked {...shop} />
+                ))}
+              </Card.Group>
+            ) : (
+              <Aux>
+                <Header as="h3">
+                  <Icon name="warning sign" /> There were no shops to display.{" "}
+                </Header>
+                <Button
+                  as={GimmeSomeSpace}
+                  onClick={() =>
+                    fetchShops(page, config.arbitraryWaitForTryingAgain)}
+                  primary
+                  floated="right"
+                  className="fancy"
+                  content="Try again"
+                  icon="refresh"
+                />
+              </Aux>
+            )}
           </Segment>
         )}
         <Transporter />
@@ -93,8 +126,13 @@ export default connect(
     fetching: state.shops.fetching
   }),
   dispatch => ({
-    fetchShops: () => dispatch(fetchShops()),
+    fetchShops: (page, artificialWait) =>
+      dispatch(fetchShops(page, artificialWait)),
     regressShopPage: () => dispatch(regressShopPage()),
     advanceShopPage: () => dispatch(advanceShopPage())
   })
 )(withPageHeader(config.pageHeaders.exploreShops, ExploreShops));
+
+/* Styling */
+
+const GimmeSomeSpace = styled.div`margin-top: 2rem;`;

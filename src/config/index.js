@@ -24,6 +24,7 @@ export default {
   localApi: "http://localhost:6166",
   warningFlashTimeout: 5000,
   placeholderImage: "https://placehold.it/400x400",
+  arbitraryWaitForTryingAgain: 1200,
   about,
   artists,
   brands,
