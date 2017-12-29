@@ -54,7 +54,13 @@ function PieceCard(props) {
       )}
       {props.purchaseLinked && (
         <Card.Content extra>
-          <Button as={Link} to="/purchase/1" className="fancy" primary fluid>
+          <Button
+            as={Link}
+            to={`/purchase/${props.id}`}
+            className="fancy"
+            primary
+            fluid
+          >
             <Icon name="download" /> Purchase
           </Button>
         </Card.Content>
