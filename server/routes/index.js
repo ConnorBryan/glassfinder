@@ -14,6 +14,7 @@ module.exports = app => {
   app.get("/users/:id", UserController.read);
   app.get("/users/:id/pieces", UserController.getPiecesForId);
   app.post("/users/:id/update-password", UserController.updatePassword);
+  app.post("/users/:id/link", UserController.link);
 
   app.get("/shops/", ShopController.read);
   app.get("/shops/:id", ShopController.read);

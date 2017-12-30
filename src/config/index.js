@@ -14,6 +14,11 @@ import pieces from "../slices/pieces/config.json";
 
 export default {
   appName: "Glassfinder",
+  linkTypes: {
+    SHOP: "SHOP",
+    ARTIST: "ARTIST",
+    BRAND: "BRAND"
+  },
   iconSet: {
     shop: "cart",
     artist: "paint brush",

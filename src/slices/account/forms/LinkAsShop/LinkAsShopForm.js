@@ -1,13 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
 import Yup from "yup";
 
 import config from "../../../../config";
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../abstracts/AbstractForm";
+import { attemptLinkAsShop } from "../../redux/actions";
 
-const props = {
+const formProps = {
   icon: config.iconSet.shop,
-  header: "Upgrade to shop",
   fields: [
     {
       name: "name",
@@ -90,12 +91,17 @@ const props = {
         .matches(/^\d{5}(?:[-\s]\d{4})?$/, "A valid ZIP is required.")
         .required("A valid ZIP is required.")
     }
-  ],
-  onSubmit: values => {
-    alert(`Upgrading to shop with ${JSON.stringify(values, null, 2)}`);
-  }
+  ]
 };
 
-export default function UpgradeToShopForm() {
-  return <AbstractForm {...props} />;
+function LinkAsShopForm(props) {
+  const { attemptLinkAsShop } = props;
+
+  const onSubmit = values => attemptLinkAsShop(values);
+
+  return <AbstractForm onSubmit={onSubmit} {...formProps} />;
 }
+
+export default connect(null, dispatch => ({
+  attemptLinkAsShop: values => dispatch(attemptLinkAsShop(values))
+}))(LinkAsShopForm);

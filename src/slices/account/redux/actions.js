@@ -139,3 +139,32 @@ export const attemptUpdatePassword = (currentPassword, newPassword) => async (
     dispatch(stopLoading());
   }
 };
+
+export const attemptLinkAsShop = values => async (dispatch, getState) => {
+  try {
+    dispatch(startLoading());
+
+    const { account } = getState();
+
+    if (!account) {
+      dispatch(stopLoading());
+      return dispatch(push("/"));
+    }
+
+    const { id } = account;
+
+    await services.linkAsShop(id, values);
+
+    // Display success;
+    dispatch(push("/my-account"));
+  } catch (e) {
+    dispatch(
+      displayWarning({
+        header: "Unable to link account",
+        content: e.toString()
+      })
+    );
+  } finally {
+    dispatch(stopLoading());
+  }
+};

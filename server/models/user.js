@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING
   });
 
-  User.prototype.linkAs = async function(type, config = {}, model) {
+  User.prototype.linkAs = async function(type, config = {}) {
     if (!constants.LINK_TYPES[type])
       throw Error(`Type ${type} is an invalid link type.`);
 
@@ -19,18 +19,22 @@ module.exports = (sequelize, DataTypes) => {
 
     switch (type) {
       case constants.LINK_TYPES.SHOP:
-        associate = associateShop.bind(this);
+        associate = associateShop.bind(this, config, sequelize.model("Shop"));
         break;
       case constants.LINK_TYPES.ARTIST:
-        associate = associateArtist.bind(this);
+        associate = associateArtist.bind(
+          this,
+          config,
+          sequelize.model("Artist")
+        );
         break;
       case constants.LINK_TYPES.BRAND:
-        associate = associateBrand.bind(this);
+        associate = associateBrand.bind(this, config, sequelize.model("Brand"));
       default:
         break;
     }
 
-    return await associate(config, model);
+    return await associate();
   };
 
   return User;

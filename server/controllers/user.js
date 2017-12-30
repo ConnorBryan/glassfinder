@@ -1,8 +1,12 @@
 const passport = require("passport");
 
 const { User, Piece } = require("../models");
+const constants = require("../config/constants.json");
 const { createSafePassword, confirmPassword } = require("../config/passport");
 const { genericPaginatedRead } = require("./common");
+
+const userNotFoundResponse = res =>
+  res.status(404).json({ success: false, error: "User not found" });
 
 module.exports = {
   signup: async (req, res, next) => {
@@ -69,10 +73,7 @@ module.exports = {
 
       const user = await User.findById(+id);
 
-      if (!user)
-        return res
-          .status(404)
-          .json({ success: false, error: "User not found" });
+      if (!user) return userNotFoundResponse(res);
 
       const actualPassword = user.password;
       const passwordsMatch = await confirmPassword(
@@ -92,6 +93,42 @@ module.exports = {
       return res.status(200).json({
         success: true,
         message: "Password successfully updated"
+      });
+    } catch (e) {
+      return res.status(500).json({
+        success: false,
+        error: e.toString()
+      });
+    }
+  },
+  link: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { type, config } = req.body;
+      const isValidType = constants.LINK_TYPES[type];
+
+      if (!id || !isValidType || !config)
+        return res.status(400).json({
+          success: false,
+          error: "An id, valid type and config are required to link"
+        });
+
+      const parsedConfig = JSON.parse(config);
+      const user = await User.findById(+id);
+
+      if (!user) return userNotFoundResponse(res);
+
+      const linked = await user.linkAs(type, parsedConfig);
+
+      if (!linked)
+        return res.status(400).json({
+          success: false,
+          error: "An error occurred while linking"
+        });
+
+      return res.status(200).json({
+        success: true,
+        message: `Successfully linked user ${id} as ${type}`
       });
     } catch (e) {
       return res.status(500).json({

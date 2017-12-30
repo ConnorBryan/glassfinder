@@ -5,9 +5,9 @@ import withPageHeader from "../components/withPageHeader";
 import SigninForm from "../slices/account/forms/Signin";
 import SignupForm from "../slices/account/forms/Signup";
 import UpdatePasswordForm from "../slices/account/forms/UpdatePassword";
+import LinkAsShopForm from "../slices/account/forms/LinkAsShop";
 
 // Shops
-import UpgradeToShopForm from "../slices/shops/forms/UpgradeToShop";
 import UpdateShopInfoForm from "../slices/shops/forms/UpdateShopInfo";
 
 // Artists
@@ -35,7 +35,7 @@ export const UpdatePassword = withPageHeader(
 // Shops
 export const BecomeAShop = withPageHeader(
   config.pageHeaders.becomeAShop,
-  UpgradeToShopForm
+  LinkAsShopForm
 );
 
 export const UpdateShopInfo = withPageHeader(
