@@ -1,34 +1,44 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../abstracts/AbstractForm";
+import { attemptUpdatePassword } from "../../redux/actions";
 
-const props = {
+const formProps = {
   icon: "lock",
   header: "Update password",
   fields: [
     {
-      name: "password",
+      name: "currentPassword",
       type: "password",
-      label: "Password",
-      placeholder: "Enter password",
+      label: "Current password",
+      placeholder: "Enter your current password",
       value: "",
       validation: Validators.password
     },
     {
-      name: "passwordAgain",
+      name: "newPassword",
       type: "password",
-      label: "Password, again",
-      placeholder: "Enter password again",
+      label: "New password",
+      placeholder: "Enter your new password",
       value: "",
       validation: Validators.passwordAgain
     }
-  ],
-  onSubmit: values => {
-    alert(`Updating password with ${JSON.stringify(values, null, 2)}`);
-  }
+  ]
 };
 
-export default function UpdatePasswordForm() {
-  return <AbstractForm {...props} />;
+function UpdatePasswordForm(props) {
+  const { attemptUpdatePassword } = props;
+
+  const onSubmit = ({ currentPassword, newPassword }) => {
+    attemptUpdatePassword(currentPassword, newPassword);
+  };
+
+  return <AbstractForm onSubmit={onSubmit} {...formProps} />;
 }
+
+export default connect(null, dispatch => ({
+  attemptUpdatePassword: (currentPassword, newPassword) =>
+    dispatch(attemptUpdatePassword(currentPassword, newPassword))
+}))(UpdatePasswordForm);

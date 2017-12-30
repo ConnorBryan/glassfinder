@@ -33,7 +33,7 @@ const formProps = {
       })
     },
     {
-      name: "password",
+      name: "newPassword",
       type: "password",
       label: "Password",
       placeholder: "Enter password",
@@ -41,7 +41,7 @@ const formProps = {
       validation: Validators.password
     },
     {
-      name: "passwordAgain",
+      name: "currentPassword",
       type: "password",
       label: "Password, again",
       placeholder: "Enter password again",
@@ -53,7 +53,7 @@ const formProps = {
 
 function SignupForm(props) {
   const { account, history, attemptSignup } = props;
-  const onSubmit = ({ email, password }) => {
+  const onSubmit = ({ email, newPassword: password }) => {
     attemptSignup(email, password);
     history.push("/");
   };

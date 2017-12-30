@@ -12,8 +12,8 @@ export const password = Yup.string()
 export const passwordAgain = Yup.mixed().test(
   "match",
   "Passwords must match",
-  function(password) {
-    return password === this.options.parent.password;
+  function(currentPassword) {
+    return currentPassword === this.options.parent.newPassword;
   }
 );
 

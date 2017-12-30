@@ -13,6 +13,7 @@ module.exports = app => {
   app.get("/users/", UserController.read);
   app.get("/users/:id", UserController.read);
   app.get("/users/:id/pieces", UserController.getPiecesForId);
+  app.post("/users/:id/update-password", UserController.updatePassword);
 
   app.get("/shops/", ShopController.read);
   app.get("/shops/:id", ShopController.read);

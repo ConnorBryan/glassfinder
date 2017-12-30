@@ -29,9 +29,11 @@ export const setCheckedForUserData = () => ({
 
 // Action Handlers
 export const checkForUserData = () => dispatch => {
+  dispatch(setCheckedForUserData());
+
   const userData = getUserData();
 
-  if (!userData) return setCheckedForUserData();
+  if (!userData) return;
 
   const { account, token } = userData;
 

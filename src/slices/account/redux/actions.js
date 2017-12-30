@@ -8,6 +8,7 @@ import {
   startLoading,
   stopLoading
 } from "../../../redux/actions";
+import services from "../services";
 
 // Actions
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
@@ -105,4 +106,36 @@ export const attemptSignout = () => dispatch => {
   dispatch(signout());
   dispatch(clearToken());
   dispatch(push("/"));
+};
+
+export const attemptUpdatePassword = (currentPassword, newPassword) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch(startLoading());
+
+    const { account } = getState();
+
+    if (!account) {
+      dispatch(stopLoading());
+      return dispatch(push("/"));
+    }
+
+    const { id } = account;
+
+    await services.updatePassword(id, currentPassword, newPassword);
+
+    // Display success.
+    dispatch(push("/my-account"));
+  } catch (e) {
+    dispatch(
+      displayWarning({
+        header: "Unable to update password",
+        content: e.toString()
+      })
+    );
+  } finally {
+    dispatch(stopLoading());
+  }
 };
