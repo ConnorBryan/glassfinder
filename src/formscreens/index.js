@@ -6,12 +6,12 @@ import SigninForm from "../slices/account/forms/Signin";
 import SignupForm from "../slices/account/forms/Signup";
 import UpdatePasswordForm from "../slices/account/forms/UpdatePassword";
 import LinkAsShopForm from "../slices/account/forms/LinkAsShop";
+import LinkAsArtistForm from "../slices/account/forms/LinkAsArtist";
 
 // Shops
 import UpdateShopInfoForm from "../slices/shops/forms/UpdateShopInfo";
 
 // Artists
-import UpgradeToArtistForm from "../slices/artists/forms/UpgradeToArtist";
 import UpdateArtistInfoForm from "../slices/artists/forms/UpdateArtistInfo";
 
 // Brands
@@ -32,23 +32,23 @@ export const UpdatePassword = withPageHeader(
   UpdatePasswordForm
 );
 
-// Shops
 export const BecomeAShop = withPageHeader(
   config.pageHeaders.becomeAShop,
   LinkAsShopForm
 );
 
+export const BecomeAnArtist = withPageHeader(
+  config.pageHeaders.becomeAnArtist,
+  LinkAsArtistForm
+);
+
+// Shops
 export const UpdateShopInfo = withPageHeader(
   config.pageHeaders.updateShopInfo,
   UpdateShopInfoForm
 );
 
 // Artists
-export const BecomeAnArtist = withPageHeader(
-  config.pageHeaders.becomeAnArtist,
-  UpgradeToArtistForm
-);
-
 export const UpdateArtistInfo = withPageHeader(
   config.pageHeaders.updateArtistInfo,
   UpdateArtistInfoForm

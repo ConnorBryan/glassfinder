@@ -1,13 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
 import Yup from "yup";
 
 import config from "../../../../config";
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../abstracts/AbstractForm";
+import { attemptLinkAsArtist } from "../../redux/actions";
 
-const props = {
+const formProps = {
   icon: config.iconSet.artist,
-  header: "Upgrade to artist",
   fields: [
     {
       name: "name",
@@ -42,12 +43,17 @@ const props = {
         "A 'from' location is required. You don't have to get too specific."
       )
     }
-  ],
-  onSubmit: values => {
-    alert(`Upgrading to artist with ${JSON.stringify(values, null, 2)}`);
-  }
+  ]
 };
 
-export default function UpgradeToArtistForm() {
-  return <AbstractForm {...props} />;
+function LinkAsArtistForm(props) {
+  const { attemptLinkAsArtist } = props;
+
+  const onSubmit = values => attemptLinkAsArtist(values);
+
+  return <AbstractForm onSubmit={onSubmit} {...formProps} />;
 }
+
+export default connect(null, dispatch => ({
+  attemptLinkAsArtist: values => dispatch(attemptLinkAsArtist(values))
+}))(LinkAsArtistForm);
