@@ -58,7 +58,9 @@ module.exports = {
           return done(new Error("Incorrect email or password"));
 
         const payload = { sub: existingUser.id };
-        const token = jwt.sign(payload, constants.JWT_SECRET);
+        const token = jwt.sign(payload, constants.JWT_SECRET, {
+          expiresIn: 300
+        });
         const data = { email: existingUser.email };
 
         return done(null, token, data);

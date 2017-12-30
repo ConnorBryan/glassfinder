@@ -2,6 +2,7 @@ import { push } from "react-router-redux";
 import axios from "axios";
 
 import config from "../../../config";
+import { setUserData } from "../../../util";
 import {
   displayWarning,
   startLoading,
@@ -79,6 +80,8 @@ export const attemptSignin = (email, password) => async dispatch => {
       dispatch(signinSuccess(account));
       dispatch(setToken(token));
       dispatch(push("/my-account"));
+
+      setUserData(account, token);
     } else {
       dispatch(signinFailure());
       dispatch(

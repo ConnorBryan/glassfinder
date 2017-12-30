@@ -116,7 +116,6 @@ class ExploreShops extends Component {
             )}
           </Segment>
         )}
-        <Transporter />
       </Segment.Group>
     );
   }
