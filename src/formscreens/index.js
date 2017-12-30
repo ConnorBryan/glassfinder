@@ -7,6 +7,7 @@ import SignupForm from "../slices/account/forms/Signup";
 import UpdatePasswordForm from "../slices/account/forms/UpdatePassword";
 import LinkAsShopForm from "../slices/account/forms/LinkAsShop";
 import LinkAsArtistForm from "../slices/account/forms/LinkAsArtist";
+import LinkAsBrandForm from "../slices/account/forms/LinkAsBrand";
 
 // Shops
 import UpdateShopInfoForm from "../slices/shops/forms/UpdateShopInfo";
@@ -15,7 +16,6 @@ import UpdateShopInfoForm from "../slices/shops/forms/UpdateShopInfo";
 import UpdateArtistInfoForm from "../slices/artists/forms/UpdateArtistInfo";
 
 // Brands
-import UpgradeToBrandForm from "../slices/brands/forms/UpgradeToBrand";
 import UpdateBrandInfoForm from "../slices/brands/forms/UpdateBrandInfo";
 import UploadCatalogForm from "../slices/brands/forms/UploadCatalog";
 
@@ -42,6 +42,11 @@ export const BecomeAnArtist = withPageHeader(
   LinkAsArtistForm
 );
 
+export const BecomeABrand = withPageHeader(
+  config.pageHeaders.becomeABrand,
+  LinkAsBrandForm
+);
+
 // Shops
 export const UpdateShopInfo = withPageHeader(
   config.pageHeaders.updateShopInfo,
@@ -55,11 +60,6 @@ export const UpdateArtistInfo = withPageHeader(
 );
 
 // Brands
-export const BecomeABrand = withPageHeader(
-  config.pageHeaders.becomeABrand,
-  UpgradeToBrandForm
-);
-
 export const UpdateBrandInfo = withPageHeader(
   config.pageHeaders.updateBrandInfo,
   UpdateBrandInfoForm

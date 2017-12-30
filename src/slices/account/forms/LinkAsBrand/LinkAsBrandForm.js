@@ -1,13 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
 import Yup from "yup";
 
 import config from "../../../../config";
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../abstracts/AbstractForm";
+import { attemptLinkAsBrand } from "../../redux/actions";
 
-const props = {
+const formProps = {
   icon: config.iconSet.brand,
-  header: "Upgrade to brand",
   fields: [
     {
       name: "name",
@@ -53,12 +54,17 @@ const props = {
         "A brand website must be a valid URL."
       )
     }
-  ],
-  onSubmit: values => {
-    alert(`Upgrading to brand with ${JSON.stringify(values, null, 2)}`);
-  }
+  ]
 };
 
-export default function UpgradeToBrandForm() {
-  return <AbstractForm {...props} />;
+function LinkAsBrandForm(props) {
+  const { attemptLinkAsBrand } = props;
+
+  const onSubmit = values => attemptLinkAsBrand(values);
+
+  return <AbstractForm onSubmit={onSubmit} {...formProps} />;
 }
+
+export default connect(null, dispatch => ({
+  attemptLinkAsBrand: values => dispatch(attemptLinkAsBrand(values))
+}))(LinkAsBrandForm);
