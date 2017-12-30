@@ -156,7 +156,7 @@ export const attemptLinkAsShop = values => async (dispatch, getState) => {
     await services.linkAsShop(id, values);
 
     // Display success;
-    dispatch(push("/my-account"));
+    dispatch(attemptSignout());
   } catch (e) {
     dispatch(
       displayWarning({

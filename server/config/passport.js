@@ -61,7 +61,12 @@ module.exports = {
         const token = jwt.sign(payload, constants.JWT_SECRET, {
           expiresIn: 300
         });
-        const data = { id: existingUser.id, email: existingUser.email };
+        const data = {
+          id: existingUser.id,
+          email: existingUser.email,
+          type: existingUser.type,
+          linked: existingUser.linked
+        };
 
         return done(null, token, data);
       } catch (e) {
