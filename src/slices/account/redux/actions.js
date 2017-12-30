@@ -2,7 +2,7 @@ import { push } from "react-router-redux";
 import axios from "axios";
 
 import config from "../../../config";
-import { setUserData } from "../../../util";
+import { setUserData, clearUserData } from "../../../util";
 import {
   displayWarning,
   startLoading,
@@ -86,7 +86,7 @@ export const attemptSignin = (email, password) => async dispatch => {
       dispatch(signinFailure());
       dispatch(
         displayWarning({
-          header: "Unable to sign up",
+          header: "Unable to sign in",
           content: error
         })
       );
@@ -100,6 +100,8 @@ export const attemptSignin = (email, password) => async dispatch => {
 };
 
 export const attemptSignout = () => dispatch => {
+  clearUserData();
+
   dispatch(signout());
   dispatch(clearToken());
   dispatch(push("/"));

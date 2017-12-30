@@ -4,7 +4,8 @@ import {
   START_LOADING,
   STOP_LOADING,
   SHOW_SIDEBAR,
-  HIDE_SIDEBAR
+  HIDE_SIDEBAR,
+  SET_CHECKED_FOR_USER_DATA
 } from "./actions";
 
 export const createReducer = (initialState, handlers) => (
@@ -28,4 +29,8 @@ export const loading = createReducer(false, {
 export const sidebar = createReducer(false, {
   [SHOW_SIDEBAR]: () => true,
   [HIDE_SIDEBAR]: () => false
+});
+
+export const checkedForUserData = createReducer(false, {
+  [SET_CHECKED_FOR_USER_DATA]: () => true
 });

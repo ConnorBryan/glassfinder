@@ -17,3 +17,9 @@ export const getUserData = () => {
 
   return JSON.parse(rawUserData);
 };
+
+export const clearUserData = () => {
+  const { localStorage } = window;
+
+  localStorage.removeItem(LOCALSTORAGE_USER_DATA);
+};

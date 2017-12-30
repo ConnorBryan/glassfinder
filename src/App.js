@@ -13,13 +13,19 @@ import {
 import styled from "styled-components";
 
 import config from "./config";
-import { hideWarning } from "./redux/actions";
+import { hideWarning, checkForUserData } from "./redux/actions";
 import Navigation from "./partials/Navigation";
 import AccountBar from "./partials/AccountBar";
 import Slider from "./partials/Slider";
 import Footer from "./partials/Footer";
 
 class App extends Component {
+  componentDidMount() {
+    const { checkForUserData, checkedForUserData } = this.props;
+
+    if (!checkedForUserData) checkForUserData();
+  }
+
   render() {
     const { route, warning, loading, hideWarning } = this.props;
 
@@ -75,9 +81,11 @@ App.propTypes = {
 export default connect(
   state => ({
     warning: state.warning,
-    loading: state.loading
+    loading: state.loading,
+    checkedForUserData: state.checkedForUserData
   }),
   dispatch => ({
+    checkForUserData: () => dispatch(checkForUserData()),
     hideWarning: () => dispatch(hideWarning())
   })
 )(withRouter(App));
