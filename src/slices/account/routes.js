@@ -7,7 +7,8 @@ import {
   BecomeAnArtist,
   UpdateArtistInfo,
   BecomeABrand,
-  UpdateBrandInfo
+  UpdateBrandInfo,
+  UploadImage
 } from "../../formscreens";
 import MyAccount from "./screens/MyAccount";
 import ViewMyPieces from "./screens/ViewMyPieces";
@@ -67,5 +68,10 @@ export default [
     path: "/my-account/view-my-pieces",
     exact: true,
     component: ViewMyPieces
+  },
+  {
+    path: "/my-account/upload-image",
+    exact: true,
+    component: UploadImage
   }
 ];

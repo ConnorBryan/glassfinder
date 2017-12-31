@@ -209,3 +209,32 @@ export const attemptUpdateInfo = values => async (dispatch, getState) => {
     dispatch(stopLoading());
   }
 };
+
+export const attemptUploadImage = image => async (dispatch, getState) => {
+  try {
+    dispatch(startLoading());
+
+    const { account } = getState();
+
+    if (!account) {
+      dispatch(stopLoading());
+      return dispatch(push("/"));
+    }
+
+    const { id } = account;
+
+    await services.uploadImage(id, image);
+
+    // Display success;
+    dispatch(push("/my-account"));
+  } catch (e) {
+    dispatch(
+      displayWarning({
+        header: "Unable to upload image",
+        content: e.toString()
+      })
+    );
+  } finally {
+    dispatch(stopLoading());
+  }
+};

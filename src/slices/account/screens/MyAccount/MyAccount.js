@@ -43,7 +43,6 @@ function MyAccount(props) {
           />
         </Menu>
       </Segment>
-
       {!linked && (
         <Aux>
           <Segment attached="top" color={config.color}>
@@ -67,7 +66,6 @@ function MyAccount(props) {
           </Segment>
         </Aux>
       )}
-
       {linkedAsShop && (
         <Aux>
           <Segment attached="top" color={config.color}>
@@ -83,6 +81,10 @@ function MyAccount(props) {
                 title="Update shop information"
               />
               <MyAccountItem
+                to="/my-account/upload-image"
+                title="Upload an image"
+              />
+              <MyAccountItem
                 to="/my-account/upload-piece"
                 title="Upload a piece"
               />
@@ -94,7 +96,6 @@ function MyAccount(props) {
           </Segment>
         </Aux>
       )}
-
       {linkedAsArtist && (
         <Aux>
           <Segment attached="top" color={config.color}>
@@ -108,6 +109,10 @@ function MyAccount(props) {
               <MyAccountItem
                 to="/my-account/update-artist-information"
                 title="Update artist information"
+              />
+              <MyAccountItem
+                to="/my-account/upload-image"
+                title="Upload an image"
               />
               <MyAccountItem
                 to="/my-account/upload-piece"
@@ -134,6 +139,10 @@ function MyAccount(props) {
               <MyAccountItem
                 to="/my-account/update-brand-information"
                 title="Update brand information"
+              />
+              <MyAccountItem
+                to="/my-account/upload-image"
+                title="Upload an image"
               />
               <MyAccountItem
                 to="/my-account/upload-catalog"

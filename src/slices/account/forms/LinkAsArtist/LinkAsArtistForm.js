@@ -19,13 +19,6 @@ const formProps = {
       validation: Yup.string().required("An artist name is required.")
     },
     {
-      name: "picture",
-      type: "file",
-      label: "Picture",
-      value: "",
-      validation: Validators.picture
-    },
-    {
       name: "description",
       type: "textarea",
       label: "Description",

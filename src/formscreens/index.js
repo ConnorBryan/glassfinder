@@ -12,6 +12,7 @@ import UpdateShopInfoForm from "../slices/account/forms/UpdateShopInfo";
 import UpdateArtistInfoForm from "../slices/account/forms/UpdateArtistInfo";
 import UpdateBrandInfoForm from "../slices/account/forms/UpdateBrandInfo";
 import UploadCatalogForm from "../slices/account/forms/UploadCatalog";
+import UploadImageForm from "../slices/account/forms/UploadImage";
 
 // Pieces
 import UploadPieceForm from "../slices/pieces/forms/UploadPiece";
@@ -59,6 +60,11 @@ export const UpdateBrandInfo = withPageHeader(
 export const UploadCatalog = withPageHeader(
   config.pageHeaders.uploadCatalog,
   UploadCatalogForm
+);
+
+export const UploadImage = withPageHeader(
+  config.pageHeaders.uploadImage,
+  UploadImageForm
 );
 
 // Pieces
