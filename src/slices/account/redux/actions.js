@@ -17,6 +17,7 @@ export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 export const SIGNIN_FAILURE = "SIGNIN_FAILURE";
 export const SIGNOUT = "SIGNOUT";
 export const SET_TOKEN = "SET_TOKEN";
+export const SET_LINK = "SET_LINK";
 
 // Action Creators
 export const signupSuccess = () => ({ type: SIGNUP_SUCCESS });
@@ -29,6 +30,7 @@ export const signinFailure = () => ({ type: SIGNIN_FAILURE });
 export const signout = () => ({ type: SIGNOUT });
 export const setToken = token => ({ type: SET_TOKEN, payload: { token } });
 export const clearToken = () => setToken(null);
+export const setLink = link => ({ type: SET_LINK, payload: { link } });
 
 // Action Handlers
 export const attemptSignup = (email, password) => async dispatch => {
@@ -175,3 +177,33 @@ export const attemptLinkAsArtist = values => dispatch =>
   dispatch(attemptLinkAs(services.linkAsArtist, values));
 export const attemptLinkAsBrand = values => dispatch =>
   dispatch(attemptLinkAs(services.linkAsBrand, values));
+
+export const attemptUpdateInfo = values => async (dispatch, getState) => {
+  try {
+    dispatch(startLoading());
+
+    const { account } = getState();
+
+    if (!account) {
+      dispatch(stopLoading());
+      return dispatch(push("/"));
+    }
+
+    const { id } = account;
+
+    const link = await services.updateInfo(id, values);
+
+    // Display success.
+    dispatch(setLink(link));
+    dispatch(push("/my-account"));
+  } catch (e) {
+    dispatch(
+      displayWarning({
+        header: "Unable to update shop information",
+        content: e.toString()
+      })
+    );
+  } finally {
+    dispatch(stopLoading());
+  }
+};

@@ -1,6 +1,6 @@
 const passport = require("passport");
 
-const { User, Piece } = require("../models");
+const { User, Shop, Artist, Brand, Piece } = require("../models");
 const constants = require("../config/constants.json");
 const { createSafePassword, confirmPassword } = require("../config/passport");
 const { genericPaginatedRead } = require("./common");
@@ -129,6 +129,57 @@ module.exports = {
       return res.status(200).json({
         success: true,
         message: `Successfully linked user ${id} as ${type}`
+      });
+    } catch (e) {
+      return res.status(500).json({
+        success: false,
+        error: e.toString()
+      });
+    }
+  },
+  update: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { values } = req.body;
+
+      if (!id || !values)
+        return res.status(400).json({
+          success: false,
+          error: "An id and values are required to update information"
+        });
+
+      const parsedValues = JSON.parse(values);
+      const user = await User.findById(+id);
+
+      if (!user) return userNotFoundResponse(res);
+
+      if (!user.linked)
+        return res.status(400).json({
+          success: false,
+          error: "An unlinked user cannot be updated"
+        });
+
+      const { type } = user;
+      const models = {
+        [constants.LINK_TYPES.SHOP]: Shop,
+        [constants.LINK_TYPES.ARTIST]: Artist,
+        [constants.LINK_TYPES.BRAND]: Brand
+      };
+      const Model = models[type];
+      const originalModel = await Model.findOne({ where: { userId: id } });
+
+      if (!originalModel)
+        return res.status(400).json({
+          success: false,
+          error: "User was linked but no link equivalent was found"
+        });
+
+      const updatedModel = await originalModel.update(parsedValues);
+
+      return res.status(200).json({
+        success: true,
+        message: `Successfully updated info for user ${id} as ${type}`,
+        link: updatedModel
       });
     } catch (e) {
       return res.status(500).json({

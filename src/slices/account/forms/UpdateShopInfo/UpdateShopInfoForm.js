@@ -5,6 +5,7 @@ import Yup from "yup";
 import config from "../../../../config";
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../abstracts/AbstractForm";
+import { attemptUpdateInfo } from "../../redux/actions";
 
 const formProps = {
   icon: config.iconSet.shop,
@@ -83,13 +84,10 @@ const formProps = {
         .matches(/^\d{5}(?:[-\s]\d{4})?$/, "A valid ZIP is required.")
         .required("A valid ZIP is required.")
     }
-  ],
-  onSubmit: values => {
-    alert(`Updating shop with ${JSON.stringify(values, null, 2)}`);
-  }
+  ]
 };
 
-function UpdateShopInfoForm({ link }) {
+function UpdateShopInfoForm({ link, attemptUpdateInfo }) {
   if (!link) return null;
 
   const props = {
@@ -100,12 +98,16 @@ function UpdateShopInfoForm({ link }) {
     }))
   };
 
-  return <AbstractForm {...props} />;
+  const onSubmit = values => attemptUpdateInfo(values);
+
+  return <AbstractForm onSubmit={onSubmit} {...props} />;
 }
 
 export default connect(
   state => ({
     link: state.account ? state.account.link : null
   }),
-  null
+  dispatch => ({
+    attemptUpdateInfo: values => dispatch(attemptUpdateInfo(values))
+  })
 )(UpdateShopInfoForm);
