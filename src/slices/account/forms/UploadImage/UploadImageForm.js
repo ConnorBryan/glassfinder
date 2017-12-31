@@ -48,7 +48,7 @@ class UploadImageForm extends Component {
           <Segment attached="top">
             <Card>
               <Card.Content>
-                <Card.Description className="fancy">
+                <Card.Description textAlign="center" className="fancy">
                   Your current image
                 </Card.Description>
               </Card.Content>

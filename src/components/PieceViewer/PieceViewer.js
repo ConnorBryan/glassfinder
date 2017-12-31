@@ -129,61 +129,63 @@ export default class PieceViewer extends Component {
           advance={this.advanceCurrentPiece}
           advanceDisabled={rightNavigationDisabled}
         />
-        <Segment attached="bottom">
-          <Grid>
-            <Grid.Row>
-              <Responsive
-                as={Grid.Column}
-                minWidth={Responsive.onlyTablet.maxWidth}
-                computer={3}
-                largeScreen={3}
-                widescreen={3}
-                stretched
-              >
-                <PieceViewerNavigation
-                  icon="chevron left"
-                  disabled={leftNavigationDisabled}
-                  onClick={
-                    !leftNavigationDisabled ? (
-                      this.regressCurrentPiece
-                    ) : (
-                      undefined
-                    )
-                  }
-                />
-              </Responsive>
-              <Grid.Column
-                mobile={16}
-                tablet={16}
-                computer={10}
-                largeScreen={10}
-                widescreen={10}
-              >
-                <PieceCard fluid linked purchaseLinked {...currentPiece} />
-              </Grid.Column>
-              <Responsive
-                as={Grid.Column}
-                minWidth={Responsive.onlyTablet.maxWidth}
-                computer={3}
-                largeScreen={3}
-                widescreen={3}
-                stretched
-              >
-                <PieceViewerNavigation
-                  icon="chevron right"
-                  disabled={rightNavigationDisabled}
-                  onClick={
-                    !rightNavigationDisabled ? (
-                      this.advanceCurrentPiece
-                    ) : (
-                      undefined
-                    )
-                  }
-                />
-              </Responsive>
-            </Grid.Row>
-          </Grid>
-        </Segment>
+        {pieces.length > 0 && (
+          <Segment attached="bottom">
+            <Grid>
+              <Grid.Row>
+                <Responsive
+                  as={Grid.Column}
+                  minWidth={Responsive.onlyTablet.maxWidth}
+                  computer={3}
+                  largeScreen={3}
+                  widescreen={3}
+                  stretched
+                >
+                  <PieceViewerNavigation
+                    icon="chevron left"
+                    disabled={leftNavigationDisabled}
+                    onClick={
+                      !leftNavigationDisabled ? (
+                        this.regressCurrentPiece
+                      ) : (
+                        undefined
+                      )
+                    }
+                  />
+                </Responsive>
+                <Grid.Column
+                  mobile={16}
+                  tablet={16}
+                  computer={10}
+                  largeScreen={10}
+                  widescreen={10}
+                >
+                  <PieceCard fluid linked purchaseLinked {...currentPiece} />
+                </Grid.Column>
+                <Responsive
+                  as={Grid.Column}
+                  minWidth={Responsive.onlyTablet.maxWidth}
+                  computer={3}
+                  largeScreen={3}
+                  widescreen={3}
+                  stretched
+                >
+                  <PieceViewerNavigation
+                    icon="chevron right"
+                    disabled={rightNavigationDisabled}
+                    onClick={
+                      !rightNavigationDisabled ? (
+                        this.advanceCurrentPiece
+                      ) : (
+                        undefined
+                      )
+                    }
+                  />
+                </Responsive>
+              </Grid.Row>
+            </Grid>
+          </Segment>
+        )}
       </Segment>
     );
   }
