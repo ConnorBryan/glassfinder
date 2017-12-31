@@ -12,8 +12,8 @@ import {
   Dropdown
 } from "semantic-ui-react";
 
-import config from "../config";
-import UploadField from "../components/UploadField";
+import config from "../../config";
+import UploadField from "../../components/UploadField";
 
 const FancyButton = props => <Button as={Fancy} {...props} />;
 

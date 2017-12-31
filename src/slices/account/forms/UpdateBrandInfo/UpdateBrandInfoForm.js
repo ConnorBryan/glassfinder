@@ -1,13 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
 import Yup from "yup";
 
 import config from "../../../../config";
 import * as Validators from "../../../../validators";
-import AbstractUpdateForm from "../../../../abstracts/AbstractUpdateForm";
+import AbstractForm from "../../../../components/AbstractForm";
+import { attemptUpdateInfo } from "../../redux/actions";
 
-const props = {
+const formProps = {
   icon: config.iconSet.brand,
-  header: "Update brand",
   fields: [
     {
       name: "name",
@@ -46,14 +47,30 @@ const props = {
         "A brand website must be a valid URL."
       )
     }
-  ],
-  onSubmit: values => {
-    alert(`Updating shop with ${JSON.stringify(values, null, 2)}`);
-  }
+  ]
 };
 
-export default function UpdateBrandInfoForm({ currentValues }) {
-  return (
-    <AbstractUpdateForm originalProps={props} currentValues={currentValues} />
-  );
+function UpdateBrandInfoForm({ link, attemptUpdateInfo }) {
+  if (!link) return null;
+
+  const props = {
+    ...formProps,
+    fields: formProps.fields.map(prop => ({
+      ...prop,
+      value: link[prop.name] || prop.value
+    }))
+  };
+
+  const onSubmit = values => attemptUpdateInfo(values);
+
+  return <AbstractForm onSubmit={onSubmit} {...props} />;
 }
+
+export default connect(
+  state => ({
+    link: state.account ? state.account.link : null
+  }),
+  dispatch => ({
+    attemptUpdateInfo: values => dispatch(attemptUpdateInfo(values))
+  })
+)(UpdateBrandInfoForm);

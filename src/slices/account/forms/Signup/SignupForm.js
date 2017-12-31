@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 import * as Validators from "../../../../validators";
-import AbstractForm from "../../../../abstracts/AbstractForm";
+import AbstractForm from "../../../../components/AbstractForm";
 import { attemptSignup } from "../../redux/actions";
 
 const formProps = {

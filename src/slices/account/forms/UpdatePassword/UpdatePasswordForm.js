@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import * as Validators from "../../../../validators";
-import AbstractForm from "../../../../abstracts/AbstractForm";
+import AbstractForm from "../../../../components/AbstractForm";
 import { attemptUpdatePassword } from "../../redux/actions";
 
 const formProps = {

@@ -2,7 +2,7 @@ import React from "react";
 import Yup from "yup";
 
 import * as Validators from "../../../../validators";
-import AbstractForm from "../../../../abstracts/AbstractForm";
+import AbstractForm from "../../../../components/AbstractForm";
 
 const props = {
   icon: "puzzle",

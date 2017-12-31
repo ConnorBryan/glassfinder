@@ -1,7 +1,7 @@
 import React from "react";
 import Yup from "yup";
 
-import AbstractForm from "../../../../abstracts/AbstractForm";
+import AbstractForm from "../../../../components/AbstractForm";
 
 const props = {
   icon: "book",

@@ -4,7 +4,7 @@ import Yup from "yup";
 
 import config from "../../../../config";
 import * as Validators from "../../../../validators";
-import AbstractForm from "../../../../abstracts/AbstractForm";
+import AbstractForm from "../../../../components/AbstractForm";
 import { attemptLinkAsBrand } from "../../redux/actions";
 
 const formProps = {
