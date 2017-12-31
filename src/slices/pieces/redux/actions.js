@@ -51,7 +51,6 @@ export const fetchPieces = (page, artificialWait) => async dispatch => {
     dispatch(fetchPiecesSuccess(pieces));
     dispatch(setPiecesTotalPages(totalPages));
   } catch (e) {
-    console.error(e);
     dispatch(fetchPiecesFailure());
     dispatch(
       displayWarning({

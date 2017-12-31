@@ -80,7 +80,7 @@ class ExplorePieces extends Component {
         <Transporter />
         {fetching ? (
           <Segment attached="bottom" textAlign="center">
-            <Loader active={true} inline size="huge">
+            <Loader active inline size="huge">
               Loading...
             </Loader>
           </Segment>
