@@ -8,6 +8,7 @@
   },
   "PLACEHOLDER_IMAGE": "https://placehold.it/400x400",
   "PLACEHOLDER_SITE": "https://google.com",
+  "SPACES_URL": "https://glassfinder-resources.nyc3.digitaloceanspaces.com",
   "POPULATION_COUNT": 3,
   "PIECE_COUNT": 3,
   "DEFAULT_PASSWORD": "111111",

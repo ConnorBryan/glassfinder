@@ -198,6 +198,10 @@ export const attemptUpdateInfo = values => async (dispatch, getState) => {
     // Display success.
     dispatch(setLink(link));
     dispatch(push("/my-account"));
+
+    const { account: updatedAccount, token } = getState();
+
+    setUserData(updatedAccount, token);
   } catch (e) {
     dispatch(
       displayWarning({
@@ -223,10 +227,15 @@ export const attemptUploadImage = image => async (dispatch, getState) => {
 
     const { id } = account;
 
-    await services.uploadImage(id, image);
+    const link = await services.uploadImage(id, image);
 
     // Display success;
+    dispatch(setLink(link));
     dispatch(push("/my-account"));
+
+    const { account: updatedAccount, token } = getState();
+
+    setUserData(updatedAccount, token);
   } catch (e) {
     dispatch(
       displayWarning({

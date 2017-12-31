@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Form, Button, Segment, Icon } from "semantic-ui-react";
+import { Form, Button, Segment, Icon, Card, Image } from "semantic-ui-react";
 import styled from "styled-components";
 
 import config from "../../../../config";
@@ -39,11 +39,24 @@ class UploadImageForm extends Component {
   };
 
   render() {
+    const { image } = this.props;
     const { uploading } = this.state;
 
     return (
       <Segment.Group>
-        <Form as={Segment} attached="top">
+        {image && (
+          <Segment attached="top">
+            <Card>
+              <Card.Content>
+                <Card.Description className="fancy">
+                  Your current image
+                </Card.Description>
+              </Card.Content>
+              <Image src={image} />
+            </Card>
+          </Segment>
+        )}
+        <Form as={Segment} attached={image ? "bottom" : "top"}>
           <UploadField label="Image" onUpload={this.setImage} />
         </Form>
         <Segment attached="bottom" color={config.color}>
@@ -65,9 +78,15 @@ class UploadImageForm extends Component {
   }
 }
 
-export default connect(null, dispatch => ({
-  attemptUploadImage: image => dispatch(attemptUploadImage(image))
-}))(UploadImageForm);
+export default connect(
+  state => ({
+    image:
+      state.account && state.account.linked ? state.account.link.image : null
+  }),
+  dispatch => ({
+    attemptUploadImage: image => dispatch(attemptUploadImage(image))
+  })
+)(UploadImageForm);
 
 /* Styling */
 

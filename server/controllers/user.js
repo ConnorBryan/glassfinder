@@ -1,9 +1,27 @@
 const passport = require("passport");
+const aws = require("aws-sdk");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+const uuid = require("uuid/v4");
 
 const { User, Shop, Artist, Brand, Piece } = require("../models");
 const constants = require("../config/constants.json");
 const { createSafePassword, confirmPassword } = require("../config/passport");
 const { genericPaginatedRead } = require("./common");
+
+const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
+const s3 = new aws.S3({
+  endpoint: spacesEndpoint
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3,
+    bucket: "glassfinder-resources",
+    acl: "public-read",
+    key: (req, file, cb) => cb(null, `${uuid()}-${file.originalname}`)
+  })
+}).single("image");
 
 const userNotFoundResponse = res =>
   res.status(404).json({ success: false, error: "User not found" });
@@ -189,6 +207,61 @@ module.exports = {
         success: true,
         message: `Successfully updated info for user ${id} as ${type}`,
         link: updatedModel
+      });
+    } catch (e) {
+      return res.status(500).json({
+        success: false,
+        error: e.toString()
+      });
+    }
+  },
+  uploadImage: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      if (!id)
+        return res.status(400).json({
+          success: false,
+          error: "An id is required to upload an image"
+        });
+
+      const user = await User.findById(+id);
+
+      if (!user) return userNotFoundResponse(res);
+
+      if (!user.linked)
+        return res.status(400).json({
+          success: false,
+          error: "An unlinked user cannot upload an image"
+        });
+
+      const { type } = user;
+      const models = {
+        [constants.LINK_TYPES.SHOP]: Shop,
+        [constants.LINK_TYPES.ARTIST]: Artist,
+        [constants.LINK_TYPES.BRAND]: Brand
+      };
+      const Model = models[type];
+      const originalModel = await Model.findOne({ where: { userId: id } });
+
+      return upload(req, res, async err => {
+        if (err)
+          return res.status(400).json({
+            success: false,
+            error: err.toString()
+          });
+
+        const { key } = req.file;
+
+        const updatedModel = await originalModel.update({
+          image: `${constants.SPACES_URL}/${key}`
+        });
+
+        return res.status(200).json({
+          success: true,
+          message: `Successfully updated info for user ${id}`,
+          link: updatedModel
+        });
       });
     } catch (e) {
       return res.status(500).json({
