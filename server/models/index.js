@@ -41,6 +41,4 @@ db.Sequelize = Sequelize;
 //   await populate(db);
 // })();
 
-sequelize.sync();
-
 module.exports = db;

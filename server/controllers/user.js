@@ -118,17 +118,26 @@ module.exports = {
 
       if (!user) return userNotFoundResponse(res);
 
-      const linked = await user.linkAs(type, parsedConfig);
+      const link = await user.linkAs(type, parsedConfig);
 
-      if (!linked)
+      if (!link)
         return res.status(400).json({
           success: false,
           error: "An error occurred while linking"
         });
 
+      const data = {
+        id: user.id,
+        email: user.email,
+        type: user.type,
+        linked: true,
+        link
+      };
+
       return res.status(200).json({
         success: true,
-        message: `Successfully linked user ${id} as ${type}`
+        message: `Successfully linked user ${id} as ${type}`,
+        data
       });
     } catch (e) {
       return res.status(500).json({

@@ -155,10 +155,12 @@ const attemptLinkAs = (linkAsService, values) => async (dispatch, getState) => {
 
     const { id } = account;
 
-    await linkAsService(id, values);
+    const updatedAccount = await linkAsService(id, values);
 
     // Display success;
-    dispatch(attemptSignout());
+    dispatch(signinSuccess(updatedAccount));
+    dispatch(setLink(updatedAccount.link));
+    dispatch(push("/my-account"));
   } catch (e) {
     dispatch(
       displayWarning({

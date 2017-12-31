@@ -4,12 +4,14 @@ import constants from "../../../config/";
 
 async function linkAs(id, type, config) {
   const url = `${constants.localApi}/users/${id}/link`;
-  const { data: { success } } = await axios.post(url, {
+  const { data: { success, data: account } } = await axios.post(url, {
     type,
     config
   });
 
   if (!success) throw Error("There was an issue while attempting link.");
+
+  return account;
 }
 
 export async function linkAsShop(id, config) {
