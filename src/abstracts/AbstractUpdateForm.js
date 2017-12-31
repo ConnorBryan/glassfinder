@@ -4,17 +4,16 @@ import PropTypes from "prop-types";
 import AbstractForm from "./AbstractForm";
 
 function AbstractUpdateForm({ originalProps, currentValues }) {
-  originalProps.fields = originalProps.fields.map(field => ({
+  const fields = originalProps.fields.map(field => ({
     ...field,
     value: currentValues[field.name] || field.value
   }));
-
-  return <AbstractForm {...originalProps} />;
+  return <AbstractForm fields={fields} />;
 }
 
 AbstractUpdateForm.propTypes = {
   originalProps: PropTypes.object.isRequired,
-  currentValues: PropTypes.objectOf(PropTypes.string)
+  currentValues: PropTypes.object
 };
 
 AbstractUpdateForm.defaultProps = {

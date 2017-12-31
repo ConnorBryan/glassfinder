@@ -73,6 +73,7 @@ function AbstractForm(props) {
                       placeholder={inputProps.placeholder}
                       search
                       selection
+                      value={inputProps.value}
                       options={inputProps.options}
                       onChange={handleSelect}
                     />
@@ -135,7 +136,6 @@ function AbstractForm(props) {
 
 AbstractForm.propTypes = {
   icon: PropTypes.string,
-  header: PropTypes.string,
   fields: PropTypes.arrayOf(PropTypes.object),
   validate: PropTypes.func,
   onSubmit: PropTypes.func
@@ -143,7 +143,6 @@ AbstractForm.propTypes = {
 
 AbstractForm.defaultProps = {
   icon: "",
-  header: "",
   description: "",
   fields: [],
   validate: values => true,

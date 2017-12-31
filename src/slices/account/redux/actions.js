@@ -140,7 +140,7 @@ export const attemptUpdatePassword = (currentPassword, newPassword) => async (
   }
 };
 
-const attemptLinkAs = (values, linkAsService) => async (dispatch, getState) => {
+const attemptLinkAs = (linkAsService, values) => async (dispatch, getState) => {
   try {
     dispatch(startLoading());
 
@@ -170,8 +170,8 @@ const attemptLinkAs = (values, linkAsService) => async (dispatch, getState) => {
 };
 
 export const attemptLinkAsShop = values => dispatch =>
-  dispatch(attemptLinkAs(values, services.linkAsShop));
+  dispatch(attemptLinkAs(services.linkAsShop, values));
 export const attemptLinkAsArtist = values => dispatch =>
-  dispatch(attemptLinkAs(values, services.linkAsArtist));
+  dispatch(attemptLinkAs(services.linkAsArtist, values));
 export const attemptLinkAsBrand = values => dispatch =>
-  dispatch(attemptLinkAs(values, services.linkAsBrand));
+  dispatch(attemptLinkAs(services.linkAsBrand, values));

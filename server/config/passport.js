@@ -57,6 +57,9 @@ module.exports = {
         if (!passwordsMatch)
           return done(new Error("Incorrect email or password"));
 
+        const link = existingUser.linked
+          ? await existingUser.fetchLink()
+          : null;
         const payload = { sub: existingUser.id };
         const token = jwt.sign(payload, constants.JWT_SECRET, {
           expiresIn: 300
@@ -65,7 +68,8 @@ module.exports = {
           id: existingUser.id,
           email: existingUser.email,
           type: existingUser.type,
-          linked: existingUser.linked
+          linked: existingUser.linked,
+          link
         };
 
         return done(null, token, data);

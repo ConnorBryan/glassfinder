@@ -37,6 +37,22 @@ module.exports = (sequelize, DataTypes) => {
     return await associate();
   };
 
+  User.prototype.fetchLink = async function() {
+    const { id: userId, linked, type } = this;
+
+    if (!linked || !type)
+      throw Error(`Cannot fetchLink on a user with no type or link`);
+
+    const models = {
+      [constants.LINK_TYPES.SHOP]: sequelize.model("Shop"),
+      [constants.LINK_TYPES.ARTIST]: sequelize.model("Artist"),
+      [constants.LINK_TYPES.BRAND]: sequelize.model("Brand")
+    };
+    const Model = models[type];
+
+    return await Model.findOne({ where: { userId } });
+  };
+
   return User;
 };
 

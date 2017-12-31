@@ -1,13 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 import Yup from "yup";
 
 import config from "../../../../config";
 import * as Validators from "../../../../validators";
-import AbstractUpdateForm from "../../../../abstracts/AbstractUpdateForm";
+import AbstractForm from "../../../../abstracts/AbstractForm";
 
-const props = {
+const formProps = {
   icon: config.iconSet.shop,
-  header: "Update shop",
   fields: [
     {
       name: "name",
@@ -89,8 +89,23 @@ const props = {
   }
 };
 
-export default function UpdateShopInfoForm({ currentValues }) {
-  return (
-    <AbstractUpdateForm originalProps={props} currentValues={currentValues} />
-  );
+function UpdateShopInfoForm({ link }) {
+  if (!link) return null;
+
+  const props = {
+    ...formProps,
+    fields: formProps.fields.map(prop => ({
+      ...prop,
+      value: link[prop.name] || prop.value
+    }))
+  };
+
+  return <AbstractForm {...props} />;
 }
+
+export default connect(
+  state => ({
+    link: state.account ? state.account.link : null
+  }),
+  null
+)(UpdateShopInfoForm);
