@@ -1,14 +1,4 @@
-const nodemailer = require("nodemailer");
-const mailgun = require("nodemailer-mailgun-transport");
-
-const auth = {
-  auth: {
-    api_key: "",
-    domain: "sandboxb1e1fc4bcc2d4209b92f227ca03efaa9.mailgun.org"
-  }
-};
-const authSettings = mailgun(auth);
-const transporter = nodemailer.createTransport(authSettings);
+const { transporter } = require("../util");
 
 module.exports = {
   send: async (req, res) => {
@@ -28,16 +18,15 @@ module.exports = {
     };
 
     return transporter.sendMail(mailOptions, (err, info) => {
-      if (err)
-        return res.status(500).json({
-          success: false,
-          error: err.toString()
-        });
-
-      return res.status(200).json({
-        success: true,
-        message: "Successfully sent a contact message"
-      });
+      return err
+        ? res.status(500).json({
+            success: false,
+            error: err.toString()
+          })
+        : res.status(200).json({
+            success: true,
+            message: "Successfully sent a contact message"
+          });
     });
   }
 };

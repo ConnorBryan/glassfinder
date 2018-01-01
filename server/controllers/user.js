@@ -5,11 +5,11 @@ const multerS3 = require("multer-s3");
 const uuid = require("uuid/v4");
 
 const { User, Shop, Artist, Brand, Piece } = require("../models");
-const constants = require("../config/constants.json");
+const constants = require("../config/constants");
 const { createSafePassword, confirmPassword } = require("../config/passport");
 const { genericPaginatedRead } = require("./common");
 
-const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
+const spacesEndpoint = new aws.Endpoint(constants.SPACES_ENDPOINT);
 const s3 = new aws.S3({
   endpoint: spacesEndpoint
 });
@@ -17,7 +17,7 @@ const s3 = new aws.S3({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: "glassfinder-resources",
+    bucket: constants.BUCKET,
     acl: "public-read",
     key: (req, file, cb) => cb(null, `${uuid()}-${file.originalname}`)
   })

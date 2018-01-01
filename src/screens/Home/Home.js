@@ -5,8 +5,8 @@ import styled from "styled-components";
 
 import config from "../../config";
 import Update from "../../components/Update";
+import HeroCard from "../../components/HeroCard";
 import withPageHeader from "../../components/withPageHeader";
-import HeroCard from "./components/HeroCard";
 
 function Home(props) {
   return (

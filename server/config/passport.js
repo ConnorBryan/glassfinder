@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
 const LocalStrategy = require("passport-local").Strategy;
 
-const constants = require("../config/constants.json");
+const constants = require("../config/constants");
 const { User } = require("../models");
 
 module.exports = {

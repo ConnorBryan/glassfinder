@@ -3,7 +3,7 @@ import axios from "axios";
 import constants from "../../../config/";
 
 async function linkAs(id, type, config) {
-  const url = `${constants.localApi}/users/${id}/link`;
+  const url = `${constants.api}/users/${id}/link`;
   const { data: { success, data: account } } = await axios.post(url, {
     type,
     config

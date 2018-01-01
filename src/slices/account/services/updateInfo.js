@@ -3,7 +3,7 @@ import axios from "axios";
 import constants from "../../../config/";
 
 export default async function updateInfo(id, values) {
-  const url = `${constants.localApi}/users/${id}`;
+  const url = `${constants.api}/users/${id}`;
   const { data: { success, link } } = await axios.post(url, {
     values: JSON.stringify(values)
   });

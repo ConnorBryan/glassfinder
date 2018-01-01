@@ -1,4 +1,4 @@
-const constants = require("../config/constants.json");
+const constants = require("../config/constants");
 const db = require("./index");
 
 module.exports = (sequelize, DataTypes) => {

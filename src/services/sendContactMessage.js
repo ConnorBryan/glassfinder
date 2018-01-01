@@ -3,7 +3,7 @@ import axios from "axios";
 import constants from "../config";
 
 export default async function sendContactMessage(name, email, message) {
-  const url = `${constants.localApi}/contact`;
+  const url = `${constants.api}/contact`;
   const { data: { success } } = await axios.post(url, {
     name,
     email,

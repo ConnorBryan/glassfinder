@@ -1,4 +1,4 @@
-const constants = require("../config/constants.json");
+const constants = require("../config/constants");
 
 async function genericPaginatedRead(req, res, Model, singular, plural) {
   try {

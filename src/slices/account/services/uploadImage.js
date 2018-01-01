@@ -7,7 +7,7 @@ export default async function uploadImage(id, image) {
 
   formData.append("image", image);
 
-  const url = `${constants.localApi}/users/${id}/upload-image`;
+  const url = `${constants.api}/users/${id}/upload-image`;
   const { data: { success, link } } = await axios.post(url, formData);
 
   if (!success)

@@ -26,7 +26,7 @@ export default {
     piece: "puzzle"
   },
   color: "blue",
-  localApi: "http://localhost:6166",
+  api: process.env.REACT_APP_API,
   warningFlashTimeout: 5000,
   placeholderImage: "https://placehold.it/400x400",
   arbitraryWaitForTryingAgain: 1200,

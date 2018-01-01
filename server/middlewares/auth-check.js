@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const constants = require("../config/constants.json");
+const constants = require("../config/constants");
 const { User } = require("../models");
 
 module.exports = (req, res, next) => {

@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt-nodejs");
 const chance = new (require("chance"))();
 const _ = require("lodash");
 
-const constants = require("../config/constants.json");
+const constants = require("../config/constants");
 
 module.exports = async function({ User, Shop, Artist, Brand, Piece }) {
   /*

@@ -39,7 +39,7 @@ export const attemptSignup = (email, password) => async dispatch => {
 
     const {
       data: { success, error }
-    } = await axios.post(`${config.localApi}/signup`, {
+    } = await axios.post(`${config.api}/signup`, {
       email,
       password
     });
@@ -72,7 +72,7 @@ export const attemptSignin = (email, password) => async dispatch => {
 
     const {
       data: { success, error, token, data: account }
-    } = await axios.post(`${config.localApi}/signin`, {
+    } = await axios.post(`${config.api}/signin`, {
       email,
       password
     });
