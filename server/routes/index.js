@@ -3,7 +3,8 @@ const {
   shop: ShopController,
   artist: ArtistController,
   brand: BrandController,
-  piece: PieceController
+  piece: PieceController,
+  contact: ContactController
 } = require("../controllers");
 
 module.exports = app => {
@@ -30,4 +31,6 @@ module.exports = app => {
 
   app.get("/pieces/", PieceController.read);
   app.get("/pieces/:id", PieceController.read);
+
+  app.post("/contact", ContactController.send);
 };

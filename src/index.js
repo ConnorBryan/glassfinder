@@ -20,7 +20,7 @@ const history = createHistory();
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunk, routerMiddleware(history))
+  applyMiddleware(routerMiddleware(history), thunk)
 );
 
 ReactDOM.render(

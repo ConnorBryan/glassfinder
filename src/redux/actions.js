@@ -1,5 +1,8 @@
+import { push } from "react-router-redux";
+
 import { getUserData } from "../util";
 import { signinSuccess, setToken } from "../slices/account/redux/actions";
+import services from "../services";
 
 // Actions
 export const DISPLAY_WARNING = "DISPLAY_WARNING";
@@ -39,4 +42,24 @@ export const checkForUserData = () => dispatch => {
 
   dispatch(signinSuccess(account));
   dispatch(setToken(token));
+};
+
+export const sendContactMessage = (name, email, message) => async dispatch => {
+  try {
+    dispatch(startLoading());
+
+    await services.sendContactMessage(name, email, message);
+
+    // Display success;
+    dispatch(push("/"));
+  } catch (e) {
+    dispatch(
+      displayWarning({
+        header: "Unable to send contact message",
+        content: e.toString()
+      })
+    );
+  } finally {
+    dispatch(stopLoading());
+  }
 };
