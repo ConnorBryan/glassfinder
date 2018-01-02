@@ -5,6 +5,7 @@ import About from "../screens/About";
 import Contact from "../screens/Contact";
 import TermsAndConditions from "../screens/TermsAndConditions";
 import PrivacyPolicy from "../screens/PrivacyPolicy";
+import Verify from "../screens/Verify";
 
 export default [
   {
@@ -41,5 +42,10 @@ export default [
     path: "/privacy-policy",
     exact: true,
     component: PrivacyPolicy
+  },
+  {
+    path: "/verify/:id?/:verificationCode?",
+    exact: true,
+    component: Verify
   }
 ];

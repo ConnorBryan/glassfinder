@@ -37,7 +37,7 @@ module.exports = {
           from: constants.TRANSPORTER_EMAIL_ADDRESS,
           to: email.trim(),
           subject: "Please verify your new Glassfinder account",
-          html: composeMessage(verificationCode)
+          html: composeMessage(newUser.id, verificationCode)
         };
 
         return transporter.sendMail(
@@ -129,11 +129,11 @@ async function confirmPassword(incomingPassword, correctPassword) {
   });
 }
 
-function composeMessage(verificationCode) {
+function composeMessage(id, verificationCode) {
   return `
     <h1>Welcome to Glassfinder!</h1>
     <p>In order to ensure you are a real human being, please click the link below to verify your account.</p>
-    <a href="${constants.URL}/verify?verificationCode=${verificationCode}">Verify my account</a>
+    <a href="${constants.URL}/verify/${id}/${verificationCode}">Verify my account</a>
     <p><em>If you did not sign up for a Glassfinder account, please ignore this message.</em></p>
   `;
 }
