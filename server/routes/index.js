@@ -8,29 +8,29 @@ const {
 } = require("../controllers");
 
 module.exports = app => {
-  app.post("/signup", UserController.signup);
-  app.post("/signin", UserController.signin);
+  app.post("/api/signup", UserController.signup);
+  app.post("/api/signin", UserController.signin);
 
-  app.get("/users/", UserController.read);
-  app.get("/users/:id", UserController.read);
-  app.post("/users/:id", UserController.update);
-  app.get("/users/:id/pieces", UserController.getPiecesForId);
-  app.post("/users/:id/update-password", UserController.updatePassword);
-  app.post("/users/:id/link", UserController.link);
-  app.post("/users/:id/upload-image", UserController.uploadImage);
+  app.get("/api/users/", UserController.read);
+  app.get("/api/users/:id", UserController.read);
+  app.post("/api/users/:id", UserController.update);
+  app.get("/api/users/:id/pieces", UserController.getPiecesForId);
+  app.post("/api/users/:id/update-password", UserController.updatePassword);
+  app.post("/api/users/:id/link", UserController.link);
+  app.post("/api/users/:id/upload-image", UserController.uploadImage);
 
-  app.get("/shops/", ShopController.read);
-  app.get("/shops/:id", ShopController.read);
-  app.get("/shops/:id/pieces", ShopController.getPiecesForId);
+  app.get("/api/shops/", ShopController.read);
+  app.get("/api/shops/:id", ShopController.read);
+  app.get("/api/shops/:id/pieces", ShopController.getPiecesForId);
 
-  app.get("/artists/", ArtistController.read);
-  app.get("/artists/:id", ArtistController.read);
+  app.get("/api/artists/", ArtistController.read);
+  app.get("/api/artists/:id", ArtistController.read);
 
-  app.get("/brands/", BrandController.read);
-  app.get("/brands/:id", BrandController.read);
+  app.get("/api/brands/", BrandController.read);
+  app.get("/api/brands/:id", BrandController.read);
 
-  app.get("/pieces/", PieceController.read);
-  app.get("/pieces/:id", PieceController.read);
+  app.get("/api/pieces/", PieceController.read);
+  app.get("/api/pieces/:id", PieceController.read);
 
-  app.post("/contact", ContactController.send);
+  app.post("/api/contact", ContactController.send);
 };
