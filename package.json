@@ -6,6 +6,7 @@
     "accounting": "^0.4.1",
     "axios": "^0.17.1",
     "bcrypt-nodejs": "^0.0.3",
+    "cypress": "^1.4.1",
     "dotenv": "^4.0.0",
     "formik": "^0.10.5",
     "history": "^4.7.2",

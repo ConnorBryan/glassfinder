@@ -23,3 +23,5 @@ export const clearUserData = () => {
 
   localStorage.removeItem(LOCALSTORAGE_USER_DATA);
 };
+
+export const getIdFromPath = path => path.substr(1, path.length);

@@ -5,16 +5,19 @@ import { Card, Image, Icon, Message } from "semantic-ui-react";
 import styled from "styled-components";
 
 import config from "../../config";
+import { getIdFromPath } from "../../util";
 
-function HeroCard(props) {
+function HeroCard({ icon, image, title, link }) {
+  const id = `visit-${getIdFromPath(link)}`;
+
   return (
-    <Card as={Link} color={config.color} to={props.link} raised>
-      <Image src={props.image} />
+    <Card as={Link} color={config.color} to={link} id={id} raised>
+      <Image src={image} />
       <Card.Content>
         <TextAlign align="center">
           <Card.Header as="h3" className="fancy">
             <BlackText>
-              <Icon name={props.icon} /> {props.title}
+              <Icon name={icon} /> {title}
             </BlackText>
           </Card.Header>
         </TextAlign>

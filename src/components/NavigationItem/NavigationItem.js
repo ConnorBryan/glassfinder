@@ -8,6 +8,7 @@ function NavigationItem(props) {
     <Menu.Item
       icon={props.icon}
       as={Link}
+      id={props.id}
       active={props.active}
       to={props.to}
       content={props.title}
@@ -17,6 +18,7 @@ function NavigationItem(props) {
 }
 
 NavigationItem.propTypes = {
+  id: PropTypes.string,
   icon: PropTypes.string,
   active: PropTypes.bool,
   to: PropTypes.string.isRequired,

@@ -42,7 +42,13 @@ function Home(props) {
       </Item.Group>
       <Message attached="bottom">
         <Button.Group fluid>
-          <Button as={Link} className="fancy" to="/updates" primary>
+          <Button
+            as={Link}
+            className="fancy"
+            to="/updates"
+            id="view-all-updates"
+            primary
+          >
             View all <Icon name="chevron right" />
           </Button>
         </Button.Group>

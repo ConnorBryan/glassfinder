@@ -4,6 +4,7 @@ import { Responsive, Menu, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 
 import config from "../../config";
+import { getIdFromPath } from "../../util";
 import { showSidebar, hideSidebar } from "../../redux/actions";
 import NavigationItem from "../../components/NavigationItem";
 
@@ -15,6 +16,7 @@ function Navigation(props) {
       <NavigationItem
         fancy
         active={activePathname === "/"}
+        id="home"
         to="/"
         title={config.appName}
       />
@@ -42,6 +44,7 @@ function Navigation(props) {
         {config.navigation.map(item => (
           <NavigationItem
             key={item.key}
+            id={getIdFromPath(item.to)}
             active={activePathname === item.to}
             {...item}
           />

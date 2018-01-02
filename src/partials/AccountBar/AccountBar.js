@@ -36,6 +36,7 @@ function AccountBar(props) {
           <Aux>
             <Menu.Item
               as={Link}
+              id="sign-in"
               to="/sign-in"
               active={router.location.pathname === "/sign-in"}
             >
@@ -43,6 +44,7 @@ function AccountBar(props) {
             </Menu.Item>
             <Menu.Item
               as={Link}
+              id="sign-up"
               to="/sign-up"
               active={router.location.pathname === "/sign-up"}
             >
