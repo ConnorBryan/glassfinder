@@ -23,9 +23,11 @@ function AboutItem(props) {
 
 function About(props) {
   return (
-    <Item.Group as={Segment} divided relaxed="very">
-      {config.about.map(about => <AboutItem key={about.key} {...about} />)}
-    </Item.Group>
+    <Segment.Group>
+      <Item.Group as={Segment} basic divided relaxed="very">
+        {config.about.map(about => <AboutItem key={about.key} {...about} />)}
+      </Item.Group>
+    </Segment.Group>
   );
 }
 

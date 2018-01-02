@@ -23,12 +23,12 @@ class Help extends Component {
 
     return (
       <Segment.Group>
-        <Segment attached="top">
+        <Segment basic>
           <Header as="h3" className="fancy">
-            <Icon name="list ul" /> Topics
+            <Icon name="list ul" /> Help Topics
           </Header>
         </Segment>
-        <Segment attached="bottom">
+        <Segment basic>
           <Accordion styled fluid>
             {config.helpTopics.map((topic, index) => (
               <Aux key={topic.key}>

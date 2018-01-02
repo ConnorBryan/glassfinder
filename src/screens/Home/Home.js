@@ -19,18 +19,13 @@ import withPageHeader from "../../components/withPageHeader";
 
 function Home(props) {
   return (
-    <Segment>
-      <Segment
-        as={SplashParallax}
-        bgImage={config.splashImage}
-        strength={400}
-        basic
-      >
+    <Segment basic>
+      <SplashParallax bgImage={config.splashImage} strength={400} basic>
         <Header
           as={VisibleH1}
           content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti eum, labore quidem autem aperiam qui dolor a, error, reprehenderit natus sapiente repellendus libero ipsa, recusandae et rerum amet! Ea, officia?"
         />
-      </Segment>
+      </SplashParallax>
       <Card.Group as={GimmeSomeSpace} stackable itemsPerRow={3}>
         {config.heroes.map(hero => <HeroCard key={hero.key} {...hero} />)}
       </Card.Group>
@@ -60,7 +55,7 @@ export default withPageHeader(config.pageHeaders.home, Home);
 
 /* Styling */
 const SplashParallax = styled(Parallax)`
-  min-height: 25rem;
+  min-height: 30rem;
   display: flex;
   align-items: center;
   justify-content: center;

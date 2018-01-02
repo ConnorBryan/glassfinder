@@ -31,10 +31,8 @@ class App extends Component {
 
     return (
       <Container>
-        <Segment color={config.color}>
-          <Navigation />
-          <AccountBar />
-        </Segment>
+        <Navigation />
+        <AccountBar />
         {warning && (
           <Message
             as={Redlined}
@@ -49,7 +47,7 @@ class App extends Component {
         <Slider />
         <Sidebar.Pusher>
           <Segment
-            as={warning ? Redlined : Segment}
+            as={warning ? Redlined : Derp}
             attached="bottom"
             color={config.color}
           >
@@ -91,6 +89,7 @@ export default connect(
 )(withRouter(App));
 
 // Styling
+const Derp = styled(Segment)`min-height: 80vh !important;`;
 
 const Redlined = styled.div`
   border: 1px solid red !important;

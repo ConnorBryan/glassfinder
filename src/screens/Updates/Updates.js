@@ -7,14 +7,16 @@ import Update from "../../components/Update";
 
 function Updates(props) {
   return (
-    <Item.Group as={Segment} divided relaxed="very" attached="top">
-      <Item>
-        <Item.Header as="h3" className="fancy">
-          <Icon name="newspaper" /> All Updates
-        </Item.Header>
-      </Item>
-      {config.updates.map(update => <Update key={update.key} {...update} />)}
-    </Item.Group>
+    <Segment.Group>
+      <Item.Group as={Segment} basic divided relaxed="very">
+        <Item>
+          <Item.Header as="h3" className="fancy">
+            <Icon name="newspaper" /> All Updates
+          </Item.Header>
+        </Item>
+        {config.updates.map(update => <Update key={update.key} {...update} />)}
+      </Item.Group>
+    </Segment.Group>
   );
 }
 
