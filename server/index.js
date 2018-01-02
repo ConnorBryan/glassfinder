@@ -30,8 +30,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api", authCheckMiddleware);
-
 require("./routes")(app);
 
 app.get("*", (req, res) =>
