@@ -28,12 +28,13 @@ const userNotFoundResponse = res =>
 
 module.exports = {
   signup: async (req, res, next) => {
-    return passport.authenticate("local-signup", err => {
+    return passport.authenticate("local-signup", (err, id) => {
       if (err) return res.json({ success: false, error: err.toString() });
 
       return res.status(200).json({
         success: true,
-        message: "Sign up successful."
+        message: "Sign up successful.",
+        id
       });
     })(req, res, next);
   },
@@ -262,6 +263,55 @@ module.exports = {
           message: `Successfully updated info for user ${id}`,
           link: updatedModel
         });
+      });
+    } catch (e) {
+      return res.status(500).json({
+        success: false,
+        error: e.toString()
+      });
+    }
+  },
+  verify: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { verificationCode } = req.body;
+
+      if (!id || !verificationCode)
+        return res.status(400).json({
+          success: false,
+          error: "An id and a verification code are required to verify a user"
+        });
+
+      const user = await User.findById(+id);
+
+      if (!user) return userNotFoundResponse(res);
+
+      if (user.verified)
+        return res.status(400).json({
+          success: false,
+          error: `User ${id} is already verified`
+        });
+
+      if (!user.verified && !user.verificationCode)
+        return res.status(400).json({
+          success: false,
+          error: `User ${id} is not verified but no verification code is present`
+        });
+
+      if (verificationCode !== user.verificationCode)
+        return res.status(400).json({
+          success: false,
+          error: "The provided verification code was incorrent"
+        });
+
+      await user.update({
+        verified: true,
+        verificationCode: null
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: `Succesfully verified user ${id}`
       });
     } catch (e) {
       return res.status(500).json({

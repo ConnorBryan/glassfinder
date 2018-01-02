@@ -33,16 +33,18 @@ module.exports = {
           type: null
         });
 
+        const { id } = newUser;
+
         const mailOptions = {
           from: constants.TRANSPORTER_EMAIL_ADDRESS,
           to: email.trim(),
           subject: "Please verify your new Glassfinder account",
-          html: composeMessage(newUser.id, verificationCode)
+          html: composeMessage(id, verificationCode)
         };
 
         return transporter.sendMail(
           mailOptions,
-          err => (err ? done(err) : done(null))
+          err => (err ? done(err) : done(id))
         );
       } catch (e) {
         return done(e);

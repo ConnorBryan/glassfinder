@@ -38,7 +38,7 @@ export const attemptSignup = (email, password) => async dispatch => {
     dispatch(startLoading());
 
     const {
-      data: { success, error }
+      data: { success, error, id }
     } = await axios.post(`${config.api}/signup`, {
       email,
       password
@@ -47,7 +47,7 @@ export const attemptSignup = (email, password) => async dispatch => {
     dispatch(stopLoading());
 
     success
-      ? dispatch(push("/"))
+      ? dispatch(push(`/verify/${id}`))
       : dispatch(
           displayWarning({
             header: "Unable to sign up",
