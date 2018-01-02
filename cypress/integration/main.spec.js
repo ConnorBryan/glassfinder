@@ -78,7 +78,7 @@ describe("Glassfinder", () => {
       it("should be navigable", () => ensureNavigable("terms-and-conditions"));
     });
 
-    context("Terms and Conditions", () => {
+    context("Privacy Policy", () => {
       it("should be navigable", () => ensureNavigable("privacy-policy"));
     });
   });

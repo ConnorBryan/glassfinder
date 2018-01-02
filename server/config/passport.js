@@ -1,8 +1,10 @@
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
 const LocalStrategy = require("passport-local").Strategy;
+const uuid = require("uuid/v4");
 
 const constants = require("../config/constants");
+const { transporter } = require("../util");
 const { User } = require("../models");
 
 module.exports = {
@@ -20,16 +22,28 @@ module.exports = {
         if (emailExists)
           return done(new Error(`A user already exists with email ${email}`));
 
+        const verificationCode = uuid();
+
         const newUser = await User.create({
           email: email.trim(),
           password: await createSafePassword(password),
+          verificationCode,
           verified: false,
-          verificationCode: null,
           linked: false,
           type: null
         });
 
-        return done(null);
+        const mailOptions = {
+          from: constants.TRANSPORTER_EMAIL_ADDRESS,
+          to: email.trim(),
+          subject: "Please verify your new Glassfinder account",
+          html: composeMessage(verificationCode)
+        };
+
+        return transporter.sendMail(
+          mailOptions,
+          err => (err ? done(err) : done(null))
+        );
       } catch (e) {
         return done(e);
       }
@@ -49,6 +63,13 @@ module.exports = {
         if (!existingUser)
           return done(new Error("Incorrect email or password"));
 
+        if (!existingUser.verified)
+          return done(
+            new Error(
+              "An unverified account cannot sign in. Please check your inbox for the verification code."
+            )
+          );
+
         const passwordsMatch = await confirmPassword(
           password,
           existingUser.password
@@ -62,7 +83,7 @@ module.exports = {
           : null;
         const payload = { sub: existingUser.id };
         const token = jwt.sign(payload, constants.JWT_SECRET, {
-          expiresIn: 300
+          expiresIn: constants.TOKEN_EXPIRATION
         });
         const data = {
           id: existingUser.id,
@@ -106,4 +127,13 @@ async function confirmPassword(incomingPassword, correctPassword) {
       return err ? reject(err) : resolve(result);
     });
   });
+}
+
+function composeMessage(verificationCode) {
+  return `
+    <h1>Welcome to Glassfinder!</h1>
+    <p>In order to ensure you are a real human being, please click the link below to verify your account.</p>
+    <a href="${constants.URL}/verify?verificationCode=${verificationCode}">Verify my account</a>
+    <p><em>If you did not sign up for a Glassfinder account, please ignore this message.</em></p>
+  `;
 }

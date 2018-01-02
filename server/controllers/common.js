@@ -32,8 +32,6 @@ async function genericPaginatedRead(req, res, Model, singular, plural) {
       });
     }
   } catch (e) {
-    console.error(e);
-
     return res.json({
       success: false,
       error: e.toString()

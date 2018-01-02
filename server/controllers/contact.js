@@ -1,3 +1,4 @@
+const constants = require("../config/constants");
 const { transporter } = require("../util");
 
 module.exports = {
@@ -11,8 +12,8 @@ module.exports = {
       });
 
     const mailOptions = {
-      from: "do_not_reply@glassfinder.com",
-      to: "cchromium@gmail.com",
+      from: constants.TRANSPORTER_EMAIL_ADDRESS,
+      to: constants.CONTACT_EMAIL_ADDRESS,
       subject: `Contact form message from ${email}`,
       html: composeMessage(name, email, message)
     };
