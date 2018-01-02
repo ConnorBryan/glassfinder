@@ -63,3 +63,20 @@ export const sendContactMessage = (name, email, message) => async dispatch => {
     dispatch(stopLoading());
   }
 };
+
+export const verifyCode = (id, verificationCode) => async dispatch => {
+  try {
+    const result = await services.verifyCode(id, verificationCode);
+
+    // Display success;
+    dispatch(push("/sign-in"));
+  } catch (e) {
+    dispatch(
+      displayWarning({
+        header: "Unable to verify code",
+        content: e.toString()
+      })
+    );
+    dispatch(push("/"));
+  }
+};

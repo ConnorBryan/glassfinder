@@ -24,12 +24,14 @@ describe("Glassfinder", () => {
       });
 
       it("should properly link to all three heroes", () => {
-        openBaseUrl();
-        ensureNavigable("visit-explore-shops", "explore-shops");
-        openBaseUrl();
-        ensureNavigable("visit-explore-pieces", "explore-pieces");
-        openBaseUrl();
-        ensureNavigable("visit-explore-brands", "explore-brands");
+        [
+          { id: "visit-explore-shops", include: "explore-shops" },
+          { id: "visit-explore-pieces", include: "explore-pieces" },
+          { id: "visit-explore-brands", include: "explore-brands" }
+        ].forEach(({ id, include }) => {
+          openBaseUrl();
+          ensureNavigable(id, include);
+        });
       });
 
       it("should link to '/updates' when the 'View All' button is pressed", () => {
