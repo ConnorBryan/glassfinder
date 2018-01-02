@@ -1,6 +1,9 @@
 body {
-  background: url(/bg.png);
-  padding: 2rem 0 2rem 0;
+  background: url(/bg.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .fancy {

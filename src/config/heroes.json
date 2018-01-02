@@ -3,21 +3,21 @@
     "key": "A",
     "icon": "cart",
     "link": "/explore-shops",
-    "image": "https://placehold.it/400x400",
+    "image": "/shops.jpg",
     "title": "Shops"
   },
   {
     "key": "B",
     "icon": "puzzle",
     "link": "/explore-pieces",
-    "image": "https://placehold.it/400x400",
+    "image": "/pieces.jpg",
     "title": "Pieces"
   },
   {
     "key": "C",
     "icon": "building",
     "link": "/explore-brands",
-    "image": "https://placehold.it/400x400",
+    "image": "/brands.jpg",
     "title": "Brands"
   }
 ]
