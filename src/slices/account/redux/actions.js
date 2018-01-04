@@ -118,16 +118,11 @@ export const attemptSignout = () => dispatch => {
 export const attemptUpdatePassword = (currentPassword, newPassword) => async (
   dispatch,
   getState
-) => {
-  try {
-    dispatch(startLoading());
-
+) =>
+  requestWith(dispatch, "Unable to update password", async () => {
     const { account } = getState();
 
-    if (!account) {
-      dispatch(stopLoading());
-      return dispatch(push("/"));
-    }
+    if (!account) return redirectHome(dispatch);
 
     const { id } = account;
 
@@ -135,48 +130,22 @@ export const attemptUpdatePassword = (currentPassword, newPassword) => async (
 
     // Display success.
     dispatch(push("/my-account"));
-  } catch (e) {
-    dispatch(
-      displayWarning({
-        header: "Unable to update password",
-        content: e.toString()
-      })
-    );
-  } finally {
-    dispatch(stopLoading());
-  }
-};
+  });
 
-const attemptLinkAs = (linkAsService, values) => async (dispatch, getState) => {
-  try {
-    dispatch(startLoading());
-
+const attemptLinkAs = (linkAsService, values) => async (dispatch, getState) =>
+  requestWith(dispatch, "Unable to link", async () => {
     const { account } = getState();
 
-    if (!account) {
-      dispatch(stopLoading());
-      return dispatch(push("/"));
-    }
+    if (!account) return redirectHome(dispatch);
 
     const { id } = account;
-
     const updatedAccount = await linkAsService(id, values);
 
     // Display success;
     dispatch(signinSuccess(updatedAccount));
     dispatch(setLink(updatedAccount.link));
     dispatch(push("/my-account"));
-  } catch (e) {
-    dispatch(
-      displayWarning({
-        header: "Unable to link account",
-        content: e.toString()
-      })
-    );
-  } finally {
-    dispatch(stopLoading());
-  }
-};
+  });
 
 export const attemptLinkAsShop = values => dispatch =>
   dispatch(attemptLinkAs(services.linkAsShop, values));
@@ -185,19 +154,13 @@ export const attemptLinkAsArtist = values => dispatch =>
 export const attemptLinkAsBrand = values => dispatch =>
   dispatch(attemptLinkAs(services.linkAsBrand, values));
 
-export const attemptUpdateInfo = values => async (dispatch, getState) => {
-  try {
-    dispatch(startLoading());
-
+export const attemptUpdateInfo = values => async (dispatch, getState) =>
+  requestWith(dispatch, "Unable to update info", async () => {
     const { account } = getState();
 
-    if (!account) {
-      dispatch(stopLoading());
-      return dispatch(push("/"));
-    }
+    if (!account) return redirectHome(dispatch);
 
     const { id } = account;
-
     const link = await services.updateInfo(id, values);
 
     // Display success.
@@ -207,28 +170,13 @@ export const attemptUpdateInfo = values => async (dispatch, getState) => {
     const { account: updatedAccount, token } = getState();
 
     setUserData(updatedAccount, token);
-  } catch (e) {
-    dispatch(
-      displayWarning({
-        header: "Unable to update shop information",
-        content: e.toString()
-      })
-    );
-  } finally {
-    dispatch(stopLoading());
-  }
-};
+  });
 
-export const attemptUploadImage = image => async (dispatch, getState) => {
-  try {
-    dispatch(startLoading());
-
+export const attemptUploadImage = image => async (dispatch, getState) =>
+  requestWith(dispatch, "Unable to upload image", async () => {
     const { account } = getState();
 
-    if (!account) {
-      dispatch(stopLoading());
-      return dispatch(push("/"));
-    }
+    if (!account) return redirectHome(dispatch);
 
     const { id } = account;
     const link = await services.uploadImage(id, image);
@@ -240,17 +188,7 @@ export const attemptUploadImage = image => async (dispatch, getState) => {
     const { account: updatedAccount, token } = getState();
 
     setUserData(updatedAccount, token);
-  } catch (e) {
-    dispatch(
-      displayWarning({
-        header: "Unable to upload image",
-        content: e.toString()
-      })
-    );
-  } finally {
-    dispatch(stopLoading());
-  }
-};
+  });
 
 export const attemptUploadPiece = (
   name,
