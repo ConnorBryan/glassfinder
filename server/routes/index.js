@@ -19,6 +19,7 @@ module.exports = app => {
   app.post("/api/users/:id/link", UserController.link);
   app.post("/api/users/:id/upload-image", UserController.uploadImage);
   app.post("/api/users/:id/verify", UserController.verify);
+  app.get("/api/users/:id/my-pieces", UserController.readMyPieces);
 
   app.get("/api/shops/", ShopController.read);
   app.get("/api/shops/:id", ShopController.read);

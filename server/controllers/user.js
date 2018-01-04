@@ -1,7 +1,13 @@
 const passport = require("passport");
 
 const constants = require("../config/constants");
-const { userNotFound } = require("../util");
+const {
+  respondWith,
+  requireVariables,
+  userNotFound,
+  error,
+  success
+} = require("../util");
 const upload = require("../util").upload(constants.USER_BUCKET);
 const { User, Shop, Artist, Brand, Piece } = require("../models");
 const { createSafePassword, confirmPassword } = require("../config/passport");
@@ -300,5 +306,29 @@ module.exports = {
         error: e.toString()
       });
     }
-  }
+  },
+  readMyPieces: (req, res) =>
+    respondWith(res, async () => {
+      const { id } = req.params;
+      const { page } = req.query;
+
+      requireVariables(["id", "page"], [id, page]);
+
+      const coercedPage = +(page || 0);
+      const limit = constants.MODEL_READ_LIMIT;
+      const offset = coercedPage * limit;
+      const { count, rows: pieces } = await Piece.findAndCountAll({
+        where: { userId: +id },
+        offset,
+        limit,
+        $sort: { id: 1 }
+      });
+      const pages = Math.ceil(count / limit);
+      console.log("HIT");
+      return success(res, `Successfully read pieces for User#${id}`, {
+        count,
+        pages,
+        pieces
+      });
+    })
 };

@@ -23,6 +23,7 @@ export const SIGNIN_FAILURE = "SIGNIN_FAILURE";
 export const SIGNOUT = "SIGNOUT";
 export const SET_TOKEN = "SET_TOKEN";
 export const SET_LINK = "SET_LINK";
+export const SET_MY_PIECES = "SET_MY_PIECES";
 
 // Action Creators
 export const signupSuccess = () => ({ type: SIGNUP_SUCCESS });
@@ -36,6 +37,10 @@ export const signout = () => ({ type: SIGNOUT });
 export const setToken = token => ({ type: SET_TOKEN, payload: { token } });
 export const clearToken = () => setToken(null);
 export const setLink = link => ({ type: SET_LINK, payload: { link } });
+export const setMyPieces = pieces => ({
+  type: SET_MY_PIECES,
+  payload: { pieces }
+});
 
 // Action Handlers
 export const attemptSignup = (email, password) => async dispatch => {
@@ -208,4 +213,18 @@ export const attemptUploadPiece = (
 
     // Display success.
     dispatch(push("/my-account"));
+  });
+
+export const fetchMyPieces = (page = 0) => async (dispatch, getState) =>
+  requestWith(dispatch, "Unable to fetch pieces", async () => {
+    const { account } = getState();
+
+    if (!account) return redirectHome(dispatch);
+
+    const { id } = account;
+
+    const { pieces } = await services.fetchMyPieces(id, page);
+
+    // Display success;
+    dispatch(setMyPieces(pieces));
   });
