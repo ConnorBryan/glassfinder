@@ -1,15 +1,20 @@
 const constants = require("../config/constants");
+const { respondWith, error, success } = require("../util");
 
-async function genericPaginatedRead(req, res, Model, singular, plural) {
-  try {
+function genericPaginatedRead(req, res, Model, singular, plural) {
+  return respondWith(res, async () => {
     const id = req.params.id;
+    const modelType = capitalize(singular);
 
     if (id) {
       // Fetch one.
       const model = await Model.findById(id);
 
-      return res.json({
-        success: true,
+      if (!model) {
+        return error(res, `${modelType}#${id} does not exist`);
+      }
+
+      return success(res, `Successfully retrieved ${modelType}#${id}`, {
         [singular]: model
       });
     } else {
@@ -24,19 +29,22 @@ async function genericPaginatedRead(req, res, Model, singular, plural) {
       });
       const pages = Math.ceil(count / limit);
 
-      return res.json({
-        success: true,
+      return success(res, `Successfully retrieved ${plural}`, {
         count,
         pages,
         [plural]: models
       });
     }
-  } catch (e) {
-    return res.json({
-      success: false,
-      error: e.toString()
-    });
-  }
+  });
 }
 
 module.exports = { genericPaginatedRead };
+
+/* === */
+
+function capitalize(string) {
+  return string
+    .split("")
+    .map((l, i) => (i === 0 ? l.toUpperCase() : l))
+    .join("");
+}

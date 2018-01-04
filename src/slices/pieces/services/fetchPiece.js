@@ -4,7 +4,7 @@ import constants from "../../../config";
 
 export default async function fetchPiece(id) {
   const url = `${constants.api}/pieces/${id}`;
-  const { data: { piece } } = await axios.get(url);
+  const { data: { payload: { piece } } } = await axios.get(url);
 
   return piece;
 }

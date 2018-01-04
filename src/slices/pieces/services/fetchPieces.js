@@ -5,7 +5,9 @@ import constants from "../../../config";
 export default async function fetchPieces(page = 0) {
   try {
     const url = `${constants.api}/pieces?page=${page}`;
-    const { data: { pieces, pages: totalPages } } = await axios.get(url);
+    const {
+      data: { payload: { pieces, pages: totalPages } }
+    } = await axios.get(url);
 
     return { pieces, totalPages };
   } catch (e) {
