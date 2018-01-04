@@ -1,4 +1,5 @@
 const constants = require("../config/constants");
+const { respondWith, requireVariables, error, success } = require("../util");
 const { User, Piece } = require("../models");
 const { genericPaginatedRead } = require("./common");
 
@@ -48,38 +49,3 @@ module.exports = {
   read: async (req, res) =>
     await genericPaginatedRead(req, res, Piece, "piece", "pieces")
 };
-
-async function respondWith(res, func) {
-  try {
-    return await func();
-  } catch (e) {
-    return res.status(500).json({
-      success: false,
-      error: e.toString()
-    });
-  }
-}
-
-function requireVariables(required, actual, cb) {
-  for (let i = 0; i < required.length; i++) {
-    const requirement = required[i];
-    const variable = actual[i];
-
-    if (!variable) throw Error(`Missing required variable > ${requirement}`);
-  }
-}
-
-function error(res, error) {
-  return res.status(400).json({
-    success: false,
-    error
-  });
-}
-
-function success(res, message, payload) {
-  return res.status(200).json({
-    success: true,
-    message,
-    payload
-  });
-}

@@ -1,30 +1,11 @@
 const passport = require("passport");
-const aws = require("aws-sdk");
-const multer = require("multer");
-const multerS3 = require("multer-s3");
-const uuid = require("uuid/v4");
 
-const { User, Shop, Artist, Brand, Piece } = require("../models");
 const constants = require("../config/constants");
+const { userNotFound } = require("../util");
+const upload = require("../util").upload(constants.USER_BUCKET);
+const { User, Shop, Artist, Brand, Piece } = require("../models");
 const { createSafePassword, confirmPassword } = require("../config/passport");
 const { genericPaginatedRead } = require("./common");
-
-const spacesEndpoint = new aws.Endpoint(constants.SPACES_ENDPOINT);
-const s3 = new aws.S3({
-  endpoint: spacesEndpoint
-});
-
-const upload = multer({
-  storage: multerS3({
-    s3,
-    bucket: constants.BUCKET,
-    acl: "public-read",
-    key: (req, file, cb) => cb(null, `${uuid()}-${file.originalname}`)
-  })
-}).single("image");
-
-const userNotFoundResponse = res =>
-  res.status(404).json({ success: false, error: "User not found" });
 
 module.exports = {
   signup: async (req, res, next) => {
@@ -92,7 +73,7 @@ module.exports = {
 
       const user = await User.findById(+id);
 
-      if (!user) return userNotFoundResponse(res);
+      if (!user) return userNotFound(res);
 
       const actualPassword = user.password;
       const passwordsMatch = await confirmPassword(
@@ -135,7 +116,7 @@ module.exports = {
       const parsedConfig = JSON.parse(config);
       const user = await User.findById(+id);
 
-      if (!user) return userNotFoundResponse(res);
+      if (!user) return userNotFound(res);
 
       const link = await user.linkAs(type, parsedConfig);
 
@@ -179,7 +160,7 @@ module.exports = {
       const parsedValues = JSON.parse(values);
       const user = await User.findById(+id);
 
-      if (!user) return userNotFoundResponse(res);
+      if (!user) return userNotFound(res);
 
       if (!user.linked)
         return res.status(400).json({
@@ -228,7 +209,7 @@ module.exports = {
 
       const user = await User.findById(+id);
 
-      if (!user) return userNotFoundResponse(res);
+      if (!user) return userNotFound(res);
 
       if (!user.linked)
         return res.status(400).json({
@@ -255,7 +236,7 @@ module.exports = {
         const { key } = req.file;
 
         const updatedModel = await originalModel.update({
-          image: `${constants.SPACES_URL}/${key}`
+          image: `${constants.USER_IMAGES_SPACES_URL}/${key}`
         });
 
         return res.status(200).json({
@@ -284,7 +265,7 @@ module.exports = {
 
       const user = await User.findById(+id);
 
-      if (!user) return userNotFoundResponse(res);
+      if (!user) return userNotFound(res);
 
       if (user.verified)
         return res.status(400).json({
