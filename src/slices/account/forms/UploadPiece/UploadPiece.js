@@ -1,12 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import Yup from "yup";
 
-import * as Validators from "../../../../validators";
 import AbstractForm from "../../../../components/AbstractForm";
+import { attemptUploadPiece } from "../../redux/actions";
 
-const props = {
-  icon: "puzzle",
-  header: "Upload piece",
+const formProps = {
   fields: [
     {
       name: "name",
@@ -15,13 +14,6 @@ const props = {
       placeholder: "Enter name",
       value: "",
       validation: Yup.string().required("A name is required.")
-    },
-    {
-      name: "picture",
-      type: "file",
-      label: "Picture",
-      value: "",
-      validation: Validators.picture
     },
     {
       name: "maker",
@@ -57,12 +49,19 @@ const props = {
       value: "",
       validation: Yup.string().required("A location is required.")
     }
-  ],
-  onSubmit: values => {
-    alert(`Uploading piece with ${JSON.stringify(values, null, 2)}`);
-  }
+  ]
 };
 
-export default function UploadPieceForm() {
-  return <AbstractForm {...props} />;
+function UploadPieceForm(props) {
+  const { attemptUploadPiece } = props;
+
+  const onSubmit = ({ name, maker, price, description, location }) =>
+    attemptUploadPiece(name, maker, price, description, location);
+
+  return <AbstractForm onSubmit={onSubmit} {...formProps} />;
 }
+
+export default connect(null, dispatch => ({
+  attemptUploadPiece: (name, maker, price, description, location) =>
+    dispatch(attemptUploadPiece(name, maker, price, description, location))
+}))(UploadPieceForm);

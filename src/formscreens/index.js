@@ -13,9 +13,7 @@ import UpdateArtistInfoForm from "../slices/account/forms/UpdateArtistInfo";
 import UpdateBrandInfoForm from "../slices/account/forms/UpdateBrandInfo";
 import UploadCatalogForm from "../slices/account/forms/UploadCatalog";
 import UploadImageForm from "../slices/account/forms/UploadImage";
-
-// Pieces
-import UploadPieceForm from "../slices/pieces/forms/UploadPiece";
+import UploadPieceForm from "../slices/account/forms/UploadPiece";
 
 // Account
 export const Signin = withPageHeader(config.pageHeaders.signin, SigninForm);
@@ -67,7 +65,6 @@ export const UploadImage = withPageHeader(
   UploadImageForm
 );
 
-// Pieces
 export const UploadPiece = withPageHeader(
   config.pageHeaders.uploadPiece,
   UploadPieceForm

@@ -2,7 +2,12 @@ import { push } from "react-router-redux";
 import axios from "axios";
 
 import config from "../../../config";
-import { setUserData, clearUserData } from "../../../util";
+import {
+  setUserData,
+  clearUserData,
+  requestWith,
+  redirectHome
+} from "../../../util";
 import {
   displayWarning,
   startLoading,
@@ -226,7 +231,6 @@ export const attemptUploadImage = image => async (dispatch, getState) => {
     }
 
     const { id } = account;
-
     const link = await services.uploadImage(id, image);
 
     // Display success;
@@ -247,3 +251,23 @@ export const attemptUploadImage = image => async (dispatch, getState) => {
     dispatch(stopLoading());
   }
 };
+
+export const attemptUploadPiece = (
+  name,
+  maker,
+  price,
+  description,
+  location
+) => async (dispatch, getState) =>
+  requestWith(dispatch, "Unable to upload piece", async () => {
+    const { account } = getState();
+
+    if (!account) return redirectHome(dispatch);
+
+    const { id } = account;
+
+    await services.uploadPiece(id, name, maker, price, description, location);
+
+    // Display success.
+    dispatch(push("/my-account"));
+  });

@@ -66,7 +66,7 @@ export const sendContactMessage = (name, email, message) => async dispatch => {
 
 export const verifyCode = (id, verificationCode) => async dispatch => {
   try {
-    const result = await services.verifyCode(id, verificationCode);
+    await services.verifyCode(id, verificationCode);
 
     // Display success;
     dispatch(push("/sign-in"));

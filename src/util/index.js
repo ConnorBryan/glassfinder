@@ -25,3 +25,5 @@ export const clearUserData = () => {
 };
 
 export const getIdFromPath = path => path.substr(1, path.length);
+
+export { requestWith, redirectHome } from "./request-response";
