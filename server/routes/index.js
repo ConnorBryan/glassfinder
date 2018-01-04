@@ -32,6 +32,7 @@ module.exports = app => {
 
   app.get("/api/pieces/", PieceController.read);
   app.get("/api/pieces/:id", PieceController.read);
+  app.post("/api/pieces", PieceController.create);
 
   app.post("/api/contact", ContactController.send);
 };
