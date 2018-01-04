@@ -152,27 +152,24 @@ module.exports = {
       });
     }
   },
-  update: async (req, res) => {
-    try {
+  update: async (req, res) =>
+    respondWith(res, async () => {
       const { id } = req.params;
       const { values } = req.body;
 
-      if (!id || !values)
-        return res.status(400).json({
-          success: false,
-          error: "An id and values are required to update information"
-        });
+      requireVariables(["id", "values"], [id, values]);
 
-      const parsedValues = JSON.parse(values);
       const user = await User.findById(+id);
 
-      if (!user) return userNotFound(res);
-
-      if (!user.linked)
-        return res.status(400).json({
-          success: false,
-          error: "An unlinked user cannot be updated"
-        });
+      switch (true) {
+        case !user:
+          return userNotFound(res);
+        case !user.linked:
+          return error(
+            res,
+            "An id and values are required to update information"
+          );
+      }
 
       const { type } = user;
       const models = {
@@ -181,132 +178,83 @@ module.exports = {
         [constants.LINK_TYPES.BRAND]: Brand
       };
       const Model = models[type];
-      const originalModel = await Model.findOne({ where: { userId: id } });
-
-      if (!originalModel)
-        return res.status(400).json({
-          success: false,
-          error: "User was linked but no link equivalent was found"
-        });
-
-      const updatedModel = await originalModel.update(parsedValues);
-
-      return res.status(200).json({
-        success: true,
-        message: `Successfully updated info for user ${id} as ${type}`,
-        link: updatedModel
+      const parsedValues = JSON.parse(values);
+      const updatedModel = await Model.update(parsedValues, {
+        where: { userId: id }
       });
-    } catch (e) {
-      return res.status(500).json({
-        success: false,
-        error: e.toString()
-      });
-    }
-  },
-  uploadImage: async (req, res) => {
-    try {
+
+      return success(
+        res,
+        `Successfully updated info for User#${id} as ${type}`,
+        { link: updatedModel }
+      );
+    }),
+  uploadImage: async (req, res) =>
+    respondWith(res, async () => {
       const { id } = req.params;
 
-      if (!id)
-        return res.status(400).json({
-          success: false,
-          error: "An id is required to upload an image"
-        });
+      requireVariables(["id"], [id]);
 
       const user = await User.findById(+id);
 
-      if (!user) return userNotFound(res);
-
-      if (!user.linked)
-        return res.status(400).json({
-          success: false,
-          error: "An unlinked user cannot upload an image"
-        });
-
-      const { type } = user;
-      const models = {
-        [constants.LINK_TYPES.SHOP]: Shop,
-        [constants.LINK_TYPES.ARTIST]: Artist,
-        [constants.LINK_TYPES.BRAND]: Brand
-      };
-      const Model = models[type];
-      const originalModel = await Model.findOne({ where: { userId: id } });
+      switch (true) {
+        case !user:
+          return userNotFound(res);
+        case !user.linked:
+          return error(res, "An unlinked user cannot upload an image");
+      }
 
       return upload(req, res, async err => {
-        if (err)
-          return res.status(400).json({
-            success: false,
-            error: err.toString()
-          });
+        if (err) return error(res, err);
 
         const { key } = req.file;
+        const { type } = user;
+        const models = {
+          [constants.LINK_TYPES.SHOP]: Shop,
+          [constants.LINK_TYPES.ARTIST]: Artist,
+          [constants.LINK_TYPES.BRAND]: Brand
+        };
+        const Model = models[type];
+        const updatedModel = await Model.update(
+          { image: `${constants.USER_IMAGES_SPACES_URL}/${key}` },
+          { where: { userId: id } }
+        );
 
-        const updatedModel = await originalModel.update({
-          image: `${constants.USER_IMAGES_SPACES_URL}/${key}`
-        });
-
-        return res.status(200).json({
-          success: true,
-          message: `Successfully updated info for user ${id}`,
+        return success(res, `Successfully updated info for User#${id}`, {
           link: updatedModel
         });
       });
-    } catch (e) {
-      return res.status(500).json({
-        success: false,
-        error: e.toString()
-      });
-    }
-  },
-  verify: async (req, res) => {
-    try {
+    }),
+  verify: async (req, res) =>
+    respondWith(res, async () => {
       const { id } = req.params;
       const { verificationCode } = req.body;
 
-      if (!id || !verificationCode)
-        return res.status(400).json({
-          success: false,
-          error: "An id and a verification code are required to verify a user"
-        });
+      requireVariables(["id", "verificationCode"], [id, verificationCode]);
 
       const user = await User.findById(+id);
 
-      if (!user) return userNotFound(res);
-
-      if (user.verified)
-        return res.status(400).json({
-          success: false,
-          error: `User ${id} is already verified`
-        });
-
-      if (!user.verified && !user.verificationCode)
-        return res.status(400).json({
-          success: false,
-          error: `User ${id} is not verified but no verification code is present`
-        });
-
-      if (verificationCode !== user.verificationCode)
-        return res.status(400).json({
-          success: false,
-          error: "The provided verification code was incorrent"
-        });
+      switch (true) {
+        case !user:
+          return userNotFound(res);
+        case user.verified:
+          return error(res, `User#${id} is already verified`);
+        case !user.verified && !user.verificationCode:
+          return error(
+            res,
+            `User#${id} is not verified but no verification code is present`
+          );
+        case verificationCode !== user.verificationCode:
+          return error(res, `The provided verification code was incorrect`);
+      }
 
       await user.update({
         verified: true,
         verificationCode: null
       });
 
-      return res.status(200).json({
-        success: true,
-        message: `Succesfully verified user ${id}`
-      });
-    } catch (e) {
-      return res.status(500).json({
-        success: false,
-        error: e.toString()
-      });
-    }
-  },
+      return success(res, `Successfully verified User#${id}`);
+    }),
   readMyPieces: (req, res) =>
     respondWith(res, async () => {
       const { id } = req.params;
@@ -324,7 +272,7 @@ module.exports = {
         $sort: { id: 1 }
       });
       const pages = Math.ceil(count / limit);
-      console.log("HIT");
+
       return success(res, `Successfully read pieces for User#${id}`, {
         count,
         pages,
