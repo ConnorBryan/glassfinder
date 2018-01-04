@@ -1,5 +1,6 @@
 const constants = require("../config/constants");
 const { respondWith, requireVariables, error, success } = require("../util");
+const upload = require("../util").upload(constants.PIECE_BUCKET);
 const { User, Piece } = require("../models");
 const { genericPaginatedRead } = require("./common");
 
@@ -58,6 +59,29 @@ async function read(req, res) {
 
 function uploadImage(req, res) {
   return respondWith(res, async () => {
-    return success(res, "Derp");
+    const { id } = req.params;
+
+    requireVariables(["id"], [id]);
+
+    const piece = await Piece.findById(+id);
+
+    if (!piece) {
+      return error(res, `Piece#${id} was not found`);
+    }
+
+    return upload(req, res, async err => {
+      if (err) {
+        return error(err.toString());
+      }
+
+      const { file: { key } } = req;
+      const updatedPiece = await piece.update({
+        image: `${constants.PIECE_IMAGES_SPACES_URL}/${key}`
+      });
+
+      return success(req, `Succesfully uploaded an image for Piece#${id}`, {
+        piece: updatedPiece
+      });
+    });
   });
 }
