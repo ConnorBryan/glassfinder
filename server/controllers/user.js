@@ -4,9 +4,10 @@ const constants = require("../config/constants");
 const {
   respondWith,
   requireProperties,
-  userNotFound,
   error,
-  success
+  success,
+  userNotFound,
+  userNotLinked
 } = require("../util");
 const upload = require("../util").upload(constants.USER_BUCKET);
 const { User, Shop, Artist, Brand, Piece } = require("../models");
@@ -197,10 +198,7 @@ function update(req, res) {
       case !user:
         return userNotFound(res);
       case !user.linked:
-        return error(
-          res,
-          "An id and values are required to update information"
-        );
+        return userNotLinked(res);
     }
 
     const parsedValues = JSON.parse(values);
@@ -272,7 +270,7 @@ function uploadImage(req, res) {
       case !user:
         return userNotFound(res);
       case !user.linked:
-        return error(res, "An unlinked user cannot upload an image");
+        return userNotLinked(res);
     }
 
     return upload(req, res, async err => {

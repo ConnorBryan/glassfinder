@@ -4,7 +4,8 @@ const {
   requireProperties,
   error,
   success,
-  userNotFound
+  userNotFound,
+  userNotLinked
 } = require("../util");
 const upload = require("../util").upload(constants.PIECE_BUCKET);
 const { User, Piece } = require("../models");
@@ -37,8 +38,9 @@ function create(req, res) {
     switch (true) {
       case !user:
         return userNotFound(res);
-      case !user.verified:
       case !user.linked:
+        return userNotLinked(res);
+      case !user.verified:
       case user.type === constants.LINK_TYPES.BRAND:
         return error(
           res,

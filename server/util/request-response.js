@@ -25,22 +25,21 @@ module.exports = {
     }
   },
 
-  error(res, error) {
-    return res.status(400).json({
+  error: (res, error) =>
+    res.status(400).json({
       success: false,
       error
-    });
-  },
+    }),
 
-  success(res, message, payload) {
-    return res.status(200).json({
+  success: (res, message, payload) =>
+    res.status(200).json({
       success: true,
       message,
       payload
-    });
-  },
+    }),
 
-  userNotFound(res) {
-    return res.status(404).json({ success: false, error: "User not found" });
-  }
+  userNotFound: res =>
+    res.status(404).json({ success: false, error: "User not found" }),
+  userNotLinked: res =>
+    res.status(400).json({ success: false, error: "User must be linked" })
 };
