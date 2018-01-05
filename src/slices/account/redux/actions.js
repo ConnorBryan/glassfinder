@@ -1,18 +1,11 @@
 import { push } from "react-router-redux";
-import axios from "axios";
 
-import config from "../../../config";
 import {
   setUserData,
   clearUserData,
   requestWith,
   redirectHome
 } from "../../../util";
-import {
-  displayWarning,
-  startLoading,
-  stopLoading
-} from "../../../redux/actions";
 import services from "../services";
 
 // Actions
