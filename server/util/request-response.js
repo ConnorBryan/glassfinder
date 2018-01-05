@@ -10,12 +10,18 @@ module.exports = {
     }
   },
 
-  requireVariables(required, actual) {
-    for (let i = 0; i < required.length; i++) {
-      const requirement = required[i];
-      const variable = actual[i];
+  requireProperties(requirements) {
+    const err = Object.keys(requirements)
+      .map(
+        requirement =>
+          !requirements[requirement] &&
+          `Missing required variable >${requirement}<`
+      )
+      .filter(Boolean)
+      .join("\n");
 
-      if (!variable) throw Error(`Missing required variable > ${requirement}`);
+    if (err.length > 0) {
+      throw Error(err);
     }
   },
 

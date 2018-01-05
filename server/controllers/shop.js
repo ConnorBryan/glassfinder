@@ -1,4 +1,4 @@
-const { respondWith, requireVariables, success } = require("../util");
+const { respondWith, requireProperties, success } = require("../util");
 const { User, Shop, Piece } = require("../models");
 const { genericPaginatedRead } = require("./common");
 
@@ -31,7 +31,7 @@ function fetchPiecesForId(req, res) {
   return respondWith(res, async () => {
     const { id } = req.params;
 
-    requireVariables(["id"], [id]);
+    requireProperties({ id });
 
     const shopId = +id;
     const { userId: shopsUserId } = await Shop.findById(shopId);

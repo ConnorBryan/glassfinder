@@ -3,7 +3,7 @@ const passport = require("passport");
 const constants = require("../config/constants");
 const {
   respondWith,
-  requireVariables,
+  requireProperties,
   userNotFound,
   error,
   success
@@ -85,7 +85,7 @@ function fetchPiecesForId(req, res) {
   return respondWith(res, async () => {
     const { id } = req.params;
 
-    requireVariables(["id"], [id]);
+    requireProperties({ id });
 
     const userId = +id;
     const pieces = await Piece.findAll({ where: { userId } });
@@ -107,7 +107,7 @@ function verify(req, res) {
     const { id } = req.params;
     const { verificationCode } = req.body;
 
-    requireVariables(["id", "verificationCode"], [id, verificationCode]);
+    requireProperties({ id, verificationCode });
 
     const user = await User.findById(+id);
 
@@ -146,7 +146,7 @@ function link(req, res) {
     const { id } = req.params;
     const { type, config } = req.body;
 
-    requireVariables(["id", "type", "config"], [id, type, config]);
+    requireProperties({ id, type, config });
 
     const isValidType = constants.LINK_TYPES[type];
 
@@ -189,7 +189,7 @@ function update(req, res) {
     const { id } = req.params;
     const { values } = req.body;
 
-    requireVariables(["id", "values"], [id, values]);
+    requireProperties({ id, values });
 
     const user = await User.findById(+id);
 
@@ -233,10 +233,7 @@ function updatePassword(req, res) {
     const { id } = req.params;
     const { currentPassword, newPassword } = req.body;
 
-    requireVariables(
-      ["id", "currentPassword", "newPassword"],
-      [id, currentPassword, newPassword]
-    );
+    requireProperties({ id, currentPassword, newPassword });
 
     const user = await User.findById(+id);
 
@@ -267,7 +264,7 @@ function uploadImage(req, res) {
   return respondWith(res, async () => {
     const { id } = req.params;
 
-    requireVariables(["id"], [id]);
+    requireProperties({ id });
 
     const user = await User.findById(+id);
 
@@ -312,7 +309,7 @@ function fetchMyPieces(req, res) {
     const { id } = req.params;
     const { page } = req.query;
 
-    requireVariables(["id", "page"], [id, page]);
+    requireProperties({ id, page });
 
     const coercedPage = +(page || 0);
     const limit = constants.MODEL_READ_LIMIT;

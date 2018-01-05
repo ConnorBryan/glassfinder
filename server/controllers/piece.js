@@ -1,7 +1,7 @@
 const constants = require("../config/constants");
 const {
   respondWith,
-  requireVariables,
+  requireProperties,
   error,
   success,
   userNotFound
@@ -30,10 +30,7 @@ function create(req, res) {
     const { userId } = req.query;
     const { name, description, maker, price, location } = req.body;
 
-    requireVariables(
-      ["userId", "name", "description", "maker", "price", "location"],
-      [userId, name, description, maker, price, location]
-    );
+    requireProperties({ userId, name, description, maker, price, location });
 
     const user = await User.findById(+userId);
 
@@ -88,7 +85,7 @@ function uploadImage(req, res) {
   return respondWith(res, async () => {
     const { id } = req.params;
 
-    requireVariables(["id"], [id]);
+    requireProperties({ id });
 
     const piece = await Piece.findById(+id);
 

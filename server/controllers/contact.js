@@ -2,7 +2,7 @@ const constants = require("../config/constants");
 const {
   transporter,
   respondWith,
-  requireVariables,
+  requireProperties,
   success
 } = require("../util");
 
@@ -22,7 +22,7 @@ function send(req, res) {
   return respondWith(res, async () => {
     const { name, email, message } = req.body;
 
-    requireVariables(["name", "email", "message"], [name, email, message]);
+    requireProperties({ name, email, message });
 
     const mailOptions = {
       from: constants.TRANSPORTER_EMAIL_ADDRESS,
