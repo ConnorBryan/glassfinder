@@ -4,7 +4,7 @@ const { genericPaginatedRead } = require("./common");
 module.exports = {
   read: async (req, res) =>
     await genericPaginatedRead(req, res, Shop, "shop", "shops"),
-  getPiecesForId: async (req, res) => {
+  fetchPiecesForId: async (req, res) => {
     try {
       const id = req.params.id;
 
@@ -12,7 +12,7 @@ module.exports = {
         return res.status(400).json({
           success: false,
           error:
-            "An id is required as a req.params property for Shop#getPiecesforId "
+            "An id is required as a req.params property for Shop#fetchPiecesForId "
         });
       }
 

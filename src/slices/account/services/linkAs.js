@@ -4,7 +4,9 @@ import constants from "../../../config/";
 
 async function linkAs(id, type, config) {
   const url = `${constants.api}/users/${id}/link`;
-  const { data: { success, data: account } } = await axios.post(url, {
+  const {
+    data: { success, payload: { data: account } }
+  } = await axios.post(url, {
     type,
     config
   });

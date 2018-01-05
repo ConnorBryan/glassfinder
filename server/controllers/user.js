@@ -14,269 +14,345 @@ const { createSafePassword, confirmPassword } = require("../config/passport");
 const { genericPaginatedRead } = require("./common");
 
 module.exports = {
-  signup: async (req, res, next) => {
-    return passport.authenticate("local-signup", (err, id) => {
-      if (err) return res.json({ success: false, error: err.toString() });
-
-      return res.status(200).json({
-        success: true,
-        message: "Sign up successful.",
-        id
-      });
-    })(req, res, next);
-  },
-  signin: async (req, res, next) => {
-    return passport.authenticate("local-login", (err, token, data) => {
-      if (err) return res.json({ success: false, error: err.toString() });
-
-      return res.status(200).json({
-        success: true,
-        message: "Sign in successful",
-        token,
-        data
-      });
-    })(req, res, next);
-  },
-  read: async (req, res) =>
-    await genericPaginatedRead(req, res, User, "user", "users"),
-  getPiecesForId: async (req, res) => {
-    try {
-      const id = req.params.id;
-
-      if (!id) {
-        return res.status(400).json({
-          success: false,
-          error:
-            "An id is required as a req.params property for User#getPiecesforId "
-        });
-      }
-
-      const userId = +id;
-      const pieces = await Piece.findAll({ where: { userId } });
-
-      return res.status(200).json({
-        success: true,
-        pieces
-      });
-    } catch (e) {
-      return res.status(500).json({
-        success: false,
-        error: e.toString()
-      });
-    }
-  },
-  updatePassword: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { currentPassword, newPassword } = req.body;
-
-      if (!id || !currentPassword || !newPassword)
-        return res.status(400).json({
-          success: false,
-          error:
-            "An id, current password and new password is required to updatePassword"
-        });
-
-      const user = await User.findById(+id);
-
-      if (!user) return userNotFound(res);
-
-      const actualPassword = user.password;
-      const passwordsMatch = await confirmPassword(
-        currentPassword,
-        actualPassword
-      );
-
-      if (!passwordsMatch)
-        return res
-          .status(400)
-          .json({ success: false, error: "Current password was incorrect" });
-
-      user.password = await createSafePassword(newPassword);
-
-      await user.save();
-
-      return res.status(200).json({
-        success: true,
-        message: "Password successfully updated"
-      });
-    } catch (e) {
-      return res.status(500).json({
-        success: false,
-        error: e.toString()
-      });
-    }
-  },
-  link: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { type, config } = req.body;
-      const isValidType = constants.LINK_TYPES[type];
-
-      if (!id || !isValidType || !config)
-        return res.status(400).json({
-          success: false,
-          error: "An id, valid type and config are required to link"
-        });
-
-      const parsedConfig = JSON.parse(config);
-      const user = await User.findById(+id);
-
-      if (!user) return userNotFound(res);
-
-      const link = await user.linkAs(type, parsedConfig);
-
-      if (!link)
-        return res.status(400).json({
-          success: false,
-          error: "An error occurred while linking"
-        });
-
-      const data = {
-        id: user.id,
-        email: user.email,
-        type: user.type,
-        linked: true,
-        link
-      };
-
-      return res.status(200).json({
-        success: true,
-        message: `Successfully linked user ${id} as ${type}`,
-        data
-      });
-    } catch (e) {
-      return res.status(500).json({
-        success: false,
-        error: e.toString()
-      });
-    }
-  },
-  update: async (req, res) =>
-    respondWith(res, async () => {
-      const { id } = req.params;
-      const { values } = req.body;
-
-      requireVariables(["id", "values"], [id, values]);
-
-      const user = await User.findById(+id);
-
-      switch (true) {
-        case !user:
-          return userNotFound(res);
-        case !user.linked:
-          return error(
-            res,
-            "An id and values are required to update information"
-          );
-      }
-
-      const { type } = user;
-      const models = {
-        [constants.LINK_TYPES.SHOP]: Shop,
-        [constants.LINK_TYPES.ARTIST]: Artist,
-        [constants.LINK_TYPES.BRAND]: Brand
-      };
-      const Model = models[type];
-      const parsedValues = JSON.parse(values);
-      const updatedModel = await Model.update(parsedValues, {
-        where: { userId: id }
-      });
-
-      return success(
-        res,
-        `Successfully updated info for User#${id} as ${type}`,
-        { link: updatedModel }
-      );
-    }),
-  uploadImage: async (req, res) =>
-    respondWith(res, async () => {
-      const { id } = req.params;
-
-      requireVariables(["id"], [id]);
-
-      const user = await User.findById(+id);
-
-      switch (true) {
-        case !user:
-          return userNotFound(res);
-        case !user.linked:
-          return error(res, "An unlinked user cannot upload an image");
-      }
-
-      return upload(req, res, async err => {
-        if (err) return error(res, err);
-
-        const { key } = req.file;
-        const { type } = user;
-        const models = {
-          [constants.LINK_TYPES.SHOP]: Shop,
-          [constants.LINK_TYPES.ARTIST]: Artist,
-          [constants.LINK_TYPES.BRAND]: Brand
-        };
-        const Model = models[type];
-        const updatedModel = await Model.update(
-          { image: `${constants.USER_IMAGES_SPACES_URL}/${key}` },
-          { where: { userId: id } }
-        );
-
-        return success(res, `Successfully updated info for User#${id}`, {
-          link: updatedModel
-        });
-      });
-    }),
-  verify: async (req, res) =>
-    respondWith(res, async () => {
-      const { id } = req.params;
-      const { verificationCode } = req.body;
-
-      requireVariables(["id", "verificationCode"], [id, verificationCode]);
-
-      const user = await User.findById(+id);
-
-      switch (true) {
-        case !user:
-          return userNotFound(res);
-        case user.verified:
-          return error(res, `User#${id} is already verified`);
-        case !user.verified && !user.verificationCode:
-          return error(
-            res,
-            `User#${id} is not verified but no verification code is present`
-          );
-        case verificationCode !== user.verificationCode:
-          return error(res, `The provided verification code was incorrect`);
-      }
-
-      await user.update({
-        verified: true,
-        verificationCode: null
-      });
-
-      return success(res, `Successfully verified User#${id}`);
-    }),
-  readMyPieces: (req, res) =>
-    respondWith(res, async () => {
-      const { id } = req.params;
-      const { page } = req.query;
-
-      requireVariables(["id", "page"], [id, page]);
-
-      const coercedPage = +(page || 0);
-      const limit = constants.MODEL_READ_LIMIT;
-      const offset = coercedPage * limit;
-      const { count, rows: pieces } = await Piece.findAndCountAll({
-        where: { userId: +id },
-        offset,
-        limit,
-        $sort: { id: 1 }
-      });
-      const pages = Math.ceil(count / limit);
-
-      return success(res, `Successfully read pieces for User#${id}`, {
-        count,
-        pages,
-        pieces
-      });
-    })
+  signup,
+  signin,
+  read,
+  updatePassword,
+  link,
+  update,
+  uploadImage,
+  verify,
+  fetchMyPieces,
+  fetchPiecesForId
 };
+
+/* === */
+
+/**
+ * @async
+ * @func signup
+ * @desc An aliased wrapper for passport's "local-signup" strategy.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @param {ExpressNext} next 
+ * @returns {number} id - A unique identifier for the newly created User.
+ */
+async function signup(req, res, next) {
+  return passport.authenticate("local-signup", (err, id) => {
+    return err ? error(res, err) : success(res, "Sign up successful", { id });
+  })(req, res, next);
+}
+
+/**
+ * @async
+ * @func signin
+ * @desc An aliased wrapper for passport's "local-login" strategy.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @param {ExpressNext} next
+ * @returns {string} token - A JWT used for accessing restricted resources.
+ * @returns {object} data - Relevant User data for account management.
+ */
+async function signin(req, res, next) {
+  return passport.authenticate("local-login", (err, token, data) => {
+    return err
+      ? error(res, err)
+      : success(res, "Sign in successful", {
+          token,
+          data
+        });
+  })(req, res, next);
+}
+
+/**
+ * @async
+ * @func read
+ * @desc Provides either a single or multiple instances of User.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {User | Array<User>}
+ */
+async function read(req, res) {
+  return await genericPaginatedRead(req, res, User, "user", "users");
+}
+
+/**
+ * @deprecated
+ * @func fetchPiecesForId
+ * @desc Retrieve all pieces related to a particular User.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Array<Piece>}
+ */
+function fetchPiecesForId(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+
+    requireVariables(["id"], [id]);
+
+    const userId = +id;
+    const pieces = await Piece.findAll({ where: { userId } });
+
+    return success(res, `Successfully fetched pieces for User#${userId}`, {
+      pieces
+    });
+  });
+}
+
+/**
+ * @func verify
+ * @desc Elevate the permissions of a new User following email confirmation.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ */
+function verify(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+    const { verificationCode } = req.body;
+
+    requireVariables(["id", "verificationCode"], [id, verificationCode]);
+
+    const user = await User.findById(+id);
+
+    switch (true) {
+      case !user:
+        return userNotFound(res);
+      case user.verified:
+        return error(res, `User#${id} is already verified`);
+      case !user.verified && !user.verificationCode:
+        return error(
+          res,
+          `User#${id} is not verified but no verification code is present`
+        );
+      case verificationCode !== user.verificationCode:
+        return error(res, `The provided verification code was incorrect`);
+    }
+
+    await user.update({
+      verified: true,
+      verificationCode: null
+    });
+
+    return success(res, `Successfully verified User#${id}`);
+  });
+}
+
+/**
+ * @func link
+ * @desc Updates a User in the database to become associated with another Model.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {object} data - User information with the new Model link embedded within.
+ */
+function link(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+    const { type, config } = req.body;
+
+    requireVariables(["id", "type", "config"], [id, type, config]);
+
+    const isValidType = constants.LINK_TYPES[type];
+
+    if (!isValidType) return error(res, `Invalid type ${type}`);
+
+    const user = await User.findById(+id);
+
+    switch (true) {
+      case !user:
+        return userNotFound(res);
+      case user.linked:
+        return error(res, `User#${id} is already linked as ${user.type}`);
+    }
+
+    const parsedConfig = JSON.parse(config);
+    const link = await user.linkAs(type, parsedConfig);
+    const data = {
+      id: user.id,
+      email: user.email,
+      type: user.type,
+      linked: true,
+      link
+    };
+
+    return success(res, `Successfully linked User#${id} as ${type}`, {
+      data
+    });
+  });
+}
+
+/**
+ * @func update
+ * @desc Potentially updates all safe fields of a User's linked Model with some or all new values.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {object} link - The User's new, updated linked model.
+ */
+function update(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+    const { values } = req.body;
+
+    requireVariables(["id", "values"], [id, values]);
+
+    const user = await User.findById(+id);
+
+    switch (true) {
+      case !user:
+        return userNotFound(res);
+      case !user.linked:
+        return error(
+          res,
+          "An id and values are required to update information"
+        );
+    }
+
+    const parsedValues = JSON.parse(values);
+    const Model = fetchLinkedModel(user);
+
+    await Model.update(parsedValues, {
+      where: { userId: id }
+    });
+
+    const link = await Model.findOne({ where: { userId: id } });
+
+    return success(
+      res,
+      `Successfully updated info for User#${id} as ${user.type}`,
+      {
+        link
+      }
+    );
+  });
+}
+
+/**
+ * @func updatePassword
+ * @desc Adjust the "password" field of a single User.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ */
+function updatePassword(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    requireVariables(
+      ["id", "currentPassword", "newPassword"],
+      [id, currentPassword, newPassword]
+    );
+
+    const user = await User.findById(+id);
+
+    if (!user) return userNotFound(res);
+
+    const { password: actualPassword } = user;
+    const passwordsMatch = await confirmPassword(
+      currentPassword,
+      actualPassword
+    );
+
+    if (!passwordsMatch) return error(res, "Invalid user or password");
+
+    await user.update({ password: await createSafePassword(newPassword) });
+
+    return success(res, "Password successfully updated");
+  });
+}
+
+/**
+ * @func uploadImage
+ * @desc Replace the primary image of a User's linked Model.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {object} link - The User's new, updated linked model.
+ */
+function uploadImage(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+
+    requireVariables(["id"], [id]);
+
+    const user = await User.findById(+id);
+
+    switch (true) {
+      case !user:
+        return userNotFound(res);
+      case !user.linked:
+        return error(res, "An unlinked user cannot upload an image");
+    }
+
+    return upload(req, res, async err => {
+      if (err) return error(res, err);
+
+      const { file: { key } } = req;
+      const Model = fetchLinkedModel(user);
+
+      await Model.update(
+        { image: `${constants.USER_IMAGES_SPACES_URL}/${key}` },
+        { where: { userId: id } }
+      );
+
+      const link = await Model.findOne({ where: { userId: id } });
+
+      return success(res, `Successfully updated info for User#${id}`, {
+        link
+      });
+    });
+  });
+}
+
+/**
+ * @func fetchMyPieces
+ * @desc Retrieve paginated Pieces associated with a given User.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {number} count - How many total Pieces are associated with the User
+ * @returns {number} pages - How many total pages of Pieces there are
+ * @returns {Array<Piece>}
+ */
+function fetchMyPieces(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+    const { page } = req.query;
+
+    requireVariables(["id", "page"], [id, page]);
+
+    const coercedPage = +(page || 0);
+    const limit = constants.MODEL_READ_LIMIT;
+    const offset = coercedPage * limit;
+    const { count, rows: pieces } = await Piece.findAndCountAll({
+      where: { userId: +id },
+      offset,
+      limit,
+      $sort: { id: 1 }
+    });
+    const pages = Math.ceil(count / limit);
+
+    return success(res, `Successfully read pieces for User#${id}`, {
+      count,
+      pages,
+      pieces
+    });
+  });
+}
+
+/* === */
+
+/**
+ * @func fetchLinkedModel
+ * @desc Translates a User's type into a Sequelize Model to use for querying.
+ * @param {string} type
+ * @returns {SequelizeModel} Model
+ */
+function fetchLinkedModel({ type }) {
+  const models = {
+    [constants.LINK_TYPES.SHOP]: Shop,
+    [constants.LINK_TYPES.ARTIST]: Artist,
+    [constants.LINK_TYPES.BRAND]: Brand
+  };
+  const Model = models[type];
+
+  if (!Model) throw Error(`Unable to get linked model with type ${type}`);
+
+  return Model;
+}

@@ -8,7 +8,10 @@ export default async function uploadImage(id, image) {
   formData.append("image", image);
 
   const url = `${constants.api}/users/${id}/upload-image`;
-  const { data: { success, link } } = await axios.post(url, formData);
+  const { data: { success, payload: { link } } } = await axios.post(
+    url,
+    formData
+  );
 
   if (!success)
     throw Error("There was an issue while attempting to upload an image.");

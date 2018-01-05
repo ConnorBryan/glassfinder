@@ -43,74 +43,36 @@ export const setMyPieces = pieces => ({
 });
 
 // Action Handlers
-export const attemptSignup = (email, password) => async dispatch => {
-  try {
-    dispatch(startLoading());
+export const attemptSignup = (email, password) => dispatch =>
+  requestWith(dispatch, "Unable to sign up", async () => {
+    try {
+      const id = await services.signup(email, password);
 
-    const {
-      data: { success, error, id }
-    } = await axios.post(`${config.api}/signup`, {
-      email,
-      password
-    });
+      // Display success.
+      dispatch(signupSuccess());
+      dispatch(push(`/verify/${id}`));
+    } catch (e) {
+      dispatch(signupFailure());
+      throw e;
+    }
+  });
 
-    dispatch(stopLoading());
+export const attemptSignin = (email, password) => dispatch =>
+  requestWith(dispatch, "Unable to sign in", async () => {
+    try {
+      const { account, token } = await services.signin(email, password);
 
-    success
-      ? dispatch(push(`/verify/${id}`))
-      : dispatch(
-          displayWarning({
-            header: "Unable to sign up",
-            content: error
-          })
-        );
-  } catch (e) {
-    dispatch(stopLoading());
+      setUserData(account, token);
 
-    dispatch(
-      displayWarning({
-        header: "Unable to sign up",
-        content: "There was an issue communicating with the server."
-      })
-    );
-  }
-};
-
-export const attemptSignin = (email, password) => async dispatch => {
-  try {
-    dispatch(startLoading());
-
-    const {
-      data: { success, error, token, data: account }
-    } = await axios.post(`${config.api}/signin`, {
-      email,
-      password
-    });
-
-    dispatch(stopLoading());
-
-    if (success) {
+      // Display success.
       dispatch(signinSuccess(account));
       dispatch(setToken(token));
       dispatch(push("/my-account"));
-
-      setUserData(account, token);
-    } else {
+    } catch (e) {
       dispatch(signinFailure());
-      dispatch(
-        displayWarning({
-          header: "Unable to sign in",
-          content: error
-        })
-      );
-      dispatch(push("/"));
+      throw e;
     }
-  } catch (e) {
-    dispatch(stopLoading());
-    dispatch(signinFailure());
-    dispatch(push("/"));
-  }
-};
+  });
 
 export const attemptSignout = () => dispatch => {
   clearUserData();
@@ -159,41 +121,17 @@ export const attemptLinkAsArtist = values => dispatch =>
 export const attemptLinkAsBrand = values => dispatch =>
   dispatch(attemptLinkAs(services.linkAsBrand, values));
 
-export const attemptUpdateInfo = values => async (dispatch, getState) =>
-  requestWith(dispatch, "Unable to update info", async () => {
-    const { account } = getState();
+export const attemptUpdateInfo = values => (dispatch, getState) =>
+  utilizeUpdateService(dispatch, getState, "Unable to update information")(
+    services.updateInfo,
+    values
+  );
 
-    if (!account) return redirectHome(dispatch);
-
-    const { id } = account;
-    const link = await services.updateInfo(id, values);
-
-    // Display success.
-    dispatch(setLink(link));
-    dispatch(push("/my-account"));
-
-    const { account: updatedAccount, token } = getState();
-
-    setUserData(updatedAccount, token);
-  });
-
-export const attemptUploadImage = image => async (dispatch, getState) =>
-  requestWith(dispatch, "Unable to upload image", async () => {
-    const { account } = getState();
-
-    if (!account) return redirectHome(dispatch);
-
-    const { id } = account;
-    const link = await services.uploadImage(id, image);
-
-    // Display success;
-    dispatch(setLink(link));
-    dispatch(push("/my-account"));
-
-    const { account: updatedAccount, token } = getState();
-
-    setUserData(updatedAccount, token);
-  });
+export const attemptUploadImage = image => (dispatch, getState) =>
+  utilizeUpdateService(dispatch, getState, "Unable to upload image")(
+    services.uploadImage,
+    image
+  );
 
 export const attemptUploadPiece = (
   name,
@@ -228,3 +166,24 @@ export const fetchMyPieces = (page = 0) => async (dispatch, getState) =>
     // Display success;
     dispatch(setMyPieces(pieces));
   });
+
+/* === */
+
+export function utilizeUpdateService(dispatch, getState, errorHeader) {
+  return async (service, ...args) =>
+    requestWith(dispatch, errorHeader, async () => {
+      const { account, token } = getState();
+
+      if (!account) return redirectHome(dispatch);
+
+      const { id } = account;
+      const link = await service(id, ...args);
+      const updatedAccount = { ...account, link };
+
+      setUserData(updatedAccount, token);
+
+      // Display success.
+      dispatch(setLink(link));
+      dispatch(push("/my-account"));
+    });
+}

@@ -14,16 +14,16 @@ module.exports = app => {
   app.get("/api/users/", UserController.read);
   app.get("/api/users/:id", UserController.read);
   app.post("/api/users/:id", UserController.update);
-  app.get("/api/users/:id/pieces", UserController.getPiecesForId);
+  app.get("/api/users/:id/pieces", UserController.fetchPiecesForId);
   app.post("/api/users/:id/update-password", UserController.updatePassword);
   app.post("/api/users/:id/link", UserController.link);
   app.post("/api/users/:id/upload-image", UserController.uploadImage);
   app.post("/api/users/:id/verify", UserController.verify);
-  app.get("/api/users/:id/my-pieces", UserController.readMyPieces);
+  app.get("/api/users/:id/my-pieces", UserController.fetchMyPieces);
 
   app.get("/api/shops/", ShopController.read);
   app.get("/api/shops/:id", ShopController.read);
-  app.get("/api/shops/:id/pieces", ShopController.getPiecesForId);
+  app.get("/api/shops/:id/pieces", ShopController.fetchPiecesForId);
 
   app.get("/api/artists/", ArtistController.read);
   app.get("/api/artists/:id", ArtistController.read);
