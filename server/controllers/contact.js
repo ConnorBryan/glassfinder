@@ -1,15 +1,28 @@
 const constants = require("../config/constants");
-const { transporter } = require("../util");
+const {
+  transporter,
+  respondWith,
+  requireVariables,
+  success
+} = require("../util");
 
 module.exports = {
-  send: async (req, res) => {
+  send
+};
+
+/* === */
+
+/**
+ * @func send
+ * @desc Send a contact form message to the specified email address.
+ * @param {ExpressRequest} req 
+ * @param {ExpressRequest} res 
+ */
+function send(req, res) {
+  return respondWith(res, async () => {
     const { name, email, message } = req.body;
 
-    if (!name || !email || !message)
-      return res.status(400).json({
-        success: false,
-        error: `A name, an email and a message are all required to send a contact message.`
-      });
+    requireVariables(["name", "email", "message"], [name, email, message]);
 
     const mailOptions = {
       from: constants.TRANSPORTER_EMAIL_ADDRESS,
@@ -18,23 +31,41 @@ module.exports = {
       html: composeMessage(name, email, message)
     };
 
-    return transporter.sendMail(mailOptions, (err, info) => {
-      return err
-        ? res.status(500).json({
-            success: false,
-            error: err.toString()
-          })
-        : res.status(200).json({
-            success: true,
-            message: "Successfully sent a contact message"
-          });
-    });
-  }
-};
+    const info = await sendMail(transporter, mailOptions);
 
+    return success(res, `Successfully sent a message`);
+  });
+}
+
+/* === */
+
+/**
+ * @func composeMessage
+ * @desc Convenience formatter for nodemailer.
+ * @param {string} name - The recipient's name
+ * @param {string} email - The recipient's email address
+ * @param {string} message - The recipient's comments
+ * @returns {string}
+ */
 function composeMessage(name, email, message) {
   return `
     <h4>Message from <em>${name}</em> (<a href="mailto:${email}">${email}</a>)</h4>
     <p>${message}</p>
   `;
+}
+
+/**
+ * @func sendMail
+ * @desc A promisified version of nodemailer's transporter's sendMail method.
+ * @param {Transporter} transporter 
+ * @param {object} options 
+ * @returns {Promise}
+ */
+function sendMail(transporter, options) {
+  return new Promise((resolve, reject) => {
+    return transporter.sendMail(
+      options,
+      (err, info) => (err ? reject(err) : resolve(info))
+    );
+  });
 }

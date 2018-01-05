@@ -1,37 +1,45 @@
+const { respondWith, requireVariables, success } = require("../util");
 const { User, Shop, Piece } = require("../models");
 const { genericPaginatedRead } = require("./common");
 
 module.exports = {
-  read: async (req, res) =>
-    await genericPaginatedRead(req, res, Shop, "shop", "shops"),
-  fetchPiecesForId: async (req, res) => {
-    try {
-      const id = req.params.id;
-
-      if (!id) {
-        return res.status(400).json({
-          success: false,
-          error:
-            "An id is required as a req.params property for Shop#fetchPiecesForId "
-        });
-      }
-
-      const shopId = +id;
-      const { userId: shopsUserId } = await Shop.findById(shopId);
-      const { id: userId } = await User.findOne({ where: { id: shopsUserId } });
-      const pieces = await Piece.findAll({ where: { userId } });
-
-      return res.status(200).json({
-        success: true,
-        pieces
-      });
-    } catch (e) {
-      console.error(e);
-
-      return res.status(500).json({
-        success: false,
-        error: e.toString()
-      });
-    }
-  }
+  read,
+  fetchPiecesForId
 };
+
+/* === */
+
+/**
+ * @func read
+ * @desc Provides either a single or multiple instances of Shop.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Shop | Array<Shop>}
+ */
+function read(req, res) {
+  return genericPaginatedRead(req, res, Shop, "shop", "shops");
+}
+
+/**
+ * @func fetchPiecesForId
+ * @desc Retrieves all pieces related to a Shop.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Array<Piece>}
+ */
+function fetchPiecesForId(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+
+    requireVariables(["id"], [id]);
+
+    const shopId = +id;
+    const { userId: shopsUserId } = await Shop.findById(shopId);
+    const { id: userId } = await User.findOne({ where: { id: shopsUserId } });
+    const pieces = await Piece.findAll({ where: { userId } });
+
+    return success(res, `Successfully fetched pieces for User#${id}`, {
+      pieces
+    });
+  });
+}

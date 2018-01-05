@@ -1,5 +1,11 @@
 const constants = require("../config/constants");
-const { respondWith, requireVariables, error, success } = require("../util");
+const {
+  respondWith,
+  requireVariables,
+  error,
+  success,
+  userNotFound
+} = require("../util");
 const upload = require("../util").upload(constants.PIECE_BUCKET);
 const { User, Piece } = require("../models");
 const { genericPaginatedRead } = require("./common");
@@ -12,6 +18,13 @@ module.exports = {
 
 /* === */
 
+/**
+ * @func create
+ * @desc Add a new instance of Piece to the database.
+ * @param {ExpressRequest} req 
+ * @param {ExpressRequest} res 
+ * @returns {Piece}
+ */
 function create(req, res) {
   return respondWith(res, async () => {
     const { userId } = req.query;
@@ -24,16 +37,16 @@ function create(req, res) {
 
     const user = await User.findById(+userId);
 
-    if (
-      !user ||
-      !user.verified ||
-      !user.linked ||
-      user.type === constants.LINK_TYPES.BRAND
-    ) {
-      return error(
-        res,
-        `A piece can only upload by a verified, linked user that is not a brand`
-      );
+    switch (true) {
+      case !user:
+        return userNotFound(res);
+      case !user.verified:
+      case !user.linked:
+      case user.type === constants.LINK_TYPES.BRAND:
+        return error(
+          res,
+          `A piece can only upload by a verified, linked user that is not a brand`
+        );
     }
 
     const piece = await Piece.create({
@@ -53,10 +66,24 @@ function create(req, res) {
   });
 }
 
-async function read(req, res) {
-  return await genericPaginatedRead(req, res, Piece, "piece", "pieces");
+/**
+ * @func read
+ * @desc Provides either a single or multiple instances of Piece.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Piece | Array<Piece>}
+ */
+function read(req, res) {
+  return genericPaginatedRead(req, res, Piece, "piece", "pieces");
 }
 
+/**
+ * @func uploadImage
+ * @desc Replace the primary image of a Piece.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Piece | Array<Piece>}
+ */
 function uploadImage(req, res) {
   return respondWith(res, async () => {
     const { id } = req.params;

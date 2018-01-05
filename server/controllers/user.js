@@ -29,7 +29,6 @@ module.exports = {
 /* === */
 
 /**
- * @async
  * @func signup
  * @desc An aliased wrapper for passport's "local-signup" strategy.
  * @param {ExpressRequest} req 
@@ -37,14 +36,13 @@ module.exports = {
  * @param {ExpressNext} next 
  * @returns {number} id - A unique identifier for the newly created User.
  */
-async function signup(req, res, next) {
+function signup(req, res, next) {
   return passport.authenticate("local-signup", (err, id) => {
     return err ? error(res, err) : success(res, "Sign up successful", { id });
   })(req, res, next);
 }
 
 /**
- * @async
  * @func signin
  * @desc An aliased wrapper for passport's "local-login" strategy.
  * @param {ExpressRequest} req 
@@ -53,7 +51,7 @@ async function signup(req, res, next) {
  * @returns {string} token - A JWT used for accessing restricted resources.
  * @returns {object} data - Relevant User data for account management.
  */
-async function signin(req, res, next) {
+function signin(req, res, next) {
   return passport.authenticate("local-login", (err, token, data) => {
     return err
       ? error(res, err)
@@ -65,15 +63,14 @@ async function signin(req, res, next) {
 }
 
 /**
- * @async
  * @func read
  * @desc Provides either a single or multiple instances of User.
  * @param {ExpressRequest} req 
  * @param {ExpressResponse} res 
  * @returns {User | Array<User>}
  */
-async function read(req, res) {
-  return await genericPaginatedRead(req, res, User, "user", "users");
+function read(req, res) {
+  return genericPaginatedRead(req, res, User, "user", "users");
 }
 
 /**
