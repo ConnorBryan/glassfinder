@@ -5760,6 +5760,10 @@ react-scripts@1.0.17:
   optionalDependencies:
     fsevents "1.1.2"
 
+react-simple-parallax@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/react-simple-parallax/-/react-simple-parallax-0.2.6.tgz#d98557796e9b6b723c1230ba1dc8eb42bef50ac3"
+
 react@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
