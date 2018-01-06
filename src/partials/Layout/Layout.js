@@ -102,13 +102,15 @@ function MobileFeatured(props) {
         </Card.Content>
         <Card.Content
           as={Button}
-          extra
           content={buttonContent}
           onClick={buttonOnClick}
-          basic
+          color="blue"
           fluid
-          primary
-        />
+          extra
+        >
+          {buttonContent}
+          <Icon name="chevron right" />
+        </Card.Content>
       </Card>
     </Card.Group>
   );
@@ -137,7 +139,6 @@ function DesktopFeatured(props) {
               onClick={buttonOnClick}
               size="large"
               floated={flipped ? "left" : "right"}
-              basic
               primary
             />
           </Item.Extra>
@@ -214,13 +215,13 @@ function Layout(props) {
       <Segment as={NoPadding} basic>
         <Splash />
       </Segment>
-      <Segment secondary>
+      <Segment as={NoSidePadding} color="blue" secondary>
         <Shops />
       </Segment>
-      <Segment tertiary>
+      <Segment as={NoSidePadding} color="blue" tertiary>
         <Pieces />
       </Segment>
-      <Segment secondary>
+      <Segment as={NoSidePadding} color="blue" secondary>
         <Brands />
       </Segment>
     </Container>
@@ -251,6 +252,11 @@ const Centered = styled.div`
 const Splasher = styled(Centered)`min-height: 60vh !important;`;
 
 const NoPadding = styled.div`padding: 0 !important;`;
+
+const NoSidePadding = styled.div`
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+`;
 
 const Tagline = styled.div`font-size: 3rem !important;`;
 
@@ -283,5 +289,7 @@ const Feature = styled.div`
     margin-top: 1.5rem !important;
     letter-spacing: 0.33rem !important;
     text-transform: uppercase !important;
+    background: #2185d0 !important;
+    color: white !important;
   }
 `;
