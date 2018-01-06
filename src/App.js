@@ -19,6 +19,8 @@ import AccountBar from "./partials/AccountBar";
 import Slider from "./partials/Slider";
 import Footer from "./partials/Footer";
 
+import Layout from "./partials/Layout";
+
 class App extends Component {
   componentDidMount() {
     const { checkForUserData, checkedForUserData } = this.props;
@@ -29,44 +31,7 @@ class App extends Component {
   render() {
     const { route, warning, loading, hideWarning } = this.props;
 
-    return (
-      <Container>
-        <Navigation />
-        <AccountBar />
-        {warning && (
-          <Message
-            as={Redlined}
-            attached="top"
-            onDismiss={hideWarning}
-            negative
-            icon="warning sign"
-            header={warning.header}
-            content={warning.content}
-          />
-        )}
-        <Slider />
-        <Sidebar.Pusher>
-          <Segment
-            as={warning ? Redlined : Derp}
-            attached="bottom"
-            color={config.color}
-          >
-            {loading ? (
-              <TextCenter>
-                <Loader active inline size="large">
-                  Loading...
-                </Loader>
-              </TextCenter>
-            ) : (
-              renderRoutes(route.routes)
-            )}
-          </Segment>
-        </Sidebar.Pusher>
-        <Segment color={config.color}>
-          <Footer />
-        </Segment>
-      </Container>
-    );
+    return <Layout />;
   }
 }
 
