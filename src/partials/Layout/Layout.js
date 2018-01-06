@@ -7,7 +7,9 @@ import {
   Icon,
   Responsive,
   Image,
-  Header
+  Header,
+  Item,
+  Card
 } from "semantic-ui-react";
 import { Parallax } from "react-parallax";
 import styled from "styled-components";
@@ -87,14 +89,139 @@ function Splash(props) {
   );
 }
 
+function MobileFeatured(props) {
+  const { image, title, description, buttonContent, buttonOnClick } = props;
+
+  return (
+    <Card.Group>
+      <Card fluid raised>
+        <Image src={image} />
+        <Card.Content textAlign="center">
+          <Card.Header as="h1">{title}</Card.Header>
+          <Card.Description>{description}</Card.Description>
+        </Card.Content>
+        <Card.Content
+          as={Button}
+          extra
+          content={buttonContent}
+          onClick={buttonOnClick}
+          basic
+          fluid
+          primary
+        />
+      </Card>
+    </Card.Group>
+  );
+}
+
+function DesktopFeatured(props) {
+  const {
+    image,
+    description,
+    title,
+    flipped,
+    buttonContent,
+    buttonOnClick
+  } = props;
+
+  return (
+    <Item.Group>
+      <Item>
+        {!flipped && <Item.Image size="large" src={image} circular />}
+        <Item.Content as={GimmeSomeSpace}>
+          <Item.Header as="h1">{title}</Item.Header>
+          <Item.Description>{description}</Item.Description>
+          <Item.Extra>
+            <Button
+              content={buttonContent}
+              onClick={buttonOnClick}
+              size="large"
+              floated={flipped ? "left" : "right"}
+              basic
+              primary
+            />
+          </Item.Extra>
+        </Item.Content>
+        {flipped && <Item.Image size="large" src={image} circular />}
+      </Item>
+    </Item.Group>
+  );
+}
+
+function Featured(props) {
+  return (
+    <Container>
+      <Feature>
+        <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
+          <MobileFeatured {...props} />
+        </Responsive>
+        <Responsive minWidth={Responsive.onlyTablet.maxWidth}>
+          <DesktopFeatured {...props} />
+        </Responsive>
+      </Feature>
+    </Container>
+  );
+}
+
+function Shops() {
+  const props = {
+    image: "/shops.jpg",
+    title: "Shops",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse.",
+    flipped: false,
+    buttonContent: "Explore shops",
+    buttonOnClick: () => {}
+  };
+
+  return <Featured {...props} />;
+}
+
+function Pieces() {
+  const props = {
+    image: "/pieces.jpg",
+    title: "Pieces",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse.",
+    flipped: true,
+    buttonContent: "Explore pieces",
+    buttonOnClick: () => {}
+  };
+
+  return <Featured {...props} />;
+}
+
+function Brands() {
+  const props = {
+    image: "/brands.jpg",
+    title: "Brands",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse.",
+    flipped: false,
+    buttonContent: "Explore brands",
+    buttonOnClick: () => {}
+  };
+
+  return <Featured {...props} />;
+}
+
 function Layout(props) {
   return (
     <Container as={Segment.Group} fluid>
-      <Segment attached="top" basic>
+      <Segment basic>
         <Navbar />
       </Segment>
-      <Segment as={NoPadding} attached="bottom" basic>
+      <Segment as={NoPadding} basic>
         <Splash />
+      </Segment>
+      <Segment secondary>
+        <Shops />
+      </Segment>
+      <Segment tertiary>
+        <Pieces />
+      </Segment>
+      <Segment secondary>
+        <Brands />
       </Segment>
     </Container>
   );
@@ -115,12 +242,13 @@ const GetStarted = styled.div`
   }
 `;
 
-const Splasher = styled.div`
+const Centered = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 60vh !important;
 `;
+
+const Splasher = styled(Centered)`min-height: 60vh !important;`;
 
 const NoPadding = styled.div`padding: 0 !important;`;
 
@@ -131,3 +259,29 @@ const Subtagline = styled.div`font-size: 1.5rem !important;`;
 const Ghost = styled.div`background: rgba(255, 255, 255, 0.5) !important;`;
 
 const Emphasized = styled.em`color: #2185d0 !important;`;
+
+const GimmeSomeSpace = styled.div`padding-left: 3rem !important;`;
+
+const Feature = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh !important;
+
+  h1 {
+    font-size: 3rem !important;
+    letter-spacing: 0.33rem !important;
+    text-transform: uppercase !important;
+  }
+
+  .description {
+    font-size: 1.5rem !important;
+    line-height: 1.75rem !important;
+  }
+
+  button {
+    margin-top: 1.5rem !important;
+    letter-spacing: 0.33rem !important;
+    text-transform: uppercase !important;
+  }
+`;
