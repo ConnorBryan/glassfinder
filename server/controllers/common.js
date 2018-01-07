@@ -32,6 +32,7 @@ function genericPaginatedRead(req, res, Model, singular, plural) {
       return success(res, `Successfully retrieved ${plural}`, {
         count,
         pages,
+        perPage: constants.MODEL_READ_LIMIT,
         [plural]: models
       });
     }

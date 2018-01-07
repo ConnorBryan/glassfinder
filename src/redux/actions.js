@@ -1,6 +1,6 @@
 import { push } from "react-router-redux";
 
-import { getUserData } from "../util";
+import { getLocalUserData } from "../util";
 import { signinSuccess, setToken } from "../slices/account/redux/actions";
 import services from "../services";
 
@@ -34,7 +34,7 @@ export const setCheckedForUserData = () => ({
 export const checkForUserData = () => dispatch => {
   dispatch(setCheckedForUserData());
 
-  const userData = getUserData();
+  const userData = getLocalUserData();
 
   if (!userData) return;
 

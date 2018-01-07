@@ -1,8 +1,8 @@
 import { push } from "react-router-redux";
 
 import {
-  setUserData,
-  clearUserData,
+  setLocalUserData,
+  clearLocalUserData,
   requestWith,
   redirectHome
 } from "../../../util";
@@ -55,7 +55,7 @@ export const attemptSignin = (email, password) => dispatch =>
     try {
       const { account, token } = await services.signin(email, password);
 
-      setUserData(account, token);
+      setLocalUserData(account, token);
 
       // Display success.
       dispatch(signinSuccess(account));
@@ -68,7 +68,7 @@ export const attemptSignin = (email, password) => dispatch =>
   });
 
 export const attemptSignout = () => dispatch => {
-  clearUserData();
+  clearLocalUserData();
 
   dispatch(signout());
   dispatch(clearToken());
@@ -173,7 +173,7 @@ export function utilizeUpdateService(dispatch, getState, errorHeader) {
       const link = await service(id, ...args);
       const updatedAccount = { ...account, link };
 
-      setUserData(updatedAccount, token);
+      setLocalUserData(updatedAccount, token);
 
       // Display success.
       dispatch(setLink(link));
