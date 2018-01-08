@@ -44,16 +44,19 @@ export const clearLocalUserData = () => clearLocalStorageData(USER_DATA);
 export const MODELS_DATA = "MODELS_DATA";
 
 export const setLocalModelsData = (
+  key,
   models,
   activePage,
   modelsPerPage,
   totalPages
 ) =>
-  setLocalStorageData(MODELS_DATA, {
+  setLocalStorageData(`${key}_${MODELS_DATA}`, {
     models,
     activePage,
     modelsPerPage,
     totalPages
   });
-export const getLocalModelsData = () => getLocalStorageData(MODELS_DATA);
-export const clearLocalModelsData = () => clearLocalStorageData(MODELS_DATA);
+export const getLocalModelsData = key =>
+  getLocalStorageData(`${key}_${MODELS_DATA}`);
+export const clearLocalModelsData = key =>
+  clearLocalStorageData(`${key}_${MODELS_DATA}`);

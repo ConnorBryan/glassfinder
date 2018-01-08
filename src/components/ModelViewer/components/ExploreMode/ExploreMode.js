@@ -49,6 +49,11 @@ function ExploreMode(props) {
     />
   );
 
+  const ModelView = styled.main`
+    margin-bottom: 0 !important;
+    min-height: 70vh;
+  `;
+
   return initiallyFetchedModels ? (
     <Segment.Group as={ModelView}>
       <ModelPagination attached="top" />
@@ -83,9 +88,3 @@ ExploreMode.propTypes = {
 };
 
 export default ExploreMode;
-
-/* Styling */
-const ModelView = styled.main`
-  margin-bottom: 0 !important;
-  min-height: 70vh;
-`;

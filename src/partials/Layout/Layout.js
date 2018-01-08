@@ -12,12 +12,17 @@ import {
   Item,
   Card,
   Grid,
-  Popup
+  Popup,
+  Divider
 } from "semantic-ui-react";
 import { Parallax } from "react-parallax";
 import styled from "styled-components";
+import Aux from "react-aux";
 
-import services from "../../slices/shops/services";
+import shopServices from "../../slices/shops/services";
+import artistServices from "../../slices/artists/services";
+import brandServices from "../../slices/brands/services";
+import pieceServices from "../../slices/pieces/services";
 import ModelViewer from "../../components/ModelViewer";
 
 // Navbar
@@ -212,126 +217,229 @@ function Brands() {
 }
 
 // Layout
+function renderGenericTile(models, loadDetailsModeFromExploreMode) {
+  const topRow = [models[0], models[1], models[2]].filter(x => x);
+  const bottomRow = [models[3], models[4], models[5]].filter(x => x);
+  const Row = ({ models }) => (
+    <Grid.Row>
+      {models.map((model, index) => {
+        if (model) {
+          const TileCard = (
+            <Card
+              onClick={() => loadDetailsModeFromExploreMode(model.id)}
+              centered
+            >
+              <Image src={model.image} />
+            </Card>
+          );
+
+          const TilePopup = () => (
+            <Popup trigger={TileCard} inverted>
+              <Popup.Header content={model.name} />
+              <Popup.Content content={model.description} />
+            </Popup>
+          );
+
+          return (
+            <Grid.Column key={index}>
+              <TilePopup />
+            </Grid.Column>
+          );
+        }
+      })}
+    </Grid.Row>
+  );
+
+  return (
+    <Grid columns={3}>
+      <Row models={topRow} />
+      <Row models={bottomRow} />
+    </Grid>
+  );
+}
+
+function renderGenericItem(models, loadDetailsModeFromExploreMode) {
+  const displayLocal = model => (
+    <Item.Meta
+      content={
+        model.city && model.state ? `${model.city}, ${model.state}` : model.from
+      }
+    />
+  );
+
+  return (
+    <Item.Group divided>
+      {models.map((model, index) => (
+        <Item as={Padded}>
+          <Item.Image
+            size="small"
+            src={model.image}
+            onClick={() => loadDetailsModeFromExploreMode(model.id)}
+          />
+          <Item.Content>
+            <Item.Header as="h2" content={model.name} />
+            {displayLocal(model)}
+            <Item.Description content={model.description} />
+            <Item.Extra>
+              <Button
+                as={Fancy}
+                floated="right"
+                onClick={() => loadDetailsModeFromExploreMode(model.id)}
+                primary
+              >
+                Visit {model.name} <Icon name="chevron right" />
+              </Button>
+            </Item.Extra>
+          </Item.Content>
+        </Item>
+      ))}
+    </Item.Group>
+  );
+}
+
+function renderGenericCard(models, loadDetailsModeFromExploreMode) {
+  const displayLocal = model => (
+    <Card.Meta
+      content={
+        model.city && model.state ? `${model.city}, ${model.state}` : model.from
+      }
+    />
+  );
+
+  return (
+    <Card.Group itemsPerRow={3} stackable>
+      {models.map((model, index) => (
+        <Card centered fluid>
+          <Image
+            as={Clicky}
+            src={model.image}
+            onClick={() => loadDetailsModeFromExploreMode(model.id)}
+          />
+          <Card.Content>
+            <Card.Header as="h2" content={model.name} />
+            {displayLocal(model)}
+            <Card.Description content={model.description} />
+          </Card.Content>
+          <Card.Content extra>
+            <Button
+              as={Fancy}
+              floated="right"
+              onClick={() => loadDetailsModeFromExploreMode(model.id)}
+              primary
+              fluid
+            >
+              Visit {model.name} <Icon name="chevron right" />
+            </Button>
+          </Card.Content>
+        </Card>
+      ))}
+    </Card.Group>
+  );
+}
 
 function Layout(props) {
-  const model = {
-    exploreService: services.fetchShops,
-    detailService: services.fetchShop,
+  const pieces = {
+    exploreService: pieceServices.fetchPieces,
+    detailService: pieceServices.fetchPiece,
+    plural: "pieces",
+    singular: "piece",
+    icon: "puzzle",
+    renderTile: renderGenericTile,
+    renderItem: renderGenericItem,
+    renderCard: renderGenericCard,
+    renderDetail: piece => {
+      return <p>{piece.name}</p>;
+    }
+  };
+
+  const shops = {
+    exploreService: shopServices.fetchShops,
+    detailService: shopServices.fetchShop,
     plural: "shops",
     singular: "shop",
     icon: "cart",
-    renderTile: (models, loadDetailsModeFromExploreMode) => {
-      const topRow = [models[0], models[1], models[2]].filter(x => x);
-      const bottomRow = [models[3], models[4], models[5]].filter(x => x);
-      const Row = ({ models }) => (
-        <Grid.Row>
-          {models.map((model, index) => {
-            if (model) {
-              const TileCard = (
-                <Card
-                  onClick={() => loadDetailsModeFromExploreMode(model.id)}
-                  centered
-                >
-                  <Image src={model.image} />
-                </Card>
-              );
-
-              const TilePopup = () => (
-                <Popup trigger={TileCard} inverted>
-                  <Popup.Header content={model.name} />
-                  <Popup.Content content={model.description} />
-                </Popup>
-              );
-
-              return (
-                <Grid.Column key={index}>
-                  <TilePopup />
-                </Grid.Column>
-              );
-            }
-          })}
-        </Grid.Row>
-      );
-
-      return (
-        <Grid columns={3}>
-          <Row models={topRow} />
-          <Row models={bottomRow} />
-        </Grid>
-      );
-    },
-    renderItem: (models, loadDetailsModeFromExploreMode) => {
-      return (
-        <Item.Group divided>
-          {models.map((model, index) => (
-            <Item as={Padded}>
-              <Item.Image
-                size="small"
-                src={model.image}
-                onClick={() => loadDetailsModeFromExploreMode(model.id)}
-              />
-              <Item.Content>
-                <Item.Header as="h2" content={model.name} />
-                <Item.Meta content={`${model.city}, ${model.state}`} />
-                <Item.Description content={model.description} />
-                <Item.Extra>
-                  <Button
-                    as={Fancy}
-                    floated="right"
-                    onClick={() => loadDetailsModeFromExploreMode(model.id)}
-                    primary
-                  >
-                    Visit {model.name} <Icon name="chevron right" />
-                  </Button>
-                </Item.Extra>
-              </Item.Content>
-            </Item>
-          ))}
-        </Item.Group>
-      );
-    },
-    renderCard: (models, loadDetailsModeFromExploreMode) => {
-      return (
-        <Card.Group itemsPerRow={3}>
-          {models.map((model, index) => (
-            <Card centered fluid>
-              <Image
-                as={Clicky}
-                src={model.image}
-                onClick={() => loadDetailsModeFromExploreMode(model.id)}
-              />
-              <Card.Content>
-                <Card.Header as="h2" content={model.name} />
-                <Card.Meta content={`${model.city}, ${model.state}`} />
-                <Card.Description content={model.description} />
-              </Card.Content>
-              <Card.Content extra>
-                <Button
-                  as={Fancy}
-                  floated="right"
-                  onClick={() => loadDetailsModeFromExploreMode(model.id)}
-                  primary
-                  fluid
-                >
-                  Visit {model.name} <Icon name="chevron right" />
-                </Button>
-              </Card.Content>
-            </Card>
-          ))}
-        </Card.Group>
-      );
-    },
+    renderTile: renderGenericTile,
+    renderItem: renderGenericItem,
+    renderCard: renderGenericCard,
     renderDetail: model => {
-      const style = {
-        width: "20rem",
-        height: "10rem",
-        border: "1px solid red",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      };
+      const DetailSplash = styled.div`
+        min-height: 60vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
 
-      return <div style={style}>{model.name}</div>;
+        .item {
+          color: white !important;
+          background: rgba(220, 220, 220, 0.75) !important;
+        }
+
+        .button {
+          margin: 0 0.5rem 0 0.5rem !important;
+        }
+      `;
+
+      return (
+        <Aux>
+          <Parallax
+            bgImage="https://wallpapercave.com/wp/AumsrZG.jpg"
+            strength={200}
+            basic
+          >
+            <Item.Group as={DetailSplash}>
+              <Item as={Padded}>
+                <Item.Content>
+                  <Item.Header as="h2" content={model.name} />
+                  <Item.Meta
+                    content={`${model.street} ${model.city}, ${model.state} ${model.zip}`}
+                  />
+                  <Item.Description content={model.description} />
+                  <Divider inverted section />
+                  <Button.Group floated="right">
+                    <Button secondary>
+                      <Icon name="phone" /> {model.phone}
+                    </Button>
+                    <Button secondary>
+                      <Icon name="envelope" /> {model.email}
+                    </Button>
+                    <Button as={Fancy} primary>
+                      <Icon name="map pin" /> Find on map
+                    </Button>
+                  </Button.Group>
+                </Item.Content>
+              </Item>
+            </Item.Group>
+          </Parallax>
+          <ModelViewer {...pieces} />
+        </Aux>
+      );
+    }
+  };
+
+  const artists = {
+    exploreService: artistServices.fetchArtists,
+    detailService: artistServices.fetchArtist,
+    plural: "artists",
+    singular: "artist",
+    icon: "paint brush",
+    renderTile: renderGenericTile,
+    renderItem: renderGenericItem,
+    renderCard: renderGenericCard,
+    renderDetail: artist => {
+      return <p>{artist.name}</p>;
+    }
+  };
+
+  const brands = {
+    exploreService: brandServices.fetchBrands,
+    detailService: brandServices.fetchBrand,
+    plural: "brands",
+    singular: "brand",
+    icon: "building",
+    renderTile: renderGenericTile,
+    renderItem: renderGenericItem,
+    renderCard: renderGenericCard,
+    renderDetail: brand => {
+      return <p>{brand.name}</p>;
     }
   };
 
@@ -340,7 +448,7 @@ function Layout(props) {
       <Segment basic>
         <Navbar />
       </Segment>
-      {/*<Segment.Group>
+      <Segment.Group>
         <Segment as={NoPadding} basic>
           <Splash />
         </Segment>
@@ -355,10 +463,16 @@ function Layout(props) {
             <Brands />
           </Segment>
         </FeatureSet>
-      </Segment.Group>*/}
-      <Segment basic>
-        <ModelViewer {...model} />
-      </Segment>
+        <Segment tertiary>
+          <ModelViewer {...shops} />
+        </Segment>
+        <Segment secondary>
+          <ModelViewer {...artists} />
+        </Segment>
+        <Segment tertiary>
+          <ModelViewer {...brands} />
+        </Segment>
+      </Segment.Group>
     </Container>
   );
 }

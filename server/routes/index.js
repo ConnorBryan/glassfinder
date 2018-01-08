@@ -28,7 +28,7 @@ module.exports = app => {
   app.get("/api/artists/", ArtistController.read);
   app.get("/api/artists/:id", ArtistController.read);
 
-  app.get("/api/brands/", BrandController.read);
+  app.get("/api/brands", BrandController.read);
   app.get("/api/brands/:id", BrandController.read);
 
   app.get("/api/pieces/", PieceController.read);

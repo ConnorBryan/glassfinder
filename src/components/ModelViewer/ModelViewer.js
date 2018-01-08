@@ -146,14 +146,16 @@ export default class ModelViewer extends Component {
    * @param {number} totalPages
    */
   cacheModelData = (models, activePage, modelsPerPage, totalPages) => {
+    const { singular } = this.props;
+
     models.forEach((page, pageIndex) =>
       page.forEach((model, modelIndex) =>
         this.modelMap.set(model.id, [pageIndex, modelIndex])
       )
     );
 
-    clearLocalModelsData();
-    setLocalModelsData(models, activePage, modelsPerPage, totalPages);
+    clearLocalModelsData(singular);
+    setLocalModelsData(singular, models, activePage, modelsPerPage, totalPages);
   };
 
   /**
@@ -162,7 +164,9 @@ export default class ModelViewer extends Component {
    * @returns {object} - Initial settings to load with.
    */
   checkCacheForModelData = () => {
-    const cachedData = getLocalModelsData();
+    const { singular } = this.props;
+
+    const cachedData = getLocalModelsData(singular);
 
     return (
       cachedData || {
@@ -441,7 +445,8 @@ export default class ModelViewer extends Component {
           models,
           activeModel,
           initiallyFetchedModels,
-          initiallyFetchedModel
+          initiallyFetchedModel,
+          setActiveModel: this.setActiveModel
         }}
       />
     );
@@ -556,7 +561,7 @@ const ModelViewerMenu = styled.nav`
 
 const ModelViewerContent = styled.div`
   .sidebar {
-    width: 99% !important;
+    width: 100% !important;
   }
   .pusher,
   .segment {

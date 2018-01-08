@@ -1,3 +1,4 @@
+import fetchBrand from "./fetchBrand";
 import fetchBrands from "./fetchBrands";
 
-export default { fetchBrands };
+export default { fetchBrand, fetchBrands };
