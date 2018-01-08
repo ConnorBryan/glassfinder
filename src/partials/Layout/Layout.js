@@ -217,6 +217,7 @@ function Layout(props) {
     detailService: services.fetchShop,
     plural: "shops",
     singular: "shop",
+    icon: "cart",
     renderTile: (models, loadDetailsModeFromExploreMode) => {
       const style = {
         width: "10rem",

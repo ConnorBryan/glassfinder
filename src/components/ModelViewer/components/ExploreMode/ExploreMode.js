@@ -28,45 +28,29 @@ function ExploreMode(props) {
     loadDetailsModeFromExploreMode
   } = props;
 
+  const pagination = (
+    <Pagination
+      {...{
+        activePage,
+        totalPages,
+        modelsPerPage,
+        goToFirstPage,
+        regressPage,
+        advancePage,
+        goToLastPage,
+        loadDetailsModeFromExploreMode
+      }}
+    />
+  );
+
   return initiallyFetchedModels ? (
     <section>
-      <p>
-        <strong>Explore Mode: </strong>
-        <button
-          disabled={exploreMode === ModelViewer.ExploreModes.Tile}
-          onClick={switchToExploreTileMode}
-        >
-          Tiles
-        </button>
-        <button
-          disabled={exploreMode === ModelViewer.ExploreModes.Item}
-          onClick={switchToExploreItemMode}
-        >
-          Items
-        </button>
-        <button
-          disabled={exploreMode === ModelViewer.ExploreModes.Card}
-          onClick={switchToExploreCardMode}
-        >
-          Cards
-        </button>
-      </p>
-      <Pagination
-        {...{
-          activePage,
-          totalPages,
-          modelsPerPage,
-          goToFirstPage,
-          regressPage,
-          advancePage,
-          goToLastPage,
-          loadDetailsModeFromExploreMode
-        }}
-      />
+      {pagination}
       <div>
         {activeModels &&
           renderExploreMode(activeModels, loadDetailsModeFromExploreMode)}
       </div>
+      {pagination}
     </section>
   ) : (
     <p>Loading...</p>
@@ -85,9 +69,6 @@ ExploreMode.propTypes = {
   initiallyFetchedModels: PropTypes.bool.isRequired,
   renderExploreMode: PropTypes.func.isRequired,
   activeModels: PropTypes.array.isRequired,
-  switchToExploreTileMode: PropTypes.func.isRequired,
-  switchToExploreItemMode: PropTypes.func.isRequired,
-  switchToExploreCardMode: PropTypes.func.isRequired,
   goToFirstPage: PropTypes.func.isRequired,
   regressPage: PropTypes.func.isRequired,
   advancePage: PropTypes.func.isRequired,

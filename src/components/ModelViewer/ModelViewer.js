@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { times } from "lodash";
+import { Container, Menu, Dropdown, Icon } from "semantic-ui-react";
+import styled from "styled-components";
 
 import {
   setLocalModelsData,
@@ -350,9 +352,6 @@ export default class ModelViewer extends Component {
           initiallyFetchedModels,
           renderExploreMode,
           activeModels,
-          switchToExploreTileMode: this.switchToExploreTileMode,
-          switchToExploreItemMode: this.switchToExploreItemMode,
-          switchToExploreCardMode: this.switchToExploreCardMode,
           goToFirstPage: this.goToFirstPage,
           regressPage: this.regressPage,
           advancePage: this.advancePage,
@@ -440,7 +439,8 @@ export default class ModelViewer extends Component {
   };
 
   render() {
-    const { mode } = this.state;
+    const { icon, plural } = this.props;
+    const { mode, exploreMode } = this.state;
 
     if (!this.modeRenderers) {
       this.modeRenderers = {
@@ -451,31 +451,80 @@ export default class ModelViewer extends Component {
 
     const renderMode = this.modeRenderers[mode];
 
+    const menuHeader = (
+      <Menu.Menu>
+        <Menu.Item icon={icon} />
+        <Menu.Item header content={plural} />
+      </Menu.Menu>
+    );
+
+    const modeMenu = (
+      <Menu.Menu position="right">
+        <Menu.Item icon="window restore" />
+        <Menu.Item header>Mode</Menu.Item>
+        <Menu.Item
+          active={mode === ModelViewer.Modes.Explore}
+          onClick={this.switchToExploreMode}
+        >
+          Explore
+        </Menu.Item>
+        <Menu.Item
+          active={mode === ModelViewer.Modes.Detail}
+          onClick={this.switchToDetailMode}
+        >
+          Detail
+        </Menu.Item>
+      </Menu.Menu>
+    );
+
+    const optionsMenu = (
+      <Menu.Menu position="right">
+        <Menu.Item icon="options" />
+        <Menu.Item header>Options</Menu.Item>
+        <Dropdown item text="View as">
+          <Dropdown.Menu>
+            <Dropdown.Item
+              active={exploreMode === ModelViewer.ExploreModes.Tile}
+              onClick={this.switchToExploreTileMode}
+            >
+              Tiles
+            </Dropdown.Item>
+            <Dropdown.Item
+              active={exploreMode === ModelViewer.ExploreModes.Item}
+              onClick={this.switchToExploreItemMode}
+            >
+              Items
+            </Dropdown.Item>
+            <Dropdown.Item
+              active={exploreMode === ModelViewer.ExploreModes.Card}
+              onClick={this.switchToExploreCardMode}
+            >
+              Cards
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        <Dropdown item text="Sort by" />
+      </Menu.Menu>
+    );
+
     return (
-      <section>
-        <p>
-          <strong>Mode: </strong>
-          <button
-            disabled={mode === ModelViewer.Modes.Explore}
-            onClick={this.switchToExploreMode}
-          >
-            Explore
-          </button>
-          <button
-            disabled={mode === ModelViewer.Modes.Detail}
-            onClick={this.switchToDetailMode}
-          >
-            Detail
-          </button>
-          <button
-            disabled={mode === ModelViewer.Modes.Editable}
-            onClick={this.switchToEditableMode}
-          >
-            Editable
-          </button>
-        </p>
-        <section>{renderMode()}</section>
-      </section>
+      <Container>
+        <Menu as={ModelViewerMenu}>
+          {menuHeader}
+          {mode === ModelViewer.Modes.Explore && optionsMenu}
+          {modeMenu}
+        </Menu>
+        {renderMode()}
+      </Container>
     );
   }
 }
+
+/* Styling */
+
+const ModelViewerMenu = styled.nav`
+  .header {
+    text-transform: uppercase !important;
+    letter-spacing: 0.25rem !important;
+  }
+`;
