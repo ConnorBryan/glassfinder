@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Menu } from "semantic-ui-react";
 
 function Pagination(props) {
   const {
+    attached,
+    plural,
     activePage,
     totalPages,
     goToFirstPage,
@@ -13,18 +16,31 @@ function Pagination(props) {
   } = props;
 
   return (
-    <p>
-      <strong>Page: </strong> {activePage + 1} / {totalPages}
-      <button onClick={goToFirstPage}>{"<<"}</button>
-      <button onClick={regressPage}>{"<"}</button>
-      <button onClick={advancePage}>{">"}</button>
-      <button onClick={goToLastPage}>{">>"}</button>
-      <em>Showing {modelsPerPage} models per page</em>
-    </p>
+    <Menu attached={attached}>
+      <Menu.Menu position="left">
+        <Menu.Item icon="eye" />
+        <Menu.Item header>
+          Showing {`${modelsPerPage} ${plural}`} per page.
+        </Menu.Item>
+      </Menu.Menu>
+      <Menu.Menu position="right">
+        <Menu.Item icon="fast backward" onClick={goToFirstPage} />
+        <Menu.Item icon="backward" onClick={regressPage} />
+        <Menu.Item header>
+          <em>
+            Viewing page {activePage + 1} of {totalPages}
+          </em>
+        </Menu.Item>
+        <Menu.Item icon="forward" onClick={advancePage} />
+        <Menu.Item icon="fast forward" onClick={goToLastPage} />
+      </Menu.Menu>
+    </Menu>
   );
 }
 
 Pagination.propTypes = {
+  attached: PropTypes.string.isRequired,
+  plural: PropTypes.string.isRequired,
   activePage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   goToFirstPage: PropTypes.func.isRequired,

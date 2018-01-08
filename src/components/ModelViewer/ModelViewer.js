@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { times } from "lodash";
-import { Container, Menu, Dropdown, Icon } from "semantic-ui-react";
+import {
+  Container,
+  Menu,
+  Dropdown,
+  Icon,
+  Sidebar,
+  Segment
+} from "semantic-ui-react";
 import styled from "styled-components";
 
 import {
@@ -103,7 +110,7 @@ export default class ModelViewer extends Component {
 
     const activeModels = models[activePage];
 
-    if (activeModels.length === 0) {
+    if (activeModels && activeModels.length === 0) {
       const { [plural]: fetchedModels } = await exploreService(activePage);
 
       this.setState(({ models, activePage, modelsPerPage, totalPages }) => {
@@ -316,8 +323,8 @@ export default class ModelViewer extends Component {
    * @desc Display all relevant information for ExploreMode.
    * @returns {Component}
    */
-  renderExploreMode = () => {
-    const { renderTile, renderItem, renderCard } = this.props;
+  renderExploreMode = children => {
+    const { plural, renderTile, renderItem, renderCard } = this.props;
     const {
       models,
       activePage,
@@ -341,6 +348,8 @@ export default class ModelViewer extends Component {
     return (
       <ExploreMode
         {...{
+          plural,
+          children,
           renderTile,
           renderItem,
           renderCard,
@@ -487,19 +496,19 @@ export default class ModelViewer extends Component {
               active={exploreMode === ModelViewer.ExploreModes.Tile}
               onClick={this.switchToExploreTileMode}
             >
-              Tiles
+              <Icon name="grid layout" /> Tiles
             </Dropdown.Item>
             <Dropdown.Item
               active={exploreMode === ModelViewer.ExploreModes.Item}
               onClick={this.switchToExploreItemMode}
             >
-              Items
+              <Icon name="list layout" /> Items
             </Dropdown.Item>
             <Dropdown.Item
               active={exploreMode === ModelViewer.ExploreModes.Card}
               onClick={this.switchToExploreCardMode}
             >
-              Cards
+              <Icon name="block layout" /> Cards
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -507,14 +516,30 @@ export default class ModelViewer extends Component {
       </Menu.Menu>
     );
 
+    const ExploreModels = ({ children }) => this.renderExploreMode(children);
+
     return (
       <Container>
-        <Menu as={ModelViewerMenu}>
+        <Menu as={ModelViewerMenu} attached="top">
           {menuHeader}
           {mode === ModelViewer.Modes.Explore && optionsMenu}
           {modeMenu}
         </Menu>
-        {renderMode()}
+        <Sidebar.Pushable as={ModelViewerContent}>
+          <Sidebar
+            as={Segment}
+            raised
+            animation="overlay"
+            width="very wide"
+            direction="right"
+            visible={mode === ModelViewer.Modes.Detail}
+          >
+            {mode === ModelViewer.Modes.Detail && renderMode()}
+          </Sidebar>
+          <Sidebar.Pusher dimmed={mode === ModelViewer.Modes.Detail}>
+            {mode === ModelViewer.Modes.Explore ? renderMode() : <Segment />}
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </Container>
     );
   }
@@ -526,5 +551,15 @@ const ModelViewerMenu = styled.nav`
   .header {
     text-transform: uppercase !important;
     letter-spacing: 0.25rem !important;
+  }
+`;
+
+const ModelViewerContent = styled.div`
+  .sidebar {
+    width: 99% !important;
+  }
+  .pusher,
+  .segment {
+    min-height: 75vh !important;
   }
 `;

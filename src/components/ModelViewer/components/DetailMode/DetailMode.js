@@ -8,7 +8,8 @@ function DetailMode(props) {
     models,
     activeModel,
     initiallyFetchedModels,
-    initiallyFetchedModel
+    initiallyFetchedModel,
+    setActiveModel
   } = props;
 
   const atLeastOneModel = models[0] && models[0].length > 1;
@@ -22,7 +23,7 @@ function DetailMode(props) {
 
     return renderDetail(model);
   } else if (atLeastOneModel) {
-    this.setActiveModel([0, 0]);
+    setActiveModel([0, 0]);
 
     return renderDetail(models[0][0]);
   } else {
@@ -35,7 +36,8 @@ DetailMode.propTypes = {
   models: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   activeModel: PropTypes.arrayOf(PropTypes.number).isRequired,
   initiallyFetchedModels: PropTypes.bool.isRequired,
-  initiallyFetchedModel: PropTypes.bool.isRequired
+  initiallyFetchedModel: PropTypes.bool.isRequired,
+  setActiveModel: PropTypes.func.isRequired
 };
 
 export default DetailMode;

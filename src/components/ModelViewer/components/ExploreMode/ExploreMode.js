@@ -1,12 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Segment, Loader } from "semantic-ui-react";
+import { Segment, Loader, Sidebar } from "semantic-ui-react";
+import styled from "styled-components";
+import Aux from "react-aux";
 
 import ModelViewer from "../../ModelViewer";
 import Pagination from "../Pagination";
 
 function ExploreMode(props) {
   const {
+    children,
+    plural,
     renderTile,
     renderItem,
     renderCard,
@@ -28,9 +32,10 @@ function ExploreMode(props) {
     loadDetailsModeFromExploreMode
   } = props;
 
-  const pagination = (
+  const ModelPagination = ({ attached }) => (
     <Pagination
       {...{
+        plural,
         activePage,
         totalPages,
         modelsPerPage,
@@ -38,20 +43,21 @@ function ExploreMode(props) {
         regressPage,
         advancePage,
         goToLastPage,
-        loadDetailsModeFromExploreMode
+        loadDetailsModeFromExploreMode,
+        attached
       }}
     />
   );
 
   return initiallyFetchedModels ? (
-    <section>
-      {pagination}
-      <div>
+    <Segment.Group as={ModelView}>
+      <ModelPagination attached="top" />
+      <Segment attached="bottom">
         {activeModels &&
           renderExploreMode(activeModels, loadDetailsModeFromExploreMode)}
-      </div>
-      {pagination}
-    </section>
+      </Segment>
+      <ModelPagination attached="bottom" />
+    </Segment.Group>
   ) : (
     <p>Loading...</p>
   );
@@ -77,3 +83,9 @@ ExploreMode.propTypes = {
 };
 
 export default ExploreMode;
+
+/* Styling */
+const ModelView = styled.main`
+  margin-bottom: 0 !important;
+  min-height: 70vh;
+`;
