@@ -10,7 +10,9 @@ import {
   Image,
   Header,
   Item,
-  Card
+  Card,
+  Grid,
+  Popup
 } from "semantic-ui-react";
 import { Parallax } from "react-parallax";
 import styled from "styled-components";
@@ -219,54 +221,105 @@ function Layout(props) {
     singular: "shop",
     icon: "cart",
     renderTile: (models, loadDetailsModeFromExploreMode) => {
-      const style = {
-        width: "10rem",
-        height: "10rem",
-        border: "1px solid",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      };
-      return models.map((model, index) => (
-        <div key={index} style={style}>
-          {model.id}
-          <button onClick={() => loadDetailsModeFromExploreMode(model.id)}>
-            View details
-          </button>
-        </div>
-      ));
+      const topRow = [models[0], models[1], models[2]].filter(x => x);
+      const bottomRow = [models[3], models[4], models[5]].filter(x => x);
+      const Row = ({ models }) => (
+        <Grid.Row>
+          {models.map((model, index) => {
+            if (model) {
+              const TileCard = (
+                <Card
+                  onClick={() => loadDetailsModeFromExploreMode(model.id)}
+                  centered
+                >
+                  <Image src={model.image} />
+                </Card>
+              );
+
+              const TilePopup = () => (
+                <Popup trigger={TileCard} inverted>
+                  <Popup.Header content={model.name} />
+                  <Popup.Content content={model.description} />
+                </Popup>
+              );
+
+              return (
+                <Grid.Column key={index}>
+                  <TilePopup />
+                </Grid.Column>
+              );
+            }
+          })}
+        </Grid.Row>
+      );
+
+      return (
+        <Grid columns={3}>
+          <Row models={topRow} />
+          <Row models={bottomRow} />
+        </Grid>
+      );
     },
     renderItem: (models, loadDetailsModeFromExploreMode) => {
-      const style = {
-        width: "30rem",
-        height: "10rem",
-        border: "1px solid blue",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      };
-
-      return models.map((model, index) => (
-        <div key={index} style={style}>
-          {model.name}
-        </div>
-      ));
+      return (
+        <Item.Group divided>
+          {models.map((model, index) => (
+            <Item as={Padded}>
+              <Item.Image
+                size="small"
+                src={model.image}
+                onClick={() => loadDetailsModeFromExploreMode(model.id)}
+              />
+              <Item.Content>
+                <Item.Header as="h2" content={model.name} />
+                <Item.Meta content={`${model.city}, ${model.state}`} />
+                <Item.Description content={model.description} />
+                <Item.Extra>
+                  <Button
+                    as={Fancy}
+                    floated="right"
+                    onClick={() => loadDetailsModeFromExploreMode(model.id)}
+                    primary
+                  >
+                    Visit {model.name} <Icon name="chevron right" />
+                  </Button>
+                </Item.Extra>
+              </Item.Content>
+            </Item>
+          ))}
+        </Item.Group>
+      );
     },
     renderCard: (models, loadDetailsModeFromExploreMode) => {
-      const style = {
-        width: "20rem",
-        height: "10rem",
-        border: "1px solid red",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      };
-
-      return models.map((model, index) => (
-        <div key={index} style={style}>
-          {model.name}
-        </div>
-      ));
+      return (
+        <Card.Group itemsPerRow={3}>
+          {models.map((model, index) => (
+            <Card centered fluid>
+              <Image
+                as={Clicky}
+                src={model.image}
+                onClick={() => loadDetailsModeFromExploreMode(model.id)}
+              />
+              <Card.Content>
+                <Card.Header as="h2" content={model.name} />
+                <Card.Meta content={`${model.city}, ${model.state}`} />
+                <Card.Description content={model.description} />
+              </Card.Content>
+              <Card.Content extra>
+                <Button
+                  as={Fancy}
+                  floated="right"
+                  onClick={() => loadDetailsModeFromExploreMode(model.id)}
+                  primary
+                  fluid
+                >
+                  Visit {model.name} <Icon name="chevron right" />
+                </Button>
+              </Card.Content>
+            </Card>
+          ))}
+        </Card.Group>
+      );
     },
     renderDetail: model => {
       const style = {
@@ -313,6 +366,21 @@ function Layout(props) {
 export default Layout;
 
 // Styling
+const Fancy = styled.div`
+  text-transform: uppercase !important;
+  letter-spacing: 0.25rem !important;
+`;
+
+const Padded = styled.div`
+  padding: 2rem 1rem 2rem 1rem !important;
+
+  .image {
+    cursor: pointer !important;
+  }
+`;
+
+const Clicky = styled.div`cursor: pointer !important;`;
+
 const GetStarted = styled.div`
   button {
     letter-spacing: 0.33rem !important;
