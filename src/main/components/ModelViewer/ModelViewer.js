@@ -264,7 +264,7 @@ export default class ModelViewer extends Component {
    * @desc Go back one page.
    */
   regressPage = () => {
-    const { activePage, totalPages } = this.state;
+    const { activePage } = this.state;
 
     const nextPage = activePage - 1;
 
@@ -383,7 +383,7 @@ export default class ModelViewer extends Component {
    * @desc A componentDidMount replacement for when ModelViewer initially loads in DetailMode.
    */
   detailModeMount = async () => {
-    const { detailService, singular } = this.props;
+    const { detailService } = this.props;
     const { activeModel } = this.state;
 
     if (!activeModel) {
@@ -520,8 +520,6 @@ export default class ModelViewer extends Component {
         <Dropdown item text="Sort by" />
       </Menu.Menu>
     );
-
-    const ExploreModels = ({ children }) => this.renderExploreMode(children);
 
     return (
       <Container>

@@ -1,30 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Segment, Loader, Sidebar } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
 import styled from "styled-components";
-import Aux from "react-aux";
 
-import ModelViewer from "../../ModelViewer";
 import Pagination from "../Pagination";
 
 function ExploreMode(props) {
   const {
-    children,
     plural,
-    renderTile,
-    renderItem,
-    renderCard,
-    models,
     activePage,
     totalPages,
     modelsPerPage,
-    exploreMode,
     initiallyFetchedModels,
     renderExploreMode,
     activeModels,
-    switchToExploreTileMode,
-    switchToExploreItemMode,
-    switchToExploreCardMode,
     goToFirstPage,
     regressPage,
     advancePage,

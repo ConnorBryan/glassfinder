@@ -38,6 +38,8 @@ export function renderGenericTile(models, loadDetailsModeFromExploreMode) {
               <TilePopup />
             </Grid.Column>
           );
+        } else {
+          return null;
         }
       })}
     </Grid.Row>
@@ -125,30 +127,32 @@ export function renderGenericCard(models, loadDetailsModeFromExploreMode) {
   );
 
   return (
-    <Card.Group itemsPerRow={3} stackable>
-      {models.map((model, index) => (
-        <Card centered fluid>
-          <Image
-            src={model.image}
-            onClick={() => loadDetailsModeFromExploreMode(model.id)}
-          />
-          <Card.Content>
-            <Card.Header as="h2" content={model.name} />
-            {displayLocal(model)}
-            <Card.Description content={model.description} />
-          </Card.Content>
-          <Card.Content extra>
-            <Button
-              floated="right"
+    <Styles>
+      <Card.Group itemsPerRow={3} stackable>
+        {models.map((model, index) => (
+          <Card centered fluid>
+            <Image
+              src={model.image}
               onClick={() => loadDetailsModeFromExploreMode(model.id)}
-              primary
-              fluid
-            >
-              Visit {model.name} <Icon name="chevron right" />
-            </Button>
-          </Card.Content>
-        </Card>
-      ))}
-    </Card.Group>
+            />
+            <Card.Content>
+              <Card.Header as="h2" content={model.name} />
+              {displayLocal(model)}
+              <Card.Description content={model.description} />
+            </Card.Content>
+            <Card.Content extra>
+              <Button
+                floated="right"
+                onClick={() => loadDetailsModeFromExploreMode(model.id)}
+                primary
+                fluid
+              >
+                Visit {model.name} <Icon name="chevron right" />
+              </Button>
+            </Card.Content>
+          </Card>
+        ))}
+      </Card.Group>
+    </Styles>
   );
 }

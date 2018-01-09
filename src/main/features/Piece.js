@@ -1,7 +1,4 @@
 import React from "react";
-import { Item, Divider, Button, Icon } from "semantic-ui-react";
-import styled from "styled-components";
-import { Parallax } from "react-parallax";
 
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
