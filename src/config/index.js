@@ -25,6 +25,12 @@ export default {
     brand: "building",
     piece: "puzzle"
   },
+  TYPES: {
+    SHOP: "SHOP",
+    ARTIST: "ARTIST",
+    BRAND: "BRAND",
+    PIECE: "PIECE"
+  },
   color: "blue",
   api: process.env.REACT_APP_API,
   warningFlashTimeout: 5000,
