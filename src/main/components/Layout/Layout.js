@@ -1,14 +1,12 @@
 import React from "react";
+import { BrowserRouter, Switch } from "react-router-dom";
 import { Container, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
+import routes, { RecursiveRoutes } from "../../routes";
 import Navbar from "../../components/Navbar";
-import Splash from "../../components/Splash";
-import FeaturedSet from "../../components/FeaturedSet";
 
-import { ShopViewer, ArtistViewer, BrandViewer } from "../../features";
-
-function Layout() {
+function Layout(props) {
   const Styles = styled.div`
     .segments > .segment:first-of-type {
       padding: 0 !important;
@@ -21,21 +19,11 @@ function Layout() {
         <Segment basic>
           <Navbar />
         </Segment>
-        <Segment.Group>
-          <Segment basic>
-            <Splash />
-          </Segment>
-          <FeaturedSet />
-          <Segment tertiary>
-            <ShopViewer />
-          </Segment>
-          <Segment secondary>
-            <ArtistViewer />
-          </Segment>
-          <Segment tertiary>
-            <BrandViewer />
-          </Segment>
-        </Segment.Group>
+        <BrowserRouter>
+          <Switch>
+            {routes.map((route, i) => <RecursiveRoutes key={i} {...route} />)}
+          </Switch>
+        </BrowserRouter>
       </Container>
     </Styles>
   );

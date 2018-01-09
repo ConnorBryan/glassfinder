@@ -17,7 +17,7 @@ export function BrandHero() {
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse.",
     flipped: false,
     buttonContent: "Explore brands",
-    buttonOnClick: () => {}
+    link: "/brands"
   };
 
   return <Featured {...props} />;

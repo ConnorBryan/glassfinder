@@ -1,16 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Item, Button } from "semantic-ui-react";
 
-function DesktopFeatured(props) {
-  const {
-    image,
-    description,
-    title,
-    flipped,
-    buttonContent,
-    buttonOnClick
-  } = props;
-
+function DesktopFeatured({
+  image,
+  description,
+  title,
+  flipped,
+  buttonContent,
+  link
+}) {
   return (
     <Item.Group>
       <Item>
@@ -20,8 +19,9 @@ function DesktopFeatured(props) {
           <Item.Description>{description}</Item.Description>
           <Item.Extra>
             <Button
+              as={Link}
+              to={link}
               content={buttonContent}
-              onClick={buttonOnClick}
               size="large"
               floated={flipped ? "left" : "right"}
               primary

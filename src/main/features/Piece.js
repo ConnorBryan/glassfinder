@@ -17,7 +17,7 @@ export function PieceHero() {
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse.",
     flipped: true,
     buttonContent: "Explore pieces",
-    buttonOnClick: () => {}
+    link: "/pieces"
   };
 
   return <Featured {...props} />;

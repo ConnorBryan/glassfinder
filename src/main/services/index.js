@@ -8,13 +8,17 @@ export default class API {
   /**
    * @method fetchModel
    * @desc Retrieve a single instance of a model from the database.
-   * @param {string} singular 
+   * @param {string} singular
+   * @param {string} plural
    * @param {number} id 
    */
-  static async fetchModel(singular, id) {
+  static async fetchModel(singular, plural, id) {
     try {
-      const url = `${constants.api}/${singular}/${id}`;
-      const { data: { payload: { [singular]: model } } } = await axios.get(url);
+      const url = `${constants.api}/${plural}/${id}`;
+      const {
+        data,
+        data: { payload: { [singular]: model } }
+      } = await axios.get(url);
 
       return model;
     } catch (e) {
@@ -24,10 +28,10 @@ export default class API {
     }
   }
 
-  static fetchShop = partial(API.fetchModel, "shop");
-  static fetchArtist = partial(API.fetchModel, "artist");
-  static fetchBrand = partial(API.fetchModel, "brand");
-  static fetchPiece = partial(API.fetchModel, "piece");
+  static fetchShop = partial(API.fetchModel, "shop", "shops");
+  static fetchArtist = partial(API.fetchModel, "artist", "artists");
+  static fetchBrand = partial(API.fetchModel, "brand", "brands");
+  static fetchPiece = partial(API.fetchModel, "piece", "pieces");
 
   /**
    * @async

@@ -22,7 +22,7 @@ export function ShopHero() {
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse.",
     flipped: false,
     buttonContent: "Explore shops",
-    buttonOnClick: () => {}
+    link: "/shops"
   };
 
   return <Featured {...props} />;

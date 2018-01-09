@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { times } from "lodash";
 import {
   Container,
@@ -20,9 +21,7 @@ import {
 import ExploreMode from "./components/ExploreMode";
 import DetailMode from "./components/DetailMode";
 
-const ID_FROM_URL = 1;
-
-export default class ModelViewer extends Component {
+class ModelViewer extends Component {
   static propTypes = {
     exploreService: PropTypes.func.isRequired,
     detailService: PropTypes.func.isRequired,
@@ -49,6 +48,10 @@ export default class ModelViewer extends Component {
   constructor(props) {
     super(props);
 
+    const { location: { pathname } } = this.props;
+
+    const id = +pathname.split("/")[2];
+
     // Check for previous session data to prepopulate state for convenience.
     const {
       models,
@@ -58,11 +61,12 @@ export default class ModelViewer extends Component {
     } = this.checkCacheForModelData();
 
     this.state = {
+      id,
       models, // A 2D array, with the first dimension representing pages and the second representing models.
       activePage, // The currently active page.
       modelsPerPage, // How many models will appear on a given page.
       totalPages, // How many total pages of models there are.
-      mode: ModelViewer.Modes.Explore, // Whether ModelViewer is showing multiple models or a single model.
+      mode: id ? ModelViewer.Modes.Detail : ModelViewer.Modes.Explore, // Whether ModelViewer is showing multiple models or a single model.
       initiallyFetchedModels: models.length > 0, // Whether or not the models collection has ever been populated.
       initiallyFetchedModel: false, // Whether or not the detail view has been accessed successfully.
       exploreMode: this.getInitialExploreMode(), // The method in which collections of models are displayed in bulk.
@@ -91,10 +95,14 @@ export default class ModelViewer extends Component {
    * @desc Change the currently active mode.
    * @param {string} mode - The mode to change to.
    */
-  switchMode = mode => {
+  switchMode = (mode, path) => {
+    const { plural, history } = this.props;
+
     if (!ModelViewer.Modes[mode]) {
       throw Error(`Invalid mode for ModelViewer: ${mode}`);
     }
+
+    history.push(`/${path}`);
 
     this.setState({ mode });
   };
@@ -183,7 +191,7 @@ export default class ModelViewer extends Component {
    * @desc Iterate through all models to find the model with a given id.
    * @returns {Model}
    */
-  findActiveInModels = (models, id = ID_FROM_URL) => {
+  findActiveInModels = (models, id) => {
     let activeModel = null;
 
     models.forEach((page, pageIndex) =>
@@ -299,13 +307,14 @@ export default class ModelViewer extends Component {
    * @desc Alternate from DetailMode to ExploreMode.
    */
   switchToExploreMode = async () => {
+    const { plural } = this.props;
     const { initiallyFetchedModels } = this.state;
 
     if (!initiallyFetchedModels) {
       await this.exploreModeMount();
     }
 
-    this.switchMode(ModelViewer.Modes.Explore);
+    this.switchMode(ModelViewer.Modes.Explore, plural);
   };
 
   /**
@@ -384,10 +393,10 @@ export default class ModelViewer extends Component {
    */
   detailModeMount = async () => {
     const { detailService } = this.props;
-    const { activeModel } = this.state;
+    const { id, activeModel } = this.state;
 
     if (!activeModel) {
-      const model = await detailService(ID_FROM_URL);
+      const model = await detailService(id);
 
       this.setState({
         models: [[model]],
@@ -415,14 +424,19 @@ export default class ModelViewer extends Component {
       this.setActiveModel(activeModel);
     }
 
-    this.switchToDetailMode();
+    this.switchToDetailMode(id);
   };
 
   /**
    * @method switchToDetailMode
    * @desc Alternate from ExploreMode to DetailMode.
+   * @param {number} id
    */
-  switchToDetailMode = () => this.switchMode(ModelViewer.Modes.Detail);
+  switchToDetailMode = id => {
+    const { plural } = this.props;
+
+    this.switchMode(ModelViewer.Modes.Detail, `${plural}/${id}`);
+  };
 
   /**
    * @method renderDetailMode
@@ -437,6 +451,8 @@ export default class ModelViewer extends Component {
       initiallyFetchedModels,
       initiallyFetchedModel
     } = this.state;
+
+    if (models.length === 0 || !models[0][0]) return null;
 
     return (
       <DetailMode
@@ -483,6 +499,7 @@ export default class ModelViewer extends Component {
           Explore
         </Menu.Item>
         <Menu.Item
+          disabled
           active={mode === ModelViewer.Modes.Detail}
           onClick={this.switchToDetailMode}
         >
@@ -547,6 +564,8 @@ export default class ModelViewer extends Component {
     );
   }
 }
+
+export default withRouter(ModelViewer);
 
 /* Styling */
 
