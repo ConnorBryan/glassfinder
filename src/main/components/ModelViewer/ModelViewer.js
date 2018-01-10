@@ -1,3 +1,36 @@
+/**
+   * @overview
+   * ModelViewer mounts differently depending on the URL.
+   *    EXPLORE MODE:
+   *      For /models, a paginated collection of a model type is displayed.
+   *        If ?page is specified, target a specific page in the dataset.
+   * 
+   *          * Use CacheProvider to attempt to retrieve the models from LocalStorage.
+   *              * If it exists, check the expiration date.
+   *                  * If it's valid, set it in state and signal "loaded".
+   *              * Else, use CacheProvider to bust the cache and continue.
+   *          * Fetch the correct model data from the correct page.
+   *          * Based on the response, add a series of empty arrays and a single populated array with that page.
+   *          * Pass the new entire collection of pages to CacheProvider for persistance.
+   *
+   *    Detail mode:
+   *      * For /models/:id, information related to an individual model is displayed.
+   *         * If ?page is specified And the model type is associated with pieces,
+   *            * Fetch the pieces associated with the model as well.
+   * 
+   *         * Use CacheProvider to attempt to attempt to retrieve the model from LocalStorage.
+   *            * If it exists, check the expiration date.
+   *               * If it's valid, set it in state and signal "loaded".
+   *            * Else, use CacheProvider to bust the cache and continue.
+   *
+   *         * Fetch the correct model data and relevant pieces if necessary.
+   *         * Set the model to active in state.
+   *         * Pass the model to CacheProvider for persistance.
+   * 
+   * @throws {InvalidURLError} - Visiting a non-id url (/models/derp). Redirect to /models/
+   * @throws {InvalidIdError} - Visiting an id url but the id is invalid. Redirect to /models/*        
+   */
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
@@ -18,6 +51,7 @@ import {
   clearLocalModelsData
 } from "../../util";
 
+import withCache from "../../components/CacheProvider";
 import ExploreMode from "./components/ExploreMode";
 import DetailMode from "./components/DetailMode";
 
@@ -91,9 +125,63 @@ class ModelViewer extends Component {
   }
 
   /**
+   * @async
+   * @method exploreModeMount
+   * @desc A componentDidMount replacement for when ModelViewer initially loads in ExploreMode.
+   */
+  exploreModeMount = async () => {
+    const { models: initialModels } = this.state;
+    const { exploreService, plural } = this.props;
+
+    if (initialModels.length > 0) return;
+
+    const {
+      [plural]: models,
+      totalPages,
+      perPage: modelsPerPage
+    } = await exploreService();
+
+    const paginatedModels = [[...models]];
+
+    this.cacheModelData(paginatedModels, 0, modelsPerPage, totalPages);
+
+    // Prepare empty pages for the other non-fetched models.
+    times(totalPages - 1, () => paginatedModels.push([]));
+
+    this.setState({
+      models: paginatedModels,
+      totalPages,
+      modelsPerPage,
+      initiallyFetchedModels: true,
+      initiallyFetchedModel: true
+    });
+  };
+
+  /**
+   * @async
+   * @method detailModeMount
+   * @desc A componentDidMount replacement for when ModelViewer initially loads in DetailMode.
+   */
+  detailModeMount = async () => {
+    const { detailService } = this.props;
+    const { id, activeModel } = this.state;
+
+    if (!activeModel) {
+      const model = await detailService(id);
+
+      this.setState({
+        models: [[model]],
+        activeModel: [0, 0],
+        initiallyFetchedModel: true
+      });
+    }
+  };
+
+  /**
    * @method switchMode
    * @desc Change the currently active mode.
    * @param {string} mode - The mode to change to.
+   * @param {string} path - The URL path to navigate to.
    */
   switchMode = (mode, path) => {
     const { plural, history } = this.props;
@@ -205,39 +293,6 @@ class ModelViewer extends Component {
   };
 
   /* Explore Mode */
-
-  /**
-   * @async
-   * @method exploreModeMount
-   * @desc A componentDidMount replacement for when ModelViewer initially loads in ExploreMode.
-   */
-  exploreModeMount = async () => {
-    const { models: initialModels } = this.state;
-    const { exploreService, plural } = this.props;
-
-    if (initialModels.length > 0) return;
-
-    const {
-      [plural]: models,
-      totalPages,
-      perPage: modelsPerPage
-    } = await exploreService();
-
-    const paginatedModels = [[...models]];
-
-    this.cacheModelData(paginatedModels, 0, modelsPerPage, totalPages);
-
-    // Prepare empty pages for the other non-fetched models.
-    times(totalPages - 1, () => paginatedModels.push([]));
-
-    this.setState({
-      models: paginatedModels,
-      totalPages,
-      modelsPerPage,
-      initiallyFetchedModels: true,
-      initiallyFetchedModel: true
-    });
-  };
 
   /**
    * @method getInitialExploreMode
@@ -382,28 +437,6 @@ class ModelViewer extends Component {
         }}
       />
     );
-  };
-
-  /* Detail Mode */
-
-  /**
-   * @async
-   * @method detailModeMount
-   * @desc A componentDidMount replacement for when ModelViewer initially loads in DetailMode.
-   */
-  detailModeMount = async () => {
-    const { detailService } = this.props;
-    const { id, activeModel } = this.state;
-
-    if (!activeModel) {
-      const model = await detailService(id);
-
-      this.setState({
-        models: [[model]],
-        activeModel: [0, 0],
-        initiallyFetchedModel: true
-      });
-    }
   };
 
   /**
@@ -565,7 +598,7 @@ class ModelViewer extends Component {
   }
 }
 
-export default withRouter(ModelViewer);
+export default withCache(withRouter(ModelViewer));
 
 /* Styling */
 
