@@ -7,11 +7,11 @@ import {
   cacheIsExpired,
   updateCache,
   updateCacheExpiration
-} from "../common";
+} from "../../../../util";
 
 export default class DetailMode extends Component {
   static propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     detailService: PropTypes.func.isRequired,
     renderDetail: PropTypes.func.isRequired
   };
@@ -32,8 +32,7 @@ export default class DetailMode extends Component {
     this.state = {
       map,
       activeModel: map.get(id),
-      loading: true,
-      error: null
+      loading: true
     };
   }
 
@@ -59,7 +58,7 @@ export default class DetailMode extends Component {
 
       this.setState({ activeModel, loading: false });
     } catch (e) {
-      this.setState({ error: e, loading: false }, () =>
+      this.setState({ loading: false }, () =>
         this.props.history.push(`/${this.props.plural}`)
       );
     }

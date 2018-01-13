@@ -8,3 +8,5 @@ export {
 } from "./local-storage";
 
 export { default as logger } from "./logger";
+
+export * from "./cache";

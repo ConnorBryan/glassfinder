@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Menu } from "semantic-ui-react";
+import { Responsive, Menu } from "semantic-ui-react";
 import Aux from "react-aux";
 
 function Pagination({
@@ -15,7 +15,7 @@ function Pagination({
 }) {
   return (
     <Aux>
-      <Menu.Menu position="right">
+      <Menu.Menu className="ui" position="right">
         <Menu.Item
           icon="fast backward"
           disabled={page === 0}
@@ -42,7 +42,9 @@ function Pagination({
           onClick={goToLastPage}
         />
       </Menu.Menu>
-      <Menu.Item header>Showing {`${perPage} ${plural}`} per page.</Menu.Item>
+      <Responsive as={Menu.Item} {...Responsive.onlyComputer} header>
+        Showing {`${perPage} ${plural}`} per page.
+      </Responsive>
     </Aux>
   );
 }

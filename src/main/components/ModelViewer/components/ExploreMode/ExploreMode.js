@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Menu, Segment, Loader } from "semantic-ui-react";
+import { Menu, Segment, Loader, Responsive } from "semantic-ui-react";
 import styled from "styled-components";
 import queryString from "query-string";
 import { times } from "lodash";
@@ -8,22 +8,31 @@ import { times } from "lodash";
 import {
   retrieveFromCache,
   cacheIsExpired,
-  updateCache,
-  updateCacheExpiration
-} from "../common";
+  updateCache
+} from "../../../../util";
 
 import ViewMode from "../ViewMode";
 import Pagination from "../Pagination";
 
+const Styles = styled.div`
+  margin-bottom: 0 !important;
+  min-height: 70vh !important;
+
+  .menu {
+    margin: 0 !important;
+  }
+`;
+
 export default class ExploreMode extends Component {
   static propTypes = {
-    plural: PropTypes.string.isRequired,
+    plural: PropTypes.string.isRequired, // e.g. { [plural]: [] } e.g. { shops: [] }
     location: PropTypes.shape({
+      // via Router.
       search: PropTypes.string.isRequired
     }),
     history: PropTypes.object.isRequired,
-    exploreService: PropTypes.func.isRequired,
-    renderTile: PropTypes.func.isRequired,
+    exploreService: PropTypes.func.isRequired, // XHR to receive collections of models.
+    renderTile: PropTypes.func.isRequired, // renderMode functions.
     renderItem: PropTypes.func.isRequired,
     renderCard: PropTypes.func.isRequired
   };
@@ -79,33 +88,65 @@ export default class ExploreMode extends Component {
       : this.fetchCollection();
   }
 
-  /* Render Modes */
-  setRenderMode = mode => {
+  /**
+   * Alter the URL in the browser to correspond with the state of the viewer.
+   * @param {number} page
+   * @param {string} renderMode 
+   */
+  adjustUrl(page, renderMode) {
     const { plural, history } = this.props;
-    const { page } = this.state;
+    const { page: statePage, renderMode: stateRenderMode } = this.state;
 
-    history.push(`/${plural}?page=${page}&renderMode=${mode}`);
+    const pageParam = page || statePage || 0;
+    const renderModeParam =
+      renderMode || stateRenderMode || ExploreMode.RenderModes.Tile;
 
+    history.push(`/${plural}?page=${pageParam}&renderMode=${renderModeParam}`);
+  }
+
+  /**
+   * @overview Render Modes
+   * In ExploreMode, basic information is show about a varying number of models.
+   * These models can be displayed in different formats that alter the display of the data.
+   * In addition to basic information, each model will contain actions that lead to various
+   *    other pages, including Detail Mode.
+   */
+
+  /**
+   * Switch between Tile, Item and Card modes.
+   * @param {string} mode
+   */
+  setRenderMode = mode => {
+    this.adjustUrl(null, mode);
     this.setState({ renderMode: mode });
   };
 
   switchToTiles = () => this.setRenderMode(ExploreMode.RenderModes.Tile);
   switchToItems = () => this.setRenderMode(ExploreMode.RenderModes.Item);
   switchToCards = () => this.setRenderMode(ExploreMode.RenderModes.Card);
-  /* Render Modes */
 
-  /* Pagination */
+  /**
+ * @overview Pagination
+ * To facilitate browsing, a small portion of the entire collection is displayed at a time.
+ * After the initial query, a structure of many empty arrays a single populated array will act as the pages.
+ * Loading different pages will trigger XHRs to populate these local arrays.
+ * After an established period of time, the local data will be cleansed and new data will arrive.
+ */
+
+  /**
+  * Alternate between collections of models to display,
+  * preferring local data to requested data.
+  * @param {number} newPage
+  */
   setCurrentPage = newPage => {
-    const { history, plural } = this.props;
-    const { totalPages, renderMode } = this.state;
+    const { totalPages } = this.state;
 
     // No paginating out of bounds.
     if (newPage < 0 || newPage >= totalPages) {
       return this.setState({ loading: false });
     }
 
-    history.push(`/${plural}?page=${newPage}&renderMode=${renderMode}`);
-
+    this.adjustUrl(newPage);
     this.setState({ page: newPage }, this.loadPage);
   };
 
@@ -113,11 +154,14 @@ export default class ExploreMode extends Component {
   goToPreviousPage = () => this.setCurrentPage(this.state.page - 1);
   goToNextPage = () => this.setCurrentPage(this.state.page + 1);
   goToLastPage = () => this.setCurrentPage(this.state.totalPages - 1);
-  /* Pagination */
 
+  /**
+   * Retrieve models for the active page from the server.
+   * Prepare the pagination structure for navigation.
+   */
   fetchCollection = () => {
     this.setState({ loading: true }, async () => {
-      const { exploreService: fetchCollection, plural, history } = this.props;
+      const { exploreService: fetchCollection, plural } = this.props;
       const { collection, page } = this.state;
 
       const {
@@ -127,9 +171,9 @@ export default class ExploreMode extends Component {
       } = await fetchCollection(page);
 
       // Redirect to the first page if invalid page.
-      if (!newCollection.length > 0) {
+      if (newCollection.length === 0) {
         return this.setState({ page: 0 }, () => {
-          history.push(`/${plural}`);
+          this.adjustUrl(0);
           this.fetchCollection();
         });
       }
@@ -137,19 +181,21 @@ export default class ExploreMode extends Component {
       // Paginate the results.
       const pages = [];
 
-      // Add other possibly cached pages prior to recaching.
       collection.length > 0
-        ? collection.forEach(page => pages.push(page))
-        : times(totalPages, () => pages.push([]));
+        ? // Populate with cache data.
+          collection.forEach(page => pages.push(page))
+        : // Populate with empty pages.
+          times(totalPages, () => pages.push([]));
 
       // Override the cached current page with the new values.
       pages[page] = newCollection;
 
       // Update the cache with the fetched collection of models.
-      updateCache(this.perPageKey, perPage);
-      updateCache(this.totalPagesKey, totalPages);
-      updateCache(this.collectionKey, JSON.stringify(pages));
-      updateCacheExpiration();
+      updateCache({
+        [this.perPageKey]: perPage,
+        [this.totalPagesKey]: totalPages,
+        [this.collectionKey]: JSON.stringify(pages)
+      });
 
       this.setState({
         totalPages,
@@ -160,6 +206,10 @@ export default class ExploreMode extends Component {
     });
   };
 
+  /**
+   * After setting a new page,
+   * display data from a) the cache, or b) the server.
+   */
   loadPage = () => {
     this.setState({ loading: true }, async () => {
       const { exploreService: fetchCollection, plural } = this.props;
@@ -168,6 +218,7 @@ export default class ExploreMode extends Component {
       // Don't do anything if the page has already been fetched.
       if (collection[page].length > 0) return this.setState({ loading: false });
 
+      // Grab all of the old pages and replace a single one with the collected page.
       const { [plural]: newCollection } = await fetchCollection(page);
       const newPages = [...collection];
 
@@ -175,12 +226,14 @@ export default class ExploreMode extends Component {
 
       // Update the cache with the updated collection of models.
       updateCache(this.collectionKey, JSON.stringify(newPages));
-      updateCacheExpiration();
 
       this.setState({ collection: newPages, loading: false });
     });
   };
 
+  /**
+   * Choose a way to display model data.
+   */
   getRenderFunc = () => {
     const { renderMode } = this.state;
     const { renderTile, renderItem, renderCard } = this.props;
@@ -194,6 +247,9 @@ export default class ExploreMode extends Component {
     return renderers[renderMode];
   };
 
+  /**
+   * Navigate to more details about a model.
+   */
   onClick = id => {
     const { history, plural } = this.props;
 
@@ -211,43 +267,45 @@ export default class ExploreMode extends Component {
       perPage
     } = this.state;
 
-    const Styles = styled.div`
-      margin-bottom: 0 !important;
-      min-height: 70vh !important;
-    `;
+    const ResponsivePagination = ({ responsiveness }) => (
+      <Responsive
+        as={Pagination}
+        {...responsiveness}
+        goToFirstPage={this.goToFirstPage}
+        goToPreviousPage={this.goToPreviousPage}
+        goToNextPage={this.goToNextPage}
+        goToLastPage={this.goToLastPage}
+        {...{ plural, page, totalPages, perPage }}
+      />
+    );
 
-    const OptionsMenu = ({ attached = "" }) => (
+    const OptionsMenu = ({ upward = false }) => (
       <Menu>
         <ViewMode
           mode={renderMode}
           switchToTiles={this.switchToTiles}
           switchToItems={this.switchToItems}
           switchToCards={this.switchToCards}
+          upward={upward}
         />
-        <Pagination
-          goToFirstPage={this.goToFirstPage}
-          goToPreviousPage={this.goToPreviousPage}
-          goToNextPage={this.goToNextPage}
-          goToLastPage={this.goToLastPage}
-          {...{ plural, page, totalPages, perPage }}
-        />
+        <ResponsivePagination responsiveness={Responsive.onlyComputer} />
       </Menu>
     );
-
-    const renderFunc = this.getRenderFunc();
 
     return (
       <Styles>
         <Segment.Group>
-          <OptionsMenu attached="top" />
+          <OptionsMenu />
+          <ResponsivePagination responsiveness={Responsive.onlyMobile} />
           <Segment>
             {loading ? (
               <Loader active />
             ) : (
-              renderFunc(collection[page], this.onClick)
+              this.getRenderFunc()(collection[page], this.onClick)
             )}
           </Segment>
-          <OptionsMenu />
+          <ResponsivePagination responsiveness={Responsive.onlyMobile} />
+          <OptionsMenu upward />
         </Segment.Group>
       </Styles>
     );

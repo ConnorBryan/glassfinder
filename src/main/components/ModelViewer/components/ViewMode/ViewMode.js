@@ -1,46 +1,66 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Menu, Dropdown, Icon } from "semantic-ui-react";
+import { Responsive, Menu, Dropdown, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 
 import ExploreMode from "../ExploreMode";
 
-function ViewMode({ mode, switchToTiles, switchToItems, switchToCards }) {
-  const Styles = styled.div`
-    .header {
-      text-transform: uppercase !important;
-      letter-spacing: 0.33rem !important;
-    }
-  `;
+const Styles = styled.div`
+  .header {
+    text-transform: uppercase !important;
+    letter-spacing: 0.33rem !important;
+  }
+`;
+
+function ViewMode({
+  mode,
+  upward,
+  switchToTiles,
+  switchToItems,
+  switchToCards
+}) {
+  const iconMap = {
+    [ExploreMode.RenderModes.Tile]: <Icon name="grid layout" />,
+    [ExploreMode.RenderModes.Item]: <Icon name="list layout" />,
+    [ExploreMode.RenderModes.Card]: <Icon name="block layout" />
+  };
+  const activeIcon = iconMap[mode];
+  const viewingAs = mode.toLowerCase();
 
   return (
     <Styles>
       <Menu.Menu position="left">
-        <Menu.Item icon="options" />
-        <Menu.Item header content="Options" />
-        <Dropdown item text={`Viewing as ${mode.toLowerCase()}s`}>
+        <Responsive
+          as={Menu.Item}
+          {...Responsive.onlyComputer}
+          header
+          content="Options"
+        />
+        <Menu.Item>{activeIcon}</Menu.Item>
+        <Dropdown item text={`Viewing as ${viewingAs}s`} upward={upward}>
           <Dropdown.Menu>
             <Dropdown.Item
               active={mode === ExploreMode.RenderModes.Tile}
               onClick={switchToTiles}
             >
-              <Icon name="grid layout" /> Tiles
+              {iconMap[ExploreMode.RenderModes.Tile]} Tiles
             </Dropdown.Item>
             <Dropdown.Item
               active={mode === ExploreMode.RenderModes.Item}
               onClick={switchToItems}
             >
-              <Icon name="list layout" /> Items
+              {iconMap[ExploreMode.RenderModes.Item]} Items
             </Dropdown.Item>
             <Dropdown.Item
               active={mode === ExploreMode.RenderModes.Card}
               onClick={switchToCards}
             >
-              <Icon name="block layout" /> Cards
+              {iconMap[ExploreMode.RenderModes.Card]} Cards
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <Dropdown item text="Sort by" />
+        <Menu.Item icon="filter" />
+        <Dropdown item text="Filter by" />
       </Menu.Menu>
     </Styles>
   );
@@ -50,7 +70,8 @@ ViewMode.propTypes = {
   mode: PropTypes.string.isRequired,
   switchToTiles: PropTypes.func.isRequired,
   switchToItems: PropTypes.func.isRequired,
-  switchToCards: PropTypes.func.isRequired
+  switchToCards: PropTypes.func.isRequired,
+  upward: PropTypes.bool
 };
 
 export default ViewMode;

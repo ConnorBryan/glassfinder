@@ -16,6 +16,7 @@ import "semantic-ui-css/semantic.min.css";
 // import "./index.css";
 
 import Main from "./main";
+import "./index.css";
 
 ReactDOM.render(<Main />, document.getElementById("root"));
 
