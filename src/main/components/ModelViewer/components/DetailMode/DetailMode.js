@@ -1,43 +1,78 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Loader } from "semantic-ui-react";
+import { Segment, Loader } from "semantic-ui-react";
 
-function DetailMode(props) {
-  const {
-    renderDetail,
-    models,
-    activeModel,
-    initiallyFetchedModels,
-    initiallyFetchedModel,
-    setActiveModel
-  } = props;
+import {
+  retrieveFromCache,
+  cacheIsExpired,
+  updateCache,
+  updateCacheExpiration
+} from "../common";
 
-  const atLeastOneModel = models[0] && models[0].length > 1;
-  const noInitialLoad = !initiallyFetchedModel && !initiallyFetchedModels;
+export default class DetailMode extends Component {
+  static propTypes = {
+    id: PropTypes.number.isRequired,
+    detailService: PropTypes.func.isRequired,
+    renderDetail: PropTypes.func.isRequired
+  };
 
-  if (noInitialLoad) {
-    return <Loader active />;
-  } else if (activeModel) {
-    const [page, index] = activeModel;
-    const model = models[page][index];
+  constructor(props) {
+    super(props);
 
-    return renderDetail(model);
-  } else if (atLeastOneModel) {
-    setActiveModel([0, 0]);
+    const { plural, id } = props;
 
-    return renderDetail(models[0][0]);
-  } else {
-    return <Loader active />;
+    this.mapKey = `${plural}ById`;
+
+    // Attempt to hydrate cached data.
+    const cachedMap = retrieveFromCache(this.mapKey);
+    const map = new Map(
+      cachedMap && !cacheIsExpired() ? JSON.parse(cachedMap) : []
+    );
+
+    this.state = {
+      map,
+      activeModel: map.get(id),
+      loading: true,
+      error: null
+    };
+  }
+
+  componentDidMount() {
+    const { activeModel } = this.state;
+
+    return activeModel
+      ? this.setState({ loading: false })
+      : this.fetchActiveModel();
+  }
+
+  async fetchActiveModel() {
+    try {
+      const { id, detailService: fetchModel } = this.props;
+      const { map } = this.state;
+
+      const activeModel = await fetchModel(id);
+
+      // Update the cache with the fetched model.
+      map.set(id, activeModel);
+      updateCache(this.mapKey, JSON.stringify([...map]));
+      updateCacheExpiration();
+
+      this.setState({ activeModel, loading: false });
+    } catch (e) {
+      this.setState({ error: e, loading: false }, () =>
+        this.props.history.push(`/${this.props.plural}`)
+      );
+    }
+  }
+
+  render() {
+    const { renderDetail } = this.props;
+    const { activeModel } = this.state;
+
+    return (
+      <Segment>
+        {activeModel ? renderDetail(activeModel) : <Loader active />}
+      </Segment>
+    );
   }
 }
-
-DetailMode.propTypes = {
-  renderDetail: PropTypes.func.isRequired,
-  models: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
-  activeModel: PropTypes.arrayOf(PropTypes.number).isRequired,
-  initiallyFetchedModels: PropTypes.bool.isRequired,
-  initiallyFetchedModel: PropTypes.bool.isRequired,
-  setActiveModel: PropTypes.func.isRequired
-};
-
-export default DetailMode;

@@ -79,7 +79,7 @@ export function renderGenericItem(models, loadDetailsModeFromExploreMode) {
     <Styles>
       <Item.Group divided>
         {models.map((model, index) => (
-          <Item>
+          <Item key={index}>
             <Item.Image
               size="small"
               src={model.image}
@@ -130,7 +130,7 @@ export function renderGenericCard(models, loadDetailsModeFromExploreMode) {
     <Styles>
       <Card.Group itemsPerRow={3} stackable>
         {models.map((model, index) => (
-          <Card centered fluid>
+          <Card key={index} centered fluid>
             <Image
               src={model.image}
               onClick={() => loadDetailsModeFromExploreMode(model.id)}

@@ -1,53 +1,61 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Menu } from "semantic-ui-react";
+import Aux from "react-aux";
 
-function Pagination(props) {
-  const {
-    attached,
-    plural,
-    activePage,
-    totalPages,
-    goToFirstPage,
-    regressPage,
-    advancePage,
-    goToLastPage,
-    modelsPerPage
-  } = props;
-
+function Pagination({
+  goToFirstPage,
+  goToPreviousPage,
+  goToNextPage,
+  goToLastPage,
+  plural,
+  page,
+  perPage,
+  totalPages
+}) {
   return (
-    <Menu attached={attached}>
-      <Menu.Menu position="left">
-        <Menu.Item icon="eye" />
-        <Menu.Item header>
-          Showing {`${modelsPerPage} ${plural}`} per page.
-        </Menu.Item>
-      </Menu.Menu>
+    <Aux>
       <Menu.Menu position="right">
-        <Menu.Item icon="fast backward" onClick={goToFirstPage} />
-        <Menu.Item icon="backward" onClick={regressPage} />
+        <Menu.Item
+          icon="fast backward"
+          disabled={page === 0}
+          onClick={goToFirstPage}
+        />
+        <Menu.Item
+          icon="backward"
+          disabled={page === 0}
+          onClick={goToPreviousPage}
+        />
         <Menu.Item header>
           <em>
-            Viewing page {activePage + 1} of {totalPages}
+            Viewing page {page + 1} of {totalPages}
           </em>
         </Menu.Item>
-        <Menu.Item icon="forward" onClick={advancePage} />
-        <Menu.Item icon="fast forward" onClick={goToLastPage} />
+        <Menu.Item
+          icon="forward"
+          disabled={page + 1 >= totalPages}
+          onClick={goToNextPage}
+        />
+        <Menu.Item
+          icon="fast forward"
+          disabled={page + 1 >= totalPages}
+          onClick={goToLastPage}
+        />
       </Menu.Menu>
-    </Menu>
+      <Menu.Item header>Showing {`${perPage} ${plural}`} per page.</Menu.Item>
+    </Aux>
   );
 }
 
 Pagination.propTypes = {
-  attached: PropTypes.string.isRequired,
-  plural: PropTypes.string.isRequired,
-  activePage: PropTypes.number.isRequired,
-  totalPages: PropTypes.number.isRequired,
   goToFirstPage: PropTypes.func.isRequired,
-  regressPage: PropTypes.func.isRequired,
-  advancePage: PropTypes.func.isRequired,
+  goToPreviousPage: PropTypes.func.isRequired,
+  goToNextPage: PropTypes.func.isRequired,
   goToLastPage: PropTypes.func.isRequired,
-  modelsPerPage: PropTypes.number.isRequired
+  plural: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  perPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired
 };
 
 export default Pagination;

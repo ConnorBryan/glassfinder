@@ -15,16 +15,13 @@ export default class API {
   static async fetchModel(singular, plural, id) {
     try {
       const url = `${constants.api}/${plural}/${id}`;
-      const {
-        data,
-        data: { payload: { [singular]: model } }
-      } = await axios.get(url);
+      const { data: { payload: { [singular]: model } } } = await axios.get(url);
 
       return model;
     } catch (e) {
       logger(e);
 
-      return null;
+      throw e;
     }
   }
 
