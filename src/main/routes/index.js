@@ -2,6 +2,10 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 import Home from "../components/Home";
+import About from "../components/About";
+import Help from "../components/Help";
+import Updates from "../components/Updates";
+import Contact from "../components/Contact";
 import {
   ShopViewer,
   ArtistViewer,
@@ -21,6 +25,26 @@ export default [
     path: "/",
     exact: true,
     component: Home
+  },
+  {
+    path: "/about",
+    exact: true,
+    component: About
+  },
+  {
+    path: "/help",
+    exact: true,
+    component: Help
+  },
+  {
+    path: "/updates",
+    exact: true,
+    component: Updates
+  },
+  {
+    path: "/contact",
+    exact: true,
+    component: Contact
   },
   {
     path: "/shops",

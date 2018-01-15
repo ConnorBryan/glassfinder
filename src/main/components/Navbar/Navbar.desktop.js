@@ -1,6 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Menu, Image, Button, Icon } from "semantic-ui-react";
 import styled from "styled-components";
+
+import { NAVIGATION_LINKS } from "../../config";
 
 const Styles = styled.div`
   button {
@@ -13,13 +16,13 @@ function DesktopNavbar() {
   return (
     <Styles>
       <Menu borderless secondary>
-        <Menu.Item onClick={() => {}}>
+        <Menu.Item as={Link} to="/">
           <Image size="small" src="/logo.png" />
         </Menu.Item>
         <Menu.Menu position="right">
-          <Menu.Item onClick={() => {}}>Link A</Menu.Item>
-          <Menu.Item onClick={() => {}}>Link B</Menu.Item>
-          <Menu.Item onClick={() => {}}>Link C</Menu.Item>
+          {NAVIGATION_LINKS.map(({ to, content }, index) => (
+            <Menu.Item as={Link} to={to} content={content} />
+          ))}
           <Menu.Item>
             <Button primary basic>
               Get started <Icon name="send" />

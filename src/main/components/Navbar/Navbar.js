@@ -4,11 +4,11 @@ import { Container, Responsive } from "semantic-ui-react";
 import MobileNavbar from "./Navbar.mobile";
 import DesktopNavbar from "./Navbar.desktop";
 
-function Navbar() {
+function Navbar(props) {
   return (
     <Container>
       <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
-        <MobileNavbar />
+        <MobileNavbar {...props} />
       </Responsive>
       <Responsive minWidth={Responsive.onlyTablet.maxWidth}>
         <DesktopNavbar />
