@@ -6,6 +6,9 @@ import About from "../components/About";
 import Help from "../components/Help";
 import Updates from "../components/Updates";
 import Contact from "../components/Contact";
+import Signin from "../components/Signin";
+import Signup from "../components/Signup";
+import Verification from "../components/Verification";
 import {
   ShopViewer,
   ArtistViewer,
@@ -16,7 +19,13 @@ import {
 export const RecursiveRoutes = route => (
   <Route
     path={route.path}
-    render={props => <route.component {...props} routes={route.routes} />}
+    render={props => (
+      <route.component
+        {...props}
+        {...route.additionalProps}
+        routes={route.routes}
+      />
+    )}
   />
 );
 
@@ -45,6 +54,21 @@ export default [
     path: "/contact",
     exact: true,
     component: Contact
+  },
+  {
+    path: "/signin",
+    exact: true,
+    component: Signin
+  },
+  {
+    path: "/signup",
+    exact: true,
+    component: Signup
+  },
+  {
+    path: "/verification/:id?/:verificationCode?",
+    exact: true,
+    component: Verification
   },
   {
     path: "/shops",

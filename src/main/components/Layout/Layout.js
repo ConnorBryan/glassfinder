@@ -11,24 +11,40 @@ import MobileNavigation from "../MobileNavigation";
 function Layout({
   mobileNavigationActive,
   showMobileNavigation,
-  hideMobileNavigation
+  hideMobileNavigation,
+  account,
+  token,
+  signin,
+  signup
 }) {
   const navigationProps = {
     mobileNavigationActive,
     showMobileNavigation,
     hideMobileNavigation
   };
+  const additionalProps = {
+    account,
+    token,
+    signin,
+    signup
+  };
 
   return (
     <BrowserRouter>
       <Container fluid>
         <Segment basic>
-          <Navbar {...navigationProps} />
+          <Navbar {...navigationProps} account={account} />
         </Segment>
         <Sidebar.Pushable>
           <MobileNavigation {...navigationProps} />
           <Sidebar.Pusher as={Switch}>
-            {routes.map((route, i) => <RecursiveRoutes key={i} {...route} />)}
+            {routes.map((route, i) => (
+              <RecursiveRoutes
+                key={i}
+                additionalProps={additionalProps}
+                {...route}
+              />
+            ))}
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </Container>
@@ -39,7 +55,11 @@ function Layout({
 Layout.propTypes = {
   mobileNavigationActive: PropTypes.bool.isRequired,
   showMobileNavigation: PropTypes.func.isRequired,
-  hideMobileNavigation: PropTypes.func.isRequired
+  hideMobileNavigation: PropTypes.func.isRequired,
+  account: PropTypes.object,
+  token: PropTypes.string,
+  signin: PropTypes.func.isRequired,
+  signup: PropTypes.func.isRequired
 };
 
 export default Layout;

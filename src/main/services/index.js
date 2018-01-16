@@ -61,4 +61,68 @@ export default class API {
   static fetchArtists = partial(API.fetchModels, "artists");
   static fetchBrands = partial(API.fetchModels, "brands");
   static fetchPieces = partial(API.fetchModels, "pieces");
+
+  /**
+   * 
+   * @param {string} email 
+   * @param {string} password 
+   * @returns {object}
+   */
+  static async signin(email, password) {
+    try {
+      const url = `${constants.api}/signin`;
+      const {
+        data: { success, payload: { token, data: account } }
+      } = await axios.post(url, {
+        email,
+        password
+      });
+
+      return { token, account };
+    } catch (e) {
+      console.error(e);
+      return {
+        token: null,
+        account: null
+      };
+    }
+  }
+
+  /**
+   * 
+   * @param {string} email 
+   * @param {string} password 
+   * @returns {number}
+   */
+  static async signup(email, password) {
+    try {
+      const url = `${constants.api}/signup`;
+      const { data: { success, payload: { id } } } = await axios.post(url, {
+        email,
+        password
+      });
+
+      return id;
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+  }
+
+  /**
+   * 
+   * @param {string} id 
+   * @param {string} verificationCode 
+   */
+  static async verify(id, verificationCode) {
+    try {
+      const url = `${constants.api}/users/${id}/verify`;
+      const { data: { success } } = await axios.post(url, { verificationCode });
+
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
 }

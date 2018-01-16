@@ -11,7 +11,7 @@ function Navbar(props) {
         <MobileNavbar {...props} />
       </Responsive>
       <Responsive minWidth={Responsive.onlyTablet.maxWidth}>
-        <DesktopNavbar />
+        <DesktopNavbar {...props} />
       </Responsive>
     </Container>
   );

@@ -44,7 +44,7 @@ module.exports = {
 
         return transporter.sendMail(
           mailOptions,
-          err => (err ? done(err) : done(id))
+          err => (err ? done(err) : done(null, id))
         );
       } catch (e) {
         return done(e);
@@ -135,7 +135,7 @@ function composeMessage(id, verificationCode) {
   return `
     <h1>Welcome to Glassfinder!</h1>
     <p>In order to ensure you are a real human being, please click the link below to verify your account.</p>
-    <a href="${constants.URL}/verify/${id}/${verificationCode}">Verify my account</a>
+    <a href="${constants.URL}/verification/${id}/${verificationCode}">Verify my account</a>
     <p><em>If you did not sign up for a Glassfinder account, please ignore this message.</em></p>
   `;
 }

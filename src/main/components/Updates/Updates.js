@@ -54,7 +54,7 @@ function Updates() {
         <Item.Group as={Segment} basic divided relaxed="very">
           <Item>
             <Item.Header as="h3" className="fancy">
-              <Icon name="newspaper" /> All Updates
+              <Icon name="newspaper" /> Updates
             </Item.Header>
           </Item>
           {UPDATES.map(update => <Update key={update.key} {...update} />)}

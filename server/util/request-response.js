@@ -28,7 +28,7 @@ module.exports = {
   error: (res, error) =>
     res.status(400).json({
       success: false,
-      error
+      error: error.toString()
     }),
 
   success: (res, message, payload) =>

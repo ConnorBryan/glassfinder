@@ -2,32 +2,52 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Image, Button, Icon } from "semantic-ui-react";
 import styled from "styled-components";
+import Aux from "react-aux";
 
 import { NAVIGATION_LINKS } from "../../config";
 
 const Styles = styled.div`
-  button {
+  a {
     letter-spacing: 0.33rem !important;
     text-transform: uppercase !important;
+    &.header.item:hover {
+      background: inherit !important;
+      color: inherit !important;
+    }
   }
 `;
 
-function DesktopNavbar() {
+function DesktopNavbar({ account }) {
   return (
     <Styles>
       <Menu borderless secondary>
-        <Menu.Item as={Link} to="/">
+        <Menu.Item header as={Link} to="/">
           <Image size="small" src="/logo.png" />
         </Menu.Item>
         <Menu.Menu position="right">
           {NAVIGATION_LINKS.map(({ to, content }, index) => (
             <Menu.Item as={Link} to={to} content={content} />
           ))}
-          <Menu.Item>
-            <Button primary basic>
-              Get started <Icon name="send" />
-            </Button>
-          </Menu.Item>
+          {account ? (
+            <Menu.Item>
+              <Button as={Link} to="/my-account" primary>
+                My account <Icon name="user" />
+              </Button>
+            </Menu.Item>
+          ) : (
+            <Aux>
+              <Menu.Item>
+                <Button as={Link} to="/signin" primary basic>
+                  Sign in <Icon name="sign in" />
+                </Button>
+              </Menu.Item>
+              <Menu.Item>
+                <Button as={Link} to="/signup" primary>
+                  Sign up <Icon name="send" />
+                </Button>
+              </Menu.Item>
+            </Aux>
+          )}
         </Menu.Menu>
       </Menu>
     </Styles>
