@@ -1,7 +1,7 @@
 import axios from "axios";
 import { partial } from "lodash";
 
-import constants from "../../config";
+import { API_ROOT, LINK_TYPES } from "../config";
 import { logger } from "../util";
 
 export default class API {
@@ -14,7 +14,7 @@ export default class API {
    */
   static async fetchModel(singular, plural, id) {
     try {
-      const url = `${constants.api}/${plural}/${id}`;
+      const url = `${API_ROOT}/${plural}/${id}`;
       const { data: { payload: { [singular]: model } } } = await axios.get(url);
 
       return model;
@@ -40,7 +40,7 @@ export default class API {
    */
   static async fetchModels(plural, page = 0) {
     try {
-      const url = `${constants.api}/${plural}?page=${page}`;
+      const url = `${API_ROOT}/${plural}?page=${page}`;
       const {
         data: { payload: { [plural]: models, pages: totalPages, perPage } }
       } = await axios.get(url);
@@ -70,7 +70,7 @@ export default class API {
    */
   static async signin(email, password) {
     try {
-      const url = `${constants.api}/signin`;
+      const url = `${API_ROOT}/sign-in`;
       const {
         data: { payload: { token, data: account } }
       } = await axios.post(url, {
@@ -96,7 +96,7 @@ export default class API {
    */
   static async signup(email, password) {
     try {
-      const url = `${constants.api}/signup`;
+      const url = `${API_ROOT}/signup`;
       const { data: { payload: { id } } } = await axios.post(url, {
         email,
         password
@@ -116,7 +116,7 @@ export default class API {
    */
   static async verify(id, verificationCode) {
     try {
-      const url = `${constants.api}/users/${id}/verify`;
+      const url = `${API_ROOT}/users/${id}/verify`;
 
       await axios.post(url, { verificationCode });
 
@@ -135,7 +135,7 @@ export default class API {
    */
   static async sendContactMessage(name, email, message) {
     try {
-      const url = `${constants.api}/contact`;
+      const url = `${API_ROOT}/contact`;
 
       await axios.post(url, {
         name,
@@ -148,6 +148,78 @@ export default class API {
       console.error(e);
 
       return false;
+    }
+  }
+
+  /**
+   * 
+   * @param {string} id
+   * @param {string} currentPassword 
+   * @param {string} newPassword
+   */
+  static async updatePassword(id, currentPassword, newPassword) {
+    try {
+      const url = `${API_ROOT}/users/${id}/update-password`;
+
+      await axios.post(url, {
+        currentPassword,
+        newPassword
+      });
+
+      return true;
+    } catch (e) {
+      console.error(e);
+
+      return false;
+    }
+  }
+
+  /**
+   * 
+   * @param {string} id
+   * @param {string} currentPassword 
+   * @param {object} config
+   * @returns {object}
+   */
+  static async becomeA(id, type, config) {
+    try {
+      const url = `${API_ROOT}/users/${id}/link`;
+      const { data: { payload: { data: account } } } = await axios.post(url, {
+        type,
+        config: JSON.stringify(config)
+      });
+
+      return account;
+    } catch (e) {
+      console.error(e);
+
+      return null;
+    }
+  }
+
+  static becomeAShop = (id, config) => API.becomeA(id, LINK_TYPES.SHOP, config);
+  static becomeAnArtist = (id, config) =>
+    API.becomeA(id, LINK_TYPES.ARTIST, config);
+  static becomeABrand = (id, config) =>
+    API.becomeA(id, LINK_TYPES.BRAND, config);
+
+  /**
+   * @param {string} id
+   * @param {object} values
+   * @returns {object}
+   */
+  static async updateInformation(id, values) {
+    try {
+      const url = `${API_ROOT}/users/${id}`;
+      const { data: { success, payload: { link } } } = await axios.post(url, {
+        values: JSON.stringify(values)
+      });
+
+      return link;
+    } catch (e) {
+      console.error(e);
+
+      return null;
     }
   }
 }

@@ -48,7 +48,7 @@ function AboutItem({ image, name, role, blurb }) {
 function About(props) {
   return (
     <Container as={Segment}>
-      <Item.Group basic divided relaxed="very">
+      <Item.Group divided relaxed="very">
         {ABOUT_ITEMS.map(about => <AboutItem key={about.key} {...about} />)}
       </Item.Group>
     </Container>

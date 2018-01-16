@@ -9,7 +9,7 @@ const {
 
 module.exports = app => {
   app.post("/api/signup", UserController.signup);
-  app.post("/api/signin", UserController.signin);
+  app.post("/api/sign-in", UserController.signin);
 
   app.get("/api/users/", UserController.read);
   app.get("/api/users/:id", UserController.read);

@@ -146,7 +146,7 @@ function MyAccountBrandMenu() {
 }
 
 function MyAccount({ account }) {
-  if (!account) return <Redirect to="/signin" />;
+  if (!account) return <Redirect to="/sign-in" />;
 
   const { linked, type } = account;
   const linkedAsShop = type === LINK_TYPES.SHOP;

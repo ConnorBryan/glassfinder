@@ -5,22 +5,20 @@ import { updateCache, retrieveFromCache, removeFromCache } from "./util";
 import Layout from "./components/Layout";
 
 export default class Main extends Component {
-  state = {
-    mobileNavigationActive: false,
-    account: null,
-    token: null,
-    error: null
-  };
+  constructor(props) {
+    super(props);
 
-  componentDidMount() {
     const account = retrieveFromCache("account");
     const token = retrieveFromCache("token");
 
-    if (account && token) {
-      this.setState({ account: JSON.parse(account), token });
-    } else {
-      removeFromCache("account", "token");
-    }
+    if (!account || !token) removeFromCache("account", "token");
+
+    this.state = {
+      mobileNavigationActive: false,
+      account: account && token ? JSON.parse(account) : null,
+      token: token || null,
+      error: null
+    };
   }
 
   // Mobile responsiveness
@@ -30,6 +28,9 @@ export default class Main extends Component {
   hideMobileNavigation = () => this.setMobileNavigationActive(false);
 
   // Authentication
+  updateAccountLink = link =>
+    this.setState(prevState => ({ account: { ...prevState.account, link } }));
+
   signin = async (email, password) => {
     const { token, account } = await API.signin(email, password);
 
@@ -67,6 +68,7 @@ export default class Main extends Component {
         {...this.state}
         showMobileNavigation={this.showMobileNavigation}
         hideMobileNavigation={this.hideMobileNavigation}
+        updateAccountLink={this.updateAccountLink}
         signin={this.signin}
         signout={this.signout}
         signup={this.signup}

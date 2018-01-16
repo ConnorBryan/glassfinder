@@ -24,6 +24,7 @@ function AbstractFormField({
     value: values[field.name],
     onChange: handleChange
   };
+  const [, options] = inputProps.options || [];
   const inputTypes = {
     textarea: () => <Form.Field control="textarea" {...inputProps} />,
     select: () => (
@@ -34,7 +35,7 @@ function AbstractFormField({
           search
           selection
           value={inputProps.value}
-          options={inputProps.options}
+          options={options}
           onChange={handleSelect}
         />
       </Form.Field>

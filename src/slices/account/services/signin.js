@@ -3,7 +3,7 @@ import axios from "axios";
 import constants from "../../../config";
 
 export default async function signin(email, password) {
-  const url = `${constants.api}/signin`;
+  const url = `${constants.api}/sign-in`;
   const {
     data: { success, payload: { token, data: account } }
   } = await axios.post(url, {

@@ -10,6 +10,14 @@ import Signin from "../components/Signin";
 import Signup from "../components/Signup";
 import Verification from "../components/Verification";
 import MyAccount from "../components/MyAccount";
+import UpdatePassword from "../components/MyAccount/components/UpdatePassword";
+import BecomeAShop from "../components/MyAccount/components/BecomeAShop";
+import BecomeAnArtist from "../components/MyAccount/components/BecomeAnArtist";
+import BecomeABrand from "../components/MyAccount/components/BecomeABrand";
+import UpdateShopInformation from "../components/MyAccount/components/UpdateShopInformation";
+import UpdateArtistInformation from "../components/MyAccount/components/UpdateArtistInformation";
+import UpdateBrandInformation from "../components/MyAccount/components/UpdateBrandInformation";
+
 import {
   ShopViewer,
   ArtistViewer,
@@ -57,15 +65,25 @@ export default [
     component: Contact
   },
   {
-    path: "/signin",
+    path: "/sign-in",
     exact: true,
     component: Signin
   },
   {
-    path: "/signup",
+    path: "/sign-up",
     exact: true,
     component: Signup
   },
+  // {
+  //   path: "/terms-and-conditions",
+  //   exact: true,
+  //   component: TermsAndConditions
+  // },
+  // {
+  //   path: "/privacy-policy",
+  //   exact: true,
+  //   component: PrivacyPolicy
+  // },
   {
     path: "/verification/:id?/:verificationCode?",
     exact: true,
@@ -115,5 +133,40 @@ export default [
     path: "/my-account",
     exact: true,
     component: MyAccount
+  },
+  {
+    path: "/my-account/update-password",
+    exact: true,
+    component: UpdatePassword
+  },
+  {
+    path: "/my-account/become-a-shop",
+    exact: true,
+    component: BecomeAShop
+  },
+  {
+    path: "/my-account/become-an-artist",
+    exact: true,
+    component: BecomeAnArtist
+  },
+  {
+    path: "/my-account/become-a-brand",
+    exact: true,
+    component: BecomeABrand
+  },
+  {
+    path: "/my-account/update-shop-information",
+    exact: true,
+    component: UpdateShopInformation
+  },
+  {
+    path: "/my-account/update-artist-information",
+    exact: true,
+    component: UpdateArtistInformation
+  },
+  {
+    path: "/my-account/update-brand-information",
+    exact: true,
+    component: UpdateBrandInformation
   }
 ];

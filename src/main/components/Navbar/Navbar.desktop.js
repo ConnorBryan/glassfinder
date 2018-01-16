@@ -1,13 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Menu, Image, Button, Icon } from "semantic-ui-react";
+import { withRouter, Link } from "react-router-dom";
+import { Menu, Image, Button, Icon, Dropdown } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 
 import { NAVIGATION_LINKS } from "../../config";
 
 const Styles = styled.div`
-  a {
+  a,
+  a > span {
     letter-spacing: 0.33rem !important;
     text-transform: uppercase !important;
     &.header.item:hover {
@@ -17,7 +18,7 @@ const Styles = styled.div`
   }
 `;
 
-function DesktopNavbar({ account, signout }) {
+function DesktopNavbar({ account, signout, location: { pathname } }) {
   return (
     <Styles>
       <Menu borderless secondary>
@@ -26,8 +27,22 @@ function DesktopNavbar({ account, signout }) {
         </Menu.Item>
         <Menu.Menu position="right">
           {NAVIGATION_LINKS.map(({ to, content }, index) => (
-            <Menu.Item key={index} as={Link} to={to} content={content} />
+            <Menu.Item
+              key={index}
+              as={Link}
+              to={to}
+              content={content}
+              active={to === pathname}
+            />
           ))}
+          <Dropdown as="a" item text="Explore">
+            <Dropdown.Menu>
+              <Dropdown.Item as={Link} to="/shops" content="Shops" />
+              <Dropdown.Item as={Link} to="/artists" content="Artists" />
+              <Dropdown.Item as={Link} to="/brands" content="Brands" />
+              <Dropdown.Item as={Link} to="/pieces" content="Pieces" />
+            </Dropdown.Menu>
+          </Dropdown>
           {account ? (
             <Aux>
               <Menu.Item>
@@ -44,12 +59,12 @@ function DesktopNavbar({ account, signout }) {
           ) : (
             <Aux>
               <Menu.Item>
-                <Button as={Link} to="/signin" primary basic>
+                <Button as={Link} to="/sign-in" primary basic>
                   Sign in <Icon name="sign in" />
                 </Button>
               </Menu.Item>
               <Menu.Item>
-                <Button as={Link} to="/signup" primary>
+                <Button as={Link} to="/sign-up" primary>
                   Sign up <Icon name="send" />
                 </Button>
               </Menu.Item>
@@ -61,4 +76,4 @@ function DesktopNavbar({ account, signout }) {
   );
 }
 
-export default DesktopNavbar;
+export default withRouter(DesktopNavbar);

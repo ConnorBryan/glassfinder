@@ -13,6 +13,7 @@ function Layout({
   hideMobileNavigation,
   account,
   token,
+  updateAccountLink,
   signin,
   signout,
   signup
@@ -25,6 +26,7 @@ function Layout({
   const additionalProps = {
     account,
     token,
+    updateAccountLink,
     signin,
     signout,
     signup
@@ -59,6 +61,7 @@ Layout.propTypes = {
   hideMobileNavigation: PropTypes.func.isRequired,
   account: PropTypes.object,
   token: PropTypes.string,
+  updateAccountLink: PropTypes.func.isRequired,
   signin: PropTypes.func.isRequired,
   signout: PropTypes.func.isRequired,
   signup: PropTypes.func.isRequired

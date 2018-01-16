@@ -1,6 +1,6 @@
 import * as linkAs from "./linkAs";
 import signup from "./signup";
-import signin from "./signin";
+import signin from "./sign-in";
 import updatePassword from "./updatePassword";
 import updateInfo from "./updateInfo";
 import uploadImage from "./uploadImage";
