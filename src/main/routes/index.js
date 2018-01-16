@@ -20,6 +20,8 @@ import UpdateBrandInformation from "../components/MyAccount/components/UpdateBra
 import UploadImage from "../components/MyAccount/components/UploadImage";
 import UploadPiece from "../components/MyAccount/components/UploadPiece";
 import MyPiecesViewer from "../components/MyAccount/components/ViewMyPieces";
+import UploadPieceImage from "../components/MyAccount/components/UploadPieceImage";
+import UpdatePieceInformation from "../components/MyAccount/components/UpdatePieceInformation";
 
 import {
   ShopViewer,
@@ -191,5 +193,15 @@ export default [
     path: "/my-account/view-my-pieces/:id?",
     exact: true,
     component: MyPiecesViewer
+  },
+  {
+    path: "/my-account/view-my-pieces/:id/upload-image",
+    exact: true,
+    component: UploadPieceImage
+  },
+  {
+    path: "/my-account/view-my-pieces/:id/update-information",
+    exact: true,
+    component: UpdatePieceInformation
   }
 ];

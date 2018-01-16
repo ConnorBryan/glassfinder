@@ -48,7 +48,14 @@ export default class Main extends Component {
   };
   signout = () => {
     this.setState({ token: null, account: null }, () => {
-      removeFromCache("account", "token");
+      removeFromCache(
+        "account",
+        "token",
+        "myPieces",
+        "myPiecesById",
+        "myPiecesPerPage",
+        "myPiecesTotalPages"
+      );
     });
   };
   signup = async (email, password) => {

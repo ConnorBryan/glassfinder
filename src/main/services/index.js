@@ -291,4 +291,49 @@ export default class API {
       return null;
     }
   }
+
+  /**
+   * @param {string} id
+   * @param {string} image
+   * @returns {object}
+   */
+  static async uploadPieceImage(id, image) {
+    try {
+      const formData = new FormData();
+
+      formData.append("image", image);
+
+      const url = `${API_ROOT}/pieces/${id}/upload-image`;
+      const { data: { payload: { piece } } } = await axios.post(url, formData);
+
+      return piece;
+    } catch (e) {
+      console.error(e);
+
+      return null;
+    }
+  }
+
+  /**
+   * @param {string} id
+   * @param {string} name
+   * @param {string} maker
+   * @param {string} price
+   * @param {string} description
+   * @param {string} location
+   */
+  static async updatePieceInformation(id, values) {
+    try {
+      const url = `${API_ROOT}/pieces/${id}`;
+      const { data: { payload: { piece } } } = await axios.post(url, {
+        values: JSON.stringify(values)
+      });
+
+      return piece;
+    } catch (e) {
+      console.error(e);
+
+      return null;
+    }
+  }
 }

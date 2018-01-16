@@ -19,9 +19,9 @@ export default class DetailMode extends Component {
   constructor(props) {
     super(props);
 
-    const { plural, id } = props;
+    const { cacheTerm, plural, id } = props;
 
-    this.mapKey = `${plural}ById`;
+    this.mapKey = `${cacheTerm || plural}ById`;
 
     // Attempt to hydrate cached data.
     const cachedMap = retrieveFromCache(this.mapKey);

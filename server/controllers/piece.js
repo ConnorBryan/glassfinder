@@ -14,6 +14,7 @@ const { genericPaginatedRead } = require("./common");
 module.exports = {
   create,
   read,
+  update,
   uploadImage
 };
 
@@ -77,6 +78,32 @@ function read(req, res) {
 }
 
 /**
+ * @func update
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {object}
+ */
+function update(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+    const { values } = req.body;
+
+    requireProperties({ id, values });
+
+    const piece = await Piece.findById(+id);
+
+    if (!piece) return error(res, `Piece#${id} could not be found`);
+
+    const parsedValues = JSON.parse(values);
+    const newPiece = await piece.update(parsedValues);
+
+    return success(res, `Successfully updated information for Piece#${id}`, {
+      piece: newPiece
+    });
+  });
+}
+
+/**
  * @func uploadImage
  * @desc Replace the primary image of a Piece.
  * @param {ExpressRequest} req 
@@ -97,7 +124,7 @@ function uploadImage(req, res) {
 
     return upload(req, res, async err => {
       if (err) {
-        return error(err.toString());
+        return error(res, err.toString());
       }
 
       const { file: { key } } = req;
@@ -105,7 +132,7 @@ function uploadImage(req, res) {
         image: `${constants.PIECE_IMAGES_SPACES_URL}/${key}`
       });
 
-      return success(req, `Succesfully uploaded an image for Piece#${id}`, {
+      return success(res, `Succesfully uploaded an image for Piece#${id}`, {
         piece: updatedPiece
       });
     });
