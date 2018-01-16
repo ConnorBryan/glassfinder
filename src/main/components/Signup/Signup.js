@@ -1,5 +1,4 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import Yup from "yup";
 import { Container } from "semantic-ui-react";
 

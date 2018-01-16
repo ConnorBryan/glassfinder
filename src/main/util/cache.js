@@ -34,3 +34,7 @@ export function updateCache(cache, value) {
 export function retrieveFromCache(key) {
   return window.localStorage.getItem(key);
 }
+
+export function removeFromCache(...keys) {
+  keys.forEach(key => window.localStorage.removeItem(key));
+}

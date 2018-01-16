@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Responsive, Menu, Dropdown, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { computerSized } from "../../../../util";
 import ExploreMode from "../ExploreMode";
 
 const Styles = styled.div`

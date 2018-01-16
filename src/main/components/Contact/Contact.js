@@ -1,7 +1,9 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import Yup from "yup";
 
+import API from "../../services";
 import * as Validators from "../../validators";
 import AbstractForm from "../AbstractForm";
 
@@ -32,8 +34,11 @@ const FIELDS = [
   }
 ];
 
-function Contact() {
-  const onSubmit = () => console.log("Submitting");
+function Contact({ history }) {
+  const onSubmit = ({ name, email, message }) => {
+    API.sendContactMessage(name, email, message);
+    history.push("/");
+  };
 
   return (
     <Container>
@@ -42,4 +47,4 @@ function Contact() {
   );
 }
 
-export default Contact;
+export default withRouter(Contact);

@@ -9,6 +9,7 @@ import Contact from "../components/Contact";
 import Signin from "../components/Signin";
 import Signup from "../components/Signup";
 import Verification from "../components/Verification";
+import MyAccount from "../components/MyAccount";
 import {
   ShopViewer,
   ArtistViewer,
@@ -109,5 +110,10 @@ export default [
     path: "/pieces/:id?",
     exact: true,
     component: PieceViewer
+  },
+  {
+    path: "/my-account",
+    exact: true,
+    component: MyAccount
   }
 ];

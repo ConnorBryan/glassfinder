@@ -20,6 +20,7 @@ function MobileNavigation({ mobileNavigationActive, hideMobileNavigation }) {
       </Menu.Item>
       {NAVIGATION_LINKS.map(({ to, content }, index) => (
         <Menu.Item
+          key={index}
           as={Link}
           to={to}
           content={content}

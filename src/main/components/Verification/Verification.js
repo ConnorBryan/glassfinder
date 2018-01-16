@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Container, Segment, Loader } from "semantic-ui-react";
-import styled from "styled-components";
-import Aux from "react-aux";
+import { Container } from "semantic-ui-react";
 
 import API from "../../services";
-import * as Validators from "../../validators";
 
 function VerificationLoading() {
   return <p>Loading...</p>;

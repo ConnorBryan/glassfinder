@@ -6,7 +6,7 @@ import DesktopNavbar from "./Navbar.desktop";
 
 function Navbar(props) {
   return (
-    <Container>
+    <Container fluid>
       <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
         <MobileNavbar {...props} />
       </Responsive>

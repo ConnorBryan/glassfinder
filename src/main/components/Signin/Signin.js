@@ -1,5 +1,4 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 
 import * as Validators from "../../validators";

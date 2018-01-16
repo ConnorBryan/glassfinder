@@ -1,8 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Formik } from "formik";
 import Yup from "yup";
-import styled from "styled-components";
 import {
   Icon,
   Form,
@@ -90,6 +88,7 @@ function AbstractForm({ fields, onSubmit }) {
           <Segment.Group stacked>
             {fields.map((field, index) => (
               <AbstractFormField
+                key={index}
                 field={field}
                 {...{ values, touched, errors, handleChange, setFieldValue }}
               />

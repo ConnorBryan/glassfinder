@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import API from "./services";
+import { updateCache, retrieveFromCache, removeFromCache } from "./util";
 import Layout from "./components/Layout";
 
 export default class Main extends Component {
@@ -10,6 +11,17 @@ export default class Main extends Component {
     token: null,
     error: null
   };
+
+  componentDidMount() {
+    const account = retrieveFromCache("account");
+    const token = retrieveFromCache("token");
+
+    if (account && token) {
+      this.setState({ account: JSON.parse(account), token });
+    } else {
+      removeFromCache("account", "token");
+    }
+  }
 
   // Mobile responsiveness
   setMobileNavigationActive = mobileNavigationActive =>
@@ -26,9 +38,18 @@ export default class Main extends Component {
       return;
     }
 
-    this.setState({ token, account });
+    this.setState({ token, account }, () => {
+      updateCache({
+        account: JSON.stringify(account),
+        token
+      });
+    });
   };
-
+  signout = () => {
+    this.setState({ token: null, account: null }, () => {
+      removeFromCache("account", "token");
+    });
+  };
   signup = async (email, password) => {
     const id = await API.signup(email, password);
 
@@ -47,6 +68,7 @@ export default class Main extends Component {
         showMobileNavigation={this.showMobileNavigation}
         hideMobileNavigation={this.hideMobileNavigation}
         signin={this.signin}
+        signout={this.signout}
         signup={this.signup}
       />
     );

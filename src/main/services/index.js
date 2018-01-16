@@ -72,7 +72,7 @@ export default class API {
     try {
       const url = `${constants.api}/signin`;
       const {
-        data: { success, payload: { token, data: account } }
+        data: { payload: { token, data: account } }
       } = await axios.post(url, {
         email,
         password
@@ -97,7 +97,7 @@ export default class API {
   static async signup(email, password) {
     try {
       const url = `${constants.api}/signup`;
-      const { data: { success, payload: { id } } } = await axios.post(url, {
+      const { data: { payload: { id } } } = await axios.post(url, {
         email,
         password
       });
@@ -117,11 +117,36 @@ export default class API {
   static async verify(id, verificationCode) {
     try {
       const url = `${constants.api}/users/${id}/verify`;
-      const { data: { success } } = await axios.post(url, { verificationCode });
+
+      await axios.post(url, { verificationCode });
 
       return true;
     } catch (e) {
       console.error(e);
+      return false;
+    }
+  }
+
+  /**
+   * 
+   * @param {string} name 
+   * @param {string} email 
+   * @param {string} message 
+   */
+  static async sendContactMessage(name, email, message) {
+    try {
+      const url = `${constants.api}/contact`;
+
+      await axios.post(url, {
+        name,
+        email,
+        message
+      });
+
+      return true;
+    } catch (e) {
+      console.error(e);
+
       return false;
     }
   }

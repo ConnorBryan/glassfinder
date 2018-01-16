@@ -17,7 +17,7 @@ const Styles = styled.div`
   }
 `;
 
-function DesktopNavbar({ account }) {
+function DesktopNavbar({ account, signout }) {
   return (
     <Styles>
       <Menu borderless secondary>
@@ -26,14 +26,21 @@ function DesktopNavbar({ account }) {
         </Menu.Item>
         <Menu.Menu position="right">
           {NAVIGATION_LINKS.map(({ to, content }, index) => (
-            <Menu.Item as={Link} to={to} content={content} />
+            <Menu.Item key={index} as={Link} to={to} content={content} />
           ))}
           {account ? (
-            <Menu.Item>
-              <Button as={Link} to="/my-account" primary>
-                My account <Icon name="user" />
-              </Button>
-            </Menu.Item>
+            <Aux>
+              <Menu.Item>
+                <Button as="a" onClick={signout} primary basic>
+                  Sign out <Icon name="sign out" />
+                </Button>
+              </Menu.Item>
+              <Menu.Item>
+                <Button as={Link} to="/my-account" primary>
+                  My account <Icon name="user" />
+                </Button>
+              </Menu.Item>
+            </Aux>
           ) : (
             <Aux>
               <Menu.Item>

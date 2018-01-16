@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter, Switch } from "react-router-dom";
 import { Container, Segment, Sidebar } from "semantic-ui-react";
-import Aux from "react-aux";
 
 import routes, { RecursiveRoutes } from "../../routes";
 import Navbar from "../Navbar";
@@ -15,6 +14,7 @@ function Layout({
   account,
   token,
   signin,
+  signout,
   signup
 }) {
   const navigationProps = {
@@ -26,6 +26,7 @@ function Layout({
     account,
     token,
     signin,
+    signout,
     signup
   };
 
@@ -33,7 +34,7 @@ function Layout({
     <BrowserRouter>
       <Container fluid>
         <Segment basic>
-          <Navbar {...navigationProps} account={account} />
+          <Navbar {...navigationProps} {...additionalProps} />
         </Segment>
         <Sidebar.Pushable>
           <MobileNavigation {...navigationProps} />
@@ -59,6 +60,7 @@ Layout.propTypes = {
   account: PropTypes.object,
   token: PropTypes.string,
   signin: PropTypes.func.isRequired,
+  signout: PropTypes.func.isRequired,
   signup: PropTypes.func.isRequired
 };
 
