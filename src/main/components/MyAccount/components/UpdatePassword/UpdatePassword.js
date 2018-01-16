@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import { Container } from "semantic-ui-react";
-import Yup from "yup";
 
 import API from "../../../../services";
 import * as Validators from "../../../../validators";

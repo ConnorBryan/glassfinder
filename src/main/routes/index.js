@@ -17,6 +17,8 @@ import BecomeABrand from "../components/MyAccount/components/BecomeABrand";
 import UpdateShopInformation from "../components/MyAccount/components/UpdateShopInformation";
 import UpdateArtistInformation from "../components/MyAccount/components/UpdateArtistInformation";
 import UpdateBrandInformation from "../components/MyAccount/components/UpdateBrandInformation";
+import UploadImage from "../components/MyAccount/components/UploadImage";
+import UploadPiece from "../components/MyAccount/components/UploadPiece";
 
 import {
   ShopViewer,
@@ -168,5 +170,15 @@ export default [
     path: "/my-account/update-brand-information",
     exact: true,
     component: UpdateBrandInformation
+  },
+  {
+    path: "/my-account/upload-image",
+    exact: true,
+    component: UploadImage
+  },
+  {
+    path: "/my-account/upload-piece",
+    exact: true,
+    component: UploadPiece
   }
 ];

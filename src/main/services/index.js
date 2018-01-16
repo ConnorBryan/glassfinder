@@ -211,11 +211,60 @@ export default class API {
   static async updateInformation(id, values) {
     try {
       const url = `${API_ROOT}/users/${id}`;
-      const { data: { success, payload: { link } } } = await axios.post(url, {
+      const { data: { payload: { link } } } = await axios.post(url, {
         values: JSON.stringify(values)
       });
 
       return link;
+    } catch (e) {
+      console.error(e);
+
+      return null;
+    }
+  }
+
+  /**
+   * @param {string} id
+   * @param {string} image
+   * @returns {object}
+   */
+  static async uploadImage(id, image) {
+    try {
+      const formData = new FormData();
+
+      formData.append("image", image);
+
+      const url = `${API_ROOT}/users/${id}/upload-image`;
+      const { data: { payload: { link } } } = await axios.post(url, formData);
+
+      return link;
+    } catch (e) {
+      console.error(e);
+
+      return null;
+    }
+  }
+
+  /**
+   * @param {string} id
+   * @param {string} name
+   * @param {string} maker
+   * @param {string} price
+   * @param {string} description
+   * @param {string} location
+   */
+  static async uploadPiece(id, name, maker, price, description, location) {
+    try {
+      const url = `${API_ROOT}/pieces?userId=${id}`;
+      const { data: { payload: { piece } } } = await axios.post(url, {
+        name,
+        maker,
+        price,
+        description,
+        location
+      });
+
+      return piece;
     } catch (e) {
       console.error(e);
 

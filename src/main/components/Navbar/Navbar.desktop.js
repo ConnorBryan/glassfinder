@@ -8,7 +8,8 @@ import { NAVIGATION_LINKS } from "../../config";
 
 const Styles = styled.div`
   a,
-  a > span {
+  .fancy,
+  .fancy > span a > span {
     letter-spacing: 0.33rem !important;
     text-transform: uppercase !important;
     &.header.item:hover {
@@ -35,7 +36,7 @@ function DesktopNavbar({ account, signout, location: { pathname } }) {
               active={to === pathname}
             />
           ))}
-          <Dropdown as="a" item text="Explore">
+          <Dropdown className="fancy" item text="Explore">
             <Dropdown.Menu>
               <Dropdown.Item as={Link} to="/shops" content="Shops" />
               <Dropdown.Item as={Link} to="/artists" content="Artists" />
@@ -46,7 +47,7 @@ function DesktopNavbar({ account, signout, location: { pathname } }) {
           {account ? (
             <Aux>
               <Menu.Item>
-                <Button as="a" onClick={signout} primary basic>
+                <Button className="fancy" onClick={signout} primary basic>
                   Sign out <Icon name="sign out" />
                 </Button>
               </Menu.Item>
