@@ -59,7 +59,7 @@ export default class DetailMode extends Component {
       this.setState({ activeModel, loading: false });
     } catch (e) {
       this.setState({ loading: false }, () =>
-        this.props.history.push(`/${this.props.plural}`)
+        this.props.history.push(`${this.props.uri}`)
       );
     }
   }

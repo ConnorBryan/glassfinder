@@ -62,6 +62,26 @@ export default class API {
   static fetchBrands = partial(API.fetchModels, "brands");
   static fetchPieces = partial(API.fetchModels, "pieces");
 
+  static async fetchPiecesForId(id, page = 0) {
+    try {
+      const url = `${API_ROOT}/users/${id}/pieces?page=${page}`;
+      const {
+        data: { payload: { count, pages: totalPages, pieces, perPage } }
+      } = await axios.get(url);
+
+      return {
+        count,
+        totalPages,
+        pieces,
+        perPage
+      };
+    } catch (e) {
+      console.error(e);
+
+      return null;
+    }
+  }
+
   /**
    * 
    * @param {string} email 

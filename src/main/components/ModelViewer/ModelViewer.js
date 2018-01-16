@@ -24,20 +24,35 @@ class ModelViewer extends Component {
 
   determineIdAndMode() {
     const { location: { pathname } } = this.props;
-    const id = pathname.split("/")[2] || null;
+    const isViewMyPieces = pathname.includes("view-my-pieces");
+    const offset = isViewMyPieces ? 3 : 2;
+    const id = pathname.split("/")[offset] || null;
     const mode = id ? ModelViewer.Modes.Detail : ModelViewer.Modes.Explore;
 
     return { id, mode };
   }
 
-  render() {
-    const { plural } = this.props;
-    const { id } = this.state;
+  getMode() {
+    const { mode } = this.state;
 
-    const Mode = id ? DetailMode : ExploreMode;
+    const modes = {
+      [ModelViewer.Modes.Explore]: ExploreMode,
+      [ModelViewer.Modes.Detail]: DetailMode
+    };
+
+    return modes[mode];
+  }
+
+  render() {
+    const { uri, plural, cacheTerm } = this.props;
+    const { id, mode } = this.state;
+
+    const Mode = this.getMode();
     const props = {
+      uri,
       plural,
       id,
+      cacheTerm,
       ...this.props,
       ...this.state
     };

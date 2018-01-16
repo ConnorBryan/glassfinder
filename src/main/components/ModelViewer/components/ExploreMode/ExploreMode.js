@@ -46,11 +46,11 @@ export default class ExploreMode extends Component {
   constructor(props) {
     super(props);
 
-    const { plural, location: { search }, history } = props;
+    const { uri, plural, cacheTerm, location: { search }, history } = props;
 
-    this.collectionKey = plural;
-    this.perPageKey = `${plural}PerPage`;
-    this.totalPagesKey = `${plural}TotalPages`;
+    this.collectionKey = cacheTerm || plural;
+    this.perPageKey = `${cacheTerm || plural}PerPage`;
+    this.totalPagesKey = `${cacheTerm || plural}TotalPages`;
 
     // Attempt to hydrate cached data.
     const perPage = retrieveFromCache(this.perPageKey) || 6;
@@ -68,7 +68,7 @@ export default class ExploreMode extends Component {
         : renderMode;
     const query = `?page=${pageParam}&renderMode=${renderModeParam}`;
 
-    history.push(`/${plural}${query}`);
+    history.push(`${uri}${query}`);
 
     this.state = {
       renderMode: renderModeParam,
@@ -94,14 +94,14 @@ export default class ExploreMode extends Component {
    * @param {string} renderMode 
    */
   adjustUrl(page, renderMode) {
-    const { plural, history } = this.props;
+    const { uri, plural, history } = this.props;
     const { page: statePage, renderMode: stateRenderMode } = this.state;
 
     const pageParam = page || statePage || 0;
     const renderModeParam =
       renderMode || stateRenderMode || ExploreMode.RenderModes.Tile;
 
-    history.push(`/${plural}?page=${pageParam}&renderMode=${renderModeParam}`);
+    history.push(`${uri}?page=${pageParam}&renderMode=${renderModeParam}`);
   }
 
   /**
@@ -251,9 +251,9 @@ export default class ExploreMode extends Component {
    * Navigate to more details about a model.
    */
   onClick = id => {
-    const { history, plural } = this.props;
+    const { uri, history } = this.props;
 
-    return history.push(`/${plural}/${id}`);
+    return history.push(`${uri}/${id}`);
   };
 
   render() {

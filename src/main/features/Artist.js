@@ -27,6 +27,7 @@ export function ArtistViewer() {
   const props = {
     exploreService: API.fetchArtists,
     detailService: API.fetchArtist,
+    uri: "/artists",
     plural: "artists",
     singular: "artist",
     icon: "paint brush",

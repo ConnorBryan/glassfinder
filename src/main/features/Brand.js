@@ -27,6 +27,7 @@ export function BrandViewer() {
   const props = {
     exploreService: API.fetchBrands,
     detailService: API.fetchBrand,
+    uri: "/brands",
     plural: "brands",
     singular: "brand",
     icon: "building",

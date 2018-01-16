@@ -4,6 +4,7 @@ import Yup from "yup";
 import { Container } from "semantic-ui-react";
 
 import API from "../../../../services";
+import { removeFromCache } from "../../../../util";
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../AbstractForm";
 
@@ -65,7 +66,7 @@ function UploadPiece({ account, history }) {
       location
     );
 
-    console.log(piece);
+    removeFromCache("myPieces");
 
     history.push("/my-account");
   };

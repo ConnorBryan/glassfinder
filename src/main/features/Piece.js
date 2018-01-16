@@ -27,6 +27,7 @@ export function PieceViewer() {
   const props = {
     exploreService: API.fetchPieces,
     detailService: API.fetchPiece,
+    uri: "/pieces",
     plural: "pieces",
     singular: "piece",
     icon: "puzzle",

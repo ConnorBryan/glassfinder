@@ -32,6 +32,7 @@ export function ShopViewer() {
   const props = {
     exploreService: API.fetchShops,
     detailService: API.fetchShop,
+    uri: "/shops",
     plural: "shops",
     singular: "shop",
     icon: "cart",

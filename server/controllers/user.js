@@ -85,14 +85,26 @@ function read(req, res) {
 function fetchPiecesForId(req, res) {
   return respondWith(res, async () => {
     const { id } = req.params;
+    const { page = 0 } = req.query;
 
     requireProperties({ id });
 
+    const limit = constants.MODEL_READ_LIMIT;
+    const offset = +page * limit;
     const userId = +id;
-    const pieces = await Piece.findAll({ where: { userId } });
+    const { count, rows } = await Piece.findAndCountAll({
+      offset,
+      limit,
+      $sort: { id: 1 },
+      where: { userId }
+    });
+    const pages = Math.ceil(count / limit);
 
     return success(res, `Successfully fetched pieces for User#${userId}`, {
-      pieces
+      count,
+      pages,
+      pieces: rows,
+      perPage: constants.MODEL_READ_LIMIT
     });
   });
 }
