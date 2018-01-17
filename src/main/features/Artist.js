@@ -1,4 +1,14 @@
 import React from "react";
+import {
+  Container,
+  Segment,
+  Item,
+  Divider,
+  Button,
+  Icon
+} from "semantic-ui-react";
+import styled from "styled-components";
+import { Parallax } from "react-parallax";
 
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
@@ -24,6 +34,12 @@ export function ArtistHero() {
 }
 
 export function ArtistViewer() {
+  const Styles = styled.div`
+    .container {
+      min-height: 80vh !important;
+    }
+  `;
+
   const props = {
     exploreService: API.fetchArtists,
     detailService: API.fetchArtist,
@@ -39,5 +55,11 @@ export function ArtistViewer() {
     }
   };
 
-  return <ModelViewer {...props} />;
+  return (
+    <Parallax bgImage="/city.jpg" strength={400} basic>
+      <Divider hidden section />
+      <ModelViewer {...props} />
+      <Divider hidden section />
+    </Parallax>
+  );
 }

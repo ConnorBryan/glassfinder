@@ -21,7 +21,7 @@ function MobileFeatured({ image, title, description, buttonContent, link }) {
             <Card.Description>{description}</Card.Description>
           </Card.Content>
           <Card.Content>
-            <Button as={Link} to={link} color="blue" extra fluid>
+            <Button as={Link} to={link} color="blue" fluid>
               {buttonContent}
               <Icon name="chevron right" />
             </Button>

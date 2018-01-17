@@ -1,7 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BrowserRouter, Switch } from "react-router-dom";
-import { Container, Segment, Sidebar } from "semantic-ui-react";
+import { BrowserRouter, Switch, Link } from "react-router-dom";
+import {
+  Container,
+  Button,
+  Segment,
+  Sidebar,
+  List,
+  Divider
+} from "semantic-ui-react";
 import styled from "styled-components";
 
 import routes, { RecursiveRoutes } from "../../routes";
@@ -11,6 +18,17 @@ import MobileNavigation from "../MobileNavigation";
 const Styles = styled.div`
   .pushable {
     min-height: 80vh !important;
+  }
+  .main {
+    min-height: 100vh !important;
+  }
+  .footer > .segment {
+    min-height: 30vh !important;
+    margin: 0 !important;
+  }
+  .button {
+    text-transform: uppercase !important;
+    letter-spacing: 0.33rem !important;
   }
 `;
 
@@ -41,11 +59,12 @@ function Layout({
     signup
   };
   const closeSidebar = () => mobileNavigationActive && hideMobileNavigation();
+  const scrollToTop = () => window.scrollTo(0, 0);
 
   return (
-    <Styles>
-      <BrowserRouter>
-        <Container fluid>
+    <BrowserRouter>
+      <Styles>
+        <Container className="main" fluid>
           <Segment basic>
             <Navbar {...navigationProps} {...additionalProps} />
           </Segment>
@@ -64,8 +83,54 @@ function Layout({
             </div>
           </Sidebar.Pushable>
         </Container>
-      </BrowserRouter>
-    </Styles>
+        <Container className="footer" fluid>
+          <Segment inverted clearing>
+            <Container>
+              <List size="big" inverted>
+                <List.Item
+                  as={Link}
+                  to="/terms-and-conditions"
+                  icon="chevron right"
+                  content="Terms and Conditions"
+                />
+                <List.Item
+                  as={Link}
+                  to="/privacy-policy"
+                  icon="chevron right"
+                  content="Privacy Policy"
+                />
+              </List>
+              <Divider inverted />
+              <List size="big" inverted>
+                <List.Item icon="users" content="Glassfinder" />
+                <List.Item icon="marker" content="Dallas, TX" />
+                <List.Item
+                  icon="mail"
+                  content={
+                    <a href="mailto:hello@glassfinder.com">
+                      hello@glassfinder.com
+                    </a>
+                  }
+                />
+                <List.Item
+                  icon="linkify"
+                  content={
+                    <a href="https://glassfinder.com">glassfinder.com</a>
+                  }
+                />
+              </List>
+              <Button
+                icon="chevron up"
+                floated="right"
+                content="Back to top"
+                onClick={scrollToTop}
+                primary
+              />
+            </Container>
+          </Segment>
+        </Container>
+      </Styles>
+    </BrowserRouter>
   );
 }
 

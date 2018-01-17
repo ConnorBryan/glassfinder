@@ -1,5 +1,12 @@
 import React from "react";
-import { Item, Divider, Button, Icon } from "semantic-ui-react";
+import {
+  Container,
+  Segment,
+  Item,
+  Divider,
+  Button,
+  Icon
+} from "semantic-ui-react";
 import styled from "styled-components";
 import { Parallax } from "react-parallax";
 
@@ -29,6 +36,12 @@ export function ShopHero() {
 }
 
 export function ShopViewer() {
+  const Styles = styled.div`
+    .container {
+      min-height: 80vh !important;
+    }
+  `;
+
   const props = {
     exploreService: API.fetchShops,
     detailService: API.fetchShop,
@@ -103,5 +116,11 @@ export function ShopViewer() {
     }
   };
 
-  return <ModelViewer {...props} />;
+  return (
+    <Parallax bgImage="/city.jpg" strength={400} basic>
+      <Divider hidden section />
+      <ModelViewer {...props} />
+      <Divider hidden section />
+    </Parallax>
+  );
 }
