@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Sidebar, Menu, Icon } from "semantic-ui-react";
+import { Sidebar, Menu } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 
@@ -14,7 +14,6 @@ const Styles = styled.div`
   }
 
   .sidebar {
-    max-height: 80vh !important;
   }
 
   .spaced {
@@ -89,16 +88,16 @@ function MobileNavigation({
           <Aux>
             <Menu.Item
               as={Link}
-              to="/"
-              content="Sign out"
-              icon="sign out"
+              to="/my-account"
+              content="My account"
+              icon="user"
               onClick={hideMobileNavigation}
             />
             <Menu.Item
               as={Link}
-              to="/my-account"
-              content="My account"
-              icon="user"
+              to="/"
+              content="Sign out"
+              icon="sign out"
               onClick={hideMobileNavigation}
             />
           </Aux>
@@ -120,10 +119,6 @@ function MobileNavigation({
             />
           </Aux>
         )}
-
-        <Menu.Item className="spaced" onClick={hideMobileNavigation}>
-          <strong>Close</strong>
-        </Menu.Item>
       </Sidebar>
     </Styles>
   );

@@ -16,10 +16,13 @@ import Pagination from "../Pagination";
 
 const Styles = styled.div`
   margin-bottom: 0 !important;
-  min-height: 40vh !important;
 
   .menu {
     margin: 0 !important;
+  }
+
+  .viewport {
+    min-height: 55vh !important;
   }
 `;
 
@@ -68,7 +71,7 @@ export default class ExploreMode extends Component {
         : renderMode;
     const query = `?page=${pageParam}&renderMode=${renderModeParam}`;
 
-    history.push(`${uri}${query}`);
+    history.replace(`${uri}${query}`);
 
     this.state = {
       renderMode: renderModeParam,
@@ -94,7 +97,7 @@ export default class ExploreMode extends Component {
    * @param {string} renderMode 
    */
   adjustUrl(page, renderMode) {
-    const { uri, plural, history } = this.props;
+    const { uri, history } = this.props;
     const { page: statePage, renderMode: stateRenderMode } = this.state;
 
     const pageParam = page || statePage || 0;
@@ -299,7 +302,7 @@ export default class ExploreMode extends Component {
         <Segment.Group>
           <OptionsMenu />
           <ResponsivePagination responsiveness={Responsive.onlyMobile} />
-          <Segment>
+          <Segment className="viewport">
             {loading ? (
               <Loader active />
             ) : (
@@ -307,7 +310,9 @@ export default class ExploreMode extends Component {
             )}
           </Segment>
           <ResponsivePagination responsiveness={Responsive.onlyMobile} />
-          <OptionsMenu upward />
+          <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
+            <OptionsMenu upward />
+          </Responsive>
         </Segment.Group>
       </Styles>
     );

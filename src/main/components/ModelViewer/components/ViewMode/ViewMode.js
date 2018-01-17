@@ -60,7 +60,7 @@ function ViewMode({
           </Dropdown.Menu>
         </Dropdown>
         <Menu.Item icon="filter" />
-        <Dropdown item text="Filter by" />
+        <Dropdown item text="Sort by" />
       </Menu.Menu>
     </Styles>
   );

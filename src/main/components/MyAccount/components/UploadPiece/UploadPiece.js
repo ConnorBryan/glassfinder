@@ -5,7 +5,6 @@ import { Container } from "semantic-ui-react";
 
 import API from "../../../../services";
 import { removeFromCache } from "../../../../util";
-import * as Validators from "../../../../validators";
 import AbstractForm from "../../../AbstractForm";
 
 const FIELDS = [
@@ -69,7 +68,9 @@ function UploadPiece({ account, history }) {
     // Clear cache to show entry on reloading Pieces view.
     removeFromCache("myPieces", "myPiecesById");
 
-    history.push("/my-account");
+    history.push(`/my-account/view-my-pieces/${piece.id}/upload-image`, {
+      piece
+    });
   };
 
   return (

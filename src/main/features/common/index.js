@@ -28,7 +28,7 @@ export function renderGenericTile(models, loadDetailsModeFromExploreMode) {
   if (models.length === 0) {
     return (
       <Styles>
-        <Segment basic fluid>
+        <Segment basic>
           <Header as="h2">
             <Icon name="warning sign" /> There is nothing to show.
           </Header>
@@ -103,7 +103,7 @@ export function renderGenericItem(models, loadDetailsModeFromExploreMode) {
   if (models.length === 0) {
     return (
       <Styles>
-        <Segment basic fluid>
+        <Segment basic>
           <Header as="h2">
             <Icon name="warning sign" /> There is nothing to show.
           </Header>
@@ -172,7 +172,7 @@ export function renderGenericCard(models, loadDetailsModeFromExploreMode) {
   if (models.length === 0) {
     return (
       <Styles>
-        <Segment basic fluid>
+        <Segment basic>
           <Header as="h2">
             <Icon name="warning sign" /> There is nothing to show.
           </Header>

@@ -28,7 +28,7 @@ function AbstractFormField({
 }) {
   const inputProps = {
     ...field,
-    error: !!touched[field.name] && errors[field.name],
+    error: !!(touched[field.name] && errors[field.name]),
     value: values[field.name],
     onChange: handleChange
   };

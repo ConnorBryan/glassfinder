@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Container } from "semantic-ui-react";
-import styled from "styled-components";
 
 import ExploreMode from "./components/ExploreMode";
 import DetailMode from "./components/DetailMode";
@@ -46,7 +45,7 @@ class ModelViewer extends Component {
 
   render() {
     const { uri, plural, cacheTerm } = this.props;
-    const { id, mode } = this.state;
+    const { id } = this.state;
 
     const Mode = this.getMode();
     const props = {

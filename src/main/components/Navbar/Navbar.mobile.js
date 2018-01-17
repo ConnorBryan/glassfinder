@@ -9,6 +9,9 @@ const Styles = styled.div`
     display: inline !important;
     text-align: right !important;
   }
+  .ui.secondary.menu a.item:hover {
+    background: white !important;
+  }
 `;
 
 function MobileNavbar({

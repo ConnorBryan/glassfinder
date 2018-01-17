@@ -1,34 +1,34 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Card, Image, Button, Icon } from "semantic-ui-react";
+import styled from "styled-components";
 
-function MobileFeatured({
-  image,
-  title,
-  description,
-  buttonContent,
-  buttonOnClick
-}) {
+const Styles = styled.div`
+  a {
+    text-transform: uppercase !important;
+    letter-spacing: 0.33rem !important;
+  }
+`;
+
+function MobileFeatured({ image, title, description, buttonContent, link }) {
   return (
-    <Card.Group>
-      <Card fluid raised>
-        <Image src={image} />
-        <Card.Content textAlign="center">
-          <Card.Header as="h1">{title}</Card.Header>
-          <Card.Description>{description}</Card.Description>
-        </Card.Content>
-        <Card.Content
-          as={Button}
-          content={buttonContent}
-          onClick={buttonOnClick}
-          color="blue"
-          fluid
-          extra
-        >
-          {buttonContent}
-          <Icon name="chevron right" />
-        </Card.Content>
-      </Card>
-    </Card.Group>
+    <Styles>
+      <Card.Group>
+        <Card fluid raised>
+          <Image src={image} />
+          <Card.Content textAlign="center">
+            <Card.Header as="h1">{title}</Card.Header>
+            <Card.Description>{description}</Card.Description>
+          </Card.Content>
+          <Card.Content>
+            <Button as={Link} to={link} color="blue" extra fluid>
+              {buttonContent}
+              <Icon name="chevron right" />
+            </Button>
+          </Card.Content>
+        </Card>
+      </Card.Group>
+    </Styles>
   );
 }
 

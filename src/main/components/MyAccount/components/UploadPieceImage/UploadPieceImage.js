@@ -16,7 +16,8 @@ import { retrieveFromCache, removeFromCache } from "../../../../util";
 import UploadField from "../../../../components/AbstractForm/components/UploadField";
 
 const Styles = styled.div`
-  .fancy {
+  .fancy,
+  .button {
     text-transform: uppercase !important;
     letter-spacing: 0.33rem !important;
   }
@@ -61,7 +62,7 @@ class UploadPieceImage extends Component {
   };
 
   submit = async () => {
-    const { account, history } = this.props;
+    const { history } = this.props;
     const { id, image } = this.state;
 
     if (this.isValid()) {
@@ -105,16 +106,16 @@ class UploadPieceImage extends Component {
             </Form>
             <Segment attached="bottom" color="blue">
               <Button.Group fluid>
+                <Button onClick={this.submit} disabled={uploading} primary>
+                  Send <Icon name="send outline" />
+                </Button>
+                <Button.Or />
                 <Button
                   icon="refresh"
                   onClick={this.clearImage}
                   content="Reset"
                   disabled={uploading}
                 />
-                <Button.Or />
-                <Button onClick={this.submit} disabled={uploading} primary>
-                  Send <Icon name="send outline" />
-                </Button>
               </Button.Group>
             </Segment>
           </Segment.Group>

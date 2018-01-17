@@ -40,6 +40,7 @@ function Layout({
     signout,
     signup
   };
+  const closeSidebar = () => mobileNavigationActive && hideMobileNavigation();
 
   return (
     <Styles>
@@ -50,15 +51,17 @@ function Layout({
           </Segment>
           <Sidebar.Pushable>
             <MobileNavigation {...navigationProps} {...additionalProps} />
-            <Sidebar.Pusher as={Switch}>
-              {routes.map((route, i) => (
-                <RecursiveRoutes
-                  key={i}
-                  additionalProps={additionalProps}
-                  {...route}
-                />
-              ))}
-            </Sidebar.Pusher>
+            <div onClick={closeSidebar}>
+              <Sidebar.Pusher as={Switch}>
+                {routes.map((route, i) => (
+                  <RecursiveRoutes
+                    key={i}
+                    additionalProps={additionalProps}
+                    {...route}
+                  />
+                ))}
+              </Sidebar.Pusher>
+            </div>
           </Sidebar.Pushable>
         </Container>
       </BrowserRouter>

@@ -51,6 +51,7 @@ export default class Main extends Component {
       });
     });
   };
+
   signout = () => {
     this.setState({ token: null, account: null }, () => {
       removeFromCache(
@@ -63,6 +64,7 @@ export default class Main extends Component {
       );
     });
   };
+
   signup = async (email, password) => {
     const id = await API.signup(email, password);
 

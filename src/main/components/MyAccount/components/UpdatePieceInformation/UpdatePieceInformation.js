@@ -3,10 +3,8 @@ import { withRouter, Redirect } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import Yup from "yup";
 
-import { STATES } from "../../../../config";
 import API from "../../../../services";
 import { removeFromCache } from "../../../../util";
-import * as Validators from "../../../../validators";
 import AbstractForm from "../../../AbstractForm";
 
 const FIELDS = [

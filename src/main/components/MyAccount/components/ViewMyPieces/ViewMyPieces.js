@@ -1,6 +1,6 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
-import { Button, Segment, Icon, Item, Menu, Modal } from "semantic-ui-react";
+import { Redirect } from "react-router-dom";
+import { Button, Segment, Icon, Item, Menu } from "semantic-ui-react";
 import { partial } from "lodash";
 import styled from "styled-components";
 
@@ -29,16 +29,26 @@ export default function MyPiecesViewer({ account, history }) {
     renderCard: renderGenericCard,
     renderDetail: piece => {
       const Styles = styled.div`
+        .image:hover {
+          cursor: pointer !important;
+        }
         .fancy {
           text-transform: uppercase !important;
           letter-spacing: 0.33rem !important;
+        }
+        .icon {
+          position: absolute !important;
+          left: 1rem !important;
         }
       `;
 
       const { id, image, name, description, maker, location, price } = piece;
       const linkRoot = `/my-account/view-my-pieces/${id}`;
       const uploadImageLink = `${linkRoot}/upload-image`;
+      const onUploadImageClick = () => history.push(uploadImageLink, { piece });
       const updateInformationLink = `${linkRoot}/update-information`;
+      const onUpdateInformationClick = () =>
+        history.push(updateInformationLink, { piece });
       const removePiece = async () => {
         const removeConfirmed = window.confirm(
           "Are you sure you want to remove this piece?\nThis cannot be undone."
@@ -62,7 +72,11 @@ export default function MyPiecesViewer({ account, history }) {
           <Segment attached="top">
             <Item.Group>
               <Item>
-                <Item.Image size="medium" src={image} />
+                <Item.Image
+                  size="medium"
+                  src={image}
+                  onClick={onUploadImageClick}
+                />
                 <Item.Content>
                   <Item.Header as="h3" content={name} />
                   <Item.Meta>${price}</Item.Meta>
@@ -73,17 +87,11 @@ export default function MyPiecesViewer({ account, history }) {
               </Item>
             </Item.Group>
           </Segment>
-          <Menu attached="bottom" widths={3}>
-            <Menu.Item
-              className="fancy"
-              onClick={() => history.push(uploadImageLink, { piece })}
-            >
+          <Menu attached="bottom" widths={3} stackable>
+            <Menu.Item className="fancy" onClick={onUploadImageClick}>
               <Icon name="picture" /> Upload image
             </Menu.Item>
-            <Menu.Item
-              className="fancy"
-              onClick={() => history.push(updateInformationLink, { piece })}
-            >
+            <Menu.Item className="fancy" onClick={onUpdateInformationClick}>
               <Icon name="pencil" /> Edit piece
             </Menu.Item>
             <Menu.Item
