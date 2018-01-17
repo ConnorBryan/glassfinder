@@ -2,10 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter, Switch } from "react-router-dom";
 import { Container, Segment, Sidebar } from "semantic-ui-react";
+import styled from "styled-components";
 
 import routes, { RecursiveRoutes } from "../../routes";
 import Navbar from "../Navbar";
 import MobileNavigation from "../MobileNavigation";
+
+const Styles = styled.div`
+  .pushable {
+    min-height: 80vh !important;
+  }
+`;
 
 function Layout({
   mobileNavigationActive,
@@ -13,6 +20,7 @@ function Layout({
   hideMobileNavigation,
   account,
   token,
+  updateAccount,
   updateAccountLink,
   signin,
   signout,
@@ -26,6 +34,7 @@ function Layout({
   const additionalProps = {
     account,
     token,
+    updateAccount,
     updateAccountLink,
     signin,
     signout,
@@ -33,25 +42,27 @@ function Layout({
   };
 
   return (
-    <BrowserRouter>
-      <Container fluid>
-        <Segment basic>
-          <Navbar {...navigationProps} {...additionalProps} />
-        </Segment>
-        <Sidebar.Pushable>
-          <MobileNavigation {...navigationProps} />
-          <Sidebar.Pusher as={Switch}>
-            {routes.map((route, i) => (
-              <RecursiveRoutes
-                key={i}
-                additionalProps={additionalProps}
-                {...route}
-              />
-            ))}
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
-      </Container>
-    </BrowserRouter>
+    <Styles>
+      <BrowserRouter>
+        <Container fluid>
+          <Segment basic>
+            <Navbar {...navigationProps} {...additionalProps} />
+          </Segment>
+          <Sidebar.Pushable>
+            <MobileNavigation {...navigationProps} {...additionalProps} />
+            <Sidebar.Pusher as={Switch}>
+              {routes.map((route, i) => (
+                <RecursiveRoutes
+                  key={i}
+                  additionalProps={additionalProps}
+                  {...route}
+                />
+              ))}
+            </Sidebar.Pusher>
+          </Sidebar.Pushable>
+        </Container>
+      </BrowserRouter>
+    </Styles>
   );
 }
 
@@ -61,6 +72,7 @@ Layout.propTypes = {
   hideMobileNavigation: PropTypes.func.isRequired,
   account: PropTypes.object,
   token: PropTypes.string,
+  updateAccount: PropTypes.func.isRequired,
   updateAccountLink: PropTypes.func.isRequired,
   signin: PropTypes.func.isRequired,
   signout: PropTypes.func.isRequired,

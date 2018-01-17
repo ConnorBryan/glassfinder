@@ -9,6 +9,14 @@ import {
   Message,
   Dropdown
 } from "semantic-ui-react";
+import styled from "styled-components";
+
+const Styles = styled.div`
+  .button {
+    text-transform: uppercase !important;
+    letter-spacing: 0.33rem !important;
+  }
+`;
 
 function AbstractFormField({
   field,
@@ -85,31 +93,33 @@ function AbstractForm({ fields, onSubmit }) {
         handleReset,
         isSubmitting
       }) => (
-        <Form>
-          <Segment.Group stacked>
-            {fields.map((field, index) => (
-              <AbstractFormField
-                key={index}
-                field={field}
-                {...{ values, touched, errors, handleChange, setFieldValue }}
-              />
-            ))}
-            <Segment attached="bottom" color="blue">
-              <Button.Group fluid>
-                <Button
-                  icon="refresh"
-                  onClick={handleReset}
-                  content="Reset"
-                  disabled={isSubmitting}
+        <Styles>
+          <Form onSubmit={handleSubmit}>
+            <Segment.Group stacked>
+              {fields.map((field, index) => (
+                <AbstractFormField
+                  key={index}
+                  field={field}
+                  {...{ values, touched, errors, handleChange, setFieldValue }}
                 />
-                <Button.Or />
-                <Button onClick={handleSubmit} disabled={isSubmitting} primary>
-                  Send <Icon name="send outline" />
-                </Button>
-              </Button.Group>
-            </Segment>
-          </Segment.Group>
-        </Form>
+              ))}
+              <Segment attached="bottom" color="blue">
+                <Button.Group fluid>
+                  <Button type="submit" disabled={isSubmitting} primary>
+                    Send <Icon name="send outline" />
+                  </Button>
+                  <Button.Or />
+                  <Button
+                    icon="refresh"
+                    onClick={handleReset}
+                    content="Reset"
+                    disabled={isSubmitting}
+                  />
+                </Button.Group>
+              </Segment>
+            </Segment.Group>
+          </Form>
+        </Styles>
       )}
     />
   );

@@ -44,11 +44,17 @@ class UploadImage extends Component {
     return true;
   };
 
-  submit = () => {
-    const { account } = this.props;
+  submit = async () => {
+    const { account, updateAccountLink, history } = this.props;
     const { image } = this.state;
 
-    if (this.isValid()) API.uploadImage(account.id, image);
+    if (this.isValid()) {
+      const link = await API.uploadImage(account.id, image);
+
+      updateAccountLink(link);
+
+      history.push("/my-account");
+    }
   };
 
   render() {
@@ -83,15 +89,21 @@ class UploadImage extends Component {
             <Segment attached="bottom" color="blue">
               <Button.Group fluid>
                 <Button
+                  className="fancy"
+                  onClick={this.submit}
+                  disabled={uploading}
+                  primary
+                >
+                  Send <Icon name="send outline" />
+                </Button>
+                <Button.Or />
+                <Button
+                  className="fancy"
                   icon="refresh"
                   onClick={this.clearImage}
                   content="Reset"
                   disabled={uploading}
                 />
-                <Button.Or />
-                <Button onClick={this.submit} disabled={uploading} primary>
-                  Send <Icon name="send outline" />
-                </Button>
               </Button.Group>
             </Segment>
           </Segment.Group>

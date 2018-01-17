@@ -15,6 +15,7 @@ module.exports = {
   create,
   read,
   update,
+  remove,
   uploadImage
 };
 
@@ -51,6 +52,7 @@ function create(req, res) {
 
     const piece = await Piece.create({
       userId,
+      image: constants.PLACEHOLDER_IMAGE,
       name,
       description,
       maker,
@@ -100,6 +102,24 @@ function update(req, res) {
     return success(res, `Successfully updated information for Piece#${id}`, {
       piece: newPiece
     });
+  });
+}
+
+/**
+ * @func remove
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
+ * @returns {object}
+ */
+function remove(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+
+    requireProperties({ id });
+
+    await Piece.destroy({ where: { id } });
+
+    return success(res, `Piece#${id} successfully deleted`);
   });
 }
 

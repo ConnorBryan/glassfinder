@@ -5,6 +5,7 @@ import Yup from "yup";
 
 import { STATES } from "../../../../config";
 import API from "../../../../services";
+import { removeFromCache } from "../../../../util";
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../AbstractForm";
 
@@ -64,7 +65,10 @@ function UpdatePieceInformation({ account, history, location: { state } }) {
   }));
 
   const onSubmit = async values => {
-    const piece = await API.updatePieceInformation(state.piece.id, values);
+    await API.updatePieceInformation(state.piece.id, values);
+
+    // Clear cache to show entry on reloading Pieces view.
+    removeFromCache("myPieces", "myPiecesById");
 
     history.push("/my-account");
   };

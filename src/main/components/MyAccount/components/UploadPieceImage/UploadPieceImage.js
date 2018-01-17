@@ -12,7 +12,7 @@ import {
 import styled from "styled-components";
 
 import API from "../../../../services";
-import { retrieveFromCache } from "../../../../util";
+import { retrieveFromCache, removeFromCache } from "../../../../util";
 import UploadField from "../../../../components/AbstractForm/components/UploadField";
 
 const Styles = styled.div`
@@ -60,11 +60,18 @@ class UploadPieceImage extends Component {
     return true;
   };
 
-  submit = () => {
-    const { account } = this.props;
+  submit = async () => {
+    const { account, history } = this.props;
     const { id, image } = this.state;
 
-    if (this.isValid()) API.uploadPieceImage(id, image);
+    if (this.isValid()) {
+      await API.uploadPieceImage(id, image);
+
+      // Clear cache to show entry on reloading Pieces view.
+      removeFromCache("myPieces", "myPiecesById");
+
+      history.push("/my-account/view-my-pieces");
+    }
   };
 
   render() {

@@ -9,7 +9,8 @@ export const LINK_TYPES = {
 export const ICON_SET = {
   [LINK_TYPES.SHOP]: "shopping cart",
   [LINK_TYPES.ARTIST]: "paint brush",
-  [LINK_TYPES.BRAND]: "building"
+  [LINK_TYPES.BRAND]: "building",
+  [LINK_TYPES.PIECE]: "puzzle"
 };
 
 export const NAVIGATION_LINKS = [

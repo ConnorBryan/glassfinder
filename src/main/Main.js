@@ -28,8 +28,13 @@ export default class Main extends Component {
   hideMobileNavigation = () => this.setMobileNavigationActive(false);
 
   // Authentication
-  updateAccountLink = link =>
-    this.setState(prevState => ({ account: { ...prevState.account, link } }));
+  updateAccount = (key, value) => {
+    this.setState(prevState => ({
+      account: { ...prevState.account, [key]: value }
+    }));
+  };
+
+  updateAccountLink = link => this.updateAccount("link", link);
 
   signin = async (email, password) => {
     const { token, account } = await API.signin(email, password);
@@ -65,8 +70,6 @@ export default class Main extends Component {
       alert("Bad sign up.");
       return;
     }
-
-    console.log(id);
   };
 
   render() {
@@ -75,6 +78,7 @@ export default class Main extends Component {
         {...this.state}
         showMobileNavigation={this.showMobileNavigation}
         hideMobileNavigation={this.hideMobileNavigation}
+        updateAccount={this.updateAccount}
         updateAccountLink={this.updateAccountLink}
         signin={this.signin}
         signout={this.signout}

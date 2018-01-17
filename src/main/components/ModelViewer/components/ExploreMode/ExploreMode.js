@@ -16,7 +16,7 @@ import Pagination from "../Pagination";
 
 const Styles = styled.div`
   margin-bottom: 0 !important;
-  min-height: 70vh !important;
+  min-height: 40vh !important;
 
   .menu {
     margin: 0 !important;
@@ -172,10 +172,12 @@ export default class ExploreMode extends Component {
 
       // Redirect to the first page if invalid page.
       if (newCollection.length === 0) {
-        return this.setState({ page: 0 }, () => {
-          this.adjustUrl(0);
-          this.fetchCollection();
-        });
+        return page !== 0
+          ? this.setState({ page: 0 }, () => {
+              this.adjustUrl(0);
+              this.fetchCollection();
+            })
+          : this.setState({ collection: [[]], loading: false });
       }
 
       // Paginate the results.

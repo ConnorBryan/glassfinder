@@ -66,7 +66,8 @@ function UploadPiece({ account, history }) {
       location
     );
 
-    removeFromCache("myPieces");
+    // Clear cache to show entry on reloading Pieces view.
+    removeFromCache("myPieces", "myPiecesById");
 
     history.push("/my-account");
   };

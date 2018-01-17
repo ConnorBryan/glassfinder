@@ -6,11 +6,37 @@ import {
   Popup,
   Item,
   Button,
+  Segment,
+  Header,
   Icon
 } from "semantic-ui-react";
 import styled from "styled-components";
 
 export function renderGenericTile(models, loadDetailsModeFromExploreMode) {
+  const Styles = styled.div`
+    .model-name {
+      text-transform: uppercase !important;
+      letter-spacing: 0.33rem !important;
+    }
+    .segment {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+  `;
+
+  if (models.length === 0) {
+    return (
+      <Styles>
+        <Segment basic fluid>
+          <Header as="h2">
+            <Icon name="warning sign" /> There is nothing to show.
+          </Header>
+        </Segment>
+      </Styles>
+    );
+  }
+
   const topRow = [models[0], models[1], models[2]].filter(x => x);
   const bottomRow = [models[3], models[4], models[5]].filter(x => x);
   const Row = ({ models }) => (
@@ -46,10 +72,12 @@ export function renderGenericTile(models, loadDetailsModeFromExploreMode) {
   );
 
   return (
-    <Grid columns={3}>
-      <Row models={topRow} />
-      <Row models={bottomRow} />
-    </Grid>
+    <Styles>
+      <Grid columns={3}>
+        <Row models={topRow} />
+        <Row models={bottomRow} />
+      </Grid>
+    </Styles>
   );
 }
 
@@ -65,7 +93,24 @@ export function renderGenericItem(models, loadDetailsModeFromExploreMode) {
         letter-spacing: 0.25rem !important;
       }
     }
+    .segment {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
   `;
+
+  if (models.length === 0) {
+    return (
+      <Styles>
+        <Segment basic fluid>
+          <Header as="h2">
+            <Icon name="warning sign" /> There is nothing to show.
+          </Header>
+        </Segment>
+      </Styles>
+    );
+  }
 
   const displayLocal = model => (
     <Item.Meta
@@ -117,7 +162,25 @@ export function renderGenericCard(models, loadDetailsModeFromExploreMode) {
         letter-spacing: 0.25rem !important;
       }
     }
+    .segment {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
   `;
+
+  if (models.length === 0) {
+    return (
+      <Styles>
+        <Segment basic fluid>
+          <Header as="h2">
+            <Icon name="warning sign" /> There is nothing to show.
+          </Header>
+        </Segment>
+      </Styles>
+    );
+  }
+
   const displayLocal = model => (
     <Card.Meta
       content={

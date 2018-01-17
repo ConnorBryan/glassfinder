@@ -31,10 +31,11 @@ module.exports = app => {
   app.get("/api/brands", BrandController.read);
   app.get("/api/brands/:id", BrandController.read);
 
-  app.get("/api/pieces/", PieceController.read);
   app.post("/api/pieces", PieceController.create);
+  app.get("/api/pieces/", PieceController.read);
   app.get("/api/pieces/:id", PieceController.read);
   app.post("/api/pieces/:id", PieceController.update);
+  app.delete("/api/pieces/:id", PieceController.remove);
   app.post("/api/pieces/:id/upload-image", PieceController.uploadImage);
 
   app.post("/api/contact", ContactController.send);

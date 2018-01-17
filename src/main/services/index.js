@@ -293,6 +293,24 @@ export default class API {
   }
 
   /**
+   * @param {string} pieceId 
+   * @returns {boolean}
+   */
+  static async removePiece(pieceId) {
+    try {
+      const url = `${API_ROOT}/pieces/${pieceId}`;
+
+      await axios.delete(url);
+
+      return true;
+    } catch (e) {
+      console.error(e);
+
+      return false;
+    }
+  }
+
+  /**
    * @param {string} id
    * @param {string} image
    * @returns {object}
