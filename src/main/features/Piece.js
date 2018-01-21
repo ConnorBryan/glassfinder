@@ -10,14 +10,13 @@ import {
   renderGenericCard
 } from "./common";
 
-export function PieceHero() {
+export function PieceHero({ verbiage }) {
   const props = {
     image: "/pieces.jpg",
-    title: "Pieces",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse.",
+    title: verbiage.Home_pieceFeatureHeader,
+    description: verbiage.Home_pieceFeatureDescription,
     flipped: true,
-    buttonContent: "Explore pieces",
+    buttonContent: verbiage.Home_pieceFeatureButton,
     link: "/pieces"
   };
 

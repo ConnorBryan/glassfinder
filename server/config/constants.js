@@ -20,7 +20,7 @@ module.exports = {
   PLACEHOLDER_IMAGE: "https://placehold.it/400x400",
   PLACEHOLDER_SITE: "https://google.com",
   MODEL_READ_LIMIT: 6,
-  POPULATION_COUNT: 100,
+  POPULATION_COUNT: 5,
   PIECE_COUNT: 1,
   DEFAULT_PASSWORD: "111111"
 };

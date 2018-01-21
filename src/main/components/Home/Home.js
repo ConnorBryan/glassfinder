@@ -11,14 +11,14 @@ const Styles = styled.div`
   }
 `;
 
-function Home() {
+function Home({ verbiage }) {
   return (
     <Styles>
       <Segment.Group>
         <Segment basic className="wrapper">
-          <Splash />
+          <Splash verbiage={verbiage} />
         </Segment>
-        <FeaturedSet />
+        <FeaturedSet verbiage={verbiage} />
       </Segment.Group>
     </Styles>
   );

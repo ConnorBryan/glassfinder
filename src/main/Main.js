@@ -15,12 +15,24 @@ export default class Main extends Component {
     if (!account || !token) removeFromCache("account", "token");
 
     this.state = {
+      verbiage: {},
       mobileNavigationActive: false,
       account: account && token ? JSON.parse(account) : null,
       token: token || null,
       error: null
     };
   }
+
+  componentDidMount() {
+    this.setVerbiage();
+  }
+
+  // Text content
+  setVerbiage = async () => {
+    const verbiage = await API.fetchVerbiage();
+
+    this.setState({ verbiage });
+  };
 
   // Mobile responsiveness
   setMobileNavigationActive = mobileNavigationActive =>

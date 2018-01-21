@@ -4,7 +4,17 @@ const _ = require("lodash");
 
 const constants = require("../config/constants");
 
-module.exports = async function({ User, Shop, Artist, Brand, Piece }) {
+module.exports = async function({
+  Verbiage,
+  User,
+  Shop,
+  Artist,
+  Brand,
+  Piece
+}) {
+  // Text for the app.
+  await Verbiage.create();
+
   /*
     Generate each type of user:
       * Unverified users.        [user@user.com / 111111]

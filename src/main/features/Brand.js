@@ -10,14 +10,13 @@ import {
   renderGenericCard
 } from "./common";
 
-export function BrandHero() {
+export function BrandHero({ verbiage }) {
   const props = {
     image: "/brands.jpg",
-    title: "Brands",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse.",
+    title: verbiage.Home_brandFeatureHeader,
+    description: verbiage.Home_brandFeatureDescription,
     flipped: false,
-    buttonContent: "Explore brands",
+    buttonContent: verbiage.Home_brandFeatureButton,
     link: "/brands"
   };
 

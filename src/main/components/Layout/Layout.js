@@ -52,7 +52,8 @@ class Layout extends Component {
     updateAccountLink: PropTypes.func.isRequired,
     signin: PropTypes.func.isRequired,
     signout: PropTypes.func.isRequired,
-    signup: PropTypes.func.isRequired
+    signup: PropTypes.func.isRequired,
+    verbiage: PropTypes.object.isRequired
   };
 
   state = { showNavbarBorder: false };
@@ -82,7 +83,8 @@ class Layout extends Component {
       updateAccountLink,
       signin,
       signout,
-      signup
+      signup,
+      verbiage
     } = this.props;
     const { context, showNavbarBorder } = this.state;
 
@@ -98,7 +100,8 @@ class Layout extends Component {
       updateAccountLink,
       signin,
       signout,
-      signup
+      signup,
+      verbiage
     };
     const closeSidebar = () => mobileNavigationActive && hideMobileNavigation();
     const scrollToTop = () => window.scrollTo(0, 0);

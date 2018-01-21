@@ -51,20 +51,20 @@ const Styles = styled.div`
   }
 `;
 
-function FeaturedSet() {
+function FeaturedSet({ verbiage }) {
   return (
     <Styles>
       <Segment color="blue" secondary>
-        <ShopHero />
+        <ShopHero verbiage={verbiage} />
       </Segment>
       <Segment color="blue" tertiary>
-        <ArtistHero />
+        <ArtistHero verbiage={verbiage} />
       </Segment>
       <Segment color="blue" secondary>
-        <BrandHero />
+        <BrandHero verbiage={verbiage} />
       </Segment>
       <Segment color="blue" tertiary>
-        <PieceHero />
+        <PieceHero verbiage={verbiage} />
       </Segment>
     </Styles>
   );

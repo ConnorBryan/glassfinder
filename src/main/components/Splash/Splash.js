@@ -39,18 +39,16 @@ const Styles = styled.div`
   }
 `;
 
-function Splash(props) {
+function Splash({ verbiage }) {
   return (
     <Styles>
       <Container className="Splash-wrapper">
         <Segment className="Splash-main" padded="very" textAlign="center" basic>
-          <Header>
-            Paraphernalia, <em>revolutionized</em>.
-          </Header>
-          <Header content="Welcome to the new way of lighting up." />
+          <Header>{verbiage.Home_tagline}</Header>
+          <Header content={verbiage.Home_subTagline} />
           <Button.Group>
             <Button primary>
-              Get started <Icon name="send" />
+              {verbiage.Home_getStartedButton} <Icon name="send" />
             </Button>
           </Button.Group>
         </Segment>

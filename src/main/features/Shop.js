@@ -24,14 +24,13 @@ import {
 
 import { PieceViewer } from "./Piece";
 
-export function ShopHero() {
+export function ShopHero({ verbiage }) {
   const props = {
     image: "/shops.jpg",
-    title: "Shops",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse.",
+    title: verbiage.Home_shopFeatureHeader,
+    description: verbiage.Home_shopFeatureDescription,
     flipped: false,
-    buttonContent: "Explore shops",
+    buttonContent: verbiage.Home_shopFeatureButton,
     link: "/shops"
   };
 

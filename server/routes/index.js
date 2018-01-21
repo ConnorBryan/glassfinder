@@ -4,7 +4,8 @@ const {
   artist: ArtistController,
   brand: BrandController,
   piece: PieceController,
-  contact: ContactController
+  contact: ContactController,
+  verbiage: VerbiageController
 } = require("../controllers");
 
 module.exports = app => {
@@ -40,4 +41,6 @@ module.exports = app => {
   app.post("/api/pieces/:id/upload-image", PieceController.uploadImage);
 
   app.post("/api/contact", ContactController.send);
+
+  app.get("/api/verbiage", VerbiageController.read);
 };

@@ -6,6 +6,24 @@ import { logger } from "../util";
 
 export default class API {
   /**
+   * @method fetchVerbiage
+   * @desc Retrieve the text to display inside the application.
+   * @returns {object}
+   */
+  static async fetchVerbiage() {
+    try {
+      const url = `${API_ROOT}/verbiage`;
+      const { data: { payload: { verbiage } } } = await axios.get(url);
+
+      return verbiage;
+    } catch (e) {
+      console.error(e);
+
+      return {};
+    }
+  }
+
+  /**
    * @method fetchModel
    * @desc Retrieve a single instance of a model from the database.
    * @param {string} singular
@@ -45,7 +63,7 @@ export default class API {
       if (typeof userId !== "undefined" && userId !== null) {
         url += `&userId=${userId}&type=${type}`;
       }
-      console.log(type);
+
       const {
         data: { payload: { [plural]: models, pages: totalPages, perPage } }
       } = await axios.get(url);

@@ -10,14 +10,13 @@ import {
   renderGenericCard
 } from "./common";
 
-export function ArtistHero() {
+export function ArtistHero({ verbiage }) {
   const props = {
     image: "https://placehold.it/400x400",
-    title: "Artists",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse.",
+    title: verbiage.Home_artistFeatureHeader,
+    description: verbiage.Home_artistFeatureDescription,
     flipped: false,
-    buttonContent: "Explore artists",
+    buttonContent: verbiage.Home_artistFeatureButton,
     link: "/artists"
   };
 
