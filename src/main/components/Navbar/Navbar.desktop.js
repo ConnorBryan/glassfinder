@@ -1,6 +1,13 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
-import { Menu, Image, Button, Icon, Dropdown } from "semantic-ui-react";
+import {
+  Menu,
+  Image,
+  Button,
+  Icon,
+  Dropdown,
+  Divider
+} from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 
@@ -18,12 +25,21 @@ const Styles = styled.div`
       color: inherit !important;
     }
   }
+  .Navbar-container {
+    background: white !important;
+    margin: 0 !important;
+  }
 `;
 
-function DesktopNavbar({ account, signout, location: { pathname } }) {
+function DesktopNavbar({
+  showBorder,
+  account,
+  signout,
+  location: { pathname }
+}) {
   return (
     <Styles>
-      <Menu borderless secondary>
+      <Menu className="Navbar-container" borderless secondary>
         <Menu.Item header as={Link} to="/">
           <Image size="small" src="/logo.png" />
         </Menu.Item>

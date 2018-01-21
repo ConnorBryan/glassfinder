@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Menu, Image, Icon } from "semantic-ui-react";
+import { Menu, Image, Icon, Divider } from "semantic-ui-react";
 import styled from "styled-components";
 
 const Styles = styled.div`
@@ -12,18 +12,23 @@ const Styles = styled.div`
   .ui.secondary.menu a.item:hover {
     background: white !important;
   }
+  .Navbar-container {
+    background: white !important;
+    margin: 0 !important;
+  }
 `;
 
 function MobileNavbar({
   mobileNavigationActive,
   showMobileNavigation,
-  hideMobileNavigation
+  hideMobileNavigation,
+  showBorder
 }) {
   const onClick = () =>
     mobileNavigationActive ? hideMobileNavigation() : showMobileNavigation();
   return (
     <Styles>
-      <Menu widths={2} borderless secondary>
+      <Menu className="Navbar-container" borderless secondary>
         <Menu.Item as={Link} to="/">
           <Image size="small" src="/logo.png" />
         </Menu.Item>
@@ -35,6 +40,7 @@ function MobileNavbar({
           <Icon name="bars" />
         </Menu.Item>
       </Menu>
+      {showBorder && <Divider fitted />}
     </Styles>
   );
 }
