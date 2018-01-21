@@ -164,7 +164,11 @@ export default class ExploreMode extends Component {
    */
   fetchCollection = () => {
     this.setState({ loading: true }, async () => {
-      const { exploreService: fetchCollection, plural } = this.props;
+      const {
+        exploreService: fetchCollection,
+        plural,
+        modelCallback
+      } = this.props;
       const { collection, page } = this.state;
 
       const {
@@ -202,6 +206,9 @@ export default class ExploreMode extends Component {
         [this.collectionKey]: JSON.stringify(pages)
       });
 
+      // Send the collection of models upward if necessary.
+      modelCallback && modelCallback(newCollection);
+
       this.setState({
         totalPages,
         perPage,
@@ -217,7 +224,11 @@ export default class ExploreMode extends Component {
    */
   loadPage = () => {
     this.setState({ loading: true }, async () => {
-      const { exploreService: fetchCollection, plural } = this.props;
+      const {
+        exploreService: fetchCollection,
+        plural,
+        modelCallback
+      } = this.props;
       const { collection, page } = this.state;
 
       // Don't do anything if the page has already been fetched.
@@ -231,6 +242,9 @@ export default class ExploreMode extends Component {
 
       // Update the cache with the updated collection of models.
       updateCache(this.collectionKey, JSON.stringify(newPages));
+
+      // Send the collection of models upward if necessary.
+      modelCallback && modelCallback(newCollection);
 
       this.setState({ collection: newPages, loading: false });
     });

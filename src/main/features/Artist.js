@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Segment,
-  Item,
-  Divider,
-  Button,
-  Icon
-} from "semantic-ui-react";
-import styled from "styled-components";
+import { Divider } from "semantic-ui-react";
 import { Parallax } from "react-parallax";
 
 import Featured from "../components/Featured";
@@ -34,12 +26,6 @@ export function ArtistHero() {
 }
 
 export function ArtistViewer() {
-  const Styles = styled.div`
-    .container {
-      min-height: 80vh !important;
-    }
-  `;
-
   const props = {
     exploreService: API.fetchArtists,
     detailService: API.fetchArtist,

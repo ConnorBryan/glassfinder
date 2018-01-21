@@ -1,17 +1,11 @@
-import React from "react";
-import {
-  Container,
-  Segment,
-  Item,
-  Divider,
-  Button,
-  Icon
-} from "semantic-ui-react";
+import React, { Component } from "react";
+import { Item, Divider, Button, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 import { Parallax } from "react-parallax";
 
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
+import ShopMap from "../components/ShopMap";
 import API from "../services";
 import {
   renderGenericTile,
@@ -35,92 +29,103 @@ export function ShopHero() {
   return <Featured {...props} />;
 }
 
-export function ShopViewer() {
-  const Styles = styled.div`
-    .container {
-      min-height: 80vh !important;
-    }
-  `;
+export class ShopViewer extends Component {
+  state = { shops: [] };
 
-  const props = {
-    exploreService: API.fetchShops,
-    detailService: API.fetchShop,
-    uri: "/shops",
-    plural: "shops",
-    singular: "shop",
-    icon: "cart",
-    renderTile: renderGenericTile,
-    renderItem: renderGenericItem,
-    renderCard: renderGenericCard,
-    renderDetail: model => {
-      const Styles = styled.div`
-        .item.group {
-          min-height: 60vh !important;
-          display: flex !important;
-          align-items: center !important;
-          justify-content: center !important;
+  setShops = shops =>
+    this.setState(prevState => ({ shops: [...prevState.shops, ...shops] }));
 
-          .item {
-            color: white !important;
-            background: rgba(220, 220, 220, 0.75) !important;
-            padding: 2rem 1rem 2rem 1rem !important;
+  shouldShowMap = () => {
+    const { location: { pathname } } = window;
 
-            .image {
-              cursor: pointer !important;
-            }
-          }
-
-          .button {
-            margin: 0 0.5rem 0 0.5rem !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.25rem !important;
-          }
-        }
-      `;
-
-      return (
-        <Styles>
-          <Parallax
-            bgImage="https://wallpapercave.com/wp/AumsrZG.jpg"
-            strength={200}
-            basic
-          >
-            d
-            <Item.Group>
-              <Item>
-                <Item.Content>
-                  <Item.Header as="h2" content={model.name} />
-                  <Item.Meta
-                    content={`${model.street} ${model.city}, ${model.state} ${model.zip}`}
-                  />
-                  <Item.Description content={model.description} />
-                  <Divider inverted section />
-                  <Button.Group floated="right">
-                    <Button secondary>
-                      <Icon name="phone" /> {model.phone}
-                    </Button>
-                    <Button secondary>
-                      <Icon name="envelope" /> {model.email}
-                    </Button>
-                    <Button primary>
-                      <Icon name="map pin" /> Find on map
-                    </Button>
-                  </Button.Group>
-                </Item.Content>
-              </Item>
-            </Item.Group>
-          </Parallax>
-          <PieceViewer />
-        </Styles>
-      );
-    }
+    return pathname.split("/").length === 2;
   };
 
-  return (
-    <Parallax bgImage="/city.jpg" strength={400} basic>
-      <Divider hidden section />
-      <ModelViewer {...props} />
-      <Divider hidden section />
-    </Parallax>
-  );
+  render() {
+    const { shops } = this.state;
+
+    const props = {
+      exploreService: API.fetchShops,
+      detailService: API.fetchShop,
+      uri: "/shops",
+      plural: "shops",
+      singular: "shop",
+      icon: "cart",
+      renderTile: renderGenericTile,
+      renderItem: renderGenericItem,
+      renderCard: renderGenericCard,
+      renderDetail: model => {
+        const Styles = styled.div`
+          .item.group {
+            min-height: 60vh !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            .item {
+              color: white !important;
+              background: rgba(220, 220, 220, 0.75) !important;
+              padding: 2rem 1rem 2rem 1rem !important;
+
+              .image {
+                cursor: pointer !important;
+              }
+            }
+
+            .button {
+              margin: 0 0.5rem 0 0.5rem !important;
+              text-transform: uppercase !important;
+              letter-spacing: 0.25rem !important;
+            }
+          }
+        `;
+
+        return (
+          <Styles>
+            <Parallax
+              bgImage="https://wallpapercave.com/wp/AumsrZG.jpg"
+              strength={200}
+              basic
+            >
+              d
+              <Item.Group>
+                <Item>
+                  <Item.Content>
+                    <Item.Header as="h2" content={model.name} />
+                    <Item.Meta
+                      content={`${model.street} ${model.city}, ${model.state} ${model.zip}`}
+                    />
+                    <Item.Description content={model.description} />
+                    <Divider inverted section />
+                    <Button.Group floated="right">
+                      <Button secondary>
+                        <Icon name="phone" /> {model.phone}
+                      </Button>
+                      <Button secondary>
+                        <Icon name="envelope" /> {model.email}
+                      </Button>
+                      <Button primary>
+                        <Icon name="map pin" /> Find on map
+                      </Button>
+                    </Button.Group>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+            </Parallax>
+            <PieceViewer />
+          </Styles>
+        );
+      }
+    };
+
+    return (
+      <Parallax bgImage="/city.jpg" strength={400} basic>
+        <Divider hidden section />
+        {this.shouldShowMap() && <ShopMap shops={shops} />}
+        <Divider hidden section />
+        <ModelViewer {...props} modelCallback={this.setShops} />
+        <Divider hidden section />
+      </Parallax>
+    );
+  }
 }
