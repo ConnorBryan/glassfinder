@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Container, Accordion, Header, Icon, Segment } from "semantic-ui-react";
 import Aux from "react-aux";
+
+import ScreenHeader from "../ScreenHeader";
 
 const HELP_TOPICS = [
   {
@@ -21,7 +24,9 @@ const HELP_TOPICS = [
 ];
 
 class Help extends Component {
-  static propTypes = {};
+  static propTypes = {
+    verbiage: PropTypes.objectOf(PropTypes.string).isRequired
+  };
 
   state = { activeIndex: -1 };
 
@@ -34,16 +39,17 @@ class Help extends Component {
   };
 
   render() {
+    const { verbiage } = this.props;
     const { activeIndex } = this.state;
 
     return (
       <Container>
         <Segment.Group>
-          <Segment basic>
-            <Header as="h3">
-              <Icon name="list ul" /> Help Topics
-            </Header>
-          </Segment>
+          <ScreenHeader
+            icon="list ul"
+            title={verbiage.Help_title}
+            description={verbiage.Help_description}
+          />
           <Segment basic>
             <Accordion styled fluid>
               {HELP_TOPICS.map((topic, index) => (

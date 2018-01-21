@@ -1,5 +1,8 @@
 import React from "react";
-import { Container, Item, Icon, Segment } from "semantic-ui-react";
+import PropTypes from "prop-types";
+import { Container, Header, Item, Icon, Segment } from "semantic-ui-react";
+
+import ScreenHeader from "../ScreenHeader";
 
 const UPDATES = [
   {
@@ -47,21 +50,27 @@ function Update({ image, header, meta, description, author }) {
   );
 }
 
-function Updates() {
+function Updates({ verbiage }) {
   return (
     <Container>
       <Segment.Group>
-        <Item.Group as={Segment} basic divided relaxed="very">
-          <Item>
-            <Item.Header as="h3" className="fancy">
-              <Icon name="newspaper" /> Updates
-            </Item.Header>
-          </Item>
-          {UPDATES.map(update => <Update key={update.key} {...update} />)}
-        </Item.Group>
+        <ScreenHeader
+          icon="newspaper"
+          title={verbiage.Updates_title}
+          description={verbiage.Updates_description}
+        />
+        <Segment basic>
+          <Item.Group as={Segment} basic divided relaxed="very">
+            {UPDATES.map(update => <Update key={update.key} {...update} />)}
+          </Item.Group>
+        </Segment>
       </Segment.Group>
     </Container>
   );
 }
+
+Updates.propTypes = {
+  verbiage: PropTypes.objectOf(PropTypes.string).isRequired
+};
 
 export default Updates;

@@ -1,10 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
 import API from "../../services";
 import * as Validators from "../../validators";
+import ScreenHeader from "../ScreenHeader";
 import AbstractForm from "../AbstractForm";
 
 const FIELDS = [
@@ -34,7 +36,7 @@ const FIELDS = [
   }
 ];
 
-function Contact({ history }) {
+function Contact({ verbiage, history }) {
   const onSubmit = ({ name, email, message }) => {
     API.sendContactMessage(name, email, message);
     history.push("/");
@@ -42,7 +44,16 @@ function Contact({ history }) {
 
   return (
     <Container>
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      <Segment.Group>
+        <ScreenHeader
+          icon="send"
+          title={verbiage.Contact_title}
+          description={verbiage.Contact_description}
+        />
+        <Segment basic>
+          <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+        </Segment>
+      </Segment.Group>
     </Container>
   );
 }

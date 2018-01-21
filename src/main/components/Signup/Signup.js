@@ -1,8 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Yup from "yup";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 
 import * as Validators from "../../validators";
+import ScreenHeader from "../ScreenHeader";
 import AbstractForm from "../AbstractForm";
 
 const FIELDS = [
@@ -42,7 +44,7 @@ const FIELDS = [
   }
 ];
 
-function Signup({ signup, history }) {
+function Signup({ verbiage, signup, history }) {
   const onSubmit = async ({ email, newPassword }) => {
     const id = await signup(email, newPassword);
 
@@ -53,7 +55,16 @@ function Signup({ signup, history }) {
 
   return (
     <Container>
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      <Segment.Group>
+        <ScreenHeader
+          icon="question circle"
+          title={verbiage.Signup_title}
+          description={verbiage.Signup_description}
+        />
+        <Segment basic>
+          <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+        </Segment>
+      </Segment.Group>
     </Container>
   );
 }

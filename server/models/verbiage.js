@@ -22,7 +22,7 @@ module.exports = (Sequelize, DataTypes) => {
     Home_shopFeatureDescription: {
       type: DataTypes.STRING,
       defaultValue:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse."
+        "High quality vendors with tons of items in their great selections."
     },
     Home_shopFeatureButton: {
       type: DataTypes.STRING,
@@ -35,7 +35,7 @@ module.exports = (Sequelize, DataTypes) => {
     Home_artistFeatureDescription: {
       type: DataTypes.STRING,
       defaultValue:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse."
+        "Talented invidiuals making the world a better place through their creative abilities."
     },
     Home_artistFeatureButton: {
       type: DataTypes.STRING,
@@ -48,7 +48,7 @@ module.exports = (Sequelize, DataTypes) => {
     Home_brandFeatureDescription: {
       type: DataTypes.STRING,
       defaultValue:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse."
+        "Manufacturers with a passion for the industry and catalogs full of must-have pieces."
     },
     Home_brandFeatureButton: {
       type: DataTypes.STRING,
@@ -60,12 +60,76 @@ module.exports = (Sequelize, DataTypes) => {
     },
     Home_pieceFeatureDescription: {
       type: DataTypes.STRING,
-      defaultValue:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia ipsa consequatur, placeat dignissimos esse provident natus ratione magni id odit nemo quasi dicta quidem! Beatae nostrum consectetur explicabo unde esse."
+      defaultValue: "Beautiful, intricate designs with form and function."
     },
     Home_pieceFeatureButton: {
       type: DataTypes.STRING,
       defaultValue: "Explore pieces"
+    },
+
+    // ## About
+    About_title: {
+      type: DataTypes.STRING,
+      defaultValue: "Our team"
+    },
+    About_description: {
+      type: DataTypes.STRING,
+      defaultValue:
+        "We're a strong willed group of individuals with a mission to revolutionize the headshop industry."
+    },
+
+    // ## Help
+    Help_title: {
+      type: DataTypes.STRING,
+      defaultValue: "Help topics"
+    },
+    Help_description: {
+      type: DataTypes.STRING,
+      defaultValue:
+        "We strive to keep our platform easy to use, but sometimes you need to know more."
+    },
+
+    // ## Updates
+    Updates_title: {
+      type: DataTypes.STRING,
+      defaultValue: "Latest updates"
+    },
+    Updates_description: {
+      type: DataTypes.STRING,
+      defaultValue: "Here's what's been going on at Glassfinder recently."
+    },
+
+    // ## Contact
+    Contact_title: {
+      type: DataTypes.STRING,
+      defaultValue: "Get in touch"
+    },
+    Contact_description: {
+      type: DataTypes.STRING,
+      defaultValue:
+        "Send us a message and let us know how we're doing, or request some help."
+    },
+
+    // ## Sign in
+    Signin_title: {
+      type: DataTypes.STRING,
+      defaultValue: "Welcome back"
+    },
+    Signin_description: {
+      type: DataTypes.STRING,
+      defaultValue:
+        "Sign in to access your account and interact with your slice of the platform."
+    },
+
+    // ## Sign in
+    Signup_title: {
+      type: DataTypes.STRING,
+      defaultValue: "Create an account"
+    },
+    Signup_description: {
+      type: DataTypes.STRING,
+      defaultValue:
+        "You're a few seconds away from unlocking a new world of features."
     }
   });
 
