@@ -85,7 +85,7 @@ const FIELDS = [
   }
 ];
 
-function BecomeAShop({ account, updateAccountLink, history }) {
+function BecomeAShop({ account, updateAccount, updateAccountLink, history }) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const onSubmit = async values => {
@@ -101,13 +101,22 @@ function BecomeAShop({ account, updateAccountLink, history }) {
       values.lat = lat;
       values.lng = lng;
 
-      const link = await API.becomeAShop(account.id, values);
+      const updatedAccount = await API.becomeAShop(account.id, values);
 
-      if (link) updateAccountLink(link);
+      if (updatedAccount) {
+        updateAccount("linked", true);
+        updateAccount("type", updatedAccount.type);
+        updateAccountLink(updatedAccount.link);
+
+        history.push("/my-account/upload-image");
+      } else {
+        history.push("/my-account");
+      }
     } else {
       alert("That address doesn't seem to be a real place.\nPlease try again.");
+
+      history.push("/my-account");
     }
-    history.push("/my-account");
   };
 
   return (

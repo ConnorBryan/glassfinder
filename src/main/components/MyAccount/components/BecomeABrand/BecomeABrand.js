@@ -47,15 +47,21 @@ const FIELDS = [
   }
 ];
 
-function BecomeABrand({ account, updateAccountLink, history }) {
+function BecomeABrand({ account, updateAccount, updateAccountLink, history }) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const onSubmit = async values => {
-    const link = await API.becomeABrand(account.id, values);
+    const updatedAccount = await API.becomeABrand(account.id, values);
 
-    if (link) updateAccountLink(link);
+    if (updatedAccount) {
+      updateAccount("linked", true);
+      updateAccount("type", updatedAccount.type);
+      updateAccountLink(updatedAccount.link);
 
-    history.push("/my-account");
+      history.push("/my-account/upload-image");
+    } else {
+      history.push("/my-account");
+    }
   };
 
   return (

@@ -42,8 +42,14 @@ const FIELDS = [
   }
 ];
 
-function Signup({ signup }) {
-  const onSubmit = ({ email, newPassword }) => signup(email, newPassword);
+function Signup({ signup, history }) {
+  const onSubmit = async ({ email, newPassword }) => {
+    const id = await signup(email, newPassword);
+
+    if (id) {
+      history.push(`/verification/${id}`);
+    }
+  };
 
   return (
     <Container>

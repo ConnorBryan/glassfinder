@@ -72,6 +72,8 @@ export default class Main extends Component {
       alert("Bad sign up.");
       return;
     }
+
+    return id;
   };
 
   render() {
