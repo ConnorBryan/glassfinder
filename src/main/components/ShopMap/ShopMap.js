@@ -25,11 +25,11 @@ class ShopMap extends Component {
     window.google.maps ? this.initMap() : (window.initMap = this.initMap);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
+    const { shops: prevShops } = prevProps;
     const { shops: currentShops } = this.props;
-    const { shops: nextShops } = nextProps;
 
-    if (nextShops.length !== currentShops.length) {
+    if (currentShops.length > prevShops.length) {
       this.loadMarkersFromProps();
     }
   }
@@ -44,6 +44,7 @@ class ShopMap extends Component {
     });
 
     this.loadMarkersFromCache();
+    this.loadMarkersFromProps();
     this.findMyLocation();
   };
 

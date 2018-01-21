@@ -87,7 +87,6 @@ export class ShopViewer extends Component {
               strength={200}
               basic
             >
-              d
               <Item.Group>
                 <Item>
                   <Item.Content>
@@ -112,7 +111,6 @@ export class ShopViewer extends Component {
                 </Item>
               </Item.Group>
             </Parallax>
-            <PieceViewer />
           </Styles>
         );
       }

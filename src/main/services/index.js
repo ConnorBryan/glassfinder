@@ -354,4 +354,25 @@ export default class API {
       return null;
     }
   }
+
+  /**
+   * @param {string} address 
+   * @returns {?object}
+   */
+  static async transformAddressToCoordinates(address) {
+    try {
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}`;
+      const { data: { status, results } } = await axios.get(url);
+
+      if (status === "OK" && results[0]) {
+        const { geometry: { location: { lat, lng } } } = results[0];
+
+        return { lat, lng };
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
 }

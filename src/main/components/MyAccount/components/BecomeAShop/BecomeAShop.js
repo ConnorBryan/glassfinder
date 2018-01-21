@@ -89,10 +89,24 @@ function BecomeAShop({ account, updateAccountLink, history }) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const onSubmit = async values => {
-    const link = await API.becomeAShop(account.id, values);
+    const { street, city, state, zip } = values;
+    const address = window.encodeURIComponent(
+      `${street}, ${city}, ${state} ${zip}`
+    );
+    const coordinates = await API.transformAddressToCoordinates(address);
 
-    if (link) updateAccountLink(link);
+    if (coordinates) {
+      const { lat, lng } = coordinates;
 
+      values.lat = lat;
+      values.lng = lng;
+
+      const link = await API.becomeAShop(account.id, values);
+
+      if (link) updateAccountLink(link);
+    } else {
+      alert("That address doesn't seem to be a real place.\nPlease try again.");
+    }
     history.push("/my-account");
   };
 
