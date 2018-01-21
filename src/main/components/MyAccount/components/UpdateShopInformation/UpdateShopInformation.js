@@ -4,6 +4,7 @@ import { Container } from "semantic-ui-react";
 import Yup from "yup";
 
 import { STATES } from "../../../../config";
+import { removeFromCache } from "../../../../util";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
 import AbstractForm from "../../../AbstractForm";
@@ -109,6 +110,8 @@ function UpdateShopInformation({ account, updateAccountLink, history }) {
       const link = await API.updateInformation(account.id, values);
 
       if (link) updateAccountLink(link);
+
+      removeFromCache("shops", "shopsById");
     } else {
       alert("That address doesn't seem to be a real place.\nPlease try again.");
     }

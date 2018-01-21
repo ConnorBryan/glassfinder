@@ -175,6 +175,10 @@ function link(req, res) {
     }
 
     const parsedConfig = JSON.parse(config);
+
+    // Set the placeholder image prior to user upload.
+    parsedConfig.image = "https://placehold.it/400x400";
+
     const link = await user.linkAs(type, parsedConfig);
     const data = {
       id: user.id,
