@@ -24,19 +24,11 @@ function ViewMode({
     [ExploreMode.RenderModes.Item]: <Icon name="list layout" />,
     [ExploreMode.RenderModes.Card]: <Icon name="block layout" />
   };
-  const activeIcon = iconMap[mode];
   const viewingAs = mode.toLowerCase();
 
   return (
     <Styles>
       <Menu.Menu position="left">
-        <Responsive
-          as={Menu.Item}
-          {...Responsive.onlyComputer}
-          header
-          content="Options"
-        />
-        <Menu.Item>{activeIcon}</Menu.Item>
         <Dropdown item text={`Viewing as ${viewingAs}s`} upward={upward}>
           <Dropdown.Menu>
             <Dropdown.Item
@@ -59,7 +51,6 @@ function ViewMode({
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <Menu.Item icon="filter" />
         <Dropdown item text="Sort by" />
       </Menu.Menu>
     </Styles>

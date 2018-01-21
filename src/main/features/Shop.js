@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Item, Divider, Button, Icon } from "semantic-ui-react";
 import styled from "styled-components";
-import { Parallax } from "react-parallax";
 
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
@@ -82,48 +81,42 @@ export class ShopViewer extends Component {
 
         return (
           <Styles>
-            <Parallax
-              bgImage="https://wallpapercave.com/wp/AumsrZG.jpg"
-              strength={200}
-              basic
-            >
-              <Item.Group>
-                <Item>
-                  <Item.Content>
-                    <Item.Header as="h2" content={model.name} />
-                    <Item.Meta
-                      content={`${model.street} ${model.city}, ${model.state} ${model.zip}`}
-                    />
-                    <Item.Description content={model.description} />
-                    <Divider inverted section />
-                    <Button.Group floated="right">
-                      <Button secondary>
-                        <Icon name="phone" /> {model.phone}
-                      </Button>
-                      <Button secondary>
-                        <Icon name="envelope" /> {model.email}
-                      </Button>
-                      <Button primary>
-                        <Icon name="map pin" /> Find on map
-                      </Button>
-                    </Button.Group>
-                  </Item.Content>
-                </Item>
-              </Item.Group>
-            </Parallax>
+            <Item.Group>
+              <Item>
+                <Item.Content>
+                  <Item.Header as="h2" content={model.name} />
+                  <Item.Meta
+                    content={`${model.street} ${model.city}, ${model.state} ${model.zip}`}
+                  />
+                  <Item.Description content={model.description} />
+                  <Divider inverted section />
+                  <Button.Group floated="right">
+                    <Button secondary>
+                      <Icon name="phone" /> {model.phone}
+                    </Button>
+                    <Button secondary>
+                      <Icon name="envelope" /> {model.email}
+                    </Button>
+                    <Button primary>
+                      <Icon name="map pin" /> Find on map
+                    </Button>
+                  </Button.Group>
+                </Item.Content>
+              </Item>
+            </Item.Group>
           </Styles>
         );
       }
     };
 
     return (
-      <Parallax bgImage="/city.jpg" strength={400} basic>
+      <section>
         <Divider hidden section />
         {this.shouldShowMap() && <ShopMap shops={shops} />}
         <Divider hidden section />
         <ModelViewer {...props} modelCallback={this.setShops} />
         <Divider hidden section />
-      </Parallax>
+      </section>
     );
   }
 }

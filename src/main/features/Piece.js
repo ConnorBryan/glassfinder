@@ -1,6 +1,5 @@
 import React from "react";
 import { Divider } from "semantic-ui-react";
-import { Parallax } from "react-parallax";
 
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
@@ -42,10 +41,10 @@ export function PieceViewer() {
   };
 
   return (
-    <Parallax bgImage="/city.jpg" strength={400} basic>
+    <section>
       <Divider hidden section />
       <ModelViewer {...props} />
       <Divider hidden section />
-    </Parallax>
+    </section>
   );
 }

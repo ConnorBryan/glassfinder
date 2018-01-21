@@ -42,9 +42,11 @@ function Pagination({
           onClick={goToLastPage}
         />
       </Menu.Menu>
-      <Responsive as={Menu.Item} {...Responsive.onlyComputer} header>
-        Showing {`${perPage} ${plural}`} per page.
-      </Responsive>
+      <Menu.Menu position="right">
+        <Responsive as={Menu.Item} {...Responsive.onlyComputer} header>
+          Showing {`${perPage} ${plural}`} per page.
+        </Responsive>
+      </Menu.Menu>
     </Aux>
   );
 }

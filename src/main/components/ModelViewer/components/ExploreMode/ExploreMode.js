@@ -171,11 +171,17 @@ export default class ExploreMode extends Component {
       } = this.props;
       const { collection, page } = this.state;
 
+      const potentialFetchTimeout = setTimeout(() => {
+        this.setState({ collection: [[]], loading: false });
+      }, 3000);
+
       const {
         [plural]: newCollection,
         totalPages,
         perPage
       } = await fetchCollection(page);
+
+      clearTimeout(potentialFetchTimeout);
 
       // Redirect to the first page if invalid page.
       if (newCollection.length === 0) {

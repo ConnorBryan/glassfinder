@@ -19,6 +19,7 @@ export function renderGenericTile(models, loadDetailsModeFromExploreMode) {
       letter-spacing: 0.33rem !important;
     }
     .segment {
+      min-height: 55vh !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
