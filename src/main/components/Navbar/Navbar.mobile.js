@@ -13,8 +13,11 @@ const Styles = styled.div`
     background: white !important;
   }
   .Navbar-container {
-    background: white !important;
+    background: ${({ showBorder }) =>
+      showBorder ? "rgba(255, 255, 255, 0.75)" : "white"} !important;
     margin: 0 !important;
+    border-bottom: ${({ showBorder }) =>
+      showBorder ? "1px solid rgb(212, 212, 212)" : "none"} !important;
   }
 `;
 
@@ -27,7 +30,7 @@ function MobileNavbar({
   const onClick = () =>
     mobileNavigationActive ? hideMobileNavigation() : showMobileNavigation();
   return (
-    <Styles>
+    <Styles showBorder={showBorder}>
       <Menu className="Navbar-container" borderless secondary>
         <Menu.Item as={Link} to="/">
           <Image size="small" src="/logo.png" />

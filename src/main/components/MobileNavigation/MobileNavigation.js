@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Sidebar, Menu } from "semantic-ui-react";
+import { Sidebar, Menu, Divider, Image } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 
@@ -15,9 +15,6 @@ const Styles = styled.div`
   .spaced {
     margin-top: 1.5rem !important;
   }
-  .Sidebar {
-    margin-top: 4rem !important;
-  }
 `;
 
 function MobileNavigation({
@@ -28,13 +25,17 @@ function MobileNavigation({
   return (
     <Styles>
       <Sidebar
-        className="Sidebar"
         as={Menu}
         visible={mobileNavigationActive}
         animation="scale down"
         width="wide"
         vertical
       >
+        {" "}
+        <Menu.Item header>
+          <Image size="small" src="/logo.png" />
+        </Menu.Item>
+        <Divider hidden />
         <Menu.Item header>
           <strong>Navigate</strong>
         </Menu.Item>

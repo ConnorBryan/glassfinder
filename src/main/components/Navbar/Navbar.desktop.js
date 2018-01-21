@@ -26,8 +26,11 @@ const Styles = styled.div`
     }
   }
   .Navbar-container {
-    background: white !important;
+    background: ${({ showBorder }) =>
+      showBorder ? "rgba(255, 255, 255, 0.75)" : "white"} !important;
     margin: 0 !important;
+    border-bottom: ${({ showBorder }) =>
+      showBorder ? "1px solid rgb(212, 212, 212)" : "none"} !important;
   }
 `;
 
@@ -38,7 +41,7 @@ function DesktopNavbar({
   location: { pathname }
 }) {
   return (
-    <Styles>
+    <Styles showBorder={showBorder}>
       <Menu className="Navbar-container" borderless secondary>
         <Menu.Item header as={Link} to="/">
           <Image size="small" src="/logo.png" />
