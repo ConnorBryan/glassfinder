@@ -1,5 +1,4 @@
 # Chores:
-  3. LESS setup for proper theming.
   4. Add VerbiageService to handle phrasing of text.
   5. Add UpdateService
   6. Finalize design for standard screens.
@@ -15,6 +14,7 @@
   16. Constants for all the random shit.chore
   17. Use the auth check for relevant routes.
   18. Rework the main README.md
+  19. Add alerting system.
 
   ### Also:
     * ArtistDetail, Cards, Items

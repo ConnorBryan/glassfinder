@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter } from "react-router-dom";
 
 import API from "./services";
 import { updateCache, retrieveFromCache, removeFromCache } from "./util";
@@ -78,16 +79,18 @@ export default class Main extends Component {
 
   render() {
     return (
-      <Layout
-        {...this.state}
-        showMobileNavigation={this.showMobileNavigation}
-        hideMobileNavigation={this.hideMobileNavigation}
-        updateAccount={this.updateAccount}
-        updateAccountLink={this.updateAccountLink}
-        signin={this.signin}
-        signout={this.signout}
-        signup={this.signup}
-      />
+      <BrowserRouter>
+        <Layout
+          {...this.state}
+          showMobileNavigation={this.showMobileNavigation}
+          hideMobileNavigation={this.hideMobileNavigation}
+          updateAccount={this.updateAccount}
+          updateAccountLink={this.updateAccountLink}
+          signin={this.signin}
+          signout={this.signout}
+          signup={this.signup}
+        />
+      </BrowserRouter>
     );
   }
 }

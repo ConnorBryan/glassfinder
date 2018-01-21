@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { BrowserRouter, Switch, Link } from "react-router-dom";
+import { withRouter, Switch, Link } from "react-router-dom";
 import {
   Container,
   Button,
@@ -57,6 +57,15 @@ class Layout extends Component {
 
   state = { showNavbarBorder: false };
 
+  componentWillReceiveProps(nextProps) {
+    const { location: { pathname: currentPathname } } = this.props;
+    const { location: { pathname: nextPathname } } = nextProps;
+
+    if (currentPathname !== nextPathname) {
+      window.scrollTo(0, 0);
+    }
+  }
+
   handleContext = context => this.setState({ context });
 
   showNavbarBorder = () => this.setState({ showNavbarBorder: true });
@@ -95,89 +104,87 @@ class Layout extends Component {
     const scrollToTop = () => window.scrollTo(0, 0);
 
     return (
-      <BrowserRouter>
-        <Styles>
-          <section ref={this.handleContext}>
-            <Container className="main" fluid>
-              <Segment className="Navbar-segment" basic>
-                <Sticky
-                  context={context}
-                  onStick={this.showNavbarBorder}
-                  onUnstick={this.hideNavbarBorder}
-                >
-                  <Navbar
-                    showBorder={showNavbarBorder}
-                    {...navigationProps}
-                    {...additionalProps}
+      <Styles>
+        <section ref={this.handleContext}>
+          <Container className="main" fluid>
+            <Segment className="Navbar-segment" basic>
+              <Sticky
+                context={context}
+                onStick={this.showNavbarBorder}
+                onUnstick={this.hideNavbarBorder}
+              >
+                <Navbar
+                  showBorder={showNavbarBorder}
+                  {...navigationProps}
+                  {...additionalProps}
+                />
+              </Sticky>
+              <MobileNavigation {...navigationProps} {...additionalProps} />
+            </Segment>
+            <Sidebar.Pushable>
+              <div onClick={closeSidebar}>
+                <Sidebar.Pusher as={Switch}>
+                  {routes.map((route, i) => (
+                    <RecursiveRoutes
+                      key={i}
+                      additionalProps={additionalProps}
+                      {...route}
+                    />
+                  ))}
+                </Sidebar.Pusher>
+              </div>
+            </Sidebar.Pushable>
+          </Container>
+          <Container className="footer" fluid>
+            <Segment inverted clearing>
+              <Container>
+                <List size="big" inverted>
+                  <List.Item
+                    as={Link}
+                    to="/terms-and-conditions"
+                    icon="chevron right"
+                    content="Terms and Conditions"
                   />
-                </Sticky>
-                <MobileNavigation {...navigationProps} {...additionalProps} />
-              </Segment>
-              <Sidebar.Pushable>
-                <div onClick={closeSidebar}>
-                  <Sidebar.Pusher as={Switch}>
-                    {routes.map((route, i) => (
-                      <RecursiveRoutes
-                        key={i}
-                        additionalProps={additionalProps}
-                        {...route}
-                      />
-                    ))}
-                  </Sidebar.Pusher>
-                </div>
-              </Sidebar.Pushable>
-            </Container>
-            <Container className="footer" fluid>
-              <Segment inverted clearing>
-                <Container>
-                  <List size="big" inverted>
-                    <List.Item
-                      as={Link}
-                      to="/terms-and-conditions"
-                      icon="chevron right"
-                      content="Terms and Conditions"
-                    />
-                    <List.Item
-                      as={Link}
-                      to="/privacy-policy"
-                      icon="chevron right"
-                      content="Privacy Policy"
-                    />
-                  </List>
-                  <Divider inverted />
-                  <List size="big" inverted>
-                    <List.Item icon="users" content="Glassfinder" />
-                    <List.Item icon="marker" content="Dallas, TX" />
-                    <List.Item
-                      icon="mail"
-                      content={
-                        <a href="mailto:hello@glassfinder.com">
-                          hello@glassfinder.com
-                        </a>
-                      }
-                    />
-                    <List.Item
-                      icon="linkify"
-                      content={
-                        <a href="https://glassfinder.com">glassfinder.com</a>
-                      }
-                    />
-                  </List>
-                  <Button
-                    icon="chevron up"
-                    floated="right"
-                    content="Back to top"
-                    onClick={scrollToTop}
-                    primary
+                  <List.Item
+                    as={Link}
+                    to="/privacy-policy"
+                    icon="chevron right"
+                    content="Privacy Policy"
                   />
-                </Container>
-              </Segment>
-            </Container>
-          </section>
-        </Styles>
-      </BrowserRouter>
+                </List>
+                <Divider inverted />
+                <List size="big" inverted>
+                  <List.Item icon="users" content="Glassfinder" />
+                  <List.Item icon="marker" content="Dallas, TX" />
+                  <List.Item
+                    icon="mail"
+                    content={
+                      <a href="mailto:hello@glassfinder.com">
+                        hello@glassfinder.com
+                      </a>
+                    }
+                  />
+                  <List.Item
+                    icon="linkify"
+                    content={
+                      <a href="https://glassfinder.com">glassfinder.com</a>
+                    }
+                  />
+                </List>
+                <Button
+                  icon="chevron up"
+                  floated="right"
+                  content="Back to top"
+                  onClick={scrollToTop}
+                  primary
+                />
+              </Container>
+            </Segment>
+          </Container>
+        </section>
+      </Styles>
     );
   }
 }
 
-export default Layout;
+export default withRouter(Layout);
