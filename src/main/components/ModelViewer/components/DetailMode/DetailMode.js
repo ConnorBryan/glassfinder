@@ -68,9 +68,11 @@ export default class DetailMode extends Component {
     const { renderDetail } = this.props;
     const { activeModel } = this.state;
 
-    return (
+    return activeModel ? (
+      renderDetail(activeModel)
+    ) : (
       <Segment>
-        {activeModel ? renderDetail(activeModel) : <Loader active />}
+        <Loader active />
       </Segment>
     );
   }

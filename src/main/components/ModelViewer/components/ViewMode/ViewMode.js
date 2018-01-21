@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Responsive, Menu, Dropdown, Icon } from "semantic-ui-react";
+import { Menu, Dropdown, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 
 import ExploreMode from "../ExploreMode";

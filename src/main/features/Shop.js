@@ -1,6 +1,17 @@
 import React, { Component } from "react";
-import { Item, Divider, Button, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import {
+  Responsive,
+  Item,
+  Divider,
+  Button,
+  Icon,
+  Segment,
+  Menu,
+  Image
+} from "semantic-ui-react";
 import styled from "styled-components";
+import { Parallax } from "react-parallax";
 
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
@@ -29,11 +40,6 @@ export function ShopHero() {
 }
 
 export class ShopViewer extends Component {
-  state = { shops: [] };
-
-  setShops = shops =>
-    this.setState(prevState => ({ shops: [...prevState.shops, ...shops] }));
-
   shouldShowMap = () => {
     const { location: { pathname } } = window;
 
@@ -41,8 +47,6 @@ export class ShopViewer extends Component {
   };
 
   render() {
-    const { shops } = this.state;
-
     const props = {
       exploreService: API.fetchShops,
       detailService: API.fetchShop,
@@ -53,57 +57,82 @@ export class ShopViewer extends Component {
       renderTile: renderGenericTile,
       renderItem: renderGenericItem,
       renderCard: renderGenericCard,
-      renderDetail: model => {
+      renderDetail: ({
+        id,
+        name,
+        street,
+        city,
+        state,
+        zip,
+        image,
+        description,
+        phone,
+        email,
+        lat,
+        lng
+      }) => {
         const Styles = styled.div`
-          .item.group {
-            min-height: 60vh !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
+          .item {
+            text-transform: uppercase !important;
+            letter-spacing: 0.25rem !important;
+          }
 
-            .item {
-              color: white !important;
-              background: rgba(220, 220, 220, 0.75) !important;
-              padding: 2rem 1rem 2rem 1rem !important;
+          .react-parallax-content {
+            min-height: 30rem !important;
+          }
 
-              .image {
-                cursor: pointer !important;
-              }
-            }
-
-            .button {
-              margin: 0 0.5rem 0 0.5rem !important;
-              text-transform: uppercase !important;
-              letter-spacing: 0.25rem !important;
-            }
+          .Shop-description {
+            font-size: 1.2rem !important;
+            line-height: 2.5rem !important;
           }
         `;
 
+        const mapsUrl = `https://www.google.com/maps/@${lat},${lng},8z`;
+        const address = `${street} ${city}, ${state} ${zip}`;
+        const telephoneHref = `tel:${phone}`;
+        const emailHref = `mailto:${email}`;
+        const piecesLink = `/pieces?userId=${id}&type=SHOP`;
+
         return (
           <Styles>
-            <Item.Group>
-              <Item>
-                <Item.Content>
-                  <Item.Header as="h2" content={model.name} />
-                  <Item.Meta
-                    content={`${model.street} ${model.city}, ${model.state} ${model.zip}`}
-                  />
-                  <Item.Description content={model.description} />
-                  <Divider inverted section />
-                  <Button.Group floated="right">
-                    <Button secondary>
-                      <Icon name="phone" /> {model.phone}
-                    </Button>
-                    <Button secondary>
-                      <Icon name="envelope" /> {model.email}
-                    </Button>
-                    <Button primary>
-                      <Icon name="map pin" /> Find on map
-                    </Button>
-                  </Button.Group>
-                </Item.Content>
-              </Item>
-            </Item.Group>
+            <Menu attached="top">
+              <Menu.Item header content={name} />
+              <Menu.Item
+                as={Responsive}
+                minWidth={Responsive.onlyTablet.minWidth}
+                position="right"
+              >
+                <Icon name="globe" /> {address}
+              </Menu.Item>
+            </Menu>
+            <Menu
+              as={Responsive}
+              maxWidth={Responsive.onlyMobile.maxWidth}
+              attached="bottom"
+            >
+              <Menu.Item>
+                <Icon name="globe" /> {address}
+              </Menu.Item>
+            </Menu>
+            <Parallax bgImage={image} strength={400} basic />
+            <Menu attached="bottom" widths={3} stackable>
+              <Menu.Item as="a" href={telephoneHref}>
+                <Icon name="phone" /> {phone}
+              </Menu.Item>
+              <Menu.Item as="a" href={emailHref}>
+                <Icon name="envelope" /> {email}
+              </Menu.Item>
+              <Menu.Item as="a" href={mapsUrl} target="_blank">
+                <Icon name="map pin" /> View on Google Maps
+              </Menu.Item>
+            </Menu>
+            <Segment attached="bottom" className="Shop-description" clearing>
+              {description}
+              <Divider hidden />
+              <Button as={Link} to={piecesLink} floated="right" primary>
+                <Icon name="puzzle" /> View pieces
+              </Button>
+            </Segment>
           </Styles>
         );
       }
@@ -112,9 +141,9 @@ export class ShopViewer extends Component {
     return (
       <section>
         <Divider hidden section />
-        {this.shouldShowMap() && <ShopMap shops={shops} />}
+        {this.shouldShowMap() && <ShopMap />}
         <Divider hidden section />
-        <ModelViewer {...props} modelCallback={this.setShops} />
+        <ModelViewer {...props} />
         <Divider hidden section />
       </section>
     );

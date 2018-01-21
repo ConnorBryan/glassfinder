@@ -38,9 +38,14 @@ export default class API {
    * @param {number} page 
    * @returns {object}
    */
-  static async fetchModels(plural, page = 0) {
+  static async fetchModels(plural, page = 0, userId, type) {
     try {
-      const url = `${API_ROOT}/${plural}?page=${page}`;
+      let url = `${API_ROOT}/${plural}?page=${page}`;
+
+      if (typeof userId !== "undefined" && userId !== null) {
+        url += `&userId=${userId}&type=${type}`;
+      }
+      console.log(type);
       const {
         data: { payload: { [plural]: models, pages: totalPages, perPage } }
       } = await axios.get(url);
@@ -352,6 +357,21 @@ export default class API {
       console.error(e);
 
       return null;
+    }
+  }
+
+  /**
+   * @returns {Array<object>}
+   */
+  static async fetchMapMarkers() {
+    try {
+      const url = `${API_ROOT}/mapmarkers`;
+      const { data: { payload: { markers } } } = await axios.get(url);
+
+      return markers;
+    } catch (e) {
+      console.error(e);
+      return [];
     }
   }
 

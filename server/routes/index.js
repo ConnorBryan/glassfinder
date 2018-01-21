@@ -24,6 +24,7 @@ module.exports = app => {
   app.get("/api/shops/", ShopController.read);
   app.get("/api/shops/:id", ShopController.read);
   app.get("/api/shops/:id/pieces", ShopController.fetchPiecesForId);
+  app.get("/api/mapmarkers", ShopController.fetchMapMarkers);
 
   app.get("/api/artists/", ArtistController.read);
   app.get("/api/artists/:id", ArtistController.read);

@@ -105,6 +105,11 @@ export default [
     component: ShopViewer
   },
   {
+    path: "/shops/:id/pieces",
+    exact: true,
+    component: PieceViewer
+  },
+  {
     path: "/artists",
     exact: true,
     component: ArtistViewer

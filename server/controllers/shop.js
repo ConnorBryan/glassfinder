@@ -4,7 +4,8 @@ const { genericPaginatedRead } = require("./common");
 
 module.exports = {
   read,
-  fetchPiecesForId
+  fetchPiecesForId,
+  fetchMapMarkers
 };
 
 /* === */
@@ -40,6 +41,25 @@ function fetchPiecesForId(req, res) {
 
     return success(res, `Successfully fetched pieces for User#${id}`, {
       pieces
+    });
+  });
+}
+
+/**
+ * @func fetchMapMarkers
+ * @desc Retrieves objects containing information relevant to Google Maps.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res
+ * @returns {Array<object>}
+ */
+function fetchMapMarkers(req, res) {
+  return respondWith(res, async () => {
+    const markers = await Shop.findAll({
+      attributes: ["lat", "lng", "id"]
+    });
+
+    return success(res, `Successfully fetched mapmarkers`, {
+      markers
     });
   });
 }

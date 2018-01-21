@@ -49,32 +49,52 @@ export default class ExploreMode extends Component {
   constructor(props) {
     super(props);
 
-    const { uri, plural, cacheTerm, location: { search }, history } = props;
+    this.state = this.getInitialState();
+  }
 
-    this.collectionKey = cacheTerm || plural;
-    this.perPageKey = `${cacheTerm || plural}PerPage`;
-    this.totalPagesKey = `${cacheTerm || plural}TotalPages`;
+  getInitialState() {
+    const {
+      uri,
+      plural,
+      cacheTerm,
+      location: { search },
+      history
+    } = this.props;
+
+    // Adjust initial state based on the URL's query string.
+    const { userId, type, page, renderMode } = queryString.parse(search);
+
+    const userIdParam =
+      typeof userId === "undefined" || isNaN(+userId) ? null : userId;
+    const typeParam = typeof type === "undefined" ? null : type;
+    const pageParam = typeof page === "undefined" || isNaN(+page) ? 0 : page;
+    const renderModeParam =
+      typeof renderMode === "undefined"
+        ? ExploreMode.RenderModes.Tile
+        : renderMode;
+    const userIdInQuery = userIdParam
+      ? `userId=${userIdParam}&type=${typeParam}&`
+      : "";
+    const query = `?${userIdInQuery}page=${pageParam}&renderMode=${renderModeParam}`;
+
+    history.replace(`${uri}${query}`);
 
     // Attempt to hydrate cached data.
+    const userIdAddendum = userId ? `For${userId}` : "";
+    this.collectionKey = `${cacheTerm || plural}${userIdAddendum}`;
+    this.perPageKey = `${cacheTerm || plural}PerPage${userIdAddendum}`;
+    this.totalPagesKey = `${cacheTerm || plural}TotalPages${userIdAddendum}`;
+
     const perPage = retrieveFromCache(this.perPageKey) || 6;
     const totalPages = retrieveFromCache(this.totalPagesKey) || 1;
     const cachedCollection = retrieveFromCache(this.collectionKey);
     const collection = JSON.parse(cachedCollection || "[]");
     const isCacheExpired = cacheIsExpired();
 
-    // Adjust initial state based on the URL's query string.
-    const { page, renderMode } = queryString.parse(search);
-    const pageParam = typeof page === "undefined" || isNaN(+page) ? 0 : page;
-    const renderModeParam =
-      typeof renderMode === "undefined"
-        ? ExploreMode.RenderModes.Tile
-        : renderMode;
-    const query = `?page=${pageParam}&renderMode=${renderModeParam}`;
-
-    history.replace(`${uri}${query}`);
-
-    this.state = {
+    return {
       renderMode: renderModeParam,
+      userId: isNaN(+userId) ? null : +userId,
+      type: typeParam || null,
       page: isNaN(+page) ? 0 : +page,
       collection: isCacheExpired ? [] : collection,
       perPage: isCacheExpired ? 1 : +perPage,
@@ -91,6 +111,18 @@ export default class ExploreMode extends Component {
       : this.fetchCollection();
   }
 
+  componentDidUpdate(prevProps) {
+    const { location: { search: currentSearch } } = this.props;
+    const { location: { search: prevSearch } } = prevProps;
+
+    const currentHasId = currentSearch.includes("userId");
+    const previousHasId = prevSearch.includes("userId");
+
+    if (currentHasId !== previousHasId) {
+      this.setState(this.getInitialState(), this.fetchCollection);
+    }
+  }
+
   /**
    * Alter the URL in the browser to correspond with the state of the viewer.
    * @param {number} page
@@ -98,13 +130,21 @@ export default class ExploreMode extends Component {
    */
   adjustUrl(page, renderMode) {
     const { uri, history } = this.props;
-    const { page: statePage, renderMode: stateRenderMode } = this.state;
+    const {
+      userId,
+      type,
+      page: statePage,
+      renderMode: stateRenderMode
+    } = this.state;
 
+    const userIdInQuery = userId ? `userId=${userId}&type=${type}` : "";
     const pageParam = page || statePage || 0;
     const renderModeParam =
       renderMode || stateRenderMode || ExploreMode.RenderModes.Tile;
 
-    history.push(`${uri}?page=${pageParam}&renderMode=${renderModeParam}`);
+    history.push(
+      `${uri}?${userIdInQuery}page=${pageParam}&renderMode=${renderModeParam}`
+    );
   }
 
   /**
@@ -164,12 +204,8 @@ export default class ExploreMode extends Component {
    */
   fetchCollection = () => {
     this.setState({ loading: true }, async () => {
-      const {
-        exploreService: fetchCollection,
-        plural,
-        modelCallback
-      } = this.props;
-      const { collection, page } = this.state;
+      const { exploreService: fetchCollection, plural } = this.props;
+      const { userId, type, collection, page } = this.state;
 
       const potentialFetchTimeout = setTimeout(() => {
         this.setState({ collection: [[]], loading: false });
@@ -179,7 +215,7 @@ export default class ExploreMode extends Component {
         [plural]: newCollection,
         totalPages,
         perPage
-      } = await fetchCollection(page);
+      } = await fetchCollection(page, userId, type);
 
       clearTimeout(potentialFetchTimeout);
 
@@ -188,7 +224,7 @@ export default class ExploreMode extends Component {
         return page !== 0
           ? this.setState({ page: 0 }, () => {
               this.adjustUrl(0);
-              this.fetchCollection();
+              this.fetchCollection(0, userId, type);
             })
           : this.setState({ collection: [[]], loading: false });
       }
@@ -212,9 +248,6 @@ export default class ExploreMode extends Component {
         [this.collectionKey]: JSON.stringify(pages)
       });
 
-      // Send the collection of models upward if necessary.
-      modelCallback && modelCallback(newCollection);
-
       this.setState({
         totalPages,
         perPage,
@@ -230,11 +263,7 @@ export default class ExploreMode extends Component {
    */
   loadPage = () => {
     this.setState({ loading: true }, async () => {
-      const {
-        exploreService: fetchCollection,
-        plural,
-        modelCallback
-      } = this.props;
+      const { exploreService: fetchCollection, plural } = this.props;
       const { collection, page } = this.state;
 
       // Don't do anything if the page has already been fetched.
@@ -248,9 +277,6 @@ export default class ExploreMode extends Component {
 
       // Update the cache with the updated collection of models.
       updateCache(this.collectionKey, JSON.stringify(newPages));
-
-      // Send the collection of models upward if necessary.
-      modelCallback && modelCallback(newCollection);
 
       this.setState({ collection: newPages, loading: false });
     });

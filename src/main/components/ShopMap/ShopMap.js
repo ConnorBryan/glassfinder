@@ -3,7 +3,8 @@ import { withRouter } from "react-router-dom";
 import { Container, Segment, Menu } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { retrieveFromCache } from "../../util";
+import API from "../../services";
+import { retrieveFromCache, removeFromCache, updateCache } from "../../util";
 
 const Styles = styled.div`
   #map {
@@ -17,21 +18,8 @@ const Styles = styled.div`
 `;
 
 class ShopMap extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     window.google.maps ? this.initMap() : (window.initMap = this.initMap);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { shops: prevShops } = prevProps;
-    const { shops: currentShops } = this.props;
-
-    if (currentShops.length > prevShops.length) {
-      this.loadMarkersFromProps();
-    }
   }
 
   initMap = async () => {
@@ -39,12 +27,11 @@ class ShopMap extends Component {
     const defaultCenter = { lat: -37.774929, lng: -122.419416 };
 
     this.map = new window.google.maps.Map(map, {
-      zoom: 4,
+      zoom: 8,
       center: defaultCenter
     });
 
-    this.loadMarkersFromCache();
-    this.loadMarkersFromProps();
+    this.loadMarkers();
     this.findMyLocation();
   };
 
@@ -64,19 +51,32 @@ class ShopMap extends Component {
     return marker;
   };
 
-  loadMarkersFromCache = () => {
-    const shops = JSON.parse(retrieveFromCache("shops") || "[]").reduce(
-      (prev, next) => [...prev, ...next],
-      []
-    );
+  loadMarkers = async () => {
+    let markers;
 
-    shops.forEach(shop => this.addMarkerToMap(shop));
+    const cachedMarkers = JSON.parse(retrieveFromCache("markers") || "[]");
+    const markersExpiration =
+      retrieveFromCache("markersExpiration") || String(new Date().getTime());
+    const expired = new Date().getTime() - +markersExpiration >= 0;
+
+    if (cachedMarkers.length > 0 && !expired) {
+      markers = cachedMarkers;
+    } else {
+      removeFromCache("markers", "markersExpiration");
+
+      markers = await API.fetchMapMarkers();
+
+      this.cacheMarkers(markers);
+    }
+
+    markers.forEach(marker => this.addMarkerToMap(marker));
   };
 
-  loadMarkersFromProps = () => {
-    const { shops } = this.props;
-
-    shops.forEach(shop => this.addMarkerToMap(shop));
+  cacheMarkers = markers => {
+    updateCache({
+      markers: JSON.stringify(markers),
+      markersExpiration: new Date().getTime() + 10000
+    });
   };
 
   panToLocation = ({ coords: { latitude: lat, longitude: lng } }) => {

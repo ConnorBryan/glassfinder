@@ -2,8 +2,17 @@ import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Container, Header, Icon, Segment, Menu } from "semantic-ui-react";
 import Aux from "react-aux";
+import styled from "styled-components";
 
 import { LINK_TYPES, ICON_SET } from "../../config";
+
+const Styles = styled.div`
+  .item,
+  .header {
+    text-transform: uppercase !important;
+    letter-spacing: 0.25rem !important;
+  }
+`;
 
 function MyAccountHeaderItem({ icon, title }) {
   return (
@@ -152,17 +161,19 @@ function MyAccount({ account }) {
   const linkedAsShop = type === LINK_TYPES.SHOP;
   const linkedAsArtist = type === LINK_TYPES.ARTIST;
   const linkedAsBrand = type === LINK_TYPES.BRAND;
-
+  console.log("Here?");
   return (
-    <Container>
-      <Segment.Group>
-        <MyAccountBasics />
-        {!linked && <MyAccountUnlinked />}
-        {linkedAsShop && <MyAccountShopMenu />}
-        {linkedAsArtist && <MyAccountArtistMenu />}
-        {linkedAsBrand && <MyAccountBrandMenu />}
-      </Segment.Group>
-    </Container>
+    <Styles>
+      <Container>
+        <Segment.Group>
+          <MyAccountBasics />
+          {!linked && <MyAccountUnlinked />}
+          {linkedAsShop && <MyAccountShopMenu />}
+          {linkedAsArtist && <MyAccountArtistMenu />}
+          {linkedAsBrand && <MyAccountBrandMenu />}
+        </Segment.Group>
+      </Container>
+    </Styles>
   );
 }
 

@@ -95,6 +95,7 @@ export function renderGenericItem(models, loadDetailsModeFromExploreMode) {
       }
     }
     .segment {
+      min-height: 55vh !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -164,6 +165,7 @@ export function renderGenericCard(models, loadDetailsModeFromExploreMode) {
       }
     }
     .segment {
+      min-height: 55vh !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;

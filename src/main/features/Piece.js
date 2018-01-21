@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider } from "semantic-ui-react";
+import { Segment, Divider, Button, Item, Icon } from "semantic-ui-react";
 
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
@@ -35,8 +35,27 @@ export function PieceViewer() {
     renderTile: renderGenericTile,
     renderItem: renderGenericItem,
     renderCard: renderGenericCard,
-    renderDetail: piece => {
-      return <p>{piece.name}</p>;
+    renderDetail: ({ image, name, price, description, maker, location }) => {
+      return (
+        <Segment clearing>
+          <Item.Group>
+            <Item>
+              <Item.Image size="medium" src={image} />
+              <Item.Content>
+                <Item.Header as="h3" content={name} />
+                <Item.Meta>${price}</Item.Meta>
+                <Item.Description content={description} />
+                <Item.Extra content={`Made by ${maker}`} />
+                <Item.Extra content={`Located at ${location}`} />
+              </Item.Content>
+            </Item>
+          </Item.Group>
+          <Divider hidden />
+          <Button floated="right" primary>
+            <Icon name="dollar" /> Purchase this piece
+          </Button>
+        </Segment>
+      );
     }
   };
 

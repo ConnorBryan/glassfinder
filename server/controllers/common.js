@@ -1,9 +1,11 @@
 const constants = require("../config/constants");
 const { respondWith, error, success } = require("../util");
+const { Shop, Artist } = require("../models");
 
 function genericPaginatedRead(req, res, Model, singular, plural) {
   return respondWith(res, async () => {
-    const id = req.params.id;
+    const { id } = req.params;
+    const { userId, type } = req.query;
     const modelType = capitalize(singular);
 
     if (id) {
@@ -22,11 +24,31 @@ function genericPaginatedRead(req, res, Model, singular, plural) {
       const page = req.query.page ? +req.query.page : 0;
       const limit = constants.MODEL_READ_LIMIT;
       const offset = page * limit;
-      const { count, rows: models } = await Model.findAndCountAll({
+      const searchSettings = {
         offset,
         limit,
         $sort: { id: 1 }
-      });
+      };
+
+      // Ugh. Hacks.
+      // Only "Shops" and "Artists" can have pieces,
+      // so when userId is present translate that to ShopId / ArtistId.
+      if (userId) {
+        const modelMap = {
+          SHOP: Shop,
+          ARTIST: Artist
+        };
+        const Model = modelMap[type];
+        const { userId: actualUserId } = await Model.findOne({
+          where: { id: userId }
+        });
+
+        searchSettings.where = { userId: actualUserId };
+      }
+
+      const { count, rows: models } = await Model.findAndCountAll(
+        searchSettings
+      );
       const pages = Math.ceil(count / limit);
 
       return success(res, `Successfully retrieved ${plural}`, {
