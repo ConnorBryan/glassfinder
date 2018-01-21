@@ -12,12 +12,11 @@ const Styles = styled.div`
     text-transform: uppercase !important;
     letter-spacing: 0.33rem !important;
   }
-
-  .sidebar {
-  }
-
   .spaced {
     margin-top: 1.5rem !important;
+  }
+  .Sidebar {
+    margin-top: 4rem !important;
   }
 `;
 
@@ -29,9 +28,10 @@ function MobileNavigation({
   return (
     <Styles>
       <Sidebar
+        className="Sidebar"
         as={Menu}
         visible={mobileNavigationActive}
-        animation="overlay"
+        animation="scale down"
         width="wide"
         vertical
       >

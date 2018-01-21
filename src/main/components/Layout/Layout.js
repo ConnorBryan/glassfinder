@@ -111,9 +111,9 @@ class Layout extends Component {
                     {...additionalProps}
                   />
                 </Sticky>
+                <MobileNavigation {...navigationProps} {...additionalProps} />
               </Segment>
               <Sidebar.Pushable>
-                <MobileNavigation {...navigationProps} {...additionalProps} />
                 <div onClick={closeSidebar}>
                   <Sidebar.Pusher as={Switch}>
                     {routes.map((route, i) => (

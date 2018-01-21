@@ -1,7 +1,6 @@
 # Chores:
 
-  1. Sticky Navbar
-  2. Fix the siderbar
+  2. Fix the sidebar
   3. LESS setup for proper theming.
   4. Add VerbiageService to handle phrasing of text.
   5. Add UpdateService
