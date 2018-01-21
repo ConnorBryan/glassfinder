@@ -1,14 +1,21 @@
 import React from "react";
-import { Container, Segment, Header, Button, Icon } from "semantic-ui-react";
-import { Parallax } from "react-parallax";
+import {
+  Container,
+  Segment,
+  Image,
+  Header,
+  Button,
+  Icon
+} from "semantic-ui-react";
 import styled from "styled-components";
 
 const Styles = styled.div`
+  background: url(/city.jpg) !important;
   .container {
     min-height: 80vh !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 
     em {
       color: #2185d0 !important;
@@ -35,26 +42,19 @@ const Styles = styled.div`
 function Splash(props) {
   return (
     <Styles>
-      <Parallax bgImage="/city.jpg" strength={400} basic>
-        <Container>
-          <Segment
-            className="Splash-main"
-            padded="very"
-            textAlign="center"
-            basic
-          >
-            <Header>
-              Paraphernalia, <em>revolutionized</em>.
-            </Header>
-            <Header content="Welcome to the new way of lighting up." />
-            <Button.Group>
-              <Button primary>
-                Get started <Icon name="send" />
-              </Button>
-            </Button.Group>
-          </Segment>
-        </Container>
-      </Parallax>
+      <Container className="Splash-wrapper">
+        <Segment className="Splash-main" padded="very" textAlign="center" basic>
+          <Header>
+            Paraphernalia, <em>revolutionized</em>.
+          </Header>
+          <Header content="Welcome to the new way of lighting up." />
+          <Button.Group>
+            <Button primary>
+              Get started <Icon name="send" />
+            </Button>
+          </Button.Group>
+        </Segment>
+      </Container>
     </Styles>
   );
 }

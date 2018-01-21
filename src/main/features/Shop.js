@@ -3,15 +3,14 @@ import { Link } from "react-router-dom";
 import {
   Responsive,
   Item,
+  Image,
   Divider,
   Button,
   Icon,
   Segment,
-  Menu,
-  Image
+  Menu
 } from "semantic-ui-react";
 import styled from "styled-components";
-import { Parallax } from "react-parallax";
 
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
@@ -77,10 +76,6 @@ export class ShopViewer extends Component {
             letter-spacing: 0.25rem !important;
           }
 
-          .react-parallax-content {
-            min-height: 30rem !important;
-          }
-
           .Shop-description {
             font-size: 1.2rem !important;
             line-height: 2.5rem !important;
@@ -114,7 +109,7 @@ export class ShopViewer extends Component {
                 <Icon name="globe" /> {address}
               </Menu.Item>
             </Menu>
-            <Parallax bgImage={image} strength={400} basic />
+            <Image src={image} />
             <Menu attached="bottom" widths={3} stackable>
               <Menu.Item as="a" href={telephoneHref}>
                 <Icon name="phone" /> {phone}

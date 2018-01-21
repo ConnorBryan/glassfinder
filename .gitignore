@@ -4,6 +4,14 @@
 /node_modules
 server/node_modules
 
+# styling
+src/semantic/node_modules
+src/semantic/dist/components
+src/semantic/dist/themes/*
+src/!semantic/dist/*.js
+src/!semantic/dist/*.css
+src/!semantic/dist/themes/default/
+
 # testing
 /coverage
 
