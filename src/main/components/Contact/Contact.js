@@ -44,16 +44,14 @@ function Contact({ verbiage, history }) {
 
   return (
     <Container>
-      <Segment.Group>
-        <ScreenHeader
-          icon="send"
-          title={verbiage.Contact_title}
-          description={verbiage.Contact_description}
-        />
-        <Segment basic>
-          <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-        </Segment>
-      </Segment.Group>
+      <ScreenHeader
+        icon="send"
+        title={verbiage.Contact_title}
+        description={verbiage.Contact_description}
+      />
+      <Segment>
+        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      </Segment>
     </Container>
   );
 }

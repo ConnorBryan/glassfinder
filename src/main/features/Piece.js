@@ -1,6 +1,16 @@
 import React from "react";
-import { Segment, Divider, Button, Item, Icon } from "semantic-ui-react";
+import PropTypes from "prop-types";
+import {
+  Container,
+  Segment,
+  Divider,
+  Button,
+  Item,
+  Icon
+} from "semantic-ui-react";
 
+import { LINK_TYPES, ICON_SET } from "../config";
+import ScreenHeader from "../components/ScreenHeader";
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
 import API from "../services";
@@ -23,7 +33,7 @@ export function PieceHero({ verbiage }) {
   return <Featured {...props} />;
 }
 
-export function PieceViewer() {
+export function PieceViewer({ verbiage }) {
   const props = {
     exploreService: API.fetchPieces,
     detailService: API.fetchPiece,
@@ -61,8 +71,20 @@ export function PieceViewer() {
   return (
     <section>
       <Divider hidden section />
+      <Container>
+        <ScreenHeader
+          icon={ICON_SET[LINK_TYPES.PIECE]}
+          title={verbiage.ExplorePieces_title}
+          description={verbiage.ExplorePieces_description}
+        />
+      </Container>
+      <Divider hidden section />
       <ModelViewer {...props} />
       <Divider hidden section />
     </section>
   );
 }
+
+PieceViewer.propTypes = {
+  verbiage: PropTypes.objectOf(PropTypes.string).isRequired
+};

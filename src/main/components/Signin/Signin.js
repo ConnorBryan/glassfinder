@@ -36,16 +36,14 @@ function Signin({ verbiage, account, history, signin }) {
 
   return (
     <Container>
-      <Segment.Group>
-        <ScreenHeader
-          icon="sign in"
-          title={verbiage.Signin_title}
-          description={verbiage.Signin_description}
-        />
-        <Segment basic>
-          <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-        </Segment>
-      </Segment.Group>
+      <ScreenHeader
+        icon="sign in"
+        title={verbiage.Signin_title}
+        description={verbiage.Signin_description}
+      />
+      <Segment>
+        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      </Segment>
     </Container>
   );
 }

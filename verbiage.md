@@ -50,22 +50,21 @@
 
 # Feature Screens
 
-  ## Explore Shops
+  ## Shops
+  ExploreShops_title
+  ExploreShops_description
 
-  ## Shop Detail
+  ## Artists
+  ExploreArtists_title
+  ExploreArtists_description
 
-  ## Explore Artists
+  ## Brands
+  ExploreBrands_title
+  ExploreBrands_description
 
-  ## Artist Detail
-
-  ## Explore Brands
-
-  ## Brand Detail
-
-  ## Explore Pieces
-
-  ## Piece Detail
-
+  ## Pieces
+  ExplorePieces_title
+  ExplorePieces_description
 
 # Account Screens
 
@@ -101,5 +100,9 @@
 # Miscellaneous
 
   ## MobileNavigation
+
+  ## ModelViewer
+
+  ## ShopMap
 
   ## Footer

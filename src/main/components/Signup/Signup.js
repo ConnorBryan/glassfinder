@@ -55,16 +55,14 @@ function Signup({ verbiage, signup, history }) {
 
   return (
     <Container>
-      <Segment.Group>
-        <ScreenHeader
-          icon="question circle"
-          title={verbiage.Signup_title}
-          description={verbiage.Signup_description}
-        />
-        <Segment basic>
-          <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-        </Segment>
-      </Segment.Group>
+      <ScreenHeader
+        icon="question circle"
+        title={verbiage.Signup_title}
+        description={verbiage.Signup_description}
+      />
+      <Segment>
+        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      </Segment>
     </Container>
   );
 }

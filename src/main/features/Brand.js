@@ -1,6 +1,9 @@
 import React from "react";
-import { Divider } from "semantic-ui-react";
+import PropTypes from "prop-types";
+import { Container, Divider } from "semantic-ui-react";
 
+import { LINK_TYPES, ICON_SET } from "../config";
+import ScreenHeader from "../components/ScreenHeader";
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
 import API from "../services";
@@ -23,7 +26,7 @@ export function BrandHero({ verbiage }) {
   return <Featured {...props} />;
 }
 
-export function BrandViewer() {
+export function BrandViewer({ verbiage }) {
   const props = {
     exploreService: API.fetchBrands,
     detailService: API.fetchBrand,
@@ -42,8 +45,20 @@ export function BrandViewer() {
   return (
     <section>
       <Divider hidden section />
+      <Container>
+        <ScreenHeader
+          icon={ICON_SET[LINK_TYPES.BRAND]}
+          title={verbiage.ExploreBrands_title}
+          description={verbiage.ExploreBrands_description}
+        />
+      </Container>
+      <Divider hidden section />
       <ModelViewer {...props} />
       <Divider hidden section />
     </section>
   );
 }
+
+BrandViewer.propTypes = {
+  verbiage: PropTypes.objectOf(PropTypes.string).isRequired
+};

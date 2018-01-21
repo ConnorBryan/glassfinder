@@ -53,18 +53,16 @@ function Update({ image, header, meta, description, author }) {
 function Updates({ verbiage }) {
   return (
     <Container>
-      <Segment.Group>
-        <ScreenHeader
-          icon="newspaper"
-          title={verbiage.Updates_title}
-          description={verbiage.Updates_description}
-        />
-        <Segment basic>
-          <Item.Group as={Segment} basic divided relaxed="very">
-            {UPDATES.map(update => <Update key={update.key} {...update} />)}
-          </Item.Group>
-        </Segment>
-      </Segment.Group>
+      <ScreenHeader
+        icon="newspaper"
+        title={verbiage.Updates_title}
+        description={verbiage.Updates_description}
+      />
+      <Segment>
+        <Item.Group as={Segment} basic divided relaxed="very">
+          {UPDATES.map(update => <Update key={update.key} {...update} />)}
+        </Item.Group>
+      </Segment>
     </Container>
   );
 }

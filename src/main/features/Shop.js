@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
+  Container,
   Responsive,
   Item,
   Image,
@@ -12,6 +14,8 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
+import { LINK_TYPES, ICON_SET } from "../config";
+import ScreenHeader from "../components/ScreenHeader";
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
 import ShopMap from "../components/ShopMap";
@@ -38,6 +42,10 @@ export function ShopHero({ verbiage }) {
 }
 
 export class ShopViewer extends Component {
+  static propTypes = {
+    verbiage: PropTypes.objectOf(PropTypes.string).isRequired
+  };
+
   shouldShowMap = () => {
     const { location: { pathname } } = window;
 
@@ -45,6 +53,8 @@ export class ShopViewer extends Component {
   };
 
   render() {
+    const { verbiage } = this.props;
+
     const props = {
       exploreService: API.fetchShops,
       detailService: API.fetchShop,
@@ -134,6 +144,14 @@ export class ShopViewer extends Component {
 
     return (
       <section>
+        <Divider hidden section />
+        <Container>
+          <ScreenHeader
+            icon={ICON_SET[LINK_TYPES.SHOP]}
+            title={verbiage.ExploreShops_title}
+            description={verbiage.ExploreShops_description}
+          />
+        </Container>
         <Divider hidden section />
         {this.shouldShowMap() && <ShopMap />}
         <Divider hidden section />

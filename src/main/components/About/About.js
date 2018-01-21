@@ -51,18 +51,16 @@ function AboutItem({ image, name, role, blurb }) {
 function About({ verbiage }) {
   return (
     <Container>
-      <Segment.Group>
-        <ScreenHeader
-          icon="question circle"
-          title={verbiage.About_title}
-          description={verbiage.About_description}
-        />
-        <Segment basic>
-          <Item.Group divided relaxed="very">
-            {ABOUT_ITEMS.map(about => <AboutItem key={about.key} {...about} />)}
-          </Item.Group>
-        </Segment>
-      </Segment.Group>
+      <ScreenHeader
+        icon="question circle"
+        title={verbiage.About_title}
+        description={verbiage.About_description}
+      />
+      <Segment>
+        <Item.Group divided relaxed="very">
+          {ABOUT_ITEMS.map(about => <AboutItem key={about.key} {...about} />)}
+        </Item.Group>
+      </Segment>
     </Container>
   );
 }

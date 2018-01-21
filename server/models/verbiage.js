@@ -130,6 +130,51 @@ module.exports = (Sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue:
         "You're a few seconds away from unlocking a new world of features."
+    },
+
+    // # Feature Screens
+
+    // ## Shops
+    ExploreShops_title: {
+      type: DataTypes.STRING,
+      defaultValue: "Explore shops"
+    },
+    ExploreShops_description: {
+      type: DataTypes.STRING,
+      defaultValue:
+        "High quality vendors with tons of items in their great selections."
+    },
+
+    // ## Artists
+    ExploreArtists_title: {
+      type: DataTypes.STRING,
+      defaultValue: "Explore artists"
+    },
+    ExploreArtists_description: {
+      type: DataTypes.STRING,
+      defaultValue:
+        "Talented invidiuals making the world a better place through their creative abilities."
+    },
+
+    // ## Brands
+    ExploreBrands_title: {
+      type: DataTypes.STRING,
+      defaultValue: "Explore brands"
+    },
+    ExploreBrands_description: {
+      type: DataTypes.STRING,
+      defaultValue:
+        "Manufacturers with a passion for the industry and catalogs full of must-have pieces."
+    },
+
+    // ## Pieces
+    ExplorePieces_title: {
+      type: DataTypes.STRING,
+      defaultValue: "Explore pieces"
+    },
+    ExplorePieces_description: {
+      type: DataTypes.STRING,
+      defaultValue: "Beautiful, intricate designs with form and function."
     }
   });
 

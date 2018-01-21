@@ -44,31 +44,29 @@ class Help extends Component {
 
     return (
       <Container>
-        <Segment.Group>
-          <ScreenHeader
-            icon="list ul"
-            title={verbiage.Help_title}
-            description={verbiage.Help_description}
-          />
-          <Segment basic>
-            <Accordion styled fluid>
-              {HELP_TOPICS.map((topic, index) => (
-                <Aux key={topic.key}>
-                  <Accordion.Title
-                    active={activeIndex === index}
-                    index={index}
-                    onClick={this.handleClick}
-                  >
-                    <Icon name="dropdown" /> {topic.title}
-                  </Accordion.Title>
-                  <Accordion.Content active={activeIndex === index}>
-                    {topic.content}
-                  </Accordion.Content>
-                </Aux>
-              ))}
-            </Accordion>
-          </Segment>
-        </Segment.Group>
+        <ScreenHeader
+          icon="list ul"
+          title={verbiage.Help_title}
+          description={verbiage.Help_description}
+        />
+        <Segment>
+          <Accordion styled fluid>
+            {HELP_TOPICS.map((topic, index) => (
+              <Aux key={topic.key}>
+                <Accordion.Title
+                  active={activeIndex === index}
+                  index={index}
+                  onClick={this.handleClick}
+                >
+                  <Icon name="dropdown" /> {topic.title}
+                </Accordion.Title>
+                <Accordion.Content active={activeIndex === index}>
+                  {topic.content}
+                </Accordion.Content>
+              </Aux>
+            ))}
+          </Accordion>
+        </Segment>
       </Container>
     );
   }
