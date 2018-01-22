@@ -13,6 +13,7 @@ import {
 import styled from "styled-components";
 
 import { LINK_TYPES, ICON_SET } from "../config";
+import { fancy, slightlyBiggerText } from "../styles/snippets";
 import ScreenHeader from "../components/ScreenHeader";
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
@@ -74,13 +75,15 @@ export class ShopViewer extends Component {
       }) => {
         const Styles = styled.div`
           .item {
-            text-transform: uppercase !important;
-            letter-spacing: 0.25rem !important;
+            ${fancy};
+          }
+
+          .Shop-wrapper {
+            margin: 0 !important;
           }
 
           .Shop-description {
-            font-size: 1.2rem !important;
-            line-height: 2.5rem !important;
+            ${slightlyBiggerText} line-height: 2.5rem !important;
           }
         `;
 
@@ -92,7 +95,7 @@ export class ShopViewer extends Component {
 
         return (
           <Styles>
-            <Menu attached="top">
+            <Menu attached="top" inverted>
               <Menu.Item header content={name} />
               <Menu.Item
                 as={Responsive}
@@ -106,13 +109,16 @@ export class ShopViewer extends Component {
               as={Responsive}
               maxWidth={Responsive.onlyMobile.maxWidth}
               attached="bottom"
+              inverted
             >
               <Menu.Item>
                 <Icon name="globe" /> {address}
               </Menu.Item>
             </Menu>
-            <Image src={image} />
-            <Menu attached="bottom" widths={3} stackable>
+            <Segment className="Shop-wrapper">
+              <Image src={image} />
+            </Segment>
+            <Menu attached="bottom" widths={3} stackable inverted>
               <Menu.Item as="a" href={telephoneHref}>
                 <Icon name="phone" /> {phone}
               </Menu.Item>

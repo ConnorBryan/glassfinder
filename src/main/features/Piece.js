@@ -59,7 +59,6 @@ export function PieceViewer({ verbiage }) {
               </Item.Content>
             </Item>
           </Item.Group>
-          <Divider hidden />
           <Button floated="right" primary>
             <Icon name="dollar" /> Purchase this piece
           </Button>

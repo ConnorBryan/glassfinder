@@ -17,7 +17,7 @@ const Styles = styled.div`
 function ScreenHeader({ icon, title, description }) {
   return (
     <Styles>
-      <Segment attached="top">
+      <Segment attached="top" inverted>
         <Header as="h3">
           <Icon name={icon} /> {title}
         </Header>
