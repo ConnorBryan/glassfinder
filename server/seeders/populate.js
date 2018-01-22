@@ -4,6 +4,8 @@ const _ = require("lodash");
 
 const constants = require("../config/constants");
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 module.exports = async function({
   User,
   Shop,
@@ -12,7 +14,8 @@ module.exports = async function({
   Piece,
   Verbiage,
   About,
-  Help
+  Help,
+  Update
 }) {
   // Text for the app.
   await Verbiage.create();
@@ -151,6 +154,32 @@ module.exports = async function({
   ];
 
   HELP_ITEMS.forEach(async help => await Help.create(help));
+
+  // Updates
+  const UPDATE_ITEMS = [
+    {
+      image:
+        "https://at-cdn-s01.audiotool.com/2013/03/06/documents/rVR63IUyL2n6ZQeScApwFDJLmztFkJ/0/cover256x256-c5f1e039e12d4009bd2e1b5919e3425a.jpg",
+      title: "Developing is moving quickly",
+      content: `
+        <p>Things are moving quickly.</p>
+      `,
+      author: "Connor Bryan"
+    },
+    {
+      image: "https://www.usnews.com/img/college-photo_1185_256x256mm.jpg",
+      title: "Went to San Francisco",
+      content: `
+        <p>What a neat city.</p>
+      `,
+      author: "Connor Bryan"
+    }
+  ];
+
+  UPDATE_ITEMS.forEach(async update => {
+    await Update.create(update);
+    await sleep(1000);
+  });
 
   /*
     Generate each type of user:

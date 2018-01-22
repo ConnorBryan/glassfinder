@@ -4,6 +4,7 @@ import Yup from "yup";
 import {
   Icon,
   Form,
+  Divider,
   Segment,
   Button,
   Message,
@@ -11,10 +12,11 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
+import { fancy } from "../../styles/snippets";
+
 const Styles = styled.div`
   .button {
-    text-transform: uppercase !important;
-    letter-spacing: 0.33rem !important;
+    ${fancy};
   }
 `;
 
@@ -94,6 +96,7 @@ function AbstractForm({ fields, onSubmit }) {
         isSubmitting
       }) => (
         <Styles>
+          <Divider hidden />
           <Form onSubmit={handleSubmit}>
             <Segment.Group stacked>
               {fields.map((field, index) => (

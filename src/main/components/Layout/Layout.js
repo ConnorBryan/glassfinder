@@ -31,9 +31,6 @@ const Styles = styled.div`
     text-transform: uppercase !important;
     letter-spacing: 0.33rem !important;
   }
-  .stacked.segments {
-    margin: 5rem 0 5rem 0 !important;
-  }
   .Navbar-segment {
     z-index: 3 !important;
     margin: 0 !important;

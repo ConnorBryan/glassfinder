@@ -98,6 +98,10 @@ module.exports = (Sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: "Here's what's been going on at Glassfinder recently."
     },
+    Updates_postedBy: {
+      type: DataTypes.STRING,
+      defaultValue: "Posted by"
+    },
 
     // ## Contact
     Contact_title: {

@@ -60,6 +60,24 @@ export default class API {
   }
 
   /**
+   * @method fetchUpdateItems
+   * @desc Retrieve items for the Updates page.
+   * @returns {Array<object>}
+   */
+  static async fetchUpdateItems() {
+    try {
+      const url = `${API_ROOT}/updates`;
+      const { data: { payload: { update } } } = await axios.get(url);
+
+      return update;
+    } catch (e) {
+      console.error(e);
+
+      return [];
+    }
+  }
+
+  /**
    * @method fetchModel
    * @desc Retrieve a single instance of a model from the database.
    * @param {string} singular

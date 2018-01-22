@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Item, Segment } from "semantic-ui-react";
+import { Container, Divider, Item, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
 import API from "../../services";
@@ -14,6 +14,10 @@ const Styles = styled.div`
 
   .description {
     ${slightlyBiggerText};
+  }
+
+  .segment {
+    margin: 0 !important;
   }
 `;
 
@@ -59,6 +63,7 @@ class About extends Component {
             title={verbiage.About_title}
             description={verbiage.About_description}
           />
+          <Divider hidden />
           <Segment>
             <Item.Group divided relaxed="very">
               {items.map(about => <AboutItem key={about.name} {...about} />)}

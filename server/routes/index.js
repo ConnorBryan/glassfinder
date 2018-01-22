@@ -7,7 +7,8 @@ const {
   contact: ContactController,
   verbiage: VerbiageController,
   about: AboutController,
-  help: HelpController
+  help: HelpController,
+  update: UpdateController
 } = require("../controllers");
 
 module.exports = app => {
@@ -55,4 +56,9 @@ module.exports = app => {
   app.get("/api/help", HelpController.read);
   app.post("/api/help/:id", HelpController.update);
   app.delete("/api/help/:id", HelpController.remove);
+
+  app.post("/api/updates", UpdateController.create);
+  app.get("/api/updates", UpdateController.read);
+  app.post("/api/updates/:id", UpdateController.update);
+  app.delete("/api/updates/:id", UpdateController.remove);
 };

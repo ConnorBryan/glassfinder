@@ -28,6 +28,7 @@
   ## Updates
   Updates_title
   Updates_description
+  Updates_postedBy
 
   ## Contact
   Contact_title

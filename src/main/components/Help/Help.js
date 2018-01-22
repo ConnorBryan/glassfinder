@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Accordion, Icon, Segment } from "semantic-ui-react";
+import { Container, Divider, Accordion, Icon } from "semantic-ui-react";
 import Aux from "react-aux";
 import styled from "styled-components";
 
@@ -23,7 +23,7 @@ const Styles = styled.div`
 
 function HelpItem({ index, activeIndex, handleClick, title, content }) {
   return (
-    <Aux key={index}>
+    <Aux>
       <Accordion.Title
         className="Help-item"
         active={activeIndex === index}
@@ -79,16 +79,16 @@ class Help extends Component {
             title={verbiage.Help_title}
             description={verbiage.Help_description}
           />
-          <Segment>
-            <Accordion styled fluid>
-              {items.map(({ title, content }, index) => (
-                <HelpItem
-                  {...{ index, activeIndex, title, content }}
-                  handleClick={this.handleClick}
-                />
-              ))}
-            </Accordion>
-          </Segment>
+          <Divider hidden />
+          <Accordion styled fluid>
+            {items.map(({ title, content }, index) => (
+              <HelpItem
+                key={index}
+                {...{ index, activeIndex, title, content }}
+                handleClick={this.handleClick}
+              />
+            ))}
+          </Accordion>
         </Container>
       </Styles>
     );

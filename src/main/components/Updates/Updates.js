@@ -1,69 +1,104 @@
-import React from "react";
-import { Container, Item, Segment } from "semantic-ui-react";
+import React, { Component } from "react";
+import { Container, Divider, Item, Segment } from "semantic-ui-react";
+import styled from "styled-components";
+import moment from "moment";
 
+import API from "../../services";
+import { updateCache, genericSetItems } from "../../util";
+import { fancy, slightlyBiggerText } from "../../styles/snippets";
 import ScreenHeader from "../ScreenHeader";
 
-const UPDATES = [
-  {
-    key: "87c98c0f-00f7-45a3-97db-eccb1b7277ee",
-    image: "https://placehold.it/400x400",
-    header: "Test",
-    meta: "03/19/2017",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
-    author: "Connor Bryan"
-  },
-  {
-    key: "08411f35-f411-4c9a-89c8-657c41f2eda6",
-    image: "https://placehold.it/400x400",
-    header: "Test",
-    meta: "03/18/2017",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
-    author: "Connor Bryan"
-  },
-  {
-    key: "A",
-    image: "https://placehold.it/400x400",
-    header: "Test",
-    meta: "03/17/2017",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?",
-    author: "Connor Bryan"
+const Styles = styled.div`
+  .description {
+    ${slightlyBiggerText};
   }
-];
+  .header {
+    ${fancy};
+  }
+`;
 
-function Update({ image, header, meta, description, author }) {
+function UpdateItem({ verbiage, image, title, createdAt, content, author }) {
+  const date = moment(new Date(createdAt)).format("MMMM Do YYYY, h:mm:ss A");
+
   return (
     <Item>
       <Item.Image circular size="small" src={image} />
       <Item.Content>
-        <Item.Header className="fancy" size="medium">
-          {header}
-        </Item.Header>
-        <Item.Meta>{meta}</Item.Meta>
-        <Item.Description>{description}</Item.Description>
-        <Item.Extra>Posted by {author}</Item.Extra>
+        <Item.Header size="medium">{title}</Item.Header>
+        <Item.Meta>{date}</Item.Meta>
+        <Item.Description
+          dangerouslySetInnerHTML={{
+            __html: content
+          }}
+        />
+        <Item.Extra>
+          {verbiage.Updates_postedBy} {author}
+        </Item.Extra>
       </Item.Content>
     </Item>
   );
 }
 
-function Updates({ verbiage }) {
-  return (
-    <Container>
-      <ScreenHeader
-        icon="newspaper"
-        title={verbiage.Updates_title}
-        description={verbiage.Updates_description}
-      />
-      <Segment>
-        <Item.Group as={Segment} basic divided relaxed="very">
-          {UPDATES.map(update => <Update key={update.key} {...update} />)}
-        </Item.Group>
-      </Segment>
-    </Container>
-  );
+class Updates extends Component {
+  state = {
+    items: []
+  };
+
+  componentDidMount() {
+    this.setItems();
+  }
+
+  setItems = async () => {
+    const setItems = genericSetItems.bind(this);
+
+    await setItems("updates", API.fetchUpdateItems);
+
+    this.sortItems();
+  };
+
+  sortItems = () => {
+    const { items } = this.state;
+
+    const sorted = items.sort((a, b) => {
+      const prevTime = new Date(a.createdAt).getTime();
+      const nextTime = new Date(b.createdAt).getTime();
+
+      return nextTime > prevTime ? -1 : 1;
+    });
+
+    updateCache("updates", JSON.stringify(sorted));
+
+    this.setState({ items: sorted });
+  };
+
+  render() {
+    const { items } = this.state;
+    const { verbiage } = this.props;
+
+    return (
+      <Styles>
+        <Container>
+          <ScreenHeader
+            icon="newspaper"
+            title={verbiage.Updates_title}
+            description={verbiage.Updates_description}
+          />
+          <Divider hidden />
+          <Segment>
+            <Item.Group as={Segment} relaxed="very" basic divided>
+              {items.map(update => (
+                <UpdateItem
+                  key={update.title}
+                  verbiage={verbiage}
+                  {...update}
+                />
+              ))}
+            </Item.Group>
+          </Segment>
+        </Container>
+      </Styles>
+    );
+  }
 }
 
 export default Updates;

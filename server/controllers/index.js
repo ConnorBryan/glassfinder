@@ -7,6 +7,7 @@ const contact = require("./contact");
 const verbiage = require("./verbiage");
 const about = require("./about");
 const help = require("./help");
+const update = require("./update");
 
 module.exports = {
   user,
@@ -17,5 +18,6 @@ module.exports = {
   contact,
   verbiage,
   about,
-  help
+  help,
+  update
 };
