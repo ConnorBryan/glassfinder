@@ -15,10 +15,6 @@ const Styles = styled.div`
   .description {
     ${slightlyBiggerText};
   }
-
-  .segment {
-    margin: 0 !important;
-  }
 `;
 
 function AboutItem({ image, name, title, description }) {
@@ -64,7 +60,7 @@ class About extends Component {
             description={verbiage.About_description}
           />
           <Divider hidden />
-          <Segment padded="very">
+          <Segment>
             <Item.Group divided relaxed="very">
               {items.map(about => <AboutItem key={about.name} {...about} />)}
             </Item.Group>
