@@ -10,6 +10,7 @@ import {
   cacheIsExpired,
   updateCache
 } from "../../../../util";
+import { fancy } from "../../../../styles/snippets";
 
 import ViewMode from "../ViewMode";
 import Pagination from "../Pagination";
@@ -24,13 +25,19 @@ const Styles = styled.div`
   .viewport {
     min-height: 55vh !important;
   }
+
+  .fancy {
+    .item,
+    .ui.menu .ui.dropdown .menu > .item {
+      ${fancy};
+    }
+  }
 `;
 
 export default class ExploreMode extends Component {
   static propTypes = {
     plural: PropTypes.string.isRequired, // e.g. { [plural]: [] } e.g. { shops: [] }
     location: PropTypes.shape({
-      // via Router.
       search: PropTypes.string.isRequired
     }),
     history: PropTypes.object.isRequired,
@@ -318,10 +325,24 @@ export default class ExploreMode extends Component {
       perPage
     } = this.state;
 
-    const ResponsivePagination = ({ responsiveness }) => (
+    const MobileViewMode = ({ upward }) => (
+      <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
+        <ViewMode
+          mobile
+          mode={renderMode}
+          upward={upward}
+          switchToTiles={this.switchToTiles}
+          switchToItems={this.switchToItems}
+          switchToCards={this.switchToCards}
+        />
+      </Responsive>
+    );
+
+    const MobilePagination = () => (
       <Responsive
+        mobile
         as={Pagination}
-        {...responsiveness}
+        maxWidth={Responsive.onlyTablet.maxWidth}
         goToFirstPage={this.goToFirstPage}
         goToPreviousPage={this.goToPreviousPage}
         goToNextPage={this.goToNextPage}
@@ -330,24 +351,44 @@ export default class ExploreMode extends Component {
       />
     );
 
-    const OptionsMenu = ({ upward = false }) => (
-      <Menu>
-        <ViewMode
-          mode={renderMode}
-          switchToTiles={this.switchToTiles}
-          switchToItems={this.switchToItems}
-          switchToCards={this.switchToCards}
-          upward={upward}
-        />
-        <ResponsivePagination responsiveness={Responsive.onlyComputer} />
+    const DesktopViewMode = () => (
+      <ViewMode
+        mode={renderMode}
+        switchToTiles={this.switchToTiles}
+        switchToItems={this.switchToItems}
+        switchToCards={this.switchToCards}
+      />
+    );
+
+    const DesktopPagination = () => (
+      <Pagination
+        goToFirstPage={this.goToFirstPage}
+        goToPreviousPage={this.goToPreviousPage}
+        goToNextPage={this.goToNextPage}
+        goToLastPage={this.goToLastPage}
+        {...{ plural, page, totalPages, perPage }}
+      />
+    );
+
+    const DesktopBar = () => (
+      <Menu
+        as={Responsive}
+        minWidth={Responsive.onlyComputer.minWidth}
+        inverted
+      >
+        <DesktopViewMode />
+        <DesktopPagination />
       </Menu>
     );
 
     return (
       <Styles>
         <Segment.Group>
-          <OptionsMenu />
-          <ResponsivePagination responsiveness={Responsive.onlyMobile} />
+          <section className="fancy">
+            <MobileViewMode />
+            <MobilePagination />
+            <DesktopBar />
+          </section>
           <Segment className="viewport">
             {loading ? (
               <Loader active />
@@ -355,10 +396,10 @@ export default class ExploreMode extends Component {
               this.getRenderFunc()(collection[page], this.onClick)
             )}
           </Segment>
-          <ResponsivePagination responsiveness={Responsive.onlyMobile} />
-          <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
-            <OptionsMenu upward />
-          </Responsive>
+          <section className="fancy">
+            <MobilePagination />
+            <MobileViewMode upward />
+          </section>
         </Segment.Group>
       </Styles>
     );

@@ -3,16 +3,17 @@ import PropTypes from "prop-types";
 import { Menu, Dropdown, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 
+import { fancy } from "../../../../styles/snippets";
 import ExploreMode from "../ExploreMode";
 
 const Styles = styled.div`
   .header {
-    text-transform: uppercase !important;
-    letter-spacing: 0.33rem !important;
+    ${fancy};
   }
 `;
 
 function ViewMode({
+  mobile,
   mode,
   upward,
   switchToTiles,
@@ -24,12 +25,13 @@ function ViewMode({
     [ExploreMode.RenderModes.Item]: <Icon name="list layout" />,
     [ExploreMode.RenderModes.Card]: <Icon name="block layout" />
   };
-  const viewingAs = mode.toLowerCase();
+  const MenuComponent = mobile ? Menu : Menu.Menu;
+  const widths = mobile ? 2 : undefined;
 
   return (
     <Styles>
-      <Menu.Menu position="left">
-        <Dropdown item text={`Viewing as ${viewingAs}s`} upward={upward}>
+      <MenuComponent widths={widths} position="left" inverted>
+        <Dropdown item text="Viewing as" upward={upward}>
           <Dropdown.Menu>
             <Dropdown.Item
               active={mode === ExploreMode.RenderModes.Tile}
@@ -52,7 +54,7 @@ function ViewMode({
           </Dropdown.Menu>
         </Dropdown>
         <Dropdown item text="Sort by" />
-      </Menu.Menu>
+      </MenuComponent>
     </Styles>
   );
 }

@@ -99,7 +99,7 @@ class ShopMap extends Component {
       <Styles>
         <Container>
           <Segment attached="top" id="map" />
-          <Menu attached="bottom" widths={1}>
+          <Menu attached="bottom" widths={1} inverted>
             <Menu.Item
               content="Find my location"
               icon="map pin"
