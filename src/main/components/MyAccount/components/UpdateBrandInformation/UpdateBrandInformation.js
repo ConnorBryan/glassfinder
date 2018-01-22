@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
 import { LINK_TYPES, ICON_SET } from "../../../../config";
@@ -71,7 +71,7 @@ function UpdateBrandInformation({
   };
 
   return (
-    <Container>
+    <Container as={Segment}>
       <ScreenHeader
         icon={ICON_SET[LINK_TYPES.BRAND]}
         title={verbiage.UpdateBrandInformation_title}

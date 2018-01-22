@@ -1,6 +1,6 @@
 import React from "react";
 import Yup from "yup";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 
 import * as Validators from "../../validators";
 import ScreenHeader from "../ScreenHeader";
@@ -53,7 +53,7 @@ function Signup({ verbiage, signup, history }) {
   };
 
   return (
-    <Container>
+    <Container as={Segment}>
       <ScreenHeader
         icon="question circle"
         title={verbiage.Signup_title}

@@ -70,7 +70,7 @@ class UploadImage extends Component {
 
     return (
       <Styles>
-        <Container>
+        <Container as={Segment}>
           <ScreenHeader
             icon="picture"
             title={verbiage.UploadImage_title}

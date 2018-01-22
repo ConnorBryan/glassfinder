@@ -71,49 +71,52 @@ export default function MyPiecesViewer({ verbiage, account, history }) {
 
       return (
         <Styles>
-          <ScreenHeader
-            icon={ICON_SET[LINK_TYPES.PIECE]}
-            title={verbiage.ViewMyPieces_title}
-            description={verbiage.ViewMyPieces_description}
-          />
-          <Segment attached="top">
-            <Item.Group>
-              <Item>
-                <Item.Image
-                  size="medium"
-                  src={image}
-                  onClick={onUploadImageClick}
-                />
-                <Item.Content>
-                  <Item.Header as="h3" content={name} />
-                  <Item.Meta>${price}</Item.Meta>
-                  <Item.Description content={description} />
-                  <Item.Extra
-                    content={`${verbiage.ViewMyPieces_madeBy} ${maker}`}
+          <Segment>
+            <ScreenHeader
+              icon={ICON_SET[LINK_TYPES.PIECE]}
+              title={verbiage.ViewMyPieces_title}
+              description={verbiage.ViewMyPieces_description}
+            />
+            <Segment attached="top">
+              <Item.Group>
+                <Item>
+                  <Item.Image
+                    size="medium"
+                    src={image}
+                    onClick={onUploadImageClick}
                   />
-                  <Item.Extra
-                    content={`${verbiage.ViewMyPieces_locatedAt} ${location}`}
-                  />
-                </Item.Content>
-              </Item>
-            </Item.Group>
+                  <Item.Content>
+                    <Item.Header as="h3" content={name} />
+                    <Item.Meta>${price}</Item.Meta>
+                    <Item.Description content={description} />
+                    <Item.Extra
+                      content={`${verbiage.ViewMyPieces_madeBy} ${maker}`}
+                    />
+                    <Item.Extra
+                      content={`${verbiage.ViewMyPieces_locatedAt} ${location}`}
+                    />
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+            </Segment>
+            <Menu attached="bottom" widths={3} stackable>
+              <Menu.Item className="fancy" onClick={onUploadImageClick}>
+                <Icon name="picture" /> {verbiage.ViewMyPieces_uploadImage}
+              </Menu.Item>
+              <Menu.Item className="fancy" onClick={onUpdateInformationClick}>
+                <Icon name="pencil" /> {verbiage.ViewMyPieces_editPiece}
+              </Menu.Item>
+              <Menu.Item
+                as={Button}
+                className="fancy"
+                negative
+                onClick={removePiece}
+              >
+                <Icon name="trash outline" />{" "}
+                {verbiage.ViewMyPieces_removePiece}
+              </Menu.Item>
+            </Menu>
           </Segment>
-          <Menu attached="bottom" widths={3} stackable>
-            <Menu.Item className="fancy" onClick={onUploadImageClick}>
-              <Icon name="picture" /> {verbiage.ViewMyPieces_uploadImage}
-            </Menu.Item>
-            <Menu.Item className="fancy" onClick={onUpdateInformationClick}>
-              <Icon name="pencil" /> {verbiage.ViewMyPieces_editPiece}
-            </Menu.Item>
-            <Menu.Item
-              as={Button}
-              className="fancy"
-              negative
-              onClick={removePiece}
-            >
-              <Icon name="trash outline" /> {verbiage.ViewMyPieces_removePiece}
-            </Menu.Item>
-          </Menu>
         </Styles>
       );
     }

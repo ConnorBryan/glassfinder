@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Divider, Item, Segment } from "semantic-ui-react";
+import { Container, Segment, Divider, Item } from "semantic-ui-react";
 import styled from "styled-components";
 import moment from "moment";
 
@@ -77,7 +77,7 @@ class Updates extends Component {
 
     return (
       <Styles>
-        <Container>
+        <Container as={Segment}>
           <ScreenHeader
             icon="newspaper"
             title={verbiage.Updates_title}

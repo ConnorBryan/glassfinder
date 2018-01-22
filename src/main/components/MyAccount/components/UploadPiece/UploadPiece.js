@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 
 import { LINK_TYPES, ICON_SET } from "../../../../config";
 import API from "../../../../services";
@@ -76,7 +76,7 @@ function UploadPiece({ verbiage, account, history }) {
   };
 
   return (
-    <Container>
+    <Container as={Segment}>
       <ScreenHeader
         icon={ICON_SET[LINK_TYPES.PIECE]}
         title={verbiage.UploadPiece_title}

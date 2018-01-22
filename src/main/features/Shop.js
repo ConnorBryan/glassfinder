@@ -157,20 +157,18 @@ export class ShopViewer extends Component {
     };
 
     return (
-      <section>
-        <Container>
-          <ScreenHeader
-            icon={ICON_SET[LINK_TYPES.SHOP]}
-            title={verbiage.ExploreShops_title}
-            description={verbiage.ExploreShops_description}
-          />
-        </Container>
+      <Container as={Segment}>
+        <ScreenHeader
+          icon={ICON_SET[LINK_TYPES.SHOP]}
+          title={verbiage.ExploreShops_title}
+          description={verbiage.ExploreShops_description}
+        />
         <Divider hidden section />
         {this.shouldShowMap() && <ShopMap />}
         <Divider hidden section />
         <ModelViewer {...props} />
         <Divider hidden section />
-      </section>
+      </Container>
     );
   }
 }

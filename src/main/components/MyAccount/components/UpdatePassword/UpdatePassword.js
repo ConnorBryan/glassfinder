@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
@@ -35,7 +35,7 @@ function UpdatePassword({ verbiage, account, history }) {
   };
 
   return (
-    <Container>
+    <Container as={Segment}>
       <ScreenHeader
         icon="lock"
         title={verbiage.UpdatePassword_title}

@@ -180,7 +180,7 @@ function MyAccount({ verbiage, account }) {
 
   return (
     <Styles>
-      <Container>
+      <Container as={Segment}>
         <ScreenHeader
           icon="settings"
           title={verbiage.MyAccount_title}

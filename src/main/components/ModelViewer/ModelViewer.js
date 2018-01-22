@@ -57,11 +57,7 @@ class ModelViewer extends Component {
       ...this.state
     };
 
-    return (
-      <Container>
-        <Mode {...props} />
-      </Container>
-    );
+    return <Mode {...props} />;
   }
 }
 

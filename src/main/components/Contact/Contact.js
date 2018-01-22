@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
 import API from "../../services";
@@ -42,7 +42,7 @@ function Contact({ verbiage, history }) {
   };
 
   return (
-    <Container>
+    <Container as={Segment}>
       <ScreenHeader
         icon="send"
         title={verbiage.Contact_title}

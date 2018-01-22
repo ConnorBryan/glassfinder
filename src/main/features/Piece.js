@@ -68,17 +68,15 @@ export function PieceViewer({ verbiage }) {
   };
 
   return (
-    <section>
-      <Container>
-        <ScreenHeader
-          icon={ICON_SET[LINK_TYPES.PIECE]}
-          title={verbiage.ExplorePieces_title}
-          description={verbiage.ExplorePieces_description}
-        />
-      </Container>
+    <Container as={Segment}>
+      <ScreenHeader
+        icon={ICON_SET[LINK_TYPES.PIECE]}
+        title={verbiage.ExplorePieces_title}
+        description={verbiage.ExplorePieces_description}
+      />
       <Divider hidden section />
       <ModelViewer {...props} />
       <Divider hidden section />
-    </section>
+    </Container>
   );
 }

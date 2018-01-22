@@ -57,14 +57,14 @@ class About extends Component {
 
     return (
       <Styles>
-        <Container>
+        <Container as={Segment}>
           <ScreenHeader
             icon="question circle"
             title={verbiage.About_title}
             description={verbiage.About_description}
           />
           <Divider hidden />
-          <Segment>
+          <Segment padded="very">
             <Item.Group divided relaxed="very">
               {items.map(about => <AboutItem key={about.name} {...about} />)}
             </Item.Group>

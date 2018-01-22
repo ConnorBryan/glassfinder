@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Divider } from "semantic-ui-react";
+import { Container, Segment, Divider } from "semantic-ui-react";
 
 import { LINK_TYPES, ICON_SET } from "../config";
 import ScreenHeader from "../components/ScreenHeader";
@@ -43,17 +43,15 @@ export function ArtistViewer({ verbiage }) {
   };
 
   return (
-    <section>
-      <Container>
-        <ScreenHeader
-          icon={ICON_SET[LINK_TYPES.ARTIST]}
-          title={verbiage.ExploreArtists_title}
-          description={verbiage.ExploreArtists_description}
-        />
-      </Container>
+    <Container as={Segment}>
+      <ScreenHeader
+        icon={ICON_SET[LINK_TYPES.ARTIST]}
+        title={verbiage.ExploreArtists_title}
+        description={verbiage.ExploreArtists_description}
+      />
       <Divider hidden section />
       <ModelViewer {...props} />
       <Divider hidden section />
-    </section>
+    </Container>
   );
 }

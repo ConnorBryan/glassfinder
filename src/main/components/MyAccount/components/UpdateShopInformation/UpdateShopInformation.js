@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
 import { LINK_TYPES, ICON_SET, STATES } from "../../../../config";
@@ -126,7 +126,7 @@ function UpdateShopInformation({
   };
 
   return (
-    <Container>
+    <Container as={Segment}>
       <ScreenHeader
         icon={ICON_SET[LINK_TYPES.SHOP]}
         title={verbiage.UpdateShopInformation_title}

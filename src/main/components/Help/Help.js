@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Container, Divider, Accordion, Icon } from "semantic-ui-react";
+import {
+  Container,
+  Segment,
+  Divider,
+  Accordion,
+  Icon
+} from "semantic-ui-react";
 import Aux from "react-aux";
 import styled from "styled-components";
 
@@ -73,7 +79,7 @@ class Help extends Component {
 
     return (
       <Styles>
-        <Container>
+        <Container as={Segment}>
           <ScreenHeader
             icon="list ul"
             title={verbiage.Help_title}

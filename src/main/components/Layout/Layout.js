@@ -19,13 +19,23 @@ import MobileNavigation from "../MobileNavigation";
 const Styles = styled.div`
   .pushable {
     min-height: 80vh !important;
+    padding: 4rem 0 4rem 0 !important;
   }
   .main {
     min-height: 100vh !important;
+    background: url(/background.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
-  .footer > .segment {
-    min-height: 30vh !important;
-    margin: 0 !important;
+  .footer {
+    border-top: 1px solid rgb(220, 220, 220);
+
+    .segment {
+      min-height: 30vh !important;
+      margin: 0 !important;
+    }
   }
   .button {
     text-transform: uppercase !important;
@@ -35,9 +45,6 @@ const Styles = styled.div`
     z-index: 3 !important;
     margin: 0 !important;
     padding: 0 !important;
-  }
-  .Layout-intermediary {
-    margin-top: 4rem !important;
   }
 `;
 
@@ -125,7 +132,7 @@ class Layout extends Component {
               <MobileNavigation {...navigationProps} {...additionalProps} />
             </Segment>
             <Sidebar.Pushable>
-              <div className="Layout-intermediary" onClick={closeSidebar}>
+              <div onClick={closeSidebar}>
                 <Sidebar.Pusher as={Switch}>
                   {routes.map((route, i) => (
                     <RecursiveRoutes
