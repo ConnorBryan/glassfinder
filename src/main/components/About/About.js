@@ -3,7 +3,7 @@ import { Container, Item, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
 import API from "../../services";
-import { retrieveFromCache, updateCache } from "../../util";
+import { genericSetItems } from "../../util";
 import { fancy, slightlyBiggerText } from "../../styles/snippets";
 import ScreenHeader from "../ScreenHeader";
 
@@ -42,15 +42,9 @@ class About extends Component {
   }
 
   setItems = async () => {
-    let items;
+    const setItems = genericSetItems.bind(this);
 
-    const cachedItems = JSON.parse(retrieveFromCache("about") || "[]");
-
-    items = cachedItems.length > 0 ? cachedItems : await API.fetchAboutItems();
-
-    updateCache("about", JSON.stringify(items));
-
-    this.setState({ items });
+    setItems("about", API.fetchAboutItems);
   };
 
   render() {

@@ -42,6 +42,24 @@ export default class API {
   }
 
   /**
+   * @method fetchHelpItems
+   * @desc Retrieve items for the Help page.
+   * @returns {Array<object>}
+   */
+  static async fetchHelpItems() {
+    try {
+      const url = `${API_ROOT}/help`;
+      const { data: { payload: { help } } } = await axios.get(url);
+
+      return help;
+    } catch (e) {
+      console.error(e);
+
+      return [];
+    }
+  }
+
+  /**
    * @method fetchModel
    * @desc Retrieve a single instance of a model from the database.
    * @param {string} singular

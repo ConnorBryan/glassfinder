@@ -1,4 +1,4 @@
-const { About } = require("../models");
+const { Help } = require("../models");
 const CRUR = require("../util/crur");
 
 module.exports = {
@@ -11,9 +11,9 @@ module.exports = {
 /* === */
 
 const config = {
-  Model: About,
-  modelName: "About",
-  collection: "about"
+  Model: Help,
+  modelName: "Help",
+  collection: "help"
 };
 
 function create(req, res) {

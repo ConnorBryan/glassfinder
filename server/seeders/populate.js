@@ -5,13 +5,14 @@ const _ = require("lodash");
 const constants = require("../config/constants");
 
 module.exports = async function({
-  Verbiage,
-  About,
   User,
   Shop,
   Artist,
   Brand,
-  Piece
+  Piece,
+  Verbiage,
+  About,
+  Help
 }) {
   // Text for the app.
   await Verbiage.create();
@@ -42,6 +43,114 @@ module.exports = async function({
   ];
 
   ABOUT_ITEMS.forEach(async about => await About.create(about));
+
+  // Help
+  const HELP_ITEMS = [
+    {
+      title: "Exploring shops",
+      content: `
+        <ul>
+          <li>
+            Click for the "Explore" dropdown in the navigation bar.
+          </li>
+          <li>
+            Select "Shops" from the dropdown menu.
+          </li>
+          <li>
+            The map shows all nearby shops that are registered with Glassfinder.
+          </li>
+          <li>
+            Below the map, a more detailed list of shops are presented.
+          </li>
+          <li>
+            To change the look and feel of the shop viewer, click the "Viewing as _" dropdown on the menu bar.
+          </li>
+          <li>
+            To view the shops in a different order, select an option underneath the "Sort by" dropdown.
+          </li>
+          <li>
+            The transporter in the middle of the menu can be used go go back and forth between pages of shops.
+          </li>
+        </ul>
+      `
+    },
+    {
+      title: "Exploring artists",
+      content: `
+        <ul>
+          <li>
+            Click for the "Explore" dropdown in the navigation bar.
+          </li>
+          <li>
+            Select "Artists" from the dropdown menu.
+          </li>
+          <li>
+            A detailed list of artists is presented.
+          </li>
+          <li>
+            To change the look and feel of the artist viewer, click the "Viewing as _" dropdown on the menu bar.
+          </li>
+          <li>
+            To view the artists in a different order, select an option underneath the "Sort by" dropdown.
+          </li>
+          <li>
+            The transporter in the middle of the menu can be used go go back and forth between pages of artists.
+          </li>
+        </ul>
+      `
+    },
+    {
+      title: "Exploring brands",
+      content: `
+        <ul>
+          <li>
+            Click for the "Explore" dropdown in the navigation bar.
+          </li>
+          <li>
+            Select "Brands" from the dropdown menu.
+          </li>
+            A detailed list of brands is presented.
+          </li>
+          <li>
+            To change the look and feel of the brand viewer, click the "Viewing as _" dropdown on the menu bar.
+          </li>
+          <li>
+            To view the brands in a different order, select an option underneath the "Sort by" dropdown.
+          </li>
+          <li>
+            The transporter in the middle of the menu can be used go go back and forth between pages of brands.
+          </li>
+        </ul>
+      `
+    },
+    {
+      title: "Exploring pieces",
+      content: `
+        <ul>
+          <li>
+            Click for the "Explore" dropdown in the navigation bar.
+          </li>
+          <li>
+            Select "Pieces" from the dropdown menu.
+          </li>
+          <li>
+            A detailed list of pieces is presented.
+          </li>
+          <li>
+            To change the look and feel of the piece viewer, click the "Viewing as _" dropdown on the menu bar.
+          </li>
+          <li>
+            To view the pieces in a different order, select an option underneath the "Sort by" dropdown.
+          </li>
+          <li>
+            The transporter in the middle of the menu can be used go go back and forth between pages of pieces.
+          </li>
+        </ul>
+      `
+    }
+  ];
+
+  HELP_ITEMS.forEach(async help => await Help.create(help));
 
   /*
     Generate each type of user:

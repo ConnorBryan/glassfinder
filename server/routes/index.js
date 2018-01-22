@@ -6,7 +6,8 @@ const {
   piece: PieceController,
   contact: ContactController,
   verbiage: VerbiageController,
-  about: AboutController
+  about: AboutController,
+  help: HelpController
 } = require("../controllers");
 
 module.exports = app => {
@@ -45,8 +46,13 @@ module.exports = app => {
 
   app.get("/api/verbiage", VerbiageController.read);
 
-  app.get("/api/about", AboutController.read);
   app.post("/api/about", AboutController.create);
+  app.get("/api/about", AboutController.read);
   app.post("/api/about/:id", AboutController.update);
   app.delete("/api/about/:id", AboutController.remove);
+
+  app.post("/api/help", HelpController.create);
+  app.get("/api/help", HelpController.read);
+  app.post("/api/help/:id", HelpController.update);
+  app.delete("/api/help/:id", HelpController.remove);
 };
