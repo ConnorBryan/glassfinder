@@ -31,6 +31,7 @@ export function ShopHero({ verbiage }) {
     description: verbiage.Home_shopFeatureDescription,
     flipped: false,
     buttonContent: verbiage.Home_shopFeatureButton,
+    icon: ICON_SET[LINK_TYPES.SHOP],
     link: "/shops"
   };
 

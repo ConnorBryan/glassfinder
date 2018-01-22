@@ -15,6 +15,10 @@ import styled from "styled-components";
 import { fancy } from "../../styles/snippets";
 
 const Styles = styled.div`
+  label {
+    ${fancy};
+  }
+
   .button {
     ${fancy};
   }

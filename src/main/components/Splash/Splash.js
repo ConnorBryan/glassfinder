@@ -1,15 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Container, Segment, Header, Button, Icon } from "semantic-ui-react";
 import styled from "styled-components";
+
+import { centered, fancy } from "../../styles/snippets";
 
 const Styles = styled.div`
   background: url(/city.jpg) !important;
   .container {
-    min-height: 80vh !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
+    ${centered} min-height: 80vh !important;
     em {
       color: #2185d0 !important;
     }
@@ -25,9 +24,9 @@ const Styles = styled.div`
     .segment {
       background: rgba(255, 255, 255, 0.5) !important;
     }
+
     button {
-      letter-spacing: 0.33rem !important;
-      text-transform: uppercase !important;
+      ${fancy};
     }
   }
 `;
@@ -40,8 +39,8 @@ function Splash({ verbiage }) {
           <Header>{verbiage.Home_tagline}</Header>
           <Header content={verbiage.Home_subTagline} />
           <Button.Group>
-            <Button primary>
-              {verbiage.Home_getStartedButton} <Icon name="send" />
+            <Button as={Link} to="/sign-up" primary>
+              {verbiage.Home_getStartedButton} <Icon name="chevron right" />
             </Button>
           </Button.Group>
         </Segment>

@@ -26,6 +26,7 @@ export function PieceHero({ verbiage }) {
     description: verbiage.Home_pieceFeatureDescription,
     flipped: true,
     buttonContent: verbiage.Home_pieceFeatureButton,
+    icon: ICON_SET[LINK_TYPES.PIECE],
     link: "/pieces"
   };
 

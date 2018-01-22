@@ -19,6 +19,7 @@ export function BrandHero({ verbiage }) {
     description: verbiage.Home_brandFeatureDescription,
     flipped: false,
     buttonContent: verbiage.Home_brandFeatureButton,
+    icon: ICON_SET[LINK_TYPES.BRAND],
     link: "/brands"
   };
 

@@ -17,8 +17,9 @@ export function ArtistHero({ verbiage }) {
     image: "https://placehold.it/400x400",
     title: verbiage.Home_artistFeatureHeader,
     description: verbiage.Home_artistFeatureDescription,
-    flipped: false,
+    flipped: true,
     buttonContent: verbiage.Home_artistFeatureButton,
+    icon: ICON_SET[LINK_TYPES.ARTIST],
     link: "/artists"
   };
 
