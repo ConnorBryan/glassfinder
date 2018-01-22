@@ -84,6 +84,16 @@ export class ShopViewer extends Component {
 
           .Shop-wrapper {
             margin: 0 !important;
+            padding: 0 !important;
+
+            .image {
+              max-height: 50vh !important;
+            }
+          }
+
+          .Shop-address {
+            margin-bottom: 0 !important;
+            font-size: 0.8rem !important;
           }
 
           .Shop-description {
@@ -113,14 +123,15 @@ export class ShopViewer extends Component {
               as={Responsive}
               maxWidth={Responsive.onlyMobile.maxWidth}
               attached="bottom"
+              className="Shop-address"
               inverted
             >
               <Menu.Item>
                 <Icon name="globe" /> {address}
               </Menu.Item>
             </Menu>
-            <Segment className="Shop-wrapper">
-              <Image src={image} />
+            <Segment attached="bottom" className="Shop-wrapper">
+              <Image src={image} fluid />
             </Segment>
             <Menu attached="bottom" widths={3} stackable inverted>
               <Menu.Item as="a" href={telephoneHref}>
