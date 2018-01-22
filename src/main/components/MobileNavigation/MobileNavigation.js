@@ -19,6 +19,7 @@ const Styles = styled.div`
 
 function MobileNavigation({
   account,
+  signout,
   mobileNavigationActive,
   hideMobileNavigation
 }) {
@@ -31,7 +32,6 @@ function MobileNavigation({
         width="wide"
         vertical
       >
-        {" "}
         <Menu.Item header>
           <Image size="small" src="/logo.png" />
         </Menu.Item>
@@ -99,7 +99,10 @@ function MobileNavigation({
               to="/"
               content="Sign out"
               icon="sign out"
-              onClick={hideMobileNavigation}
+              onClick={() => {
+                hideMobileNavigation();
+                signout();
+              }}
             />
           </Aux>
         ) : (

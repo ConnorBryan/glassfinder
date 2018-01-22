@@ -30,9 +30,9 @@ function ScreenHeader({ icon, title, description }) {
 }
 
 ScreenHeader.propTypes = {
-  icon: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired
+  icon: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string
 };
 
 export default ScreenHeader;

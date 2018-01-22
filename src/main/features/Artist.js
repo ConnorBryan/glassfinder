@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Container, Divider } from "semantic-ui-react";
 
 import { LINK_TYPES, ICON_SET } from "../config";
@@ -57,7 +56,3 @@ export function ArtistViewer({ verbiage }) {
     </section>
   );
 }
-
-ArtistViewer.propTypes = {
-  verbiage: PropTypes.objectOf(PropTypes.string).isRequired
-};

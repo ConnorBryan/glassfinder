@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 
@@ -45,9 +44,5 @@ function Signin({ verbiage, account, history, signin }) {
     </Container>
   );
 }
-
-Signin.propTypes = {
-  verbiage: PropTypes.objectOf(PropTypes.string).isRequired
-};
 
 export default Signin;

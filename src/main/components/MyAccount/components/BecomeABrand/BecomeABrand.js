@@ -3,7 +3,7 @@ import { withRouter, Redirect } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import Yup from "yup";
 
-import { LINK_TYPES, ICON_SET, STATES } from "../../../../config";
+import { LINK_TYPES, ICON_SET } from "../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
 import ScreenHeader from "../../../ScreenHeader";

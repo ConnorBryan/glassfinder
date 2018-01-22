@@ -11,7 +11,6 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { LINK_TYPES, ICON_SET } from "../../../../config";
 import API from "../../../../services";
 import ScreenHeader from "../../../ScreenHeader";
 import UploadField from "../../../../components/AbstractForm/components/UploadField";

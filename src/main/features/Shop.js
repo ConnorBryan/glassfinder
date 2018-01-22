@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
   Container,
   Responsive,
-  Item,
   Image,
   Divider,
   Button,
@@ -26,8 +24,6 @@ import {
   renderGenericCard
 } from "./common";
 
-import { PieceViewer } from "./Piece";
-
 export function ShopHero({ verbiage }) {
   const props = {
     image: "/shops.jpg",
@@ -42,10 +38,6 @@ export function ShopHero({ verbiage }) {
 }
 
 export class ShopViewer extends Component {
-  static propTypes = {
-    verbiage: PropTypes.objectOf(PropTypes.string).isRequired
-  };
-
   shouldShowMap = () => {
     const { location: { pathname } } = window;
 

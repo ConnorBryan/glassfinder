@@ -2,8 +2,6 @@
  * @overview
  * "Account screens" are screens that do require authorization.
  */
-import React from "react";
-
 import MyAccount from "../components/MyAccount";
 import UpdatePassword from "../components/MyAccount/components/UpdatePassword";
 import BecomeAShop from "../components/MyAccount/components/BecomeAShop";

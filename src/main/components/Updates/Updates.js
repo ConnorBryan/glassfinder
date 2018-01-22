@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Container, Header, Item, Icon, Segment } from "semantic-ui-react";
+import { Container, Item, Segment } from "semantic-ui-react";
 
 import ScreenHeader from "../ScreenHeader";
 
@@ -66,9 +65,5 @@ function Updates({ verbiage }) {
     </Container>
   );
 }
-
-Updates.propTypes = {
-  verbiage: PropTypes.objectOf(PropTypes.string).isRequired
-};
 
 export default Updates;

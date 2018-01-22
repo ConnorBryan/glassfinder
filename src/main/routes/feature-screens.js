@@ -3,8 +3,6 @@
  * "Feature screens" are screens that vary functionality
  * basic on signed-in status, and are related to the ModelViewer.
  */
-import React from "react";
-
 import {
   ShopViewer,
   ArtistViewer,

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Container, Item, Segment } from "semantic-ui-react";
 
 import ScreenHeader from "../ScreenHeader";
@@ -64,9 +63,5 @@ function About({ verbiage }) {
     </Container>
   );
 }
-
-About.propTypes = {
-  verbiage: PropTypes.objectOf(PropTypes.string).isRequired
-};
 
 export default About;

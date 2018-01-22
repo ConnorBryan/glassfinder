@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Yup from "yup";
 import { Container } from "semantic-ui-react";
 

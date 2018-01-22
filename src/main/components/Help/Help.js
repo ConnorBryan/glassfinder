@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Container, Accordion, Header, Icon, Segment } from "semantic-ui-react";
+import { Container, Accordion, Icon, Segment } from "semantic-ui-react";
 import Aux from "react-aux";
 
 import ScreenHeader from "../ScreenHeader";
@@ -24,10 +23,6 @@ const HELP_TOPICS = [
 ];
 
 class Help extends Component {
-  static propTypes = {
-    verbiage: PropTypes.objectOf(PropTypes.string).isRequired
-  };
-
   state = { activeIndex: -1 };
 
   handleClick = (e, { index }) => {

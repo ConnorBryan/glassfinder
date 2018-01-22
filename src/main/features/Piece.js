@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Container,
   Segment,
@@ -83,7 +82,3 @@ export function PieceViewer({ verbiage }) {
     </section>
   );
 }
-
-PieceViewer.propTypes = {
-  verbiage: PropTypes.objectOf(PropTypes.string).isRequired
-};

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Segment,
-  Image,
-  Header,
-  Button,
-  Icon
-} from "semantic-ui-react";
+import { Container, Segment, Header, Button, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 
 const Styles = styled.div`

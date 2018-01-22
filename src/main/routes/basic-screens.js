@@ -3,8 +3,6 @@
  * "Basic screens" are screens that do not require authorization
  * and are unrelated to the core functionality of the product.
  */
-import React from "react";
-
 import Home from "../components/Home";
 import About from "../components/About";
 import Help from "../components/Help";
