@@ -5,5 +5,6 @@ const brand = require("./brand");
 const piece = require("./piece");
 const contact = require("./contact");
 const verbiage = require("./verbiage");
+const about = require("./about");
 
-module.exports = { user, shop, artist, brand, piece, contact, verbiage };
+module.exports = { user, shop, artist, brand, piece, contact, verbiage, about };

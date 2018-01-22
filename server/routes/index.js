@@ -5,7 +5,8 @@ const {
   brand: BrandController,
   piece: PieceController,
   contact: ContactController,
-  verbiage: VerbiageController
+  verbiage: VerbiageController,
+  about: AboutController
 } = require("../controllers");
 
 module.exports = app => {
@@ -43,4 +44,9 @@ module.exports = app => {
   app.post("/api/contact", ContactController.send);
 
   app.get("/api/verbiage", VerbiageController.read);
+
+  app.get("/api/about", AboutController.read);
+  app.post("/api/about", AboutController.create);
+  app.post("/api/about/:id", AboutController.update);
+  app.delete("/api/about/:id", AboutController.remove);
 };

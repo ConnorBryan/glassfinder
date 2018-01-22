@@ -24,6 +24,24 @@ export default class API {
   }
 
   /**
+   * @method fetchAboutItems
+   * @desc Retrieve items for the About page.
+   * @returns {Array<object>}
+   */
+  static async fetchAboutItems() {
+    try {
+      const url = `${API_ROOT}/about`;
+      const { data: { payload: { about } } } = await axios.get(url);
+
+      return about;
+    } catch (e) {
+      console.error(e);
+
+      return [];
+    }
+  }
+
+  /**
    * @method fetchModel
    * @desc Retrieve a single instance of a model from the database.
    * @param {string} singular

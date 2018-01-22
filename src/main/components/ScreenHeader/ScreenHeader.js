@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import { Segment, Header, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { fancy } from "../../styles/snippets";
+import { fancy, slightlyBiggerText } from "../../styles/snippets";
 
 const Styles = styled.div`
   .header {
     ${fancy};
   }
   .ScreenHeader-description {
-    font-size: 1.2rem !important;
+    ${slightlyBiggerText};
   }
 `;
 

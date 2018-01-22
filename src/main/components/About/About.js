@@ -1,67 +1,79 @@
-import React from "react";
+import React, { Component } from "react";
 import { Container, Item, Segment } from "semantic-ui-react";
+import styled from "styled-components";
 
+import API from "../../services";
+import { retrieveFromCache, updateCache } from "../../util";
+import { fancy, slightlyBiggerText } from "../../styles/snippets";
 import ScreenHeader from "../ScreenHeader";
 
-const ABOUT_ITEMS = [
-  {
-    key: "A",
-    image: "https://placehold.it/400x400",
-    name: "Connor Bryan",
-    role: "Lead Developer",
-    blurb:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
-  },
-  {
-    key: "B",
-    image: "https://placehold.it/400x400",
-    name: "Connor Bryan",
-    role: "Lead Developer",
-    blurb:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
-  },
-  {
-    key: "C",
-    image: "https://placehold.it/400x400",
-    name: "Connor Bryan",
-    role: "Lead Developer",
-    blurb:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero blanditiis quaerat optio corrupti asperiores perspiciatis incidunt totam impedit consequuntur tenetur recusandae, possimus perferendis, dolorem quidem fugiat rem commodi assumenda suscipit?"
+const Styles = styled.div`
+  .header {
+    ${fancy};
   }
-];
 
-function AboutItem({ image, name, role, blurb }) {
+  .description {
+    ${slightlyBiggerText};
+  }
+`;
+
+function AboutItem({ image, name, title, description }) {
   return (
     <Item>
       <Item.Image circular size="small" src={image} />
       <Item.Content>
-        <Item.Header as="h3" className="fancy">
-          {name}
-        </Item.Header>
+        <Item.Header as="h3">{name}</Item.Header>
         <Item.Description>
-          <em>{role}</em>
+          <em>{title}</em>
         </Item.Description>
-        <Item.Description>{blurb}</Item.Description>
+        <Item.Description>{description}</Item.Description>
       </Item.Content>
     </Item>
   );
 }
 
-function About({ verbiage }) {
-  return (
-    <Container>
-      <ScreenHeader
-        icon="question circle"
-        title={verbiage.About_title}
-        description={verbiage.About_description}
-      />
-      <Segment>
-        <Item.Group divided relaxed="very">
-          {ABOUT_ITEMS.map(about => <AboutItem key={about.key} {...about} />)}
-        </Item.Group>
-      </Segment>
-    </Container>
-  );
+class About extends Component {
+  state = {
+    items: []
+  };
+
+  componentDidMount() {
+    this.setItems();
+  }
+
+  setItems = async () => {
+    let items;
+
+    const cachedItems = JSON.parse(retrieveFromCache("about") || "[]");
+
+    items = cachedItems.length > 0 ? cachedItems : await API.fetchAboutItems();
+
+    updateCache("about", JSON.stringify(items));
+
+    this.setState({ items });
+  };
+
+  render() {
+    const { verbiage } = this.props;
+    const { items } = this.state;
+
+    return (
+      <Styles>
+        <Container>
+          <ScreenHeader
+            icon="question circle"
+            title={verbiage.About_title}
+            description={verbiage.About_description}
+          />
+          <Segment>
+            <Item.Group divided relaxed="very">
+              {items.map(about => <AboutItem key={about.name} {...about} />)}
+            </Item.Group>
+          </Segment>
+        </Container>
+      </Styles>
+    );
+  }
 }
 
 export default About;

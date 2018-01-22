@@ -6,6 +6,7 @@ const constants = require("../config/constants");
 
 module.exports = async function({
   Verbiage,
+  About,
   User,
   Shop,
   Artist,
@@ -14,6 +15,33 @@ module.exports = async function({
 }) {
   // Text for the app.
   await Verbiage.create();
+
+  // About
+  const ABOUT_ITEMS = [
+    {
+      image: "https://www.famousbirthdays.com/headshots/derek-jeter-9.jpg",
+      name: "Derek Jeter",
+      title: "Project Manager",
+      description:
+        "A real hard-hitter, always willing to go to bat for the team."
+    },
+    {
+      image:
+        "http://sleazeroxx.com/wp-content/uploads/Yngwie-Malmsteen-photo-e1501340474301.jpg",
+      name: "Yngwie Malmsteen",
+      title: "Growth Hacker",
+      description:
+        "Confident and ready to go, always building up the userbase and providing the metaphorical seeds for constant expansion."
+    },
+    {
+      image: "http://connorbryan.com/images/avatar.jpg",
+      name: "Connor Bryan",
+      title: "Lead Developer",
+      description: "A pretty good developer, I guess."
+    }
+  ];
+
+  ABOUT_ITEMS.forEach(async about => await About.create(about));
 
   /*
     Generate each type of user:
