@@ -78,6 +78,10 @@ export class ShopViewer extends Component {
             ${fancy};
           }
 
+          .menu {
+            border-radius: 0 !important;
+          }
+
           .Shop-wrapper {
             margin: 0 !important;
           }

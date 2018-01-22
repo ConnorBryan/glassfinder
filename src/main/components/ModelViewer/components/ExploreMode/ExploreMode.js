@@ -20,6 +20,7 @@ const Styles = styled.div`
 
   .menu {
     margin: 0 !important;
+    border-radius: 0 !important;
   }
 
   .viewport {
