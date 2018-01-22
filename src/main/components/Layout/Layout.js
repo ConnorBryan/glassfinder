@@ -39,6 +39,9 @@ const Styles = styled.div`
     margin: 0 !important;
     padding: 0 !important;
   }
+  .Layout-intermediary {
+    margin-top: 4rem !important;
+  }
 `;
 
 class Layout extends Component {
@@ -125,7 +128,7 @@ class Layout extends Component {
               <MobileNavigation {...navigationProps} {...additionalProps} />
             </Segment>
             <Sidebar.Pushable>
-              <div onClick={closeSidebar}>
+              <div className="Layout-intermediary" onClick={closeSidebar}>
                 <Sidebar.Pusher as={Switch}>
                   {routes.map((route, i) => (
                     <RecursiveRoutes
