@@ -148,6 +148,8 @@
 
 # Miscellaneous
 
+  ## Navbar
+
   ## MobileNavigation
 
   ## ModelViewer

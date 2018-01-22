@@ -29,7 +29,16 @@ export default class Main extends Component {
 
   // Text content
   setVerbiage = async () => {
-    const verbiage = await API.fetchVerbiage();
+    let verbiage;
+
+    const cachedVerbiage = JSON.parse(retrieveFromCache("verbiage") || "{}");
+
+    verbiage =
+      Object.keys(cachedVerbiage).length > 0
+        ? cachedVerbiage
+        : await API.fetchVerbiage();
+
+    updateCache("verbiage", JSON.stringify(verbiage));
 
     this.setState({ verbiage });
   };
