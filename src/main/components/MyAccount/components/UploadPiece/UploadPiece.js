@@ -1,10 +1,12 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 
+import { LINK_TYPES, ICON_SET } from "../../../../config";
 import API from "../../../../services";
 import { removeFromCache } from "../../../../util";
+import ScreenHeader from "../../../ScreenHeader";
 import AbstractForm from "../../../AbstractForm";
 
 const FIELDS = [
@@ -52,7 +54,7 @@ const FIELDS = [
   }
 ];
 
-function UploadPiece({ account, history }) {
+function UploadPiece({ verbiage, account, history }) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const onSubmit = async ({ name, maker, price, description, location }) => {
@@ -75,7 +77,14 @@ function UploadPiece({ account, history }) {
 
   return (
     <Container>
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      <ScreenHeader
+        icon={ICON_SET[LINK_TYPES.PIECE]}
+        title={verbiage.UploadPiece_title}
+        description={verbiage.UploadPiece_description}
+      />
+      <Segment>
+        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      </Segment>
     </Container>
   );
 }

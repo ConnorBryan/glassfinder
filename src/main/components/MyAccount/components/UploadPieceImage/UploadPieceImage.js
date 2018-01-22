@@ -11,8 +11,10 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
+import { LINK_TYPES, ICON_SET } from "../../../../config";
 import API from "../../../../services";
 import { retrieveFromCache, removeFromCache } from "../../../../util";
+import ScreenHeader from "../../../ScreenHeader";
 import UploadField from "../../../../components/AbstractForm/components/UploadField";
 
 const Styles = styled.div`
@@ -76,7 +78,7 @@ class UploadPieceImage extends Component {
   };
 
   render() {
-    const { account } = this.props;
+    const { verbiage, account } = this.props;
     const { piece, uploading } = this.state;
 
     if (!account) return <Redirect to="/sign-in" />;
@@ -88,13 +90,18 @@ class UploadPieceImage extends Component {
     return (
       <Styles>
         <Container>
+          <ScreenHeader
+            icon={ICON_SET[LINK_TYPES.PIECE]}
+            title={verbiage.UploadPieceImage_title}
+            description={verbiage.UploadPieceImage_description}
+          />
           <Segment.Group>
             {image && (
               <Segment attached="top">
                 <Card>
                   <Card.Content>
                     <Card.Description textAlign="center" className="fancy">
-                      {name}'s current image
+                      {name}'s {verbiage.UploadPieceImage_currentImage}
                     </Card.Description>
                   </Card.Content>
                   <Image src={image} />
@@ -102,18 +109,21 @@ class UploadPieceImage extends Component {
               </Segment>
             )}
             <Form as={Segment} attached={image ? "bottom" : "top"}>
-              <UploadField label="Image" onUpload={this.setImage} />
+              <UploadField
+                label={verbiage.UploadPieceImage_uploadLabel}
+                onUpload={this.setImage}
+              />
             </Form>
             <Segment attached="bottom" color="blue">
               <Button.Group fluid>
                 <Button onClick={this.submit} disabled={uploading} primary>
-                  Send <Icon name="send outline" />
+                  {verbiage.UploadPieceImage_send} <Icon name="send outline" />
                 </Button>
                 <Button.Or />
                 <Button
                   icon="refresh"
                   onClick={this.clearImage}
-                  content="Reset"
+                  content={verbiage.UploadPieceImage_reset}
                   disabled={uploading}
                 />
               </Button.Group>

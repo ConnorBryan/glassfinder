@@ -1,10 +1,12 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
+import { LINK_TYPES, ICON_SET, STATES } from "../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
+import ScreenHeader from "../../../ScreenHeader";
 import AbstractForm from "../../../AbstractForm";
 
 const FIELDS = [
@@ -47,7 +49,13 @@ const FIELDS = [
   }
 ];
 
-function BecomeABrand({ account, updateAccount, updateAccountLink, history }) {
+function BecomeABrand({
+  verbiage,
+  account,
+  updateAccount,
+  updateAccountLink,
+  history
+}) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const onSubmit = async values => {
@@ -66,7 +74,14 @@ function BecomeABrand({ account, updateAccount, updateAccountLink, history }) {
 
   return (
     <Container>
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      <ScreenHeader
+        icon={ICON_SET[LINK_TYPES.BRAND]}
+        title={verbiage.BecomeABrand_title}
+        description={verbiage.BecomeABrand_description}
+      />
+      <Segment>
+        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      </Segment>
     </Container>
   );
 }

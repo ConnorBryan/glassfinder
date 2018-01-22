@@ -1,12 +1,13 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
-import { STATES } from "../../../../config";
+import { LINK_TYPES, ICON_SET, STATES } from "../../../../config";
 import { removeFromCache } from "../../../../util";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
+import ScreenHeader from "../../../ScreenHeader";
 import AbstractForm from "../../../AbstractForm";
 
 const FIELDS = [
@@ -86,7 +87,12 @@ const FIELDS = [
   }
 ];
 
-function UpdateShopInformation({ account, updateAccountLink, history }) {
+function UpdateShopInformation({
+  verbiage,
+  account,
+  updateAccountLink,
+  history
+}) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const fields = FIELDS.map(prop => ({
@@ -121,7 +127,14 @@ function UpdateShopInformation({ account, updateAccountLink, history }) {
 
   return (
     <Container>
-      <AbstractForm onSubmit={onSubmit} fields={fields} />
+      <ScreenHeader
+        icon={ICON_SET[LINK_TYPES.SHOP]}
+        title={verbiage.UpdateShopInformation_title}
+        description={verbiage.UpdateShopInformation_description}
+      />
+      <Segment>
+        <AbstractForm onSubmit={onSubmit} fields={fields} />
+      </Segment>
     </Container>
   );
 }

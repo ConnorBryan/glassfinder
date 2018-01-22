@@ -11,7 +11,9 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
+import { LINK_TYPES, ICON_SET } from "../../../../config";
 import API from "../../../../services";
+import ScreenHeader from "../../../ScreenHeader";
 import UploadField from "../../../../components/AbstractForm/components/UploadField";
 
 const Styles = styled.div`
@@ -58,7 +60,7 @@ class UploadImage extends Component {
   };
 
   render() {
-    const { account } = this.props;
+    const { verbiage, account } = this.props;
     const { uploading } = this.state;
 
     if (!account) return <Redirect to="/sign-in" />;
@@ -70,13 +72,18 @@ class UploadImage extends Component {
     return (
       <Styles>
         <Container>
+          <ScreenHeader
+            icon="picture"
+            title={verbiage.UploadImage_title}
+            description={verbiage.UploadImage_description}
+          />
           <Segment.Group>
             {image && (
               <Segment attached="top">
                 <Card>
                   <Card.Content>
                     <Card.Description textAlign="center" className="fancy">
-                      Your current image
+                      {verbiage.UploadImage_yourCurrentImage}
                     </Card.Description>
                   </Card.Content>
                   <Image src={image} />
@@ -94,7 +101,7 @@ class UploadImage extends Component {
                   disabled={uploading}
                   primary
                 >
-                  Send <Icon name="send outline" />
+                  {verbiage.UploadImage_send} <Icon name="send outline" />
                 </Button>
                 <Button.Or />
                 <Button

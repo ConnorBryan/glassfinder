@@ -4,6 +4,7 @@ import { Button, Segment, Icon, Item, Menu } from "semantic-ui-react";
 import { partial } from "lodash";
 import styled from "styled-components";
 
+import { LINK_TYPES, ICON_SET } from "../../../../config";
 import API from "../../../../services";
 import { removeFromCache } from "../../../../util";
 import {
@@ -12,8 +13,9 @@ import {
   renderGenericCard
 } from "../../../../features/common";
 import ModelViewer from "../../../ModelViewer";
+import ScreenHeader from "../../../ScreenHeader";
 
-export default function MyPiecesViewer({ account, history }) {
+export default function MyPiecesViewer({ verbiage, account, history }) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const props = {
@@ -51,7 +53,7 @@ export default function MyPiecesViewer({ account, history }) {
         history.push(updateInformationLink, { piece });
       const removePiece = async () => {
         const removeConfirmed = window.confirm(
-          "Are you sure you want to remove this piece?\nThis cannot be undone."
+          verbiage.ViewMyPieces_confirmRemoval
         );
 
         if (removeConfirmed) {
@@ -62,13 +64,18 @@ export default function MyPiecesViewer({ account, history }) {
 
             history.push("/my-account/view-my-pieces");
           } else {
-            alert("The piece was unable to be removed.\nTry again later.");
+            alert(verbiage.ViewMyPieces_unableToRemove);
           }
         }
       };
 
       return (
         <Styles>
+          <ScreenHeader
+            icon={ICON_SET[LINK_TYPES.PIECE]}
+            title={verbiage.ViewMyPieces_title}
+            description={verbiage.ViewMyPieces_description}
+          />
           <Segment attached="top">
             <Item.Group>
               <Item>
@@ -81,18 +88,22 @@ export default function MyPiecesViewer({ account, history }) {
                   <Item.Header as="h3" content={name} />
                   <Item.Meta>${price}</Item.Meta>
                   <Item.Description content={description} />
-                  <Item.Extra content={`Made by ${maker}`} />
-                  <Item.Extra content={`Located at ${location}`} />
+                  <Item.Extra
+                    content={`${verbiage.ViewMyPieces_madeBy} ${maker}`}
+                  />
+                  <Item.Extra
+                    content={`${verbiage.ViewMyPieces_locatedAt} ${location}`}
+                  />
                 </Item.Content>
               </Item>
             </Item.Group>
           </Segment>
           <Menu attached="bottom" widths={3} stackable>
             <Menu.Item className="fancy" onClick={onUploadImageClick}>
-              <Icon name="picture" /> Upload image
+              <Icon name="picture" /> {verbiage.ViewMyPieces_uploadImage}
             </Menu.Item>
             <Menu.Item className="fancy" onClick={onUpdateInformationClick}>
-              <Icon name="pencil" /> Edit piece
+              <Icon name="pencil" /> {verbiage.ViewMyPieces_editPiece}
             </Menu.Item>
             <Menu.Item
               as={Button}
@@ -100,7 +111,7 @@ export default function MyPiecesViewer({ account, history }) {
               negative
               onClick={removePiece}
             >
-              <Icon name="trash outline" /> Remove piece
+              <Icon name="trash outline" /> {verbiage.ViewMyPieces_removePiece}
             </Menu.Item>
           </Menu>
         </Styles>
@@ -110,30 +121,3 @@ export default function MyPiecesViewer({ account, history }) {
 
   return <ModelViewer {...props} />;
 }
-
-// <Button.Group>
-//           <Button
-//             onClick={() => {
-//               history.push(
-//                 `/my-account/view-my-pieces/${piece.id}/upload-image`,
-//                 {
-//                   piece
-//                 }
-//               );
-//             }}
-//           >
-//             Upload image
-//           </Button>
-//           <Button
-//             onClick={() => {
-//               history.push(
-//                 `/my-account/view-my-pieces/${piece.id}/update-information`,
-//                 {
-//                   piece
-//                 }
-//               );
-//             }}
-//           >
-//             Update information
-//           </Button>
-//         </Button.Group>

@@ -1,10 +1,12 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
+import { LINK_TYPES, ICON_SET } from "../../../../config";
 import API from "../../../../services";
 import { removeFromCache } from "../../../../util";
+import ScreenHeader from "../../../ScreenHeader";
 import AbstractForm from "../../../AbstractForm";
 
 const FIELDS = [
@@ -52,7 +54,12 @@ const FIELDS = [
   }
 ];
 
-function UpdatePieceInformation({ account, history, location: { state } }) {
+function UpdatePieceInformation({
+  verbiage,
+  account,
+  history,
+  location: { state }
+}) {
   if (!account) return <Redirect to="/sign-in" />;
 
   if (!state.piece) return <Redirect to="/my-account/view-my-pieces" />;
@@ -73,7 +80,14 @@ function UpdatePieceInformation({ account, history, location: { state } }) {
 
   return (
     <Container>
-      <AbstractForm onSubmit={onSubmit} fields={fields} />
+      <ScreenHeader
+        icon={ICON_SET[LINK_TYPES.PIECE]}
+        title={verbiage.UpdatePieceInformation_title}
+        description={verbiage.UpdatePieceInformatione_description}
+      />
+      <Segment>
+        <AbstractForm onSubmit={onSubmit} fields={fields} />
+      </Segment>
     </Container>
   );
 }

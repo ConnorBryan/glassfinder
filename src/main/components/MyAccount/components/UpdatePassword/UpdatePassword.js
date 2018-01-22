@@ -1,9 +1,10 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
+import ScreenHeader from "../../../ScreenHeader";
 import AbstractForm from "../../../AbstractForm";
 
 const FIELDS = [
@@ -25,7 +26,7 @@ const FIELDS = [
   }
 ];
 
-function UpdatePassword({ account, history }) {
+function UpdatePassword({ verbiage, account, history }) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const onSubmit = async ({ currentPassword, newPassword }) => {
@@ -35,7 +36,14 @@ function UpdatePassword({ account, history }) {
 
   return (
     <Container>
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      <ScreenHeader
+        icon="lock"
+        title={verbiage.UpdatePassword_title}
+        description={verbiage.UpdatePassword_description}
+      />
+      <Segment>
+        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      </Segment>
     </Container>
   );
 }

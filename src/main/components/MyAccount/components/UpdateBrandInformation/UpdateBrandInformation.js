@@ -1,10 +1,12 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
+import { LINK_TYPES, ICON_SET } from "../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
+import ScreenHeader from "../../../ScreenHeader";
 import AbstractForm from "../../../AbstractForm";
 
 const FIELDS = [
@@ -47,7 +49,12 @@ const FIELDS = [
   }
 ];
 
-function UpdateBrandInformation({ account, updateAccountLink, history }) {
+function UpdateBrandInformation({
+  verbiage,
+  account,
+  updateAccountLink,
+  history
+}) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const fields = FIELDS.map(prop => ({
@@ -65,7 +72,14 @@ function UpdateBrandInformation({ account, updateAccountLink, history }) {
 
   return (
     <Container>
-      <AbstractForm onSubmit={onSubmit} fields={fields} />
+      <ScreenHeader
+        icon={ICON_SET[LINK_TYPES.BRAND]}
+        title={verbiage.UpdateBrandInformation_title}
+        description={verbiage.UpdateBrandInformation_description}
+      />
+      <Segment>
+        <AbstractForm onSubmit={onSubmit} fields={fields} />
+      </Segment>
     </Container>
   );
 }

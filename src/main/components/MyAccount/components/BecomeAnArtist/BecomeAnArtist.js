@@ -1,10 +1,12 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
+import { LINK_TYPES, ICON_SET } from "../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
+import ScreenHeader from "../../../ScreenHeader";
 import AbstractForm from "../../../AbstractForm";
 
 const FIELDS = [
@@ -37,6 +39,7 @@ const FIELDS = [
 ];
 
 function BecomeAnArtist({
+  verbiage,
   account,
   updateAccount,
   updateAccountLink,
@@ -60,7 +63,14 @@ function BecomeAnArtist({
 
   return (
     <Container>
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      <ScreenHeader
+        icon={ICON_SET[LINK_TYPES.ARTIST]}
+        title={verbiage.BecomeAnArtist_title}
+        description={verbiage.BecomeAnArtist_description}
+      />
+      <Segment>
+        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      </Segment>
     </Container>
   );
 }

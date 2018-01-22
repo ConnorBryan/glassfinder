@@ -9,6 +9,9 @@ const Styles = styled.div`
   .header {
     ${fancy};
   }
+  .ScreenHeader-description {
+    font-size: 1.2rem !important;
+  }
 `;
 
 function ScreenHeader({ icon, title, description }) {
@@ -19,7 +22,9 @@ function ScreenHeader({ icon, title, description }) {
           <Icon name={icon} /> {title}
         </Header>
       </Segment>
-      <Segment attached="bottom">{description}</Segment>
+      <Segment attached="bottom" className="ScreenHeader-description">
+        {description}
+      </Segment>
     </Styles>
   );
 }
