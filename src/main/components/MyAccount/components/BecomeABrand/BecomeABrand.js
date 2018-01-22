@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container, Segment } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import Yup from "yup";
 
 import { LINK_TYPES, ICON_SET, STATES } from "../../../../config";
@@ -79,9 +79,7 @@ function BecomeABrand({
         title={verbiage.BecomeABrand_title}
         description={verbiage.BecomeABrand_description}
       />
-      <Segment>
-        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-      </Segment>
+      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
     </Container>
   );
 }

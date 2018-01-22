@@ -1,5 +1,4 @@
 # Chores:
-  4. Add VerbiageService to handle phrasing of text.
   5. Add UpdateService
   6. Finalize design for standard screens.
   7. Standard styling and common patterns.

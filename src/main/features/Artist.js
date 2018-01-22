@@ -44,7 +44,6 @@ export function ArtistViewer({ verbiage }) {
 
   return (
     <section>
-      <Divider hidden section />
       <Container>
         <ScreenHeader
           icon={ICON_SET[LINK_TYPES.ARTIST]}
@@ -53,7 +52,6 @@ export function ArtistViewer({ verbiage }) {
         />
       </Container>
       <Divider hidden section />
-
       <ModelViewer {...props} />
       <Divider hidden section />
     </section>

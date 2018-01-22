@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container, Segment } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import Yup from "yup";
 
 import { LINK_TYPES, ICON_SET } from "../../../../config";
@@ -77,9 +77,7 @@ function UpdateBrandInformation({
         title={verbiage.UpdateBrandInformation_title}
         description={verbiage.UpdateBrandInformation_description}
       />
-      <Segment>
-        <AbstractForm onSubmit={onSubmit} fields={fields} />
-      </Segment>
+      <AbstractForm onSubmit={onSubmit} fields={fields} />
     </Container>
   );
 }

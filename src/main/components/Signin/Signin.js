@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
-import { Container, Segment } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 
 import * as Validators from "../../validators";
 import ScreenHeader from "../ScreenHeader";
@@ -41,9 +41,7 @@ function Signin({ verbiage, account, history, signin }) {
         title={verbiage.Signin_title}
         description={verbiage.Signin_description}
       />
-      <Segment>
-        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-      </Segment>
+      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
     </Container>
   );
 }

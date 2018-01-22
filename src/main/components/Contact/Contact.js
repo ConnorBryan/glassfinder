@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { Container, Segment } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import Yup from "yup";
 
 import API from "../../services";
@@ -49,9 +49,7 @@ function Contact({ verbiage, history }) {
         title={verbiage.Contact_title}
         description={verbiage.Contact_description}
       />
-      <Segment>
-        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-      </Segment>
+      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
     </Container>
   );
 }

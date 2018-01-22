@@ -44,7 +44,6 @@ export function BrandViewer({ verbiage }) {
 
   return (
     <section>
-      <Divider hidden section />
       <Container>
         <ScreenHeader
           icon={ICON_SET[LINK_TYPES.BRAND]}

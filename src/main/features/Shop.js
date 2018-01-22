@@ -144,7 +144,6 @@ export class ShopViewer extends Component {
 
     return (
       <section>
-        <Divider hidden section />
         <Container>
           <ScreenHeader
             icon={ICON_SET[LINK_TYPES.SHOP]}

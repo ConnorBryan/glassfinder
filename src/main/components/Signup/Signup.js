@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Yup from "yup";
-import { Container, Segment } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 
 import * as Validators from "../../validators";
 import ScreenHeader from "../ScreenHeader";
@@ -60,9 +60,7 @@ function Signup({ verbiage, signup, history }) {
         title={verbiage.Signup_title}
         description={verbiage.Signup_description}
       />
-      <Segment>
-        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-      </Segment>
+      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
     </Container>
   );
 }

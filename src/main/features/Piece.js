@@ -70,7 +70,6 @@ export function PieceViewer({ verbiage }) {
 
   return (
     <section>
-      <Divider hidden section />
       <Container>
         <ScreenHeader
           icon={ICON_SET[LINK_TYPES.PIECE]}

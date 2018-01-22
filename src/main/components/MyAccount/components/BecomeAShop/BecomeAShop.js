@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container, Segment } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import Yup from "yup";
 
 import { LINK_TYPES, ICON_SET, STATES } from "../../../../config";
@@ -133,9 +133,7 @@ function BecomeAShop({
         title={verbiage.BecomeAShop_title}
         description={verbiage.BecomeAShop_description}
       />
-      <Segment>
-        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-      </Segment>
+      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
     </Container>
   );
 }

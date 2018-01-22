@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container, Segment } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
@@ -41,9 +41,7 @@ function UpdatePassword({ verbiage, account, history }) {
         title={verbiage.UpdatePassword_title}
         description={verbiage.UpdatePassword_description}
       />
-      <Segment>
-        <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-      </Segment>
+      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
     </Container>
   );
 }
