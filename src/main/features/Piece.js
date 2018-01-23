@@ -14,6 +14,7 @@ import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
 import API from "../services";
 import {
+  genericSorts,
   renderGenericTile,
   renderGenericItem,
   renderGenericCard
@@ -41,6 +42,7 @@ export function PieceViewer({ verbiage }) {
     plural: "pieces",
     singular: "piece",
     icon: "puzzle",
+    sorts: genericSorts,
     renderTile: renderGenericTile,
     renderItem: renderGenericItem,
     renderCard: renderGenericCard,

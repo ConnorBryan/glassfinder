@@ -16,6 +16,8 @@ function ViewMode({
   mobile,
   mode,
   upward,
+  sorts,
+  sortCollection,
   switchToTiles,
   switchToItems,
   switchToCards
@@ -31,7 +33,7 @@ function ViewMode({
   return (
     <Styles>
       <MenuComponent widths={widths} position="left" inverted>
-        <Dropdown item text="Viewing as" upward={upward}>
+        <Dropdown item text="Viewing as" {...{ upward }}>
           <Dropdown.Menu>
             <Dropdown.Item
               active={mode === ExploreMode.RenderModes.Tile}
@@ -53,7 +55,15 @@ function ViewMode({
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <Dropdown item text="Sort by" />
+        <Dropdown item text="Sort by" {...{ upward }}>
+          <Dropdown.Menu>
+            {sorts.map(({ icon, name, func }) => (
+              <Dropdown.Item onClick={() => sortCollection(func)}>
+                <Icon name={icon} /> {name}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
       </MenuComponent>
     </Styles>
   );

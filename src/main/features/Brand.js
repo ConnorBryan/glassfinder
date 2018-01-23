@@ -7,6 +7,7 @@ import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
 import API from "../services";
 import {
+  genericSorts,
   renderGenericTile,
   renderGenericItem,
   renderGenericCard
@@ -34,6 +35,7 @@ export function BrandViewer({ verbiage }) {
     plural: "brands",
     singular: "brand",
     icon: "building",
+    sorts: genericSorts,
     renderTile: renderGenericTile,
     renderItem: renderGenericItem,
     renderCard: renderGenericCard,

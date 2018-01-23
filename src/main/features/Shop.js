@@ -21,6 +21,7 @@ import ModelViewer from "../components/ModelViewer";
 import ShopMap from "../components/ShopMap";
 import API from "../services";
 import {
+  genericSorts,
   renderGenericTile,
   renderGenericItem,
   renderGenericCard
@@ -57,6 +58,7 @@ export class ShopViewer extends Component {
       plural: "shops",
       singular: "shop",
       icon: "cart",
+      sorts: genericSorts,
       renderTile: renderGenericTile,
       renderItem: renderGenericItem,
       renderCard: renderGenericCard,

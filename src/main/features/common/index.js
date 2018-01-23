@@ -12,6 +12,53 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
+export const genericSorts = [
+  {
+    icon: "calendar",
+    name: "newer",
+    func: (a, b) => {
+      const { createdAt: aCreated } = a;
+      const { createdAt: bCreated } = b;
+      const aTime = new Date(aCreated).getTime();
+      const bTime = new Date(bCreated).getTime();
+
+      return aTime < bTime ? -1 : 1;
+    }
+  },
+  {
+    icon: "calendar",
+    name: "older",
+    func: (a, b) => {
+      const { createdAt: aCreated } = a;
+      const { createdAt: bCreated } = b;
+      const aTime = new Date(aCreated).getTime();
+      const bTime = new Date(bCreated).getTime();
+
+      return aTime > bTime ? -1 : 1;
+    }
+  },
+  {
+    icon: "sort alphabet ascending",
+    name: "name a-z",
+    func: (a, b) => {
+      const { name: aName } = a;
+      const { name: bName } = b;
+
+      return aName.localeCompare(bName);
+    }
+  },
+  {
+    icon: "sort alphabet descending",
+    name: "name z-a",
+    func: (a, b) => {
+      const { name: aName } = a;
+      const { name: bName } = b;
+
+      return bName.localeCompare(aName);
+    }
+  }
+];
+
 export function renderGenericTile(models, loadDetailsModeFromExploreMode) {
   const Styles = styled.div`
     .model-name {

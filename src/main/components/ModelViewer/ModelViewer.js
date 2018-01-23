@@ -24,6 +24,7 @@ class ModelViewer extends Component {
 
   determineIdAndMode() {
     const { location: { pathname } } = this.props;
+
     const isViewMyPieces = pathname.includes("view-my-pieces");
     const offset = isViewMyPieces ? 3 : 2;
     const id = pathname.split("/")[offset] || null;

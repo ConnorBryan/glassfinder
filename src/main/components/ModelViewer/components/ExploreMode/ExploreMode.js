@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Menu, Segment, Loader, Responsive } from "semantic-ui-react";
 import styled from "styled-components";
 import queryString from "query-string";
-import { times } from "lodash";
+import { flatten, times } from "lodash";
 
 import {
   retrieveFromCache,
@@ -265,6 +265,41 @@ export default class ExploreMode extends Component {
     });
   };
 
+  sortCollection = sort => {
+    this.setState({ loading: true }, async () => {
+      if (!sort) return;
+
+      const { collection, totalPages, perPage } = this.state;
+
+      const flattened = flatten(collection);
+      const sortedCollection = flattened.sort(sort);
+      const pages = [];
+
+      times(totalPages, () => pages.push([]));
+
+      let modelCount = 0;
+      let pageCount = 0;
+
+      flattened.forEach(model => {
+        const activePage = pages[pageCount];
+
+        activePage.push(model);
+
+        modelCount++;
+
+        if (modelCount >= perPage) {
+          modelCount = 0;
+          pageCount++;
+        }
+      });
+
+      this.setState({
+        collection: pages,
+        loading: false
+      });
+    });
+  };
+
   /**
    * After setting a new page,
    * display data from a) the cache, or b) the server.
@@ -316,10 +351,10 @@ export default class ExploreMode extends Component {
   };
 
   render() {
-    const { plural } = this.props;
+    const { plural, sorts } = this.props;
     const {
       loading,
-      renderMode,
+      renderMode: mode,
       collection,
       page,
       totalPages,
@@ -328,23 +363,23 @@ export default class ExploreMode extends Component {
 
     const ConfiguredViewMode = ({ upward }) => (
       <ViewMode
-        mobile
-        mode={renderMode}
-        upward={upward}
         switchToTiles={this.switchToTiles}
         switchToItems={this.switchToItems}
         switchToCards={this.switchToCards}
+        sortCollection={this.sortCollection}
+        {...{ mode, upward, sorts }}
+        mobile
       />
     );
 
     const ConfiguredPagination = () => (
       <Pagination
-        mobile
         goToFirstPage={this.goToFirstPage}
         goToPreviousPage={this.goToPreviousPage}
         goToNextPage={this.goToNextPage}
         goToLastPage={this.goToLastPage}
         {...{ plural, page, totalPages, perPage }}
+        mobile
       />
     );
 
