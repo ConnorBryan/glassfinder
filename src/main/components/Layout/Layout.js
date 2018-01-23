@@ -102,6 +102,7 @@ class Layout extends Component {
     };
     const additionalProps = {
       account,
+      context,
       token,
       updateAccount,
       updateAccountLink,

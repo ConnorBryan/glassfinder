@@ -194,7 +194,7 @@ export function renderGenericCard(models, loadDetailsModeFromExploreMode) {
 
   return (
     <Styles>
-      <Card.Group itemsPerRow={3} stackable>
+      <Card.Group itemsPerRow={2} stackable>
         {models.map((model, index) => (
           <Card key={index} centered fluid>
             <Image

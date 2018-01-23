@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {
   Container,
+  Grid,
   Responsive,
   Image,
   Divider,
@@ -164,10 +165,20 @@ export class ShopViewer extends Component {
           description={verbiage.ExploreShops_description}
         />
         <Divider hidden section />
-        {this.shouldShowMap() && <ShopMap />}
-        <Divider hidden section />
-        <ModelViewer {...props} />
-        <Divider hidden section />
+        {this.shouldShowMap() ? (
+          <Grid stackable>
+            <Grid.Row>
+              <Grid.Column width={10}>
+                <ModelViewer {...props} />
+              </Grid.Column>
+              <Grid.Column width={6}>
+                <ShopMap />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        ) : (
+          <ModelViewer {...props} />
+        )}
       </Container>
     );
   }

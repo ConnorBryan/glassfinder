@@ -326,43 +326,20 @@ export default class ExploreMode extends Component {
       perPage
     } = this.state;
 
-    const MobileViewMode = ({ upward }) => (
-      <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
-        <ViewMode
-          mobile
-          mode={renderMode}
-          upward={upward}
-          switchToTiles={this.switchToTiles}
-          switchToItems={this.switchToItems}
-          switchToCards={this.switchToCards}
-        />
-      </Responsive>
-    );
-
-    const MobilePagination = () => (
-      <Responsive
-        mobile
-        as={Pagination}
-        maxWidth={Responsive.onlyTablet.maxWidth}
-        goToFirstPage={this.goToFirstPage}
-        goToPreviousPage={this.goToPreviousPage}
-        goToNextPage={this.goToNextPage}
-        goToLastPage={this.goToLastPage}
-        {...{ plural, page, totalPages, perPage }}
-      />
-    );
-
-    const DesktopViewMode = () => (
+    const ConfiguredViewMode = ({ upward }) => (
       <ViewMode
+        mobile
         mode={renderMode}
+        upward={upward}
         switchToTiles={this.switchToTiles}
         switchToItems={this.switchToItems}
         switchToCards={this.switchToCards}
       />
     );
 
-    const DesktopPagination = () => (
+    const ConfiguredPagination = () => (
       <Pagination
+        mobile
         goToFirstPage={this.goToFirstPage}
         goToPreviousPage={this.goToPreviousPage}
         goToNextPage={this.goToNextPage}
@@ -371,24 +348,12 @@ export default class ExploreMode extends Component {
       />
     );
 
-    const DesktopBar = () => (
-      <Menu
-        as={Responsive}
-        minWidth={Responsive.onlyComputer.minWidth}
-        inverted
-      >
-        <DesktopViewMode />
-        <DesktopPagination />
-      </Menu>
-    );
-
     return (
       <Styles>
         <Segment.Group>
           <section className="fancy">
-            <MobileViewMode />
-            <MobilePagination />
-            <DesktopBar />
+            <ConfiguredViewMode />
+            <ConfiguredPagination />
           </section>
           <Segment className="viewport">
             {loading ? (
@@ -398,8 +363,8 @@ export default class ExploreMode extends Component {
             )}
           </Segment>
           <section className="fancy">
-            <MobilePagination />
-            <MobileViewMode upward />
+            <ConfiguredPagination />
+            <ConfiguredViewMode upward />
           </section>
         </Segment.Group>
       </Styles>
