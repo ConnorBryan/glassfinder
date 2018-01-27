@@ -65,7 +65,14 @@ module.exports = app => {
   /* === */
 
   app.get("/api/admin/shops", ShopController.readAll);
+  app.delete("/api/admin/shops/:id", ShopController.remove);
+
   app.get("/api/admin/artists", ArtistController.readAll);
+  app.delete("/api/admin/artists/:id", ArtistController.remove);
+
   app.get("/api/admin/brands", BrandController.readAll);
+  app.delete("/api/admin/brands/:id", BrandController.remove);
+
   app.get("/api/admin/pieces", PieceController.readAll);
+  app.delete("/api/admin/pieces/:id", PieceController.remove);
 };

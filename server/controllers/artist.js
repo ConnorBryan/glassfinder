@@ -1,9 +1,14 @@
 const { Artist } = require("../models");
-const { genericPaginatedRead, genericReadAll } = require("./common");
+const {
+  genericPaginatedRead,
+  genericReadAll,
+  genericRemove
+} = require("./common");
 
 module.exports = {
   read,
-  readAll
+  readAll,
+  remove
 };
 
 /* === */
@@ -28,4 +33,14 @@ function read(req, res) {
  */
 function readAll(req, res) {
   return genericReadAll(req, res, Artist, "artists");
+}
+
+/**
+ * @func remove
+ * @desc Destroys an instance of Artist.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ */
+function remove(req, res) {
+  return genericRemove(req, res, Artist, "artist");
 }

@@ -1,8 +1,8 @@
 const constants = require("../config/constants");
-const { respondWith, error, success } = require("../util");
+const { respondWith, error, success, requireProperties } = require("../util");
 const { Shop, Artist } = require("../models");
 
-module.exports = { genericPaginatedRead, genericReadAll };
+module.exports = { genericPaginatedRead, genericReadAll, genericRemove };
 
 /* === */
 
@@ -72,6 +72,18 @@ function genericReadAll(req, res, Model, plural) {
     return success(res, `Successfully fetched all ${plural}`, {
       collection
     });
+  });
+}
+
+function genericRemove(req, res, Model, singular) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+
+    requireProperties({ id });
+
+    await Model.destroy({ where: { id } });
+
+    return success(res, `Successfully deleted ${capitalize(singular)}#${id}`);
   });
 }
 

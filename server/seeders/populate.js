@@ -193,32 +193,32 @@ module.exports = async function({
   */
 
   // Unverified.
-  // _.times(constants.POPULATION_COUNT, async () => {
-  //   const user = await User.create({
-  //     email: chance.email(),
-  //     password: await createSafePassword(constants.DEFAULT_PASSWORD),
-  //     verified: false,
-  //     verificationCode: chance.string({ length: 64 }),
-  //     linked: false,
-  //     type: null,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date()
-  //   });
-  // });
+  _.times(constants.POPULATION_COUNT, async () => {
+    const user = await User.create({
+      email: chance.email(),
+      password: await createSafePassword(constants.DEFAULT_PASSWORD),
+      verified: false,
+      verificationCode: chance.string({ length: 64 }),
+      linked: false,
+      type: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+  });
 
   // Verified.
-  // _.times(constants.POPULATION_COUNT, async () => {
-  //   const user = await User.create({
-  //     email: chance.email(),
-  //     password: await createSafePassword(constants.DEFAULT_PASSWORD),
-  //     verified: true,
-  //     verificationCode: null,
-  //     linked: false,
-  //     type: null,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date()
-  //   });
-  // });
+  _.times(constants.POPULATION_COUNT, async () => {
+    const user = await User.create({
+      email: chance.email(),
+      password: await createSafePassword(constants.DEFAULT_PASSWORD),
+      verified: true,
+      verificationCode: null,
+      linked: false,
+      type: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+  });
 
   // Shops
   _.times(constants.POPULATION_COUNT, async () => {
@@ -270,67 +270,67 @@ module.exports = async function({
   });
 
   // Artists
-  // _.times(constants.POPULATION_COUNT, async () => {
-  //   const user = await User.create({
-  //     email: chance.email(),
-  //     password: await createSafePassword(constants.DEFAULT_PASSWORD),
-  //     verified: true,
-  //     verificationCode: null,
-  //     linked: false,
-  //     type: null,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date()
-  //   });
+  _.times(constants.POPULATION_COUNT, async () => {
+    const user = await User.create({
+      email: chance.email(),
+      password: await createSafePassword(constants.DEFAULT_PASSWORD),
+      verified: true,
+      verificationCode: null,
+      linked: false,
+      type: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
 
-  //   const artist = await user.linkAs(
-  //     constants.LINK_TYPES.ARTIST,
-  //     {
-  //       name: chance.name(),
-  //       image: constants.PLACEHOLDER_IMAGE,
-  //       description: chance.paragraph(),
-  //       from: `${chance.city()}, ${chance.state()}`
-  //     },
-  //     Artist
-  //   );
+    const artist = await user.linkAs(
+      constants.LINK_TYPES.ARTIST,
+      {
+        name: chance.name(),
+        image: constants.PLACEHOLDER_IMAGE,
+        description: chance.paragraph(),
+        from: `${chance.city()}, ${chance.state()}`
+      },
+      Artist
+    );
 
-  //   _.times(constants.PIECE_COUNT, async () => {
-  //     await Piece.create({
-  //       name: chance.word(),
-  //       image: constants.PLACEHOLDER_IMAGE,
-  //       description: chance.paragraph(),
-  //       maker: artist.name,
-  //       price: chance.floating({ min: 5, max: 5000, fixed: 2 }),
-  //       location: `${chance.city()}, ${chance.state()}`,
-  //       userId: user.id
-  //     });
-  //   });
-  // });
+    _.times(constants.PIECE_COUNT, async () => {
+      await Piece.create({
+        name: chance.word(),
+        image: constants.PLACEHOLDER_IMAGE,
+        description: chance.paragraph(),
+        maker: artist.name,
+        price: chance.floating({ min: 5, max: 5000, fixed: 2 }),
+        location: `${chance.city()}, ${chance.state()}`,
+        userId: user.id
+      });
+    });
+  });
 
   // Brands
-  // _.times(constants.POPULATION_COUNT, async () => {
-  //   const user = await User.create({
-  //     email: chance.email(),
-  //     password: await createSafePassword(constants.DEFAULT_PASSWORD),
-  //     verified: true,
-  //     verificationCode: null,
-  //     linked: false,
-  //     type: null,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date()
-  //   });
+  _.times(constants.POPULATION_COUNT, async () => {
+    const user = await User.create({
+      email: chance.email(),
+      password: await createSafePassword(constants.DEFAULT_PASSWORD),
+      verified: true,
+      verificationCode: null,
+      linked: false,
+      type: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
 
-  //   await user.linkAs(
-  //     constants.LINK_TYPES.BRAND,
-  //     {
-  //       name: chance.word(),
-  //       image: constants.PLACEHOLDER_IMAGE,
-  //       description: chance.paragraph(),
-  //       from: `${chance.city()}, ${chance.state()}`,
-  //       site: constants.PLACEHOLDER_SITE
-  //     },
-  //     Brand
-  //   );
-  // });
+    await user.linkAs(
+      constants.LINK_TYPES.BRAND,
+      {
+        name: chance.word(),
+        image: constants.PLACEHOLDER_IMAGE,
+        description: chance.paragraph(),
+        from: `${chance.city()}, ${chance.state()}`,
+        site: constants.PLACEHOLDER_SITE
+      },
+      Brand
+    );
+  });
 };
 
 async function createSafePassword(password) {

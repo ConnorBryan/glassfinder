@@ -91,13 +91,39 @@ class AdminAPI extends API {
   static fetchAllArtists = partial(AdminAPI.fetchAllModels, "artists");
   static fetchAllBrands = partial(AdminAPI.fetchAllModels, "brands");
   static fetchAllPieces = partial(AdminAPI.fetchAllModels, "pieces");
+
+  static async deleteModel(plural, id) {
+    try {
+      const url = `${ADMIN_API_ROOT}/${plural}/${id}`;
+
+      await axios.delete(url);
+
+      return true;
+    } catch (e) {
+      console.error(e);
+
+      return false;
+    }
+  }
+
+  static deleteShop = partial(AdminAPI.deleteModel, "shops");
+  static deleteArtist = partial(AdminAPI.deleteModel, "artists");
+  static deleteBrand = partial(AdminAPI.deleteModel, "brands");
+  static deletePiece = partial(AdminAPI.deleteModel, "pieces");
 }
 
-const LINK_TYPES_TO_SERVICES = {
+const LINK_TYPES_TO_FETCH_SERVICES = {
   [LINK_TYPES.SHOP]: AdminAPI.fetchAllShops,
   [LINK_TYPES.ARTIST]: AdminAPI.fetchAllArtists,
   [LINK_TYPES.BRAND]: AdminAPI.fetchAllBrands,
   [LINK_TYPES.PIECE]: AdminAPI.fetchAllPieces
+};
+
+const LINK_TYPES_TO_DELETE_SERVICES = {
+  [LINK_TYPES.SHOP]: AdminAPI.deleteShop,
+  [LINK_TYPES.ARTIST]: AdminAPI.deleteArtist,
+  [LINK_TYPES.BRAND]: AdminAPI.deleteBrand,
+  [LINK_TYPES.PIECE]: AdminAPI.deletePiece
 };
 
 export default class Admin extends Component {
@@ -118,12 +144,14 @@ export default class Admin extends Component {
    */
   fetchCollection = (model = this.state.model) => {
     this.setState({ loading: true }, async () => {
-      const service = LINK_TYPES_TO_SERVICES[model];
+      const service = LINK_TYPES_TO_FETCH_SERVICES[model];
       const collection = (await service()).map(model => ({
         ...model,
         rowKey: uuid(),
         columnKey: uuid()
       }));
+
+      console.log("model", model);
 
       this.setState({
         loading: false,
@@ -156,6 +184,29 @@ export default class Admin extends Component {
     this.searchInput.value = "";
 
     this.setState({ displayedCollection: collection });
+  };
+
+  deleteModel = id => {
+    const { model } = this.state;
+    const term = model.toLowerCase();
+    const confirmed = window.confirm(
+      `Are you sure you want to delete this ${term}?\nThis cannot be undone.`
+    );
+
+    if (confirmed) {
+      this.setState({ loading: true }, async () => {
+        const service = LINK_TYPES_TO_DELETE_SERVICES[model];
+        const wasSuccessful = await service(id);
+
+        wasSuccessful
+          ? alert(`The ${term} was successfully deleted.`)
+          : alert(`The ${term} was unable to be deleted.`);
+
+        this.setState({ loading: false });
+
+        if (wasSuccessful) this.fetchCollection();
+      });
+    }
   };
 
   render() {
@@ -207,7 +258,10 @@ export default class Admin extends Component {
             {loading ? (
               <Loader active />
             ) : (
-              <ModelTable collection={displayedCollection} />
+              <ModelTable
+                collection={displayedCollection}
+                deleteModel={this.deleteModel}
+              />
             )}
           </Segment>
         </Container>
@@ -251,7 +305,7 @@ function ModelDropdown({
   );
 }
 
-function ModelTable({ collection }) {
+function ModelTable({ collection, deleteModel }) {
   const exampleModel = { ...(collection[0] || {}) };
 
   delete exampleModel.rowKey;
@@ -276,7 +330,7 @@ function ModelTable({ collection }) {
       </Table.Header>
       <Table.Body>
         {collection.map(model => (
-          <Aux>
+          <Aux key={model.name}>
             <Table.Row key={`${model.rowKey}`}>
               {tableHeaders.map(column => (
                 <Table.Cell key={`${model.columnKey}-${column}`}>
@@ -288,7 +342,11 @@ function ModelTable({ collection }) {
               <Table.Cell className="cell-actions" width={tableHeaders.length}>
                 <Menu widths={2} inverted fluid>
                   <Menu.Item icon="pencil" content="Edit" />
-                  <Menu.Item icon="trash" content="Delete" />
+                  <Menu.Item
+                    icon="trash"
+                    content="Delete"
+                    onClick={() => deleteModel(model.id)}
+                  />
                 </Menu>
               </Table.Cell>
             </Table.Row>

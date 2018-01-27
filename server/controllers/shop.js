@@ -1,10 +1,15 @@
 const { respondWith, requireProperties, success } = require("../util");
 const { User, Shop, Piece } = require("../models");
-const { genericPaginatedRead, genericReadAll } = require("./common");
+const {
+  genericPaginatedRead,
+  genericReadAll,
+  genericRemove
+} = require("./common");
 
 module.exports = {
   read,
   readAll,
+  remove,
   fetchPiecesForId,
   fetchMapMarkers
 };
@@ -31,6 +36,16 @@ function read(req, res) {
  */
 function readAll(req, res) {
   return genericReadAll(req, res, Shop, "shops");
+}
+
+/**
+ * @func remove
+ * @desc Destroys an instance of Shop.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ */
+function remove(req, res) {
+  return genericRemove(req, res, Shop, "shop");
 }
 
 /**

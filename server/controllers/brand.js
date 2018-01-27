@@ -1,9 +1,14 @@
 const { Brand } = require("../models");
-const { genericPaginatedRead, genericReadAll } = require("./common");
+const {
+  genericPaginatedRead,
+  genericReadAll,
+  genericRemove
+} = require("./common");
 
 module.exports = {
   read,
-  readAll
+  readAll,
+  remove
 };
 
 /* === */
@@ -28,4 +33,14 @@ function read(req, res) {
  */
 function readAll(req, res) {
   return genericReadAll(req, res, Brand, "brands");
+}
+
+/**
+ * @func remove
+ * @desc Destroys an instance of Brand.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ */
+function remove(req, res) {
+  return genericRemove(req, res, Brand, "brand");
 }
