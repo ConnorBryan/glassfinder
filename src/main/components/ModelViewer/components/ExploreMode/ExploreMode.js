@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Menu, Segment, Loader, Responsive } from "semantic-ui-react";
+import { Menu, Segment, Loader, Responsive, Search } from "semantic-ui-react";
 import styled from "styled-components";
 import queryString from "query-string";
-import { flatten, times } from "lodash";
+import { flatten, times, escapeRegExp } from "lodash";
 
 import {
   retrieveFromCache,
@@ -90,13 +90,16 @@ export default class ExploreMode extends Component {
     // Attempt to hydrate cached data.
     const userIdAddendum = userId ? `For${userId}` : "";
     this.collectionKey = `${cacheTerm || plural}${userIdAddendum}`;
+    this.modelKey = `${cacheTerm || plural}Models${userIdAddendum}`;
     this.perPageKey = `${cacheTerm || plural}PerPage${userIdAddendum}`;
     this.totalPagesKey = `${cacheTerm || plural}TotalPages${userIdAddendum}`;
 
     const perPage = retrieveFromCache(this.perPageKey) || 6;
     const totalPages = retrieveFromCache(this.totalPagesKey) || 1;
     const cachedCollection = retrieveFromCache(this.collectionKey);
+    const cachedModels = retrieveFromCache(this.modelKey);
     const collection = JSON.parse(cachedCollection || "[]");
+    const models = JSON.parse(cachedModels || "[]");
     const isCacheExpired = cacheIsExpired();
 
     return {
@@ -105,6 +108,7 @@ export default class ExploreMode extends Component {
       type: typeParam || null,
       page: isNaN(+page) ? 0 : +page,
       collection: isCacheExpired ? [] : collection,
+      models: isCacheExpired ? [] : models,
       perPage: isCacheExpired ? 1 : +perPage,
       totalPages: isCacheExpired ? 1 : +totalPages,
       loading: true
@@ -216,7 +220,7 @@ export default class ExploreMode extends Component {
       const { userId, type, collection, page } = this.state;
 
       const potentialFetchTimeout = setTimeout(() => {
-        this.setState({ collection: [[]], loading: false });
+        this.setState({ collection: [[]], models: [], loading: false });
       }, 3000);
 
       const {
@@ -234,7 +238,7 @@ export default class ExploreMode extends Component {
               this.adjustUrl(0);
               this.fetchCollection(0, userId, type);
             })
-          : this.setState({ collection: [[]], loading: false });
+          : this.setState({ collection: [[]], models: [], loading: false });
       }
 
       // Paginate the results.
@@ -253,13 +257,15 @@ export default class ExploreMode extends Component {
       updateCache({
         [this.perPageKey]: perPage,
         [this.totalPagesKey]: totalPages,
-        [this.collectionKey]: JSON.stringify(pages)
+        [this.collectionKey]: JSON.stringify(pages),
+        [this.modelKey]: JSON.stringify(newCollection)
       });
 
       this.setState({
         totalPages,
         perPage,
         collection: pages,
+        models: newCollection,
         loading: false
       });
     });
@@ -267,7 +273,9 @@ export default class ExploreMode extends Component {
 
   sortCollection = sort => {
     this.setState({ loading: true }, async () => {
-      if (!sort) return;
+      if (!sort) {
+        return this.setState({ loading: false });
+      }
 
       const { collection, totalPages, perPage } = this.state;
 
@@ -307,7 +315,7 @@ export default class ExploreMode extends Component {
   loadPage = () => {
     this.setState({ loading: true }, async () => {
       const { exploreService: fetchCollection, plural } = this.props;
-      const { collection, page } = this.state;
+      const { collection, models, page } = this.state;
 
       // Don't do anything if the page has already been fetched.
       if (collection[page].length > 0) return this.setState({ loading: false });
@@ -315,13 +323,21 @@ export default class ExploreMode extends Component {
       // Grab all of the old pages and replace a single one with the collected page.
       const { [plural]: newCollection } = await fetchCollection(page);
       const newPages = [...collection];
+      const newModels = [...models, ...newCollection];
 
       newPages[page] = newCollection;
 
       // Update the cache with the updated collection of models.
-      updateCache(this.collectionKey, JSON.stringify(newPages));
+      updateCache({
+        [this.collectionKey]: JSON.stringify(newPages),
+        [this.modelKey]: JSON.stringify(newModels)
+      });
 
-      this.setState({ collection: newPages, loading: false });
+      this.setState({
+        collection: newPages,
+        models: newModels,
+        loading: false
+      });
     });
   };
 
@@ -356,6 +372,7 @@ export default class ExploreMode extends Component {
       loading,
       renderMode: mode,
       collection,
+      models,
       page,
       totalPages,
       perPage
@@ -371,6 +388,8 @@ export default class ExploreMode extends Component {
         mobile
       />
     );
+
+    const ConfiguredSearch = () => <ModelSearch {...{ models }} />;
 
     const ConfiguredPagination = () => (
       <Pagination
@@ -388,6 +407,7 @@ export default class ExploreMode extends Component {
         <Segment.Group>
           <section className="fancy">
             <ConfiguredViewMode />
+            <ConfiguredSearch />
             <ConfiguredPagination />
           </section>
           <Segment className="viewport">
@@ -403,6 +423,78 @@ export default class ExploreMode extends Component {
           </section>
         </Segment.Group>
       </Styles>
+    );
+  }
+}
+
+class ModelSearch extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = this.getInitialState();
+  }
+
+  getInitialState() {
+    const { models } = this.props;
+
+    const results = models ? this.format(models) : [];
+
+    return {
+      originalResults: results,
+      currentResults: results,
+      value: "",
+      loading: false
+    };
+  }
+
+  handleResultsSelect = (e, { result }) =>
+    this.setState({ value: result.title });
+
+  handleSearchChange = (e, { value: eventValue }) => {
+    this.setState({ loading: true, value: eventValue }, () => {
+      const { originalResults, value } = this.state;
+
+      const regexp = new RegExp(escapeRegExp(value), "i");
+      const isMatch = result => regexp.test(result.title.toLowerCase());
+
+      this.setState({
+        loading: false,
+        currentResults: originalResults.filter(isMatch)
+      });
+    });
+  };
+
+  format(models) {
+    const termDictionary = {
+      name: "title",
+      description: "description",
+      image: "image",
+      price: "price"
+    };
+
+    return models.map(model => {
+      return Object.keys(model)
+        .filter(key => termDictionary[key])
+        .reduce((prev, next) => {
+          prev[termDictionary[next]] = model[next];
+
+          return prev;
+        }, {});
+    });
+  }
+
+  render() {
+    const { currentResults: results, loading, value } = this.state;
+
+    return (
+      <Search
+        fluid
+        noResultsMessage="Couldn't find anything."
+        size="large"
+        onResultSelect={this.handleResultsSelect}
+        onSearchChange={this.handleSearchChange}
+        {...{ results, loading, value }}
+      />
     );
   }
 }

@@ -2,6 +2,10 @@ const constants = require("../config/constants");
 const { respondWith, error, success } = require("../util");
 const { Shop, Artist } = require("../models");
 
+module.exports = { genericPaginatedRead, genericReadAll };
+
+/* === */
+
 function genericPaginatedRead(req, res, Model, singular, plural) {
   return respondWith(res, async () => {
     const { id } = req.params;
@@ -61,7 +65,15 @@ function genericPaginatedRead(req, res, Model, singular, plural) {
   });
 }
 
-module.exports = { genericPaginatedRead };
+function genericReadAll(req, res, Model, plural) {
+  return respondWith(res, async () => {
+    const collection = await Model.findAll();
+
+    return success(res, `Successfully fetched all ${plural}`, {
+      collection
+    });
+  });
+}
 
 /* === */
 

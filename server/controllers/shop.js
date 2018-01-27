@@ -1,9 +1,10 @@
 const { respondWith, requireProperties, success } = require("../util");
 const { User, Shop, Piece } = require("../models");
-const { genericPaginatedRead } = require("./common");
+const { genericPaginatedRead, genericReadAll } = require("./common");
 
 module.exports = {
   read,
+  readAll,
   fetchPiecesForId,
   fetchMapMarkers
 };
@@ -19,6 +20,17 @@ module.exports = {
  */
 function read(req, res) {
   return genericPaginatedRead(req, res, Shop, "shop", "shops");
+}
+
+/**
+ * @func readAll
+ * @desc Retrieves all instances of Shop.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Array<Shop>}
+ */
+function readAll(req, res) {
+  return genericReadAll(req, res, Shop, "shops");
 }
 
 /**

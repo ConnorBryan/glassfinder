@@ -1,9 +1,17 @@
 export const API_ROOT = process.env.REACT_APP_API;
+export const ADMIN_API_ROOT = `${API_ROOT}/admin`;
 
 export const LINK_TYPES = {
   SHOP: "SHOP",
   ARTIST: "ARTIST",
   BRAND: "BRAND"
+};
+
+export const LINK_TYPES_TO_RESOURCES = {
+  [LINK_TYPES.SHOP]: "shops",
+  [LINK_TYPES.ARTIST]: "artists",
+  [LINK_TYPES.BRANDS]: "brands",
+  [LINK_TYPES.PIECES]: "pieces"
 };
 
 export const ICON_SET = {

@@ -61,4 +61,11 @@ module.exports = app => {
   app.get("/api/updates", UpdateController.read);
   app.post("/api/updates/:id", UpdateController.update);
   app.delete("/api/updates/:id", UpdateController.remove);
+
+  /* === */
+
+  app.get("/api/admin/shops", ShopController.readAll);
+  app.get("/api/admin/artists", ArtistController.readAll);
+  app.get("/api/admin/brands", BrandController.readAll);
+  app.get("/api/admin/pieces", PieceController.readAll);
 };

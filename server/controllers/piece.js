@@ -9,11 +9,12 @@ const {
 } = require("../util");
 const upload = require("../util").upload(constants.PIECE_BUCKET);
 const { User, Piece } = require("../models");
-const { genericPaginatedRead } = require("./common");
+const { genericPaginatedRead, genericReadAll } = require("./common");
 
 module.exports = {
   create,
   read,
+  readAll,
   update,
   remove,
   uploadImage
@@ -77,6 +78,17 @@ function create(req, res) {
  */
 function read(req, res) {
   return genericPaginatedRead(req, res, Piece, "piece", "pieces");
+}
+
+/**
+ * @func readAll
+ * @desc Retrieves all instances of Piece.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Array<Piece>}
+ */
+function readAll(req, res) {
+  return genericReadAll(req, res, Piece, "pieces");
 }
 
 /**
