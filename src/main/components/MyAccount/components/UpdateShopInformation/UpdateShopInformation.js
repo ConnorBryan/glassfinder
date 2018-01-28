@@ -91,7 +91,8 @@ function UpdateShopInformation({
   verbiage,
   account,
   updateAccountLink,
-  history
+  history,
+  redirect = "/my-account"
 }) {
   if (!account) return <Redirect to="/sign-in" />;
 
@@ -122,7 +123,7 @@ function UpdateShopInformation({
       alert("That address doesn't seem to be a real place.\nPlease try again.");
     }
 
-    history.push("/my-account");
+    history.push(redirect);
   };
 
   return (

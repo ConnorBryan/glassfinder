@@ -1,10 +1,10 @@
 export const API_ROOT = process.env.REACT_APP_API;
-export const ADMIN_API_ROOT = `${API_ROOT}/admin`;
 
 export const LINK_TYPES = {
   SHOP: "SHOP",
   ARTIST: "ARTIST",
-  BRAND: "BRAND"
+  BRAND: "BRAND",
+  PIECE: "PIECE"
 };
 
 export const LINK_TYPES_TO_RESOURCES = {

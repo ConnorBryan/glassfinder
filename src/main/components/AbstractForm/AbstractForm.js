@@ -78,7 +78,7 @@ function AbstractForm({ fields, onSubmit }) {
     (values, field) => ({ ...values, [field.name]: field.value }),
     {}
   );
-
+  console.log("initial", initialValues);
   const validationSchema = Yup.object().shape(
     fields.reduce(
       (schema, field) => ({ ...schema, [field.name]: field.validation }),

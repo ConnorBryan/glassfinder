@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import {
   Container,
   Dropdown,
-  Button,
   Menu,
   Loader,
   Segment,
@@ -16,14 +15,24 @@ import { partial, escapeRegExp } from "lodash";
 import styled from "styled-components";
 import uuid from "uuid/v4";
 
-import {
-  ADMIN_API_ROOT,
-  LINK_TYPES,
-  LINK_TYPES_TO_RESOURCES,
-  ICON_SET
-} from "../main/config";
-import API from "../main/services";
+import { LINK_TYPES, ICON_SET } from "../main/config";
 import { centered, fancy } from "../main/styles/snippets";
+import UpdateShopInformation from "../main/components/MyAccount/components/UpdateShopInformation";
+import AdminAPI from "./services";
+
+export const LINK_TYPES_TO_FETCH_SERVICES = {
+  [LINK_TYPES.SHOP]: AdminAPI.fetchAllShops,
+  [LINK_TYPES.ARTIST]: AdminAPI.fetchAllArtists,
+  [LINK_TYPES.BRAND]: AdminAPI.fetchAllBrands,
+  [LINK_TYPES.PIECE]: AdminAPI.fetchAllPieces
+};
+
+export const LINK_TYPES_TO_DELETE_SERVICES = {
+  [LINK_TYPES.SHOP]: AdminAPI.deleteShop,
+  [LINK_TYPES.ARTIST]: AdminAPI.deleteArtist,
+  [LINK_TYPES.BRAND]: AdminAPI.deleteBrand,
+  [LINK_TYPES.PIECE]: AdminAPI.deletePiece
+};
 
 const Styles = styled.div`
   input,
@@ -73,59 +82,6 @@ const Styles = styled.div`
   }
 `;
 
-class AdminAPI extends API {
-  static async fetchAllModels(plural) {
-    try {
-      const url = `${ADMIN_API_ROOT}/${plural}`;
-      const { data: { payload: { collection } } } = await axios.get(url);
-
-      return collection;
-    } catch (e) {
-      console.error(e);
-
-      return [];
-    }
-  }
-
-  static fetchAllShops = partial(AdminAPI.fetchAllModels, "shops");
-  static fetchAllArtists = partial(AdminAPI.fetchAllModels, "artists");
-  static fetchAllBrands = partial(AdminAPI.fetchAllModels, "brands");
-  static fetchAllPieces = partial(AdminAPI.fetchAllModels, "pieces");
-
-  static async deleteModel(plural, id) {
-    try {
-      const url = `${ADMIN_API_ROOT}/${plural}/${id}`;
-
-      await axios.delete(url);
-
-      return true;
-    } catch (e) {
-      console.error(e);
-
-      return false;
-    }
-  }
-
-  static deleteShop = partial(AdminAPI.deleteModel, "shops");
-  static deleteArtist = partial(AdminAPI.deleteModel, "artists");
-  static deleteBrand = partial(AdminAPI.deleteModel, "brands");
-  static deletePiece = partial(AdminAPI.deleteModel, "pieces");
-}
-
-const LINK_TYPES_TO_FETCH_SERVICES = {
-  [LINK_TYPES.SHOP]: AdminAPI.fetchAllShops,
-  [LINK_TYPES.ARTIST]: AdminAPI.fetchAllArtists,
-  [LINK_TYPES.BRAND]: AdminAPI.fetchAllBrands,
-  [LINK_TYPES.PIECE]: AdminAPI.fetchAllPieces
-};
-
-const LINK_TYPES_TO_DELETE_SERVICES = {
-  [LINK_TYPES.SHOP]: AdminAPI.deleteShop,
-  [LINK_TYPES.ARTIST]: AdminAPI.deleteArtist,
-  [LINK_TYPES.BRAND]: AdminAPI.deleteBrand,
-  [LINK_TYPES.PIECE]: AdminAPI.deletePiece
-};
-
 export default class Admin extends Component {
   state = {
     loading: false,
@@ -150,8 +106,6 @@ export default class Admin extends Component {
         rowKey: uuid(),
         columnKey: uuid()
       }));
-
-      console.log("model", model);
 
       this.setState({
         loading: false,
@@ -198,13 +152,12 @@ export default class Admin extends Component {
         const service = LINK_TYPES_TO_DELETE_SERVICES[model];
         const wasSuccessful = await service(id);
 
-        wasSuccessful
-          ? alert(`The ${term} was successfully deleted.`)
-          : alert(`The ${term} was unable to be deleted.`);
-
-        this.setState({ loading: false });
-
-        if (wasSuccessful) this.fetchCollection();
+        this.setState({ loading: false }, () => {
+          if (wasSuccessful) {
+            alert(`The ${term} was successfully deleted.`);
+            this.fetchCollection();
+          } else alert(`The ${term} was unable to be deleted.`);
+        });
       });
     }
   };
@@ -221,64 +174,81 @@ export default class Admin extends Component {
     const menuHeader = `${model} Administration`;
 
     return (
-      <Styles>
-        <Container fluid>
-          <Menu attached="top" inverted>
-            <Menu.Item icon={icon} />
-            <Menu.Item content={menuHeader} header />
-            <Menu.Menu position="right">
-              <ModelDropdown
-                {...{
-                  model,
-                  switchCollectionToShops,
-                  switchCollectionToArtists,
-                  switchCollectionToBrands,
-                  switchCollectionToPieces
-                }}
-              />
-            </Menu.Menu>
-            <Menu.Menu position="right">
-              <Menu.Item icon="close" onClick={this.clearSearch} />
-              <div className="ui right aligned category search item">
-                <div className="ui transparent icon input">
-                  <input
-                    className="prompt"
-                    type="text"
-                    placeholder="Search..."
-                    ref={node => (this.searchInput = node)}
-                    onChange={this.search}
-                  />
-                  <i className="search link icon" />
-                </div>
-                <div className="results" />
-              </div>
-            </Menu.Menu>
-          </Menu>
-          <Segment attached="bottom" className="viewport">
-            {loading ? (
-              <Loader active />
-            ) : (
-              <ModelTable
-                collection={displayedCollection}
-                deleteModel={this.deleteModel}
-              />
-            )}
-          </Segment>
-        </Container>
-      </Styles>
+      <BrowserRouter>
+        <Styles>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Container fluid>
+                  <Menu attached="top" inverted>
+                    <Menu.Item icon={icon} />
+                    <ModelDropdown
+                      {...{
+                        model,
+                        menuHeader,
+                        switchCollectionToShops,
+                        switchCollectionToArtists,
+                        switchCollectionToBrands,
+                        switchCollectionToPieces
+                      }}
+                    />
+                    <Menu.Menu position="right">
+                      <Menu.Item icon="close" onClick={this.clearSearch} />
+                      <div className="ui right aligned category search item">
+                        <div className="ui transparent icon input">
+                          <input
+                            className="prompt"
+                            type="text"
+                            placeholder="Search..."
+                            ref={node => (this.searchInput = node)}
+                            onChange={this.search}
+                          />
+                          <i className="search link icon" />
+                        </div>
+                        <div className="results" />
+                      </div>
+                    </Menu.Menu>
+                  </Menu>
+                  <Segment attached="bottom" className="viewport">
+                    {loading ? (
+                      <Loader active />
+                    ) : (
+                      <ModelTable
+                        collection={displayedCollection}
+                        deleteModel={this.deleteModel}
+                      />
+                    )}
+                  </Segment>
+                </Container>
+              )}
+            />
+
+            <Route exact path="/edit/:id" component={EditModel} />
+          </Switch>
+        </Styles>
+      </BrowserRouter>
     );
+  }
+}
+
+class EditModel extends Component {
+  render() {
+    return <p> Derp </p>;
   }
 }
 
 function ModelDropdown({
   model,
+  menuHeader,
   switchCollectionToShops,
   switchCollectionToArtists,
   switchCollectionToBrands,
   switchCollectionToPieces
 }) {
   return (
-    <Dropdown text="Switch Model">
+    <Dropdown text={menuHeader}>
       <Dropdown.Menu>
         <Dropdown.Item
           text="Shops"
@@ -320,7 +290,7 @@ function ModelTable({ collection, deleteModel }) {
       </Header>
     </Segment>
   ) : (
-    <Table celled padded>
+    <Table celled padded stackable>
       <Table.Header>
         <Table.Row>
           {tableHeaders.map(header => (
@@ -340,8 +310,13 @@ function ModelTable({ collection, deleteModel }) {
             </Table.Row>
             <Table.Row className="row-actions">
               <Table.Cell className="cell-actions" width={tableHeaders.length}>
-                <Menu widths={2} inverted fluid>
-                  <Menu.Item icon="pencil" content="Edit" />
+                <Menu inverted fluid>
+                  <Menu.Item
+                    as={Link}
+                    to={`/edit/${model.id}`}
+                    icon="pencil"
+                    content="Edit"
+                  />
                   <Menu.Item
                     icon="trash"
                     content="Delete"
