@@ -20,6 +20,9 @@ import { centered, fancy } from "../main/styles/snippets";
 import UpdateShopInformation from "../main/components/MyAccount/components/UpdateShopInformation";
 import AdminAPI from "./services";
 import LinkRequests from "./components/LinkRequests";
+import Updates from "./components/Updates";
+import CreateUpdate from "./components/CreateUpdate";
+import EditUpdate from "./components/EditUpdate";
 
 export const LINK_TYPES_TO_FETCH_SERVICES = {
   [LINK_TYPES.SHOP]: AdminAPI.fetchAllShops,
@@ -40,7 +43,7 @@ const Styles = styled.div`
     ${fancy};
   }
 
-  input,
+  .white-input,
   .ui .dropdown {
     color: white !important;
     ${centered};
@@ -194,6 +197,12 @@ export default class Admin extends Component {
               icon="chain"
               content="Link requests"
             />
+            <Menu.Item
+              as={Link}
+              to="/updates"
+              icon="newspaper"
+              content="Updates"
+            />
           </Menu>
           <Switch>
             <Route
@@ -216,7 +225,7 @@ export default class Admin extends Component {
                     <Menu.Menu position="right">
                       <Menu.Item icon="close" onClick={this.clearSearch} />
                       <div className="ui right aligned category search item">
-                        <div className="ui transparent icon input">
+                        <div className="ui transparent icon input white-input">
                           <input
                             className="prompt"
                             type="text"
@@ -246,6 +255,9 @@ export default class Admin extends Component {
 
             <Route exact path="/edit/:id" component={EditModel} />
             <Route exact path="/link-requests" component={LinkRequests} />
+            <Route exact path="/updates" component={Updates} />
+            <Route exact path="/updates/new" component={CreateUpdate} />
+            <Route exact path="/updates/:id" component={EditUpdate} />
           </Switch>
         </Styles>
       </BrowserRouter>

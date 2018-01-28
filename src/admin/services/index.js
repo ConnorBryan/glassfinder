@@ -41,6 +41,7 @@ export default class AdminAPI extends API {
   static deleteArtist = partial(AdminAPI.deleteModel, "artists");
   static deleteBrand = partial(AdminAPI.deleteModel, "brands");
   static deletePiece = partial(AdminAPI.deleteModel, "pieces");
+  static deleteUpdate = partial(AdminAPI.deleteModel, "updates");
 
   static async fetchLinkRequests() {
     try {
@@ -80,6 +81,51 @@ export default class AdminAPI extends API {
       console.error(e);
 
       return false;
+    }
+  }
+
+  static async createUpdate(values) {
+    try {
+      const url = `${ADMIN_API_ROOT}/updates`;
+
+      await axios.post(url, {
+        config: JSON.stringify(values)
+      });
+
+      return true;
+    } catch (e) {
+      console.error(e);
+
+      return false;
+    }
+  }
+
+  static async updateUpdate(id, values) {
+    try {
+      const url = `${ADMIN_API_ROOT}/updates/${id}`;
+
+      await axios.post(url, {
+        config: JSON.stringify(values)
+      });
+
+      return true;
+    } catch (e) {
+      console.error(e);
+
+      return false;
+    }
+  }
+
+  static async fetchUpdate(id) {
+    try {
+      const url = `${ADMIN_API_ROOT}/updates/${id}`;
+      const { data: { payload: { update } } } = await axios.get(url);
+
+      return update;
+    } catch (e) {
+      console.error(e);
+
+      return null;
     }
   }
 }

@@ -106,8 +106,14 @@ function AbstractForm({ fields, onSubmit }) {
               {fields.map((field, index) => (
                 <AbstractFormField
                   key={index}
-                  field={field}
-                  {...{ values, touched, errors, handleChange, setFieldValue }}
+                  {...{
+                    field,
+                    values,
+                    touched,
+                    errors,
+                    handleChange,
+                    setFieldValue
+                  }}
                 />
               ))}
               <Segment attached="bottom" color="blue">

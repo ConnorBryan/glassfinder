@@ -59,6 +59,7 @@ module.exports = app => {
 
   app.post("/api/updates", UpdateController.create);
   app.get("/api/updates", UpdateController.read);
+  app.get("/api/updates/:id", UpdateController.read);
   app.post("/api/updates/:id", UpdateController.update);
   app.delete("/api/updates/:id", UpdateController.remove);
 
@@ -79,4 +80,10 @@ module.exports = app => {
   app.get("/api/admin/link-requests", UserController.readLinkRequests);
   app.post("/api/admin/link-requests/:id/approve", UserController.approveLink);
   app.post("/api/admin/link-requests/:id/deny", UserController.denyLink);
+
+  app.post("/api/admin/updates", UpdateController.create);
+  app.get("/api/admin/updates", UpdateController.read);
+  app.get("/api/admin/updates/:id", UpdateController.read);
+  app.post("/api/admin/updates/:id", UpdateController.update);
+  app.delete("/api/admin/updates/:id", UpdateController.remove);
 };

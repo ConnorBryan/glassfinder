@@ -12,7 +12,8 @@ module.exports = {
 function create(req, res, { Model, modelName, collection }) {
   return respondWith(req, async () => {
     const { config } = req.body;
-    const model = await Model.create(config);
+    const parsedConfig = JSON.parse(config);
+    const model = await Model.create(parsedConfig);
 
     return success(res, `Succesfully created a ${modelName}`, {
       [collection]: model
@@ -22,11 +23,21 @@ function create(req, res, { Model, modelName, collection }) {
 
 function read(req, res, { Model, modelName, collection }) {
   return respondWith(res, async () => {
-    const models = await Model.findAll();
+    const { id } = req.params;
 
-    return success(res, `Successfully retrieved ${modelName}s`, {
-      [collection]: models
-    });
+    if (id) {
+      const model = await Model.findById(+id);
+
+      return success(res, `Successfully retrieved ${modelName}#${id}`, {
+        [collection]: model
+      });
+    } else {
+      const models = await Model.findAll();
+
+      return success(res, `Successfully retrieved ${modelName}s`, {
+        [collection]: models
+      });
+    }
   });
 }
 

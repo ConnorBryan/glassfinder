@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Segment, Divider, Item } from "semantic-ui-react";
+import { Container, Segment, Divider, Item, Button } from "semantic-ui-react";
 import styled from "styled-components";
 import moment from "moment";
 
@@ -17,7 +17,17 @@ const Styles = styled.div`
   }
 `;
 
-function UpdateItem({ verbiage, image, title, createdAt, content, author }) {
+export function UpdateItem({
+  verbiage,
+  image,
+  title,
+  createdAt,
+  content,
+  author,
+  admin,
+  edit,
+  remove
+}) {
   const date = moment(new Date(createdAt)).format("MMMM Do YYYY, h:mm:ss A");
 
   return (
@@ -34,6 +44,12 @@ function UpdateItem({ verbiage, image, title, createdAt, content, author }) {
         <Item.Extra>
           {verbiage.Updates_postedBy} {author}
         </Item.Extra>
+        {admin && (
+          <Item.Extra>
+            <Button icon="pencil" content="Edit" primary onClick={edit} />
+            <Button icon="trash" content="Remove" negative onClick={remove} />
+          </Item.Extra>
+        )}
       </Item.Content>
     </Item>
   );
