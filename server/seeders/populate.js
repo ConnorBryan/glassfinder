@@ -15,7 +15,8 @@ module.exports = async function({
   Verbiage,
   About,
   Help,
-  Update
+  Update,
+  LinkRequest
 }) {
   // Text for the app.
   await Verbiage.create();
@@ -218,6 +219,27 @@ module.exports = async function({
       createdAt: new Date(),
       updatedAt: new Date()
     });
+    const imageSeed = chance.integer({ min: 1, max: 5 });
+
+    user.requestLink(
+      "SHOP",
+      JSON.stringify({
+        name: chance.word(),
+        image: `/examples/shop${imageSeed}.jpg`,
+        description: chance.paragraph(),
+        email: chance.email(),
+        phone: `${chance.integer({ min: 100, max: 999 })}-${chance.integer({
+          min: 100,
+          max: 999
+        })}-${chance.integer({ min: 1000, max: 9999 })}`,
+        street: chance.street(),
+        city: chance.city(),
+        state: chance.state(),
+        zip: chance.zip(),
+        lat: chance.latitude(),
+        lng: chance.longitude()
+      })
+    );
   });
 
   // Shops

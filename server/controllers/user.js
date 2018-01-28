@@ -210,7 +210,7 @@ function link(req, res) {
 function readLinkRequests(req, res) {
   return respondWith(res, async () => {
     const linkRequests = await LinkRequest.findAll();
-
+    console.log("LINK REQUESTS", linkRequests);
     return success(res, `Successfully fetched link requests`, {
       linkRequests
     });
