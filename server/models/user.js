@@ -11,6 +11,16 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING
   });
 
+  User.prototype.requestLink = async function(type, config) {
+    await sequelize.model("LinkRequest").create({
+      userId: this.id,
+      type,
+      config
+    });
+
+    this.update({ linked: true });
+  };
+
   User.prototype.linkAs = async function(type, config = {}) {
     if (!constants.LINK_TYPES[type])
       throw Error(`Type ${type} is an invalid link type.`);
@@ -40,8 +50,7 @@ module.exports = (sequelize, DataTypes) => {
   User.prototype.fetchLink = async function() {
     const { id: userId, linked, type } = this;
 
-    if (!linked || !type)
-      throw Error(`Cannot fetchLink on a user with no type or link`);
+    if (!linked || !type) return;
 
     const models = {
       [constants.LINK_TYPES.SHOP]: sequelize.model("Shop"),

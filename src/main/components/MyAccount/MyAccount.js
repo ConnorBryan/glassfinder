@@ -177,6 +177,8 @@ function MyAccount({ verbiage, account }) {
   const linkedAsShop = type === LINK_TYPES.SHOP;
   const linkedAsArtist = type === LINK_TYPES.ARTIST;
   const linkedAsBrand = type === LINK_TYPES.BRAND;
+  const waitingOnLinkConfirmation =
+    linked && !(linkedAsShop || linkedAsArtist || linkedAsBrand);
 
   return (
     <Styles>
@@ -192,6 +194,13 @@ function MyAccount({ verbiage, account }) {
           {linkedAsShop && <MyAccountShopMenu verbiage={verbiage} />}
           {linkedAsArtist && <MyAccountArtistMenu verbiage={verbiage} />}
           {linkedAsBrand && <MyAccountBrandMenu verbiage={verbiage} />}
+          {waitingOnLinkConfirmation && (
+            <Segment>
+              <Icon name="chevron right" />
+              Your link request is being processed. Please allow 24-48 hours to
+              be approved.
+            </Segment>
+          )}
         </Segment.Group>
       </Container>
     </Styles>

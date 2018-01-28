@@ -63,11 +63,6 @@ function BecomeABrand({
 
     if (updatedAccount) {
       updateAccount("linked", true);
-      updateAccount("type", updatedAccount.type);
-      updateAccountLink(updatedAccount.link);
-
-      history.push("/my-account/upload-image");
-    } else {
       history.push("/my-account");
     }
   };

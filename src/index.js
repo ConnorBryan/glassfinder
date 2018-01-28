@@ -6,6 +6,6 @@ import Admin from "./admin";
 import "./semantic/dist/semantic.min.css";
 import "./index.css";
 
-const Component = true ? Admin : Main;
+const Component = 0 ? Admin : Main;
 
 ReactDOM.render(<Component />, document.getElementById("root"));

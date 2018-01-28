@@ -75,4 +75,8 @@ module.exports = app => {
 
   app.get("/api/admin/pieces", PieceController.readAll);
   app.delete("/api/admin/pieces/:id", PieceController.remove);
+
+  app.get("/api/admin/link-requests", UserController.readLinkRequests);
+  app.post("/api/admin/link-requests/:id/approve", UserController.approveLink);
+  app.post("/api/admin/link-requests/:id/deny", UserController.denyLink);
 };

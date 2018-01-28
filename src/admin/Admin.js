@@ -19,6 +19,7 @@ import { LINK_TYPES, ICON_SET } from "../main/config";
 import { centered, fancy } from "../main/styles/snippets";
 import UpdateShopInformation from "../main/components/MyAccount/components/UpdateShopInformation";
 import AdminAPI from "./services";
+import LinkRequests from "./components/LinkRequests";
 
 export const LINK_TYPES_TO_FETCH_SERVICES = {
   [LINK_TYPES.SHOP]: AdminAPI.fetchAllShops,
@@ -35,6 +36,10 @@ export const LINK_TYPES_TO_DELETE_SERVICES = {
 };
 
 const Styles = styled.div`
+  .navbar .item {
+    ${fancy};
+  }
+
   input,
   .ui .dropdown {
     color: white !important;
@@ -176,6 +181,20 @@ export default class Admin extends Component {
     return (
       <BrowserRouter>
         <Styles>
+          <Menu className="navbar">
+            <Menu.Item
+              as={Link}
+              to="/"
+              icon="square"
+              content="Model administration"
+            />
+            <Menu.Item
+              as={Link}
+              to="/link-requests"
+              icon="chain"
+              content="Link requests"
+            />
+          </Menu>
           <Switch>
             <Route
               exact
@@ -226,6 +245,7 @@ export default class Admin extends Component {
             />
 
             <Route exact path="/edit/:id" component={EditModel} />
+            <Route exact path="/link-requests" component={LinkRequests} />
           </Switch>
         </Styles>
       </BrowserRouter>

@@ -41,4 +41,45 @@ export default class AdminAPI extends API {
   static deleteArtist = partial(AdminAPI.deleteModel, "artists");
   static deleteBrand = partial(AdminAPI.deleteModel, "brands");
   static deletePiece = partial(AdminAPI.deleteModel, "pieces");
+
+  static async fetchLinkRequests() {
+    try {
+      const url = `${ADMIN_API_ROOT}/link-requests`;
+      const { data: { payload: { linkRequests } } } = await axios.get(url);
+
+      return linkRequests;
+    } catch (e) {
+      console.error(e);
+
+      return [];
+    }
+  }
+
+  static async approveLink(id) {
+    try {
+      const url = `${ADMIN_API_ROOT}/link-requests/${id}/approve`;
+
+      await axios.post(url);
+
+      return true;
+    } catch (e) {
+      console.error(e);
+
+      return false;
+    }
+  }
+
+  static async denyLink(id) {
+    try {
+      const url = `${ADMIN_API_ROOT}/link-requests/${id}/deny`;
+
+      await axios.post(url);
+
+      return true;
+    } catch (e) {
+      console.error(e);
+
+      return false;
+    }
+  }
 }

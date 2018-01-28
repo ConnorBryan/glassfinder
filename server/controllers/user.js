@@ -10,7 +10,7 @@ const {
   userNotLinked
 } = require("../util");
 const upload = require("../util").upload(constants.USER_BUCKET);
-const { User, Shop, Artist, Brand, Piece } = require("../models");
+const { User, Shop, Artist, Brand, Piece, LinkRequest } = require("../models");
 const { createSafePassword, confirmPassword } = require("../config/passport");
 const { genericPaginatedRead } = require("./common");
 
@@ -20,6 +20,9 @@ module.exports = {
   read,
   updatePassword,
   link,
+  readLinkRequests,
+  approveLink,
+  denyLink,
   update,
   uploadImage,
   verify,
@@ -179,18 +182,75 @@ function link(req, res) {
     // Set the placeholder image prior to user upload.
     parsedConfig.image = "https://placehold.it/400x400";
 
-    const link = await user.linkAs(type, parsedConfig);
+    // Send out the request to be confirmed.
+    user.requestLink(type, JSON.stringify(parsedConfig));
+
+    // const link = await user.linkAs(type, parsedConfig);
     const data = {
       id: user.id,
       email: user.email,
       type: user.type,
       linked: true,
-      link
+      link: null
     };
 
     return success(res, `Successfully linked User#${id} as ${type}`, {
       data
     });
+  });
+}
+
+/**
+ * @func readLinkRequests
+ * @desc Retrieve the list of waiting link requests.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Array<LinkRequest>}
+ */
+function readLinkRequests(req, res) {
+  return respondWith(res, async () => {
+    const linkRequests = await LinkRequest.findAll();
+
+    return success(res, `Successfully fetched link requests`, {
+      linkRequests
+    });
+  });
+}
+
+function approveLink(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+
+    requireProperties({ id });
+
+    const linkRequest = await LinkRequest.findById(+id);
+    const { userId, type, config } = linkRequest;
+    const user = await User.findById(userId);
+    const parsedConfig = JSON.parse(config);
+
+    await linkRequest.destroy();
+    await user.linkAs(type, parsedConfig);
+
+    return success(res, `Successfully approved LinkRequest#${id}`);
+  });
+}
+
+function denyLink(req, res) {
+  return respondWith(res, async () => {
+    const { id } = req.params;
+
+    requireProperties({ id });
+
+    const linkRequest = await LinkRequest.findById(+id);
+    const user = await User.findById(linkRequest.userId);
+
+    await linkRequest.destroy();
+    await user.update({
+      linked: false,
+      link: null
+    });
+
+    return success(res, `Successfully denied LinkRequest#${id}`);
   });
 }
 
