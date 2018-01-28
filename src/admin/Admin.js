@@ -21,8 +21,14 @@ import UpdateShopInformation from "../main/components/MyAccount/components/Updat
 import AdminAPI from "./services";
 import LinkRequests from "./components/LinkRequests";
 import Updates from "./components/Updates";
-import CreateUpdate from "./components/CreateUpdate";
-import EditUpdate from "./components/EditUpdate";
+import CreateUpdate from "./components/Updates/components/CreateUpdate";
+import EditUpdate from "./components/Updates/components/EditUpdate";
+import About from "./components/About";
+import CreateAbout from "./components/About/components/CreateAbout";
+import EditAbout from "./components/About/components/EditAbout";
+import Help from "./components/Help";
+import CreateHelp from "./components/Help/components/CreateHelp";
+import EditHelp from "./components/Help/components/EditHelp";
 
 export const LINK_TYPES_TO_FETCH_SERVICES = {
   [LINK_TYPES.SHOP]: AdminAPI.fetchAllShops,
@@ -181,13 +187,63 @@ export default class Admin extends Component {
     const icon = ICON_SET[model];
     const menuHeader = `${model} Administration`;
 
+    const modelAdministration = (
+      <Container fluid>
+        <Menu attached="top" inverted>
+          <Menu.Item icon={icon} />
+          <ModelDropdown
+            {...{
+              model,
+              menuHeader,
+              switchCollectionToShops,
+              switchCollectionToArtists,
+              switchCollectionToBrands,
+              switchCollectionToPieces
+            }}
+          />
+          <Menu.Menu position="right">
+            <Menu.Item icon="close" onClick={this.clearSearch} />
+            <div className="ui right aligned category search item">
+              <div className="ui transparent icon input white-input">
+                <input
+                  className="prompt"
+                  type="text"
+                  placeholder="Search..."
+                  ref={node => (this.searchInput = node)}
+                  onChange={this.search}
+                />
+                <i className="search link icon" />
+              </div>
+              <div className="results" />
+            </div>
+          </Menu.Menu>
+        </Menu>
+        <Segment attached="bottom" className="viewport">
+          {loading ? (
+            <Loader active />
+          ) : (
+            <ModelTable
+              collection={displayedCollection}
+              deleteModel={this.deleteModel}
+            />
+          )}
+        </Segment>
+      </Container>
+    );
+
     return (
       <BrowserRouter>
         <Styles>
           <Menu className="navbar">
             <Menu.Item
               as={Link}
-              to="/"
+              to="/users"
+              icon="user"
+              content="User administration"
+            />
+            <Menu.Item
+              as={Link}
+              to="/models"
               icon="square"
               content="Model administration"
             />
@@ -197,67 +253,45 @@ export default class Admin extends Component {
               icon="chain"
               content="Link requests"
             />
+            <Menu.Item as={Link} to="/about" icon="users" content="About" />
+            <Menu.Item
+              as={Link}
+              to="/help"
+              icon="question mark"
+              content="Help"
+            />
             <Menu.Item
               as={Link}
               to="/updates"
               icon="newspaper"
               content="Updates"
             />
+            <Menu.Item
+              as={Link}
+              to="/verbiage"
+              icon="book"
+              content="Verbiage"
+            />
           </Menu>
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <Container fluid>
-                  <Menu attached="top" inverted>
-                    <Menu.Item icon={icon} />
-                    <ModelDropdown
-                      {...{
-                        model,
-                        menuHeader,
-                        switchCollectionToShops,
-                        switchCollectionToArtists,
-                        switchCollectionToBrands,
-                        switchCollectionToPieces
-                      }}
-                    />
-                    <Menu.Menu position="right">
-                      <Menu.Item icon="close" onClick={this.clearSearch} />
-                      <div className="ui right aligned category search item">
-                        <div className="ui transparent icon input white-input">
-                          <input
-                            className="prompt"
-                            type="text"
-                            placeholder="Search..."
-                            ref={node => (this.searchInput = node)}
-                            onChange={this.search}
-                          />
-                          <i className="search link icon" />
-                        </div>
-                        <div className="results" />
-                      </div>
-                    </Menu.Menu>
-                  </Menu>
-                  <Segment attached="bottom" className="viewport">
-                    {loading ? (
-                      <Loader active />
-                    ) : (
-                      <ModelTable
-                        collection={displayedCollection}
-                        deleteModel={this.deleteModel}
-                      />
-                    )}
-                  </Segment>
-                </Container>
-              )}
-            />
+            <Route exact path="/" render={() => modelAdministration} />
+            <Route exact path="/models" render={() => modelAdministration} />
 
             <Route exact path="/edit/:id" component={EditModel} />
+
             <Route exact path="/link-requests" component={LinkRequests} />
+
             <Route exact path="/updates" component={Updates} />
             <Route exact path="/updates/new" component={CreateUpdate} />
             <Route exact path="/updates/:id" component={EditUpdate} />
+
+            <Route exact path="/about" component={About} />
+            <Route exact path="/about/new" component={CreateAbout} />
+            <Route exact path="/about/:id" component={EditAbout} />
+
+            <Route exact path="/help" component={Help} />
+            <Route exact path="/help/new" component={CreateHelp} />
+            <Route exact path="/help/:id" component={EditHelp} />
           </Switch>
         </Styles>
       </BrowserRouter>

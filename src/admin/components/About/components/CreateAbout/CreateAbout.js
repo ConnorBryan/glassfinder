@@ -3,9 +3,9 @@ import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
 import { Container, Segment } from "semantic-ui-react";
 
-import ScreenHeader from "../../../main/components/ScreenHeader";
-import AbstractForm from "../../../main/components/AbstractForm";
-import AdminAPI from "../../services";
+import ScreenHeader from "../../../../../main/components/ScreenHeader";
+import AbstractForm from "../../../../../main/components/AbstractForm";
+import AdminAPI from "../../../../services";
 
 const FIELDS = [
   {
