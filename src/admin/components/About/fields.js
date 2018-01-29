@@ -16,20 +16,21 @@ export default [
     type: "text",
     label: "Name",
     placeholder: "Enter the name of the update",
-    validation: Yup.string().required("An update must have a title.")
+    validation: Yup.string().required("A team member must have a name.")
   },
   {
-    name: "content",
-    type: "textarea",
-    label: "Content",
-    placeholder: "Enter the content of the update",
-    validation: Yup.string().required("An update must have content.")
-  },
-  {
-    name: "author",
+    name: "title",
     type: "text",
-    label: "Author",
-    placeholder: "Enter the author of the update",
-    validation: Yup.string().required("An update must have an author.")
+    label: "Title",
+    placeholder: "Enter the team member's title",
+    validation: Yup.string().required("A team member must have a title.")
+  },
+  {
+    name: "description",
+    type: "textarea",
+    label: "Description",
+    placeholder:
+      "Enter the responsibilities and accomplishments of the team member",
+    validation: Yup.string().required("A team member must have a description.")
   }
 ];

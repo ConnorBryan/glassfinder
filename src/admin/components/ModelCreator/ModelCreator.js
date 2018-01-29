@@ -34,7 +34,7 @@ ModelCreator.propTypes = {
   history: PropTypes.object.isRequired,
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
   createModel: PropTypes.func.isRequired,
-  redirect: PropTypes.func.isRequired,
+  redirect: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired
