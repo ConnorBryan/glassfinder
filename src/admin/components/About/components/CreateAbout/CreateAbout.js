@@ -19,48 +19,48 @@ const FIELDS = [
     )
   },
   {
+    name: "name",
+    type: "text",
+    label: "Name",
+    placeholder: "Enter the name of the team member",
+    value: "",
+    validation: Yup.string().required("A team member must have an author.")
+  },
+  {
     name: "title",
     type: "text",
     label: "Title",
-    placeholder: "Enter the title of the update",
+    placeholder: "Enter the title of the team member",
     value: "",
-    validation: Yup.string().required("An update must have a title.")
+    validation: Yup.string().required("A team member must have a title.")
   },
   {
-    name: "content",
+    name: "description",
     type: "textarea",
-    label: "Content",
-    placeholder: "Enter the content of the update",
+    label: "Description",
+    placeholder: "Enter a description of the team member",
     value: "",
-    validation: Yup.string().required("An update must have content.")
-  },
-  {
-    name: "author",
-    type: "text",
-    label: "Author",
-    placeholder: "Enter the author of the update",
-    value: "",
-    validation: Yup.string().required("An update must have an author.")
+    validation: Yup.string().required("A team member must have content.")
   }
 ];
 
-function CreateUpdate({ history }) {
+function CreateAbout({ history }) {
   const onSubmit = async values => {
-    await AdminAPI.createUpdate(values);
+    await AdminAPI.createAbout(values);
 
-    history.push("/updates");
+    history.push("/about");
   };
 
   return (
     <Container as={Segment}>
       <ScreenHeader
-        icon="newspaper"
-        title="Create update"
-        description="Keep your users informed and up to date."
+        icon="users"
+        title="Create team member"
+        description="Let the world know you're growing."
       />
       <AbstractForm {...{ onSubmit }} fields={FIELDS} />
     </Container>
   );
 }
 
-export default CreateUpdate;
+export default CreateAbout;

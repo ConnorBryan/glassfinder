@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   Container,
   Segment,
+  Button,
   Divider,
   Accordion,
   Icon
@@ -27,7 +28,16 @@ const Styles = styled.div`
   }
 `;
 
-function HelpItem({ index, activeIndex, handleClick, title, content }) {
+export function HelpItem({
+  admin,
+  edit,
+  remove,
+  index,
+  activeIndex,
+  handleClick,
+  title,
+  content
+}) {
   return (
     <Aux>
       <Accordion.Title
@@ -45,6 +55,12 @@ function HelpItem({ index, activeIndex, handleClick, title, content }) {
           __html: content
         }}
       />
+      {admin && (
+        <Segment basic>
+          <Button icon="pencil" content="Edit" primary onClick={edit} />
+          <Button icon="trash" content="Remove" negative onClick={remove} />
+        </Segment>
+      )}
     </Aux>
   );
 }

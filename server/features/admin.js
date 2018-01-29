@@ -2,6 +2,8 @@ const { ShopController } = require("./Shop");
 const { ArtistController } = require("./Artist");
 const { BrandController } = require("./Brand");
 const { PieceController } = require("./Piece");
+const { AboutController } = require("./About");
+const { HelpController } = require("./Help");
 const { UpdateController } = require("./Update");
 
 module.exports = admin => {
@@ -16,6 +18,18 @@ module.exports = admin => {
 
   admin.get("/pieces", PieceController.readAll);
   admin.delete("/pieces/:id", PieceController.remove);
+
+  admin.post("/about", AboutController.create);
+  admin.get("/about", AboutController.read);
+  admin.get("/about/:id", AboutController.read);
+  admin.post("/about/:id", AboutController.update);
+  admin.delete("/about/:id", AboutController.remove);
+
+  admin.post("/help", HelpController.create);
+  admin.get("/help", HelpController.read);
+  admin.get("/help/:id", HelpController.read);
+  admin.post("/help/:id", HelpController.update);
+  admin.delete("/help/:id", HelpController.remove);
 
   admin.post("/updates", UpdateController.create);
   admin.get("/updates", UpdateController.read);

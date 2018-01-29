@@ -7,5 +7,5 @@ module.exports = api => {
 
   VerbiageRouter.get("/", VerbiageController.read);
 
-  api.use("/help", VerbiageRouter);
+  api.use("/verbiage", VerbiageRouter);
 };

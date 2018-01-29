@@ -2,23 +2,33 @@ import React from "react";
 import { Item } from "semantic-ui-react";
 import { partial } from "lodash";
 
-import { UpdateItem } from "../../../main/components/Updates/Updates";
+import { AboutItem } from "../../../main/components/About/About";
 import AdminAPI from "../../services";
 import ModelManager from "../ModelManager";
 
 export default function About({ history }) {
   const config = {
-    fetchItems: async () => [],
-    deleteItem: async () => !!1,
+    fetchItems: AdminAPI.fetchAboutItems,
+    deleteItem: AdminAPI.deleteAbout,
     term: "about",
     resource: "about",
     render: (items, _edit, _remove) => (
       <Item.Group divided>
         {items.map((item, index) => {
+          const verbiage = {
+            Updates_postedBy: "Posted by"
+          };
           const edit = partial(_edit, item.id);
           const remove = partial(_remove, item.id);
 
-          return <p>About</p>;
+          return (
+            <AboutItem
+              admin
+              key={index}
+              {...{ verbiage, edit, remove }}
+              {...item}
+            />
+          );
         })}
       </Item.Group>
     )

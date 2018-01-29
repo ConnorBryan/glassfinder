@@ -19,8 +19,7 @@ const Styles = styled.div`
     }
   }
   .Navbar-container {
-    background: ${({ showBorder }) =>
-      showBorder ? "rgba(255, 255, 255, 0.75)" : "white"} !important;
+    background: white !important;
     margin: 0 !important;
     border-bottom: ${({ showBorder }) =>
       showBorder ? "1px solid rgb(212, 212, 212)" : "none"} !important;

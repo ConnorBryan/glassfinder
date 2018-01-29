@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Divider, Item, Segment } from "semantic-ui-react";
+import { Button, Container, Divider, Item, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
 import API from "../../services";
@@ -17,7 +17,15 @@ const Styles = styled.div`
   }
 `;
 
-function AboutItem({ image, name, title, description }) {
+export function AboutItem({
+  admin,
+  edit,
+  remove,
+  image,
+  name,
+  title,
+  description
+}) {
   return (
     <Item>
       <Item.Image circular size="small" src={image} />
@@ -27,6 +35,12 @@ function AboutItem({ image, name, title, description }) {
           <em>{title}</em>
         </Item.Description>
         <Item.Description>{description}</Item.Description>
+        {admin && (
+          <Item.Extra>
+            <Button icon="pencil" content="Edit" primary onClick={edit} />
+            <Button icon="trash" content="Remove" negative onClick={remove} />
+          </Item.Extra>
+        )}
       </Item.Content>
     </Item>
   );
