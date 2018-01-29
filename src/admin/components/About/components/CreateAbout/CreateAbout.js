@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
 import { Container, Segment } from "semantic-ui-react";
 

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Container } from "semantic-ui-react";
 
 import ExploreMode from "./components/ExploreMode";
 import DetailMode from "./components/DetailMode";

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Menu, Segment, Loader, Responsive, Search } from "semantic-ui-react";
+import { Segment, Loader, Search } from "semantic-ui-react";
 import styled from "styled-components";
 import queryString from "query-string";
 import { flatten, times, escapeRegExp } from "lodash";
@@ -280,7 +280,6 @@ export default class ExploreMode extends Component {
       const { collection, totalPages, perPage } = this.state;
 
       const flattened = flatten(collection);
-      const sortedCollection = flattened.sort(sort);
       const pages = [];
 
       times(totalPages, () => pages.push([]));
