@@ -6,7 +6,7 @@ import { AboutItem } from "../../../main/components/About/About";
 import AdminAPI from "../../services";
 import ModelManager from "../../components/ModelManager";
 
-export default function About({ history }) {
+export default function AboutManager({ history }) {
   const config = {
     fetchItems: AdminAPI.fetchAboutItems,
     deleteItem: AdminAPI.deleteAbout,

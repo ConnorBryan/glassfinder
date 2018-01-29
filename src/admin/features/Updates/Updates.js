@@ -6,7 +6,7 @@ import { UpdateItem } from "../../../main/components/Updates/Updates";
 import AdminAPI from "../../services";
 import ModelManager from "../../components/ModelManager";
 
-export default function Update({ history }) {
+export default function UpdateManager({ history }) {
   const verbiage = {
     Updates_postedBy: "Posted by"
   };

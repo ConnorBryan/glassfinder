@@ -21,15 +21,15 @@ import AdminAPI from "./services";
 
 import LinkRequests from "./features/LinkRequests";
 
-import About from "./features/About";
+import AboutManager from "./features/About";
 import CreateAbout from "./features/About/components/CreateAbout";
 import EditAbout from "./features/About/components/EditAbout";
 
-import Help from "./features/Help";
+import HelpManager from "./features/Help";
 import CreateHelp from "./features/Help/components/CreateHelp";
 import EditHelp from "./features/Help/components/EditHelp";
 
-import Updates from "./features/Updates";
+import UpdateManager from "./features/Updates";
 import CreateUpdate from "./features/Updates/components/CreateUpdate";
 import EditUpdate from "./features/Updates/components/EditUpdate";
 
@@ -279,15 +279,15 @@ export default class Admin extends Component {
 
             <Route exact path="/link-requests" component={LinkRequests} />
 
-            <Route exact path="/updates" component={Updates} />
+            <Route exact path="/updates" component={UpdateManager} />
             <Route exact path="/updates/new" component={CreateUpdate} />
             <Route exact path="/updates/:id" component={EditUpdate} />
 
-            <Route exact path="/about" component={About} />
+            <Route exact path="/about" component={AboutManager} />
             <Route exact path="/about/new" component={CreateAbout} />
             <Route exact path="/about/:id" component={EditAbout} />
 
-            <Route exact path="/help" component={Help} />
+            <Route exact path="/help" component={HelpManager} />
             <Route exact path="/help/new" component={CreateHelp} />
             <Route exact path="/help/:id" component={EditHelp} />
           </Switch>

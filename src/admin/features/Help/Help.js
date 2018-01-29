@@ -6,7 +6,7 @@ import { HelpItem } from "../../../main/components/Help/Help";
 import AdminAPI from "../../services";
 import ModelManager from "../../components/ModelManager";
 
-export default function Help({ history }) {
+export default function HelpManager({ history }) {
   const config = {
     fetchItems: AdminAPI.fetchHelpItems,
     deleteItem: AdminAPI.deleteHelp,
