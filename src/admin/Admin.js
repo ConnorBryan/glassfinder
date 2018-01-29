@@ -18,16 +18,20 @@ import uuid from "uuid/v4";
 import { LINK_TYPES, ICON_SET } from "../main/config";
 import { centered, fancy } from "../main/styles/snippets";
 import AdminAPI from "./services";
-import LinkRequests from "./components/LinkRequests";
-import Updates from "./components/Updates";
-import CreateUpdate from "./components/Updates/components/CreateUpdate";
-import EditUpdate from "./components/Updates/components/EditUpdate";
-import About from "./components/About";
-import CreateAbout from "./components/About/components/CreateAbout";
-import EditAbout from "./components/About/components/EditAbout";
-import Help from "./components/Help";
-import CreateHelp from "./components/Help/components/CreateHelp";
-import EditHelp from "./components/Help/components/EditHelp";
+
+import LinkRequests from "./features/LinkRequests";
+
+import About from "./features/About";
+import CreateAbout from "./features/About/components/CreateAbout";
+import EditAbout from "./features/About/components/EditAbout";
+
+import Help from "./features/Help";
+import CreateHelp from "./features/Help/components/CreateHelp";
+import EditHelp from "./features/Help/components/EditHelp";
+
+import Updates from "./features/Updates";
+import CreateUpdate from "./features/Updates/components/CreateUpdate";
+import EditUpdate from "./features/Updates/components/EditUpdate";
 
 export const LINK_TYPES_TO_FETCH_SERVICES = {
   [LINK_TYPES.SHOP]: AdminAPI.fetchAllShops,

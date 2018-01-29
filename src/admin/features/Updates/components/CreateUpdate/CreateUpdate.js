@@ -1,7 +1,7 @@
 import React from "react";
 
 import AdminAPI from "../../../../services";
-import ModelCreator from "../../../ModelCreator";
+import ModelCreator from "../../../../components/ModelCreator";
 import fields from "../../fields";
 
 export default function CreateUpdate({ history }) {

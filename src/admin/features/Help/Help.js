@@ -4,7 +4,7 @@ import { partial } from "lodash";
 
 import { HelpItem } from "../../../main/components/Help/Help";
 import AdminAPI from "../../services";
-import ModelManager from "../ModelManager";
+import ModelManager from "../../components/ModelManager";
 
 export default function Help({ history }) {
   const config = {

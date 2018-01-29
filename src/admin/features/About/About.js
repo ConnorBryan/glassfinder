@@ -2,28 +2,27 @@ import React from "react";
 import { Item } from "semantic-ui-react";
 import { partial } from "lodash";
 
-import { UpdateItem } from "../../../main/components/Updates/Updates";
+import { AboutItem } from "../../../main/components/About/About";
 import AdminAPI from "../../services";
-import ModelManager from "../ModelManager";
+import ModelManager from "../../components/ModelManager";
 
-export default function Update({ history }) {
-  const verbiage = {
-    Updates_postedBy: "Posted by"
-  };
+export default function About({ history }) {
   const config = {
-    verbiage,
-    fetchItems: AdminAPI.fetchUpdateItems,
-    deleteItem: AdminAPI.deleteUpdate,
-    term: "update",
-    resource: "updates",
+    fetchItems: AdminAPI.fetchAboutItems,
+    deleteItem: AdminAPI.deleteAbout,
+    term: "about",
+    resource: "about",
     render: (items, _edit, _remove) => (
       <Item.Group divided>
         {items.map((item, index) => {
+          const verbiage = {
+            Updates_postedBy: "Posted by"
+          };
           const edit = partial(_edit, item.id);
           const remove = partial(_remove, item.id);
 
           return (
-            <UpdateItem
+            <AboutItem
               admin
               key={index}
               {...{ verbiage, edit, remove }}

@@ -1,7 +1,7 @@
 import React from "react";
 
 import AdminAPI from "../../../../services";
-import ModelEditor from "../../../ModelEditor";
+import ModelEditor from "../../../../components/ModelEditor";
 import formFields from "../../fields";
 
 export default function EditHelp({ location, history }) {
