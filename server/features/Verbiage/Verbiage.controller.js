@@ -1,5 +1,5 @@
-const { Verbiage } = require("../models");
-const { respondWith, success } = require("../util");
+const { respondWith, success } = require("../../util");
+const { Verbiage } = require("../../models");
 
 module.exports = {
   read

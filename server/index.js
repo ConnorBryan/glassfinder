@@ -30,7 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-require("./routes")(app);
+require("./features")(app);
 
 app.get("*", (req, res) =>
   res.status(200).send({

@@ -1,5 +1,5 @@
-const constants = require("../config/constants");
-const db = require("./index");
+const constants = require("../../config/constants");
+const db = require("../../models");
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define("User", {

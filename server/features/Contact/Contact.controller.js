@@ -1,10 +1,10 @@
-const constants = require("../config/constants");
+const constants = require("../../config/constants");
 const {
   transporter,
   respondWith,
   requireProperties,
   success
-} = require("../util");
+} = require("../../util");
 
 module.exports = {
   send

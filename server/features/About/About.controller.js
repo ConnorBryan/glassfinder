@@ -1,5 +1,5 @@
-const { Update } = require("../models");
-const CRUR = require("../util/crur");
+const { About } = require("../../models");
+const CRUR = require("../../util/crur");
 
 module.exports = {
   create,
@@ -11,9 +11,9 @@ module.exports = {
 /* === */
 
 const config = {
-  Model: Update,
-  modelName: "Update",
-  collection: "update"
+  Model: About,
+  modelName: "About",
+  collection: "about"
 };
 
 function create(req, res) {

@@ -1,5 +1,5 @@
-const { Help } = require("../models");
-const CRUR = require("../util/crur");
+const { Help } = require("../../models");
+const CRUR = require("../../util/crur");
 
 module.exports = {
   create,

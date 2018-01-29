@@ -1,4 +1,4 @@
-const constants = require("../config/constants");
+const constants = require("../../config/constants");
 const {
   respondWith,
   requireProperties,
@@ -6,10 +6,10 @@ const {
   success,
   userNotFound,
   userNotLinked
-} = require("../util");
-const upload = require("../util").upload(constants.PIECE_BUCKET);
-const { User, Piece } = require("../models");
-const { genericPaginatedRead, genericReadAll } = require("./common");
+} = require("../../util");
+const upload = require("../../util").upload(constants.PIECE_BUCKET);
+const { User, Piece } = require("../../models");
+const { genericPaginatedRead, genericReadAll } = require("../common");
 
 module.exports = {
   create,

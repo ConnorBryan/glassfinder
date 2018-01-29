@@ -1,10 +1,11 @@
-const { respondWith, requireProperties, success } = require("../util");
-const { User, Shop, Piece } = require("../models");
+const { respondWith, requireProperties, success } = require("../../util");
+const { Shop, User, Piece } = require("../../models");
+
 const {
   genericPaginatedRead,
   genericReadAll,
   genericRemove
-} = require("./common");
+} = require("../common");
 
 module.exports = {
   read,
