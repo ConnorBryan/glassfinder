@@ -21,4 +21,14 @@ exports.common = api => {
   api.use("/users", UserRouter);
 };
 
-exports.admin = admin => {};
+exports.admin = admin => {
+  const UserAdminRouter = express.Router();
+
+  UserAdminRouter.get("/", UserController.adminRead);
+  UserAdminRouter.get("/:id", UserController.adminRead);
+  UserAdminRouter.post("/", UserController.adminCreate);
+  UserAdminRouter.post("/:id", UserController.adminUpdate);
+  UserAdminRouter.delete("/:id", UserController.adminRemove);
+
+  admin.use("/users", UserAdminRouter);
+};

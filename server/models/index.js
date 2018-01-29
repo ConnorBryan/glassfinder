@@ -22,16 +22,16 @@ const addModel = db => (...models) =>
 const addModelsToDatabase = addModel(db);
 
 addModelsToDatabase(
-  "About",
+  "User",
+  "Shop",
   "Artist",
   "Brand",
-  "Help",
-  "LinkRequest",
   "Piece",
-  "Shop",
+  "About",
+  "Help",
   "Update",
-  "User",
-  "Verbiage"
+  "Verbiage",
+  "LinkRequest"
 );
 
 Object.keys(db).forEach(modelName => {

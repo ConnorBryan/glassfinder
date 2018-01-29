@@ -78,6 +78,7 @@ export default class AdminAPI extends API {
     }
   }
 
+  static deleteUser = partial(AdminAPI.deleteModel, "users");
   static deleteShop = partial(AdminAPI.deleteModel, "shops");
   static deleteArtist = partial(AdminAPI.deleteModel, "artists");
   static deleteBrand = partial(AdminAPI.deleteModel, "brands");
@@ -102,6 +103,7 @@ export default class AdminAPI extends API {
     }
   }
 
+  static createUser = partial(AdminAPI.createItem, "users");
   static createAbout = partial(AdminAPI.createItem, "about");
   static createHelp = partial(AdminAPI.createItem, "help");
   static createUpdate = partial(AdminAPI.createItem, "updates");
@@ -122,6 +124,7 @@ export default class AdminAPI extends API {
     }
   }
 
+  static updateUser = partial(AdminAPI.updateItem, "users");
   static updateAbout = partial(AdminAPI.updateItem, "about");
   static updateHelp = partial(AdminAPI.updateItem, "help");
   static updateUpdate = partial(AdminAPI.updateItem, "updates");
@@ -139,7 +142,23 @@ export default class AdminAPI extends API {
     }
   }
 
+  static fetchUser = partial(AdminAPI.fetchItem, "users", "user");
   static fetchAbout = partial(AdminAPI.fetchItem, "about", "about");
-  static fetchHelp = partial(AdminAPI.fetchItem, "help");
+  static fetchHelp = partial(AdminAPI.fetchItem, "help", "help");
   static fetchUpdate = partial(AdminAPI.fetchItem, "updates", "update");
+
+  //
+
+  static async fetchUsers() {
+    try {
+      const url = `${ADMIN_API_ROOT}/users`;
+      const { data: { payload: { users } } } = await axios.get(url);
+
+      return users;
+    } catch (e) {
+      console.error(e);
+
+      return [];
+    }
+  }
 }

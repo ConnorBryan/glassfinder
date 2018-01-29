@@ -13,6 +13,7 @@ const {
   userNotFound,
   userNotLinked
 } = require("../../util");
+const CRUR = require("../../util/crur");
 const upload = require("../../util").upload(constants.USER_BUCKET);
 const {
   Shop,
@@ -25,6 +26,10 @@ const {
 const { genericPaginatedRead } = require("../common");
 
 module.exports = {
+  adminCreate,
+  adminRead,
+  adminUpdate,
+  adminRemove,
   signup,
   signin,
   read,
@@ -36,6 +41,30 @@ module.exports = {
   fetchMyPieces,
   fetchPiecesForId
 };
+
+/* === */
+
+const config = {
+  Model: User,
+  modelName: "User",
+  collection: "users"
+};
+
+function adminCreate(req, res) {
+  return CRUR.create(req, res, config);
+}
+
+function adminRead(req, res) {
+  return CRUR.read(req, res, config);
+}
+
+function adminUpdate(req, res) {
+  return CRUR.update(req, res, config);
+}
+
+function adminRemove(req, res) {
+  return CRUR.remove(req, res, config);
+}
 
 /* === */
 

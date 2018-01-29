@@ -14,6 +14,7 @@ exports.admin = admin => {
   const HelpAdminRouter = express.Router();
 
   HelpAdminRouter.get("/", HelpController.read);
+  HelpAdminRouter.get("/:id", HelpController.read);
   HelpAdminRouter.post("/", HelpController.create);
   HelpAdminRouter.post("/:id", HelpController.update);
   HelpAdminRouter.delete("/:id", HelpController.remove);

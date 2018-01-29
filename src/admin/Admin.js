@@ -21,6 +21,10 @@ import AdminAPI from "./services";
 
 import LinkRequests from "./features/LinkRequests";
 
+import UserManager from "./features/User";
+import CreateUser from "./features/User/components/CreateUser";
+import EditUser from "./features/User/components/EditUser";
+
 import AboutManager from "./features/About";
 import CreateAbout from "./features/About/components/CreateAbout";
 import EditAbout from "./features/About/components/EditAbout";
@@ -278,6 +282,10 @@ export default class Admin extends Component {
             <Route exact path="/edit/:id" component={EditModel} />
 
             <Route exact path="/link-requests" component={LinkRequests} />
+
+            <Route exact path="/users" component={UserManager} />
+            <Route exact path="/users/new" component={CreateUser} />
+            <Route exact path="/users/:id" component={EditUser} />
 
             <Route exact path="/updates" component={UpdateManager} />
             <Route exact path="/updates/new" component={CreateUpdate} />
