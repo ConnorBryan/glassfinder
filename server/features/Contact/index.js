@@ -1,2 +1,2 @@
 exports.ContactController = require("./Contact.controller");
-exports.addContactRoutes = require("./Contact.routes");
+exports.addContactRoutes = require("./Contact.routes").common;

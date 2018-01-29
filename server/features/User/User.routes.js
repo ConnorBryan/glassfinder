@@ -2,7 +2,7 @@ const express = require("express");
 
 const UserController = require("./User.controller");
 
-module.exports = api => {
+exports.common = api => {
   const UserRouter = express.Router();
 
   api.post("/signup", UserController.signup);
@@ -20,3 +20,5 @@ module.exports = api => {
 
   api.use("/users", UserRouter);
 };
+
+exports.admin = admin => {};

@@ -2,7 +2,7 @@ const express = require("express");
 
 const { PieceController } = require("./");
 
-module.exports = API => {
+exports.common = api => {
   const PieceRouter = express.Router();
 
   PieceRouter.post("/", PieceController.create);
@@ -12,5 +12,14 @@ module.exports = API => {
   PieceRouter.delete("/:id", PieceController.remove);
   PieceRouter.post("/:id/upload-image", PieceController.uploadImage);
 
-  API.use("/pieces", PieceRouter);
+  api.use("/pieces", PieceRouter);
+};
+
+exports.admin = admin => {
+  const PieceAdminRouter = express.Router();
+
+  PieceAdminRouter.get("/", PieceController.readAll);
+  PieceAdminRouter.delete("/:id", PieceController.remove);
+
+  admin.use("/pieces", PieceAdminRouter);
 };

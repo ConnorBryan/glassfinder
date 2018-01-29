@@ -2,10 +2,10 @@ const express = require("express");
 
 const { ContactController } = require("./");
 
-module.exports = API => {
+exports.common = api => {
   const ContactRouter = express.Router();
 
   ContactRouter.post("/", ContactController.send);
 
-  API.use("/contact", ContactRouter);
+  api.use("/contact", ContactRouter);
 };

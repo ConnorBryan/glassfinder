@@ -2,7 +2,7 @@ const express = require("express");
 
 const { ShopController } = require("./");
 
-module.exports = API => {
+exports.common = api => {
   const ShopRouter = express.Router();
 
   ShopRouter.get("/", ShopController.read);
@@ -10,5 +10,14 @@ module.exports = API => {
   ShopRouter.get("/:id/pieces", ShopController.fetchPiecesForId);
   ShopRouter.get("/mapmarkers", ShopController.fetchMapMarkers);
 
-  API.use("/shops", ShopRouter);
+  api.use("/shops", ShopRouter);
+};
+
+exports.admin = admin => {
+  const ShopAdminRouter = express.Router();
+
+  ShopAdminRouter.get("/", ShopController.readAll);
+  ShopAdminRouter.delete("/:id", ShopController.remove);
+
+  admin.use("/shops", ShopAdminRouter);
 };

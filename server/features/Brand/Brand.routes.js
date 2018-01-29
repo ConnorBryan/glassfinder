@@ -2,11 +2,20 @@ const express = require("express");
 
 const { BrandController } = require("./");
 
-module.exports = API => {
+exports.common = api => {
   const BrandRouter = express.Router();
 
   BrandRouter.get("/", BrandController.read);
   BrandRouter.get("/:id", BrandController.read);
 
-  API.use("/brands", BrandRouter);
+  api.use("/brands", BrandRouter);
+};
+
+exports.admin = admin => {
+  const BrandAdminRouter = express.Router();
+
+  BrandAdminRouter.get("/", BrandController.readAll);
+  BrandAdminRouter.delete("/:id", BrandController.remove);
+
+  admin.use("/brands", BrandAdminRouter);
 };

@@ -1,42 +1,56 @@
 const express = require("express");
 
+const { addUserRoutes, addUserAdminRoutes } = require("../features/User");
+
+const { addShopRoutes, addShopAdminRoutes } = require("../features/Shop");
+const { addArtistRoutes, addArtistAdminRoutes } = require("../features/Artist");
+const { addBrandRoutes, addBrandAdminRoutes } = require("../features/Brand");
+const { addPieceRoutes, addPieceAdminRoutes } = require("../features/Piece");
+
+const { addContactRoutes } = require("../features/Contact");
+const {
+  addVerbiageRoutes,
+  addVerbiageAdminRoutes
+} = require("../features/Verbiage");
+const { addLinkRequestAdminRoutes } = require("../features/LinkRequest");
+
 const { addAboutRoutes, addAboutAdminRoutes } = require("../features/About");
 const { addHelpRoutes, addHelpAdminRoutes } = require("../features/Help");
 const { addUpdateRoutes, addUpdateAdminRoutes } = require("../features/Update");
 
-const { addUserRoutes } = require("../features/User");
-const { addShopRoutes } = require("../features/Shop");
-const { addArtistRoutes } = require("../features/Artist");
-const { addBrandRoutes } = require("../features/Brand");
-const { addContactRoutes } = require("../features/Contact");
-const { addPieceRoutes } = require("../features/Piece");
-const { addVerbiageRoutes } = require("../features/Verbiage");
-const { addLinkRequestRoutes } = require("../features/LinkRequest");
-const addAdminRoutes = require("./admin");
-
 module.exports = app => {
   const api = express.Router();
+
+  addUserRoutes(api);
+
+  addShopRoutes(api);
+  addArtistRoutes(api);
+  addBrandRoutes(api);
+  addPieceRoutes(api);
+
+  addContactRoutes(api);
+  addVerbiageRoutes(api);
 
   addAboutRoutes(api);
   addHelpRoutes(api);
   addUpdateRoutes(api);
 
-  addUserRoutes(api);
-  addShopRoutes(api);
-  addArtistRoutes(api);
-  addBrandRoutes(api);
-  addContactRoutes(api);
-  addVerbiageRoutes(api);
-
   const admin = express.Router();
 
-  addLinkRequestRoutes(admin);
+  addUserAdminRoutes(admin);
+
+  addShopAdminRoutes(admin);
+  addArtistAdminRoutes(admin);
+  addBrandAdminRoutes(admin);
+  addPieceAdminRoutes(admin);
+
+  addVerbiageAdminRoutes(admin);
 
   addAboutAdminRoutes(admin);
   addHelpAdminRoutes(admin);
   addUpdateAdminRoutes(admin);
 
-  addAdminRoutes(admin);
+  addLinkRequestAdminRoutes(admin);
 
   api.use("/admin", admin);
   app.use("/api", api);
