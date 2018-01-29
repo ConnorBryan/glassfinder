@@ -23,7 +23,7 @@ export default function HelpManager({ history }) {
           const { title, content } = item;
 
           return (
-            <Accordion styled fluid>
+            <Accordion key={index} styled fluid>
               <HelpItem
                 admin
                 {...{

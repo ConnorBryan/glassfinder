@@ -2,13 +2,21 @@ const express = require("express");
 
 const { AboutController } = require("./");
 
-module.exports = API => {
+exports.common = api => {
   const AboutRouter = express.Router();
 
-  AboutRouter.post("/", AboutController.create);
   AboutRouter.get("/", AboutController.read);
-  AboutRouter.post("/:id", AboutController.update);
-  AboutRouter.delete("/:id", AboutController.remove);
 
-  API.use("/about", AboutRouter);
+  api.use("/about", AboutRouter);
+};
+
+exports.admin = admin => {
+  const AboutAdminRouter = express.Router();
+
+  AboutAdminRouter.get("/", AboutController.read);
+  AboutAdminRouter.post("/", AboutController.create);
+  AboutAdminRouter.post("/:id", AboutController.update);
+  AboutAdminRouter.delete("/:id", AboutController.remove);
+
+  admin.use("/about", AboutAdminRouter);
 };

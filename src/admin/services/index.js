@@ -82,9 +82,9 @@ export default class AdminAPI extends API {
   static deleteArtist = partial(AdminAPI.deleteModel, "artists");
   static deleteBrand = partial(AdminAPI.deleteModel, "brands");
   static deletePiece = partial(AdminAPI.deleteModel, "pieces");
-  static deleteUpdate = partial(AdminAPI.deleteModel, "updates");
   static deleteAbout = partial(AdminAPI.deleteModel, "about");
   static deleteHelp = partial(AdminAPI.deleteModel, "help");
+  static deleteUpdate = partial(AdminAPI.deleteModel, "updates");
 
   static async createItem(resource, values) {
     try {
@@ -102,9 +102,9 @@ export default class AdminAPI extends API {
     }
   }
 
-  static createUpdate = partial(AdminAPI.createItem, "updates");
   static createAbout = partial(AdminAPI.createItem, "about");
   static createHelp = partial(AdminAPI.createItem, "help");
+  static createUpdate = partial(AdminAPI.createItem, "updates");
 
   static async updateItem(resource, id, values) {
     try {
@@ -122,9 +122,9 @@ export default class AdminAPI extends API {
     }
   }
 
-  static updateUpdate = partial(AdminAPI.updateItem, "updates");
   static updateAbout = partial(AdminAPI.updateItem, "about");
   static updateHelp = partial(AdminAPI.updateItem, "help");
+  static updateUpdate = partial(AdminAPI.updateItem, "updates");
 
   static async fetchItem(resource, term, id) {
     try {
@@ -139,7 +139,7 @@ export default class AdminAPI extends API {
     }
   }
 
-  static fetchUpdate = partial(AdminAPI.fetchItem, "updates", "update");
   static fetchAbout = partial(AdminAPI.fetchItem, "about", "about");
   static fetchHelp = partial(AdminAPI.fetchItem, "help");
+  static fetchUpdate = partial(AdminAPI.fetchItem, "updates", "update");
 }

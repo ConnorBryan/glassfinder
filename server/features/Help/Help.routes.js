@@ -2,13 +2,21 @@ const express = require("express");
 
 const { HelpController } = require("./");
 
-module.exports = API => {
+exports.common = api => {
   const HelpRouter = express.Router();
 
-  HelpRouter.post("/", HelpController.create);
   HelpRouter.get("/", HelpController.read);
-  HelpRouter.post("/:id", HelpController.update);
-  HelpRouter.delete("/:id", HelpController.remove);
 
-  API.use("/help", HelpRouter);
+  api.use("/help", HelpRouter);
+};
+
+exports.admin = admin => {
+  const HelpAdminRouter = express.Router();
+
+  HelpAdminRouter.get("/", HelpController.read);
+  HelpAdminRouter.post("/", HelpController.create);
+  HelpAdminRouter.post("/:id", HelpController.update);
+  HelpAdminRouter.delete("/:id", HelpController.remove);
+
+  admin.use("/help", HelpAdminRouter);
 };

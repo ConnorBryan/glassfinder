@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Yup from "yup";
 import { Container, Segment } from "semantic-ui-react";
 
 import ScreenHeader from "../../../main/components/ScreenHeader";
 import AbstractForm from "../../../main/components/AbstractForm";
-import AdminAPI from "../../services";
 
 function ModelCreator({
   history,
