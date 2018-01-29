@@ -34,7 +34,6 @@ export default class ModelManager extends Component {
     deleteItem: PropTypes.func.isRequired,
     term: PropTypes.string.isRequired,
     resource: PropTypes.string.isRequired,
-    verbiage: PropTypes.object.isRequired,
     render: PropTypes.func.isRequired
   };
 

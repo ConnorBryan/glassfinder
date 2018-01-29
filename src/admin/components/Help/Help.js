@@ -6,30 +6,19 @@ import { UpdateItem } from "../../../main/components/Updates/Updates";
 import AdminAPI from "../../services";
 import ModelManager from "../ModelManager";
 
-export default function Update({ history }) {
-  const verbiage = {
-    Updates_postedBy: "Posted by"
-  };
+export default function Help({ history }) {
   const config = {
-    verbiage,
-    fetchItems: AdminAPI.fetchUpdateItems,
-    deleteItem: AdminAPI.deleteUpdate,
-    term: "update",
-    resource: "updates",
+    fetchItems: async () => [],
+    deleteItem: async () => !!1,
+    term: "help",
+    resource: "help",
     render: (items, _edit, _remove) => (
       <Item.Group divided>
         {items.map((item, index) => {
           const edit = partial(_edit, item.id);
           const remove = partial(_remove, item.id);
 
-          return (
-            <UpdateItem
-              admin
-              key={index}
-              {...{ verbiage, edit, remove }}
-              {...item}
-            />
-          );
+          return <p>Help</p>;
         })}
       </Item.Group>
     )

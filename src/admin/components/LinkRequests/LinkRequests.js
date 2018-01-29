@@ -72,12 +72,14 @@ export default class LinkRequests extends Component {
                           <Icon name="chain" />To link as a {request.type}
                         </Segment>
                         <Table attached="bottom" padded>
-                          {Object.keys(config).map((key, index) => (
-                            <Table.Row key={index}>
-                              <Table.HeaderCell content={key} />
-                              <Table.Cell content={config[key]} />
-                            </Table.Row>
-                          ))}
+                          <Table.Body>
+                            {Object.keys(config).map((key, index) => (
+                              <Table.Row key={index}>
+                                <Table.HeaderCell content={key} />
+                                <Table.Cell content={config[key]} />
+                              </Table.Row>
+                            ))}
+                          </Table.Body>
                         </Table>
                         <Segment attached="bottom">
                           <Button
