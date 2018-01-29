@@ -1,9 +1,9 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
-import BASIC_SCREENS from "./basic-screens";
-import FEATURE_SCREENS from "./feature-screens";
-import ACCOUNT_SCREENS from "./account-screens";
+import BASIC_SCREENS from "./basicScreens";
+import FEATURE_SCREENS from "./featureScreens";
+import ACCOUNT_SCREENS from "./accountScreens";
 
 export const RecursiveRoutes = route => (
   <Route
