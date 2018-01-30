@@ -33,14 +33,11 @@ export default class ModelEditor extends Component {
     const id = pathname.split("/")[2];
 
     this.setState({ loading: true }, async () => {
-      this.setState(
-        {
-          model: await fetchModel(id)
-        },
-        () => {
-          this.setState({ loading: false, fetched: true });
-        }
-      );
+      this.setState({
+        model: await fetchModel(id),
+        loading: false,
+        fetched: true
+      });
     });
   };
 
