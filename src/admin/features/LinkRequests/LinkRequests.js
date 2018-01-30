@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   Item,
+  Image,
   Header,
   Icon,
   Table,
@@ -55,6 +56,8 @@ export default class LinkRequests extends Component {
   render() {
     const { requests } = this.state;
 
+    const formatImage = content => <Image size="small" src={content} />;
+
     return (
       <Styles>
         <Container>
@@ -76,7 +79,15 @@ export default class LinkRequests extends Component {
                             {Object.keys(config).map((key, index) => (
                               <Table.Row key={index}>
                                 <Table.HeaderCell content={key} />
-                                <Table.Cell content={config[key]} />
+                                <Table.Cell
+                                  content={
+                                    key === "image" ? (
+                                      formatImage(config[key])
+                                    ) : (
+                                      config[key]
+                                    )
+                                  }
+                                />
                               </Table.Row>
                             ))}
                           </Table.Body>
