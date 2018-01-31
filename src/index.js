@@ -8,4 +8,7 @@ import "./index.css";
 
 const Component = 0 ? Admin : Main;
 
-ReactDOM.render(<Component />, document.getElementById("root"));
+ReactDOM.render(
+  React.createElement(Component),
+  document.getElementById("root")
+);
