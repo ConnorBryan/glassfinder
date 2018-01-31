@@ -3,8 +3,9 @@ import { Container, Segment, Divider, Item, Button } from "semantic-ui-react";
 import styled from "styled-components";
 import moment from "moment";
 
+import * as config from "../../../config";
+import { CacheProvider, genericSetItems } from "../../../util";
 import API from "../../services";
-import { updateCache, genericSetItems } from "../../../util";
 import { fancy, slightlyBiggerText } from "../../styles/snippets";
 import ScreenHeader from "../ScreenHeader";
 
@@ -60,17 +61,20 @@ class Updates extends Component {
     items: []
   };
 
+  setItems = genericSetItems.bind(
+    this,
+    config.UPDATE_CACHE_KEY,
+    config.UPDATE_CACHE_EXPIRATION,
+    API.fetchUpdateItems,
+    "updates"
+  );
+
   componentDidMount() {
-    this.setItems();
+    (async () => {
+      await this.setItems();
+      this.sortItems();
+    })();
   }
-
-  setItems = async () => {
-    const setItems = genericSetItems.bind(this);
-
-    await setItems("updates", API.fetchUpdateItems);
-
-    this.sortItems();
-  };
 
   sortItems = () => {
     const { items } = this.state;
@@ -82,7 +86,11 @@ class Updates extends Component {
       return nextTime > prevTime ? -1 : 1;
     });
 
-    updateCache("updates", JSON.stringify(sorted));
+    CacheProvider.update(
+      config.UPDATE_CACHE_KEY,
+      sorted,
+      config.UPDATE_CACHE_EXPIRATION
+    );
 
     this.setState({ items: sorted });
   };

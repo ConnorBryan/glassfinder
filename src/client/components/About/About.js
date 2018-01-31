@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Container, Divider, Item, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
+import * as config from "../../../config";
 import { genericSetItems } from "../../../util";
 import API from "../../services";
 import { fancy, slightlyBiggerText } from "../../styles/snippets";
@@ -51,15 +52,17 @@ class About extends Component {
     items: []
   };
 
+  setItems = genericSetItems.bind(
+    this,
+    config.ABOUT_CACHE_KEY,
+    config.ABOUT_CACHE_EXPIRATION,
+    API.fetchAboutItems,
+    "about"
+  );
+
   componentDidMount() {
     this.setItems();
   }
-
-  setItems = async () => {
-    const setItems = genericSetItems.bind(this);
-
-    setItems("about", API.fetchAboutItems);
-  };
 
   render() {
     const { verbiage } = this.props;

@@ -10,6 +10,7 @@ import {
 import Aux from "react-aux";
 import styled from "styled-components";
 
+import * as config from "../../../config";
 import { genericSetItems } from "../../../util";
 import API from "../../services";
 import { fancy, slightlyBiggerText } from "../../styles/snippets";
@@ -71,15 +72,17 @@ class Help extends Component {
     activeIndex: -1
   };
 
+  setItems = genericSetItems.bind(
+    this,
+    config.HELP_CACHE_KEY,
+    config.HELP_CACHE_EXPIRATION,
+    API.fetchHelpItems,
+    "help"
+  );
+
   componentDidMount() {
     this.setItems();
   }
-
-  setItems = () => {
-    const setItems = genericSetItems.bind(this);
-
-    setItems("help", API.fetchHelpItems);
-  };
 
   handleClick = (e, { index }) => {
     const { activeIndex } = this.state;

@@ -17,6 +17,7 @@ src/!semantic/dist/themes/default/
 
 # production
 /build
+/backend
 
 # misc
 .DS_Store

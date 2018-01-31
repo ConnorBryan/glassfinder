@@ -1,4 +1,4 @@
-import { respondWith, requireProperties, error, success } from "./";
+import { respondWith, requireProperties, success } from "./";
 
 export default {
   create,
