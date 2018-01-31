@@ -7,7 +7,7 @@ import {
   cacheIsExpired,
   updateCache,
   updateCacheExpiration
-} from "../../../../util";
+} from "../../../../../util";
 
 export default class DetailMode extends Component {
   static propTypes = {

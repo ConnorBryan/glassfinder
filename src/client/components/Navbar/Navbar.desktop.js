@@ -4,7 +4,7 @@ import { Menu, Image, Button, Icon, Dropdown } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 
-import { ICON_SET, LINK_TYPES, NAVIGATION_LINKS } from "../../config";
+import * as config from "../../../config";
 
 const Styles = styled.div`
   a,
@@ -39,7 +39,7 @@ function DesktopNavbar({
           <Image size="small" src="/logo.png" />
         </Menu.Item>
         <Menu.Menu position="right">
-          {NAVIGATION_LINKS.map(({ to, content }, index) => (
+          {config.NAVIGATION_LINKS.map(({ to, content }, index) => (
             <Menu.Item
               key={index}
               as={Link}
@@ -54,25 +54,25 @@ function DesktopNavbar({
                 as={Link}
                 to="/shops"
                 content="Shops"
-                icon={ICON_SET[LINK_TYPES.SHOP]}
+                icon={config.ICON_SET[config.LINK_TYPES.SHOP]}
               />
               <Dropdown.Item
                 as={Link}
                 to="/artists"
                 content="Artists"
-                icon={ICON_SET[LINK_TYPES.ARTIST]}
+                icon={config.ICON_SET[config.LINK_TYPES.ARTIST]}
               />
               <Dropdown.Item
                 as={Link}
                 to="/brands"
                 content="Brands"
-                icon={ICON_SET[LINK_TYPES.BRAND]}
+                icon={config.ICON_SET[config.LINK_TYPES.BRAND]}
               />
               <Dropdown.Item
                 as={Link}
                 to="/pieces"
                 content="Pieces"
-                icon={ICON_SET[LINK_TYPES.PIECE]}
+                icon={config.ICON_SET[config.LINK_TYPES.PIECE]}
               />
             </Dropdown.Menu>
           </Dropdown>

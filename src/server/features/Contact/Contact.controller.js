@@ -1,10 +1,6 @@
 import * as config from "../../../config";
-import {
-  transporter,
-  respondWith,
-  requireProperties,
-  success
-} from "../../../util";
+import { respondWith, requireProperties, success } from "../../../util";
+import transporter from "../../transporter";
 
 /**
  * @func send

@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import { Container, Segment, Menu } from "semantic-ui-react";
 import styled from "styled-components";
 
+import { retrieveFromCache, removeFromCache, updateCache } from "../../../util";
 import API from "../../services";
-import { retrieveFromCache, removeFromCache, updateCache } from "../../util";
 
 const Styles = styled.div`
   #map {

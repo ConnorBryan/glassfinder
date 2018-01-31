@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button, Container, Divider, Item, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
+import { genericSetItems } from "../../../util";
 import API from "../../services";
-import { genericSetItems } from "../../util";
 import { fancy, slightlyBiggerText } from "../../styles/snippets";
 import ScreenHeader from "../ScreenHeader";
 

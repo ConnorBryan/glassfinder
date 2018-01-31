@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import * as config from "../config";
+import { removeFromCache, CacheProvider } from "../util";
 import API from "./services";
-import { removeFromCache, CacheProvider } from "./util";
 import AgeGate from "./components/AgeGate";
 import Layout from "./components/Layout";
 

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { partial } from "lodash";
 
-import { API_ROOT, LINK_TYPES } from "../config";
-import { logger } from "../util";
+import * as config from "../../config";
+import { logger } from "../../util";
 
 export default class API {
   /**
@@ -12,7 +12,7 @@ export default class API {
    */
   static async fetchVerbiage() {
     try {
-      const url = `${API_ROOT}/verbiage`;
+      const url = `${config.API_ROOT}/verbiage`;
       const { data: { payload: { verbiage } } } = await axios.get(url);
 
       return verbiage;
@@ -30,7 +30,7 @@ export default class API {
    */
   static async fetchAboutItems() {
     try {
-      const url = `${API_ROOT}/about`;
+      const url = `${config.API_ROOT}/about`;
       const { data: { payload: { about } } } = await axios.get(url);
 
       return about;
@@ -48,7 +48,7 @@ export default class API {
    */
   static async fetchHelpItems() {
     try {
-      const url = `${API_ROOT}/help`;
+      const url = `${config.API_ROOT}/help`;
       const { data: { payload: { help } } } = await axios.get(url);
 
       return help;
@@ -66,7 +66,7 @@ export default class API {
    */
   static async fetchUpdateItems() {
     try {
-      const url = `${API_ROOT}/updates`;
+      const url = `${config.API_ROOT}/updates`;
       const { data: { payload: { update } } } = await axios.get(url);
 
       return update;
@@ -86,7 +86,7 @@ export default class API {
    */
   static async fetchModel(singular, plural, id) {
     try {
-      const url = `${API_ROOT}/${plural}/${id}`;
+      const url = `${config.API_ROOT}/${plural}/${id}`;
       const { data: { payload: { [singular]: model } } } = await axios.get(url);
 
       return model;
@@ -112,7 +112,7 @@ export default class API {
    */
   static async fetchModels(plural, page = 0, userId, type) {
     try {
-      let url = `${API_ROOT}/${plural}?page=${page}`;
+      let url = `${config.API_ROOT}/${plural}?page=${page}`;
 
       if (typeof userId !== "undefined" && userId !== null) {
         url += `&userId=${userId}&type=${type}`;
@@ -141,7 +141,7 @@ export default class API {
 
   static async fetchPiecesForId(id, page = 0) {
     try {
-      const url = `${API_ROOT}/users/${id}/pieces?page=${page}`;
+      const url = `${config.API_ROOT}/users/${id}/pieces?page=${page}`;
       const {
         data: { payload: { count, pages: totalPages, pieces, perPage } }
       } = await axios.get(url);
@@ -167,7 +167,7 @@ export default class API {
    */
   static async signin(email, password) {
     try {
-      const url = `${API_ROOT}/sign-in`;
+      const url = `${config.API_ROOT}/sign-in`;
       const {
         data: { payload: { token, data: account } }
       } = await axios.post(url, {
@@ -193,7 +193,7 @@ export default class API {
    */
   static async signup(email, password) {
     try {
-      const url = `${API_ROOT}/signup`;
+      const url = `${config.API_ROOT}/signup`;
       const { data: { payload: { id } } } = await axios.post(url, {
         email,
         password
@@ -213,7 +213,7 @@ export default class API {
    */
   static async verify(id, verificationCode) {
     try {
-      const url = `${API_ROOT}/users/${id}/verify`;
+      const url = `${config.API_ROOT}/users/${id}/verify`;
 
       await axios.post(url, { verificationCode });
 
@@ -232,7 +232,7 @@ export default class API {
    */
   static async sendContactMessage(name, email, message) {
     try {
-      const url = `${API_ROOT}/contact`;
+      const url = `${config.API_ROOT}/contact`;
 
       await axios.post(url, {
         name,
@@ -256,7 +256,7 @@ export default class API {
    */
   static async updatePassword(id, currentPassword, newPassword) {
     try {
-      const url = `${API_ROOT}/users/${id}/update-password`;
+      const url = `${config.API_ROOT}/users/${id}/update-password`;
 
       await axios.post(url, {
         currentPassword,
@@ -280,7 +280,7 @@ export default class API {
    */
   static async becomeA(id, type, config) {
     try {
-      const url = `${API_ROOT}/users/${id}/link`;
+      const url = `${config.API_ROOT}/users/${id}/link`;
       const { data: { payload: { data: account } } } = await axios.post(url, {
         type,
         config: JSON.stringify(config)
@@ -294,11 +294,12 @@ export default class API {
     }
   }
 
-  static becomeAShop = (id, config) => API.becomeA(id, LINK_TYPES.SHOP, config);
+  static becomeAShop = (id, config) =>
+    API.becomeA(id, config.LINK_TYPES.SHOP, config);
   static becomeAnArtist = (id, config) =>
-    API.becomeA(id, LINK_TYPES.ARTIST, config);
+    API.becomeA(id, config.LINK_TYPES.ARTIST, config);
   static becomeABrand = (id, config) =>
-    API.becomeA(id, LINK_TYPES.BRAND, config);
+    API.becomeA(id, config.LINK_TYPES.BRAND, config);
 
   /**
    * @param {string} id
@@ -307,7 +308,7 @@ export default class API {
    */
   static async updateInformation(id, values) {
     try {
-      const url = `${API_ROOT}/users/${id}`;
+      const url = `${config.API_ROOT}/users/${id}`;
       const { data: { payload: { link } } } = await axios.post(url, {
         values: JSON.stringify(values)
       });
@@ -331,7 +332,7 @@ export default class API {
 
       formData.append("image", image);
 
-      const url = `${API_ROOT}/users/${id}/upload-image`;
+      const url = `${config.API_ROOT}/users/${id}/upload-image`;
       const { data: { payload: { link } } } = await axios.post(url, formData);
 
       return link;
@@ -352,7 +353,7 @@ export default class API {
    */
   static async uploadPiece(id, name, maker, price, description, location) {
     try {
-      const url = `${API_ROOT}/pieces?userId=${id}`;
+      const url = `${config.API_ROOT}/pieces?userId=${id}`;
       const { data: { payload: { piece } } } = await axios.post(url, {
         name,
         maker,
@@ -375,7 +376,7 @@ export default class API {
    */
   static async removePiece(pieceId) {
     try {
-      const url = `${API_ROOT}/pieces/${pieceId}`;
+      const url = `${config.API_ROOT}/pieces/${pieceId}`;
 
       await axios.delete(url);
 
@@ -398,7 +399,7 @@ export default class API {
 
       formData.append("image", image);
 
-      const url = `${API_ROOT}/pieces/${id}/upload-image`;
+      const url = `${config.API_ROOT}/pieces/${id}/upload-image`;
       const { data: { payload: { piece } } } = await axios.post(url, formData);
 
       return piece;
@@ -419,7 +420,7 @@ export default class API {
    */
   static async updatePieceInformation(id, values) {
     try {
-      const url = `${API_ROOT}/pieces/${id}`;
+      const url = `${config.API_ROOT}/pieces/${id}`;
       const { data: { payload: { piece } } } = await axios.post(url, {
         values: JSON.stringify(values)
       });
@@ -437,7 +438,7 @@ export default class API {
    */
   static async fetchMapMarkers() {
     try {
-      const url = `${API_ROOT}/mapmarkers`;
+      const url = `${config.API_ROOT}/mapmarkers`;
       const { data: { payload: { markers } } } = await axios.get(url);
 
       return markers;
@@ -453,7 +454,7 @@ export default class API {
    */
   static async transformAddressToCoordinates(address) {
     try {
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}`;
+      const url = `${config.GOOGLE_MAPS_GEOCODE_URL}${address}`;
       const { data: { status, results } } = await axios.get(url);
 
       if (status === "OK" && results[0]) {

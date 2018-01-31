@@ -15,7 +15,7 @@ import { partial, escapeRegExp } from "lodash";
 import styled from "styled-components";
 import uuid from "uuid/v4";
 
-import { LINK_TYPES, ICON_SET } from "../client/config";
+import * as config from "../config";
 import { centered, fancy } from "../client/styles/snippets";
 import AdminAPI from "./services";
 
@@ -38,17 +38,17 @@ import CreateUpdate from "./features/Updates/components/CreateUpdate";
 import EditUpdate from "./features/Updates/components/EditUpdate";
 
 export const LINK_TYPES_TO_FETCH_SERVICES = {
-  [LINK_TYPES.SHOP]: AdminAPI.fetchAllShops,
-  [LINK_TYPES.ARTIST]: AdminAPI.fetchAllArtists,
-  [LINK_TYPES.BRAND]: AdminAPI.fetchAllBrands,
-  [LINK_TYPES.PIECE]: AdminAPI.fetchAllPieces
+  [config.LINK_TYPES.SHOP]: AdminAPI.fetchAllShops,
+  [config.LINK_TYPES.ARTIST]: AdminAPI.fetchAllArtists,
+  [config.LINK_TYPES.BRAND]: AdminAPI.fetchAllBrands,
+  [config.LINK_TYPES.PIECE]: AdminAPI.fetchAllPieces
 };
 
 export const LINK_TYPES_TO_DELETE_SERVICES = {
-  [LINK_TYPES.SHOP]: AdminAPI.deleteShop,
-  [LINK_TYPES.ARTIST]: AdminAPI.deleteArtist,
-  [LINK_TYPES.BRAND]: AdminAPI.deleteBrand,
-  [LINK_TYPES.PIECE]: AdminAPI.deletePiece
+  [config.LINK_TYPES.SHOP]: AdminAPI.deleteShop,
+  [config.LINK_TYPES.ARTIST]: AdminAPI.deleteArtist,
+  [config.LINK_TYPES.BRAND]: AdminAPI.deleteBrand,
+  [config.LINK_TYPES.PIECE]: AdminAPI.deletePiece
 };
 
 const Styles = styled.div`
@@ -106,7 +106,7 @@ const Styles = styled.div`
 export default class Admin extends Component {
   state = {
     loading: false,
-    model: LINK_TYPES.SHOP,
+    model: config.LINK_TYPES.SHOP,
     collection: [],
     displayedCollection: []
   };
@@ -137,10 +137,22 @@ export default class Admin extends Component {
     });
   };
 
-  switchCollectionToShops = partial(this.fetchCollection, LINK_TYPES.SHOP);
-  switchCollectionToArtists = partial(this.fetchCollection, LINK_TYPES.ARTIST);
-  switchCollectionToBrands = partial(this.fetchCollection, LINK_TYPES.BRAND);
-  switchCollectionToPieces = partial(this.fetchCollection, LINK_TYPES.PIECE);
+  switchCollectionToShops = partial(
+    this.fetchCollection,
+    config.LINK_TYPES.SHOP
+  );
+  switchCollectionToArtists = partial(
+    this.fetchCollection,
+    config.LINK_TYPES.ARTIST
+  );
+  switchCollectionToBrands = partial(
+    this.fetchCollection,
+    config.LINK_TYPES.BRAND
+  );
+  switchCollectionToPieces = partial(
+    this.fetchCollection,
+    config.LINK_TYPES.PIECE
+  );
 
   search = ({ target: { value: query } }) => {
     this.setState({ loading: true }, () => {
@@ -191,7 +203,7 @@ export default class Admin extends Component {
       switchCollectionToPieces
     } = this;
     const { loading, model, displayedCollection } = this.state;
-    const icon = ICON_SET[model];
+    const icon = config.ICON_SET[model];
     const menuHeader = `${model} Administration`;
 
     const modelAdministration = (
@@ -324,22 +336,22 @@ function ModelDropdown({
       <Dropdown.Menu>
         <Dropdown.Item
           text="Shops"
-          active={model === LINK_TYPES.SHOP}
+          active={model === config.LINK_TYPES.SHOP}
           onClick={switchCollectionToShops}
         />
         <Dropdown.Item
           text="Artists"
-          active={model === LINK_TYPES.ARTIST}
+          active={model === config.LINK_TYPES.ARTIST}
           onClick={switchCollectionToArtists}
         />
         <Dropdown.Item
           text="Brands"
-          active={model === LINK_TYPES.BRAND}
+          active={model === config.LINK_TYPES.BRAND}
           onClick={switchCollectionToBrands}
         />
         <Dropdown.Item
           text="Pieces"
-          active={model === LINK_TYPES.PIECE}
+          active={model === config.LINK_TYPES.PIECE}
           onClick={switchCollectionToPieces}
         />
       </Dropdown.Menu>

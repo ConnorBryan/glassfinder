@@ -4,7 +4,7 @@ import styled from "styled-components";
 import moment from "moment";
 
 import API from "../../services";
-import { updateCache, genericSetItems } from "../../util";
+import { updateCache, genericSetItems } from "../../../util";
 import { fancy, slightlyBiggerText } from "../../styles/snippets";
 import ScreenHeader from "../ScreenHeader";
 

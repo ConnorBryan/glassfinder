@@ -4,7 +4,7 @@ import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
 import * as config from "../../../../../config";
-import { removeFromCache } from "../../../../util";
+import { removeFromCache } from "../../../../../util";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
 import ScreenHeader from "../../../ScreenHeader";

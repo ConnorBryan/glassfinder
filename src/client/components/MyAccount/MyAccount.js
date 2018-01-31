@@ -4,7 +4,7 @@ import { Container, Header, Icon, Segment, Menu } from "semantic-ui-react";
 import Aux from "react-aux";
 import styled from "styled-components";
 
-import { LINK_TYPES, ICON_SET } from "../../config";
+import * as config from "../../../config";
 import ScreenHeader from "../ScreenHeader";
 
 const Styles = styled.div`
@@ -86,7 +86,7 @@ function MyAccountShopMenu({ verbiage }) {
     <Aux>
       <Segment attached="top" color="blue">
         <MyAccountHeaderItem
-          icon={ICON_SET.SHOP}
+          icon={config.ICON_SET.SHOP}
           title={verbiage.MyAccount_shopOptionsTitle}
         />
       </Segment>
@@ -116,7 +116,7 @@ function MyAccountArtistMenu({ verbiage }) {
     <Aux>
       <Segment attached="top" color="blue">
         <MyAccountHeaderItem
-          icon={ICON_SET.ARTIST}
+          icon={config.ICON_SET.ARTIST}
           title={verbiage.MyAccount_artistOptionsTitle}
         />
       </Segment>
@@ -146,7 +146,7 @@ function MyAccountBrandMenu({ verbiage }) {
     <Aux>
       <Segment attached="top" color="blue">
         <MyAccountHeaderItem
-          icon={ICON_SET.BRAND}
+          icon={config.ICON_SET.BRAND}
           title={verbiage.MyAccount_brandOptionsTitle}
         />
       </Segment>
@@ -174,9 +174,9 @@ function MyAccount({ verbiage, account }) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const { linked, type } = account;
-  const linkedAsShop = type === LINK_TYPES.SHOP;
-  const linkedAsArtist = type === LINK_TYPES.ARTIST;
-  const linkedAsBrand = type === LINK_TYPES.BRAND;
+  const linkedAsShop = type === config.LINK_TYPES.SHOP;
+  const linkedAsArtist = type === config.LINK_TYPES.ARTIST;
+  const linkedAsBrand = type === config.LINK_TYPES.BRAND;
   const waitingOnLinkConfirmation =
     linked && !(linkedAsShop || linkedAsArtist || linkedAsBrand);
 

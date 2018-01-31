@@ -10,8 +10,8 @@ import {
 import Aux from "react-aux";
 import styled from "styled-components";
 
+import { genericSetItems } from "../../../util";
 import API from "../../services";
-import { genericSetItems } from "../../util";
 import { fancy, slightlyBiggerText } from "../../styles/snippets";
 import ScreenHeader from "../ScreenHeader";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Segment, Divider } from "semantic-ui-react";
 
-import { LINK_TYPES, ICON_SET } from "../config";
+import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
@@ -20,7 +20,7 @@ export function ArtistHero({ verbiage }) {
     description: verbiage.Home_artistFeatureDescription,
     flipped: true,
     buttonContent: verbiage.Home_artistFeatureButton,
-    icon: ICON_SET[LINK_TYPES.ARTIST],
+    icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
     link: "/artists"
   };
 
@@ -47,7 +47,7 @@ export function ArtistViewer({ verbiage }) {
   return (
     <Container as={Segment}>
       <ScreenHeader
-        icon={ICON_SET[LINK_TYPES.ARTIST]}
+        icon={config.ICON_SET[config.LINK_TYPES.ARTIST]}
         title={verbiage.ExploreArtists_title}
         description={verbiage.ExploreArtists_description}
       />

@@ -4,7 +4,7 @@ import localPassport from "passport-local";
 import uuid from "uuid/v4";
 
 import * as config from "../../config";
-import { transporter } from "../../util";
+import transporter from "../transporter";
 import models from "../database/models";
 
 const { User } = models;

@@ -1,6 +1,8 @@
 import { Responsive } from "semantic-ui-react";
 
 function checkIf(minWidth) {
+  if (typeof window === "undefined") return;
+
   const query = window.matchMedia(`(min-width: ${minWidth}px)`);
 
   return !!query.matches;

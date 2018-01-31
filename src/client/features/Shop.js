@@ -13,7 +13,7 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { LINK_TYPES, ICON_SET } from "../config";
+import * as config from "../../config";
 import { fancy, slightlyBiggerText } from "../styles/snippets";
 import ScreenHeader from "../components/ScreenHeader";
 import Featured from "../components/Featured";
@@ -34,7 +34,7 @@ export function ShopHero({ verbiage }) {
     description: verbiage.Home_shopFeatureDescription,
     flipped: false,
     buttonContent: verbiage.Home_shopFeatureButton,
-    icon: ICON_SET[LINK_TYPES.SHOP],
+    icon: config.ICON_SET[config.LINK_TYPES.SHOP],
     link: "/shops"
   };
 
@@ -162,7 +162,7 @@ export class ShopViewer extends Component {
     return (
       <Container as={Segment}>
         <ScreenHeader
-          icon={ICON_SET[LINK_TYPES.SHOP]}
+          icon={config.ICON_SET[config.LINK_TYPES.SHOP]}
           title={verbiage.ExploreShops_title}
           description={verbiage.ExploreShops_description}
         />

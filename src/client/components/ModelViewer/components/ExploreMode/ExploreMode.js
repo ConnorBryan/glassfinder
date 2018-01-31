@@ -9,7 +9,7 @@ import {
   retrieveFromCache,
   cacheIsExpired,
   updateCache
-} from "../../../../util";
+} from "../../../../../util";
 import { fancy } from "../../../../styles/snippets";
 
 import ViewMode from "../ViewMode";

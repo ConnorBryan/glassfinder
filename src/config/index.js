@@ -16,12 +16,15 @@ export const PIECE_IMAGES_SPACES_URL = process.env.PIECE_IMAGES_SPACES_URL;
 export const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY;
 export const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN;
 export const API_ROOT = process.env.REACT_APP_API;
+export const ADMIN_API_ROOT = `${API_ROOT}/admin`;
 export const API_PORT = process.env.API_PORT || 6166;
 export const URL = process.env.URL;
 export const TRANSPORTER_EMAIL_ADDRESS = "do_not_reply@glassfinder.com";
 export const CONTACT_EMAIL_ADDRESS = "cchromium@gmail.com";
 export const PLACEHOLDER_IMAGE = "https://placehold.it/400x400";
 export const PLACEHOLDER_SITE = "https://google.com";
+export const GOOGLE_MAPS_GEOCODE_URL =
+  "https://maps.googleapis.com/maps/api/geocode/json?address=";
 export const CATASTROPHIC_ERROR_NOTIFICATION =
   "An unknown error occurred. we are sorry for any inconvenience.";
 export const WELCOME_NOTIFICATION = "Welcome to Glassfinder!";

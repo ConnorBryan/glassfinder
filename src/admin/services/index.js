@@ -2,12 +2,12 @@ import axios from "axios";
 import { partial } from "lodash";
 
 import API from "../../client/services";
-import { ADMIN_API_ROOT } from "../config";
+import * as config from "../../config";
 
 export default class AdminAPI extends API {
   static async fetchLinkRequests() {
     try {
-      const url = `${ADMIN_API_ROOT}/link-requests`;
+      const url = `${config.ADMIN_API_ROOT}/link-requests`;
       const { data: { payload: { linkRequests } } } = await axios.get(url);
 
       return linkRequests;
@@ -20,7 +20,7 @@ export default class AdminAPI extends API {
 
   static async approveLink(id) {
     try {
-      const url = `${ADMIN_API_ROOT}/link-requests/${id}/approve`;
+      const url = `${config.ADMIN_API_ROOT}/link-requests/${id}/approve`;
 
       await axios.post(url);
 
@@ -34,7 +34,7 @@ export default class AdminAPI extends API {
 
   static async denyLink(id) {
     try {
-      const url = `${ADMIN_API_ROOT}/link-requests/${id}/deny`;
+      const url = `${config.ADMIN_API_ROOT}/link-requests/${id}/deny`;
 
       await axios.post(url);
 
@@ -48,7 +48,7 @@ export default class AdminAPI extends API {
 
   static async fetchAllModels(plural) {
     try {
-      const url = `${ADMIN_API_ROOT}/${plural}`;
+      const url = `${config.ADMIN_API_ROOT}/${plural}`;
       const { data: { payload: { collection } } } = await axios.get(url);
 
       return collection;
@@ -66,7 +66,7 @@ export default class AdminAPI extends API {
 
   static async deleteModel(plural, id) {
     try {
-      const url = `${ADMIN_API_ROOT}/${plural}/${id}`;
+      const url = `${config.ADMIN_API_ROOT}/${plural}/${id}`;
 
       await axios.delete(url);
 
@@ -89,7 +89,7 @@ export default class AdminAPI extends API {
 
   static async createItem(resource, values) {
     try {
-      const url = `${ADMIN_API_ROOT}/${resource}`;
+      const url = `${config.ADMIN_API_ROOT}/${resource}`;
 
       await axios.post(url, {
         config: JSON.stringify(values)
@@ -110,7 +110,7 @@ export default class AdminAPI extends API {
 
   static async updateItem(resource, id, values) {
     try {
-      const url = `${ADMIN_API_ROOT}/${resource}/${id}`;
+      const url = `${config.ADMIN_API_ROOT}/${resource}/${id}`;
 
       await axios.post(url, {
         config: JSON.stringify(values)
@@ -131,7 +131,7 @@ export default class AdminAPI extends API {
 
   static async fetchItem(resource, term, id) {
     try {
-      const url = `${ADMIN_API_ROOT}/${resource}/${id}`;
+      const url = `${config.ADMIN_API_ROOT}/${resource}/${id}`;
       const { data: { payload: { [term]: item } } } = await axios.get(url);
 
       return item;
@@ -151,7 +151,7 @@ export default class AdminAPI extends API {
 
   static async fetchUsers() {
     try {
-      const url = `${ADMIN_API_ROOT}/users`;
+      const url = `${config.ADMIN_API_ROOT}/users`;
       const { data: { payload: { users } } } = await axios.get(url);
 
       return users;

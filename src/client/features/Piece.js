@@ -8,7 +8,7 @@ import {
   Icon
 } from "semantic-ui-react";
 
-import { LINK_TYPES, ICON_SET } from "../config";
+import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
@@ -27,7 +27,7 @@ export function PieceHero({ verbiage }) {
     description: verbiage.Home_pieceFeatureDescription,
     flipped: true,
     buttonContent: verbiage.Home_pieceFeatureButton,
-    icon: ICON_SET[LINK_TYPES.PIECE],
+    icon: config.ICON_SET[config.LINK_TYPES.PIECE],
     link: "/pieces"
   };
 
@@ -72,7 +72,7 @@ export function PieceViewer({ verbiage }) {
   return (
     <Container as={Segment}>
       <ScreenHeader
-        icon={ICON_SET[LINK_TYPES.PIECE]}
+        icon={config.ICON_SET[config.LINK_TYPES.PIECE]}
         title={verbiage.ExplorePieces_title}
         description={verbiage.ExplorePieces_description}
       />

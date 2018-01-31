@@ -12,8 +12,8 @@ import {
 import styled from "styled-components";
 
 import * as config from "../../../../../config";
+import { retrieveFromCache, removeFromCache } from "../../../../../util";
 import API from "../../../../services";
-import { retrieveFromCache, removeFromCache } from "../../../../util";
 import ScreenHeader from "../../../ScreenHeader";
 import UploadField from "../../../../components/AbstractForm/components/UploadField";
 

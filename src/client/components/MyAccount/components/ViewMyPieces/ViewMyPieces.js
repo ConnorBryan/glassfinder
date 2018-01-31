@@ -11,9 +11,9 @@ import {
 import { partial } from "lodash";
 import styled from "styled-components";
 
-import { LINK_TYPES, ICON_SET } from "../../../../config";
+import * as config from "../../../../../config";
+import { removeFromCache } from "../../../../../util";
 import API from "../../../../services";
-import { removeFromCache } from "../../../../util";
 import {
   genericSorts,
   renderGenericTile,
@@ -83,7 +83,7 @@ export default function MyPiecesViewer({ verbiage, account, history }) {
           <Container>
             <Segment>
               <ScreenHeader
-                icon={ICON_SET[LINK_TYPES.PIECE]}
+                icon={config.ICON_SET[config.LINK_TYPES.PIECE]}
                 title={verbiage.ViewMyPieces_title}
                 description={verbiage.ViewMyPieces_description}
               />

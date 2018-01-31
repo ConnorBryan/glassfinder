@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Segment, Divider } from "semantic-ui-react";
 
-import { LINK_TYPES, ICON_SET } from "../config";
+import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
 import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
@@ -20,7 +20,7 @@ export function BrandHero({ verbiage }) {
     description: verbiage.Home_brandFeatureDescription,
     flipped: false,
     buttonContent: verbiage.Home_brandFeatureButton,
-    icon: ICON_SET[LINK_TYPES.BRAND],
+    icon: config.ICON_SET[config.LINK_TYPES.BRAND],
     link: "/brands"
   };
 
@@ -47,7 +47,7 @@ export function BrandViewer({ verbiage }) {
   return (
     <Container as={Segment}>
       <ScreenHeader
-        icon={ICON_SET[LINK_TYPES.BRAND]}
+        icon={config.ICON_SET[config.LINK_TYPES.BRAND]}
         title={verbiage.ExploreBrands_title}
         description={verbiage.ExploreBrands_description}
       />

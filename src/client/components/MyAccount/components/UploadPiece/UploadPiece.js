@@ -4,8 +4,8 @@ import Yup from "yup";
 import { Container, Segment } from "semantic-ui-react";
 
 import * as config from "../../../../../config";
+import { removeFromCache } from "../../../../../util";
 import API from "../../../../services";
-import { removeFromCache } from "../../../../util";
 import ScreenHeader from "../../../ScreenHeader";
 import AbstractForm from "../../../AbstractForm";
 
