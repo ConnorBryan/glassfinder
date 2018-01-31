@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import { Container, Segment } from "semantic-ui-react";
 
+import * as config from "../../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
 import ScreenHeader from "../../../ScreenHeader";
@@ -26,12 +27,23 @@ const FIELDS = [
   }
 ];
 
-function UpdatePassword({ verbiage, account, history }) {
+function UpdatePassword({ verbiage, account, history, displayNotification }) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const onSubmit = async ({ currentPassword, newPassword }) => {
-    await API.updatePassword(account.id, currentPassword, newPassword);
-    history.push("/my-account");
+    const wasSuccessful = await API.updatePassword(
+      account.id,
+      currentPassword,
+      newPassword
+    );
+
+    if (wasSuccessful) {
+      history.push("/my-account");
+
+      return displayNotification(config.UPDATE_PASSWORD_SUCCESS_NOTIFICATION);
+    }
+
+    return displayNotification(config.UPDATE_PASSWORD_FAILURE_NOTIFICATION);
   };
 
   return (

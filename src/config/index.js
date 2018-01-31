@@ -30,6 +30,14 @@ export const BAD_SIGN_IN_NOTIFICATION =
   "Incorrect email or password. Please try again.";
 export const SIGN_OUT_NOTIFICATION = "See ya later!";
 export const BAD_SIGN_UP_NOTIFICATION = "That email was already taken.";
+export const UPDATE_PASSWORD_SUCCESS_NOTIFICATION =
+  "Your password was successfully updated.";
+export const UPDATE_PASSWORD_FAILURE_NOTIFICATION =
+  "Your password was unable to be updated. Please try again later.";
+export const CONTACT_MESSAGE_SUCCESS_NOTIFICATION =
+  "Thank you so much for your feedback!";
+export const CONTACT_MESSAGE_FAILURE_NOTIFICATION =
+  "Your message was unable to be sent. Please try again later.";
 export const MODEL_LIST = [
   "User",
   "Shop",
