@@ -59,6 +59,8 @@ export const UPLOAD_PIECE_SUCCESS_NOTIFICATION =
   "Successfully uploaded a piece.";
 export const UPLOAD_PIECE_FAILURE_NOTIFICATION =
   "We were unable to upload your piece. Please try again later.";
+export const SIGNUP_SUCCESS_NOTIFICATION =
+  "Thanks for signing up! Check your email inbox for your activation link.";
 export const MODEL_LIST = [
   "User",
   "Shop",
@@ -192,3 +194,7 @@ export const UPDATE_CACHE_KEY = "UPDATE";
 export const UPDATE_CACHE_EXPIRATION = ONE_DAY;
 export const MY_PIECES_CACHE_KEY = "MY PIECES";
 export const MY_PIECES_EXPIRATION = FIFTEEN_MINUTES;
+export const UNVERIFIED_USER_SIGN_IN_ATTEMPT_ERROR =
+  "An unverified account cannot sign in. Please check your inbox for the verification code.";
+export const VERIFY_TO_SIGN_IN_NOTIFICATION =
+  "You've signed up, but you haven't verified your email. Please check your inbox. If you need another email sent out, press the button below.";

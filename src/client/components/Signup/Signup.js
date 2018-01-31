@@ -59,7 +59,7 @@ function Signup({ verbiage, signup, history }) {
         title={verbiage.Signup_title}
         description={verbiage.Signup_description}
       />
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      <AbstractForm fields={FIELDS} {...{ onSubmit }} />
     </Container>
   );
 }

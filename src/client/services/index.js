@@ -177,11 +177,20 @@ export default class API {
 
       return { token, account };
     } catch (e) {
-      console.error(e);
-      return {
+      const errorAccount = {
         token: null,
         account: null
       };
+      const errorMessage = e.response.data.error;
+
+      if (
+        errorMessage ===
+        `Error: ${config.UNVERIFIED_USER_SIGN_IN_ATTEMPT_ERROR}`
+      ) {
+        errorAccount.unverified = true;
+      }
+
+      return errorAccount;
     }
   }
 

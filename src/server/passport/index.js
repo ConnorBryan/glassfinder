@@ -68,11 +68,7 @@ export const localLoginStrategy = new LocalStrategy(
       if (!existingUser) return done(new Error("Incorrect email or password"));
 
       if (!existingUser.verified)
-        return done(
-          new Error(
-            "An unverified account cannot sign in. Please check your inbox for the verification code."
-          )
-        );
+        return done(new Error(config.UNVERIFIED_USER_SIGN_IN_ATTEMPT_ERROR));
 
       const passwordsMatch = await confirmPassword(
         password,

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 
+import * as config from "../../../config";
 import API from "../../services";
 
 function VerificationLoading() {
@@ -12,8 +13,10 @@ function VerificationVerifying() {
   return <p>Verifying...</p>;
 }
 
-function VerificationPostSignup() {
-  return <p>Post Signup...</p>;
+function VerificationPostSignup({ displayNotification }) {
+  displayNotification(config.SIGNUP_SUCCESS_NOTIFICATION);
+
+  return <Redirect to="/sign-in" />;
 }
 
 function VerificationResend() {
@@ -73,11 +76,17 @@ class Verification extends Component {
     const { mode } = this.state;
 
     const renderFuncs = {
-      [Verification.Modes.Loading]: () => <VerificationLoading />,
-      [Verification.Modes.Verifying]: () => <VerificationVerifying />,
-      [Verification.Modes.PostSignup]: () => <VerificationPostSignup />,
-      [Verification.Modes.Resend]: () => <VerificationResend />,
-      [Verification.Modes.Error]: () => <VerificationError />
+      [Verification.Modes.Loading]: () => (
+        <VerificationLoading {...this.props} />
+      ),
+      [Verification.Modes.Verifying]: () => (
+        <VerificationVerifying {...this.props} />
+      ),
+      [Verification.Modes.PostSignup]: () => (
+        <VerificationPostSignup {...this.props} />
+      ),
+      [Verification.Modes.Resend]: () => <VerificationResend {...this.props} />,
+      [Verification.Modes.Error]: () => <VerificationError {...this.props} />
     };
 
     return renderFuncs[mode];
@@ -85,6 +94,7 @@ class Verification extends Component {
 
   render() {
     const renderMode = this.getRenderMode();
+
     return <Container>{renderMode()}</Container>;
   }
 }

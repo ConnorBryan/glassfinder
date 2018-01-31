@@ -73,7 +73,7 @@ function AbstractFormField({
   );
 }
 
-function AbstractForm({ fields, onSubmit }) {
+function AbstractForm({ fields, onSubmit, actions }) {
   const initialValues = fields.reduce(
     (values, field) => ({ ...values, [field.name]: field.value }),
     {}
@@ -130,6 +130,12 @@ function AbstractForm({ fields, onSubmit }) {
                   />
                 </Button.Group>
               </Segment>
+              {actions &&
+                actions.map((action, index) => (
+                  <Segment key={index} attached="bottom" color="blue">
+                    <Button {...action} fluid />
+                  </Segment>
+                ))}
             </Segment.Group>
           </Form>
         </Styles>

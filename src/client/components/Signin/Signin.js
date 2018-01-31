@@ -34,6 +34,14 @@ function Signin({ verbiage, account, history, signin }) {
     wasSuccessful && history.push("/my-account");
   };
 
+  const actions = [
+    {
+      icon: "envelope",
+      content: "I need another verification email",
+      onClick: () => history.push("/verification")
+    }
+  ];
+
   return (
     <Container as={Segment}>
       <ScreenHeader
@@ -41,7 +49,7 @@ function Signin({ verbiage, account, history, signin }) {
         title={verbiage.Signin_title}
         description={verbiage.Signin_description}
       />
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
+      <AbstractForm {...{ onSubmit, actions }} fields={FIELDS} />
     </Container>
   );
 }

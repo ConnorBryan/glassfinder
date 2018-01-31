@@ -138,9 +138,13 @@ export default class Client extends Component {
   updateAccountLink = link => this.updateAccount("link", link);
 
   signin = async (email, password) => {
-    const { token, account } = await API.signin(email, password);
+    const { token, account, unverified } = await API.signin(email, password);
 
-    if (!token || !account) {
+    if (unverified) {
+      this.displayNotification(config.VERIFY_TO_SIGN_IN_NOTIFICATION);
+
+      return false;
+    } else if (!token || !account) {
       this.displayNotification(config.BAD_SIGN_IN_NOTIFICATION);
 
       return false;

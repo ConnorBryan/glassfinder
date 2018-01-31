@@ -186,10 +186,9 @@ export default class Admin extends Component {
         const wasSuccessful = await service(id);
 
         this.setState({ loading: false }, () => {
-          if (wasSuccessful) {
-            alert(`The ${term} was successfully deleted.`);
-            this.fetchCollection();
-          } else alert(`The ${term} was unable to be deleted.`);
+          wasSuccessful
+            ? this.fetchCollection()
+            : alert(`The ${term} was unable to be deleted.`);
         });
       });
     }
