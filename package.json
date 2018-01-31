@@ -46,6 +46,7 @@
     "sequelize": "^4.22.4",
     "sequelize-cli": "^3.2.0",
     "sha256": "^0.2.0",
+    "store": "^2.0.12",
     "styled-components": "^2.2.4",
     "uuid": "^3.1.0",
     "yup": "^0.23.0"

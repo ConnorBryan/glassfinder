@@ -1,3 +1,5 @@
+import store from "store";
+
 export function cacheIsExpired() {
   const expiresIn = retrieveFromCache("expiresIn");
 
@@ -37,4 +39,34 @@ export function retrieveFromCache(key) {
 
 export function removeFromCache(...keys) {
   keys.forEach(key => window.localStorage.removeItem(key));
+}
+
+/* === */
+
+export class CacheProvider {
+  static update = (key, value, expiration) => {
+    const futureExpiration = new Date().getTime() + expiration;
+
+    store.set(key, {
+      value,
+      expiration: futureExpiration
+    });
+  };
+
+  static retrieve = key => {
+    const { value, expiration } = store.get(key) || {};
+    const currentTime = new Date().getTime();
+
+    if (expiration && currentTime - expiration >= 0) {
+      store.remove(key);
+
+      return null;
+    }
+
+    return value;
+  };
+
+  static remove = key => store.remove(key);
+
+  static removeAll = () => store.clearAll();
 }

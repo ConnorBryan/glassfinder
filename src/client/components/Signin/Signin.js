@@ -29,8 +29,9 @@ function Signin({ verbiage, account, history, signin }) {
   if (account) return <Redirect to="/my-account" />;
 
   const onSubmit = async ({ email, password }) => {
-    await signin(email, password);
-    history.push("/my-account");
+    const wasSuccessful = await signin(email, password);
+
+    wasSuccessful && history.push("/my-account");
   };
 
   return (

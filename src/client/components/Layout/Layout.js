@@ -89,6 +89,7 @@ class Layout extends Component {
       account,
       token,
       notification: message,
+      displayNotification,
       hideNotification: dismiss,
       updateAccount,
       updateAccountLink,
@@ -107,6 +108,7 @@ class Layout extends Component {
     const additionalProps = {
       account,
       context,
+      displayNotification,
       token,
       updateAccount,
       updateAccountLink,

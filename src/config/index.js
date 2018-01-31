@@ -22,6 +22,14 @@ export const TRANSPORTER_EMAIL_ADDRESS = "do_not_reply@glassfinder.com";
 export const CONTACT_EMAIL_ADDRESS = "cchromium@gmail.com";
 export const PLACEHOLDER_IMAGE = "https://placehold.it/400x400";
 export const PLACEHOLDER_SITE = "https://google.com";
+export const CATASTROPHIC_ERROR_NOTIFICATION =
+  "An unknown error occurred. we are sorry for any inconvenience.";
+export const WELCOME_NOTIFICATION = "Welcome to Glassfinder!";
+export const GOOD_SIGN_IN_NOTIFICATION = "Welcome back!";
+export const BAD_SIGN_IN_NOTIFICATION =
+  "Incorrect email or password. Please try again.";
+export const SIGN_OUT_NOTIFICATION = "See ya later!";
+export const BAD_SIGN_UP_NOTIFICATION = "That email was already taken.";
 export const MODEL_LIST = [
   "User",
   "Shop",
@@ -136,3 +144,16 @@ export const STATES = Object.keys({
   WI: "Wisconsin",
   WY: "Wyoming"
 }).sort();
+export const FIFTEEN_MINUTES = 1000 * 60 * 15;
+export const ONE_DAY = 1000 * 60 * 60 * 24;
+export const ONE_YEAR = ONE_DAY * 365;
+export const VERBIAGE_CACHE_KEY = "VERBIAGE";
+export const VERBIAGE_CACHE_EXPIRATION = ONE_DAY;
+export const AGE_GATE_CACHE_KEY = "AGE GATE PASSED";
+export const AGE_GATE_CACHE_EXPIRATION = ONE_YEAR;
+export const ACCOUNT_CACHE_KEY = "ACCOUNT";
+export const ACCOUNT_CACHE_EXPIRATION = FIFTEEN_MINUTES;
+export const TOKEN_CACHE_KEY = "TOKEN";
+export const TOKEN_CACHE_EXPIRATION = FIFTEEN_MINUTES;
+export const MY_PIECES_CACHE_KEY = "MY PIECES";
+export const MY_PIECES_EXPIRATION = FIFTEEN_MINUTES;

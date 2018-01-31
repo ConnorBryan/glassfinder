@@ -24,7 +24,7 @@ function Notification({ dismiss, message }) {
             onClick: dismiss
           }}
         />
-        {message}
+        <span style={{ fontSize: "1.2rem" }}>{message}</span>
       </Segment>
     </TransitionablePortal>
   );

@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import * as config from "../config";
 import API from "./services";
-import { updateCache, retrieveFromCache, removeFromCache } from "./util";
+import { removeFromCache, CacheProvider } from "./util";
 import AgeGate from "./components/AgeGate";
 import Layout from "./components/Layout";
 
@@ -11,58 +11,92 @@ export default class Client extends Component {
   constructor(props) {
     super(props);
 
-    const account = retrieveFromCache("account");
-    const token = retrieveFromCache("token");
-    const hasDismissedAgeGate = retrieveFromCache("hasDismissedAgeGate");
+    this.state = this.getInitialState();
+  }
 
-    if (!account || !token) removeFromCache("account", "token");
+  getInitialState() {
+    const account = CacheProvider.retrieve(config.ACCOUNT_CACHE_KEY);
+    const token = CacheProvider.retrieve(config.TOKEN_CACHE_KEY);
+    const hasDismissedAgeGate = CacheProvider.retrieve(
+      config.AGE_GATE_CACHE_KEY
+    );
+    const verbiage = CacheProvider.retrieve(config.VERBIAGE_CACHE_KEY);
 
-    this.state = {
-      verbiage: {},
+    // For authentication, both account and token must be present.
+    if (!account || !token) {
+      CacheProvider.remove(config.ACCOUNT_CACHE_KEY);
+      CacheProvider.remove(config.TOKEN_CACHE_KEY);
+    }
+
+    return {
+      account,
+      token,
+      hasDismissedAgeGate,
+      verbiage,
       mobileNavigationActive: false,
-      account: account && token ? JSON.parse(account) : null,
-      token: token || null,
-      error: null,
-      notification: null,
-      hasDismissedAgeGate: !!hasDismissedAgeGate
+      notification: null
     };
   }
 
   componentDidMount() {
     this.setVerbiage();
-    this.displayNotification("Damn");
   }
 
-  // Text content
+  componentDidCatch(error) {
+    CacheProvider.removeAll();
+
+    this.setState(this.getInitialState(), () => {
+      this.setVerbiage();
+      this.displayNotification(config.CATASTROPHIC_ERROR_NOTIFICATION);
+    });
+  }
+
+  /**
+   * The Verbiage is the collection of words and phrases that make up most of the text on Glassfinder.
+   * On a cold load, we grab the text from the database and cache it.
+   * On a hot load, we ensure the cached verbiage is in date and then use it.
+   */
   setVerbiage = async () => {
-    let verbiage;
+    const { verbiage: cachedVerbiage } = this.state;
+    const verbiage = cachedVerbiage || (await API.fetchVerbiage());
 
-    const cachedVerbiage = JSON.parse(retrieveFromCache("verbiage") || "{}");
+    if (!cachedVerbiage) {
+      CacheProvider.update(
+        config.VERBIAGE_CACHE_KEY,
+        verbiage,
+        config.VERBIAGE_CACHE_EXPIRATION
+      );
 
-    verbiage =
-      Object.keys(cachedVerbiage).length > 0
-        ? cachedVerbiage
-        : await API.fetchVerbiage();
-
-    updateCache("verbiage", JSON.stringify(verbiage));
-
-    this.setState({ verbiage });
+      this.setState({ verbiage });
+    }
   };
 
-  // Mobile responsiveness
+  /**
+   * When browsing from a mobile device, display a menu listing buttons that route to each page.
+   */
   setMobileNavigationActive = mobileNavigationActive =>
     this.setState({ mobileNavigationActive });
   showMobileNavigation = () => this.setMobileNavigationActive(true);
   hideMobileNavigation = () => this.setMobileNavigationActive(false);
 
-  // Age Gate
+  /**
+   * Alert new users that the site contains material suitable for adults.
+   */
   dismissAgeGate = () => {
-    this.setState({ hasDismissedAgeGate: true }, () =>
-      updateCache("hasDismissedAgeGate", true)
-    );
+    this.setState({ hasDismissedAgeGate: true }, () => {
+      CacheProvider.update(
+        config.AGE_GATE_CACHE_KEY,
+        true,
+        config.AGE_GATE_CACHE_EXPIRATION
+      );
+
+      this.displayNotification(config.WELCOME_NOTIFICATION);
+    });
   };
 
-  // Notifications
+  /**
+   * Notifications appear at the top of the screen and alert the user to some happening.
+   */
   displayNotification = notification => {
     if (this.goingToHideNotification)
       clearTimeout(this.goingToHideNotification);
@@ -81,7 +115,9 @@ export default class Client extends Component {
     this.setState({ notification: null });
   };
 
-  // Authentication
+  /**
+   * Make changes to the storaged account whenever a form completes.
+   */
   updateAccount = (key, value) => {
     this.setState(prevState => ({
       account: { ...prevState.account, [key]: value }
@@ -94,49 +130,60 @@ export default class Client extends Component {
     const { token, account } = await API.signin(email, password);
 
     if (!token || !account) {
-      alert("Bad sign in.");
-      return;
+      this.displayNotification(config.BAD_SIGN_IN_NOTIFICATION);
+
+      return false;
     }
 
     this.setState({ token, account }, () => {
-      updateCache({
-        account: JSON.stringify(account),
-        token
-      });
+      CacheProvider.update(
+        config.ACCOUNT_CACHE_KEY,
+        account,
+        config.ACCOUNT_CACHE_EXPIRATION
+      );
+      CacheProvider.update(
+        config.TOKEN_CACHE_KEY,
+        token,
+        config.TOKEN_CACHE_EXPIRATION
+      );
     });
+
+    this.displayNotification(config.GOOD_SIGN_IN_NOTIFICATION);
+
+    return true;
   };
 
   signout = () => {
     this.setState({ token: null, account: null }, () => {
+      CacheProvider.remove(config.ACCOUNT_CACHE_KEY);
+      CacheProvider.remove(config.TOKEN_CACHE_KEY);
+      CacheProvider.remove(config.MY_PIECES_CACHE_KEY);
+
       removeFromCache(
-        "account",
-        "token",
         "myPieces",
         "myPiecesById",
         "myPiecesPerPage",
         "myPiecesTotalPages"
       );
+
+      this.displayNotification(config.SIGN_OUT_NOTIFICATION);
     });
   };
 
   signup = async (email, password) => {
     const id = await API.signup(email, password);
 
-    if (!id) {
-      alert("Bad sign up.");
-      return;
-    }
-
-    return id;
+    return id || this.displayNotification(config.BAD_SIGN_UP_NOTIFICATION);
   };
 
   render() {
-    const { hasDismissedAgeGate, notification } = this.state;
+    const { hasDismissedAgeGate } = this.state;
 
     return hasDismissedAgeGate ? (
       <BrowserRouter>
         <Layout
           {...this.state}
+          displayNotification={this.displayNotification}
           hideNotification={this.hideNotification}
           showMobileNavigation={this.showMobileNavigation}
           hideMobileNavigation={this.hideMobileNavigation}
