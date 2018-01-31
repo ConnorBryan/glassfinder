@@ -54,7 +54,7 @@ const FIELDS = [
   }
 ];
 
-function UploadPiece({ verbiage, account, history, displayLocation }) {
+function UploadPiece({ verbiage, account, history, displayNotification }) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const onSubmit = async ({ name, maker, price, description, location }) => {
@@ -75,9 +75,9 @@ function UploadPiece({ verbiage, account, history, displayLocation }) {
         piece
       });
 
-      return displayLocation(config.UPLOAD_PIECE_SUCCESS_NOTIFICATION);
+      return displayNotification(config.UPLOAD_PIECE_SUCCESS_NOTIFICATION);
     }
-    return displayLocation(config.UPLOAD_PIECE_FAILURE_NOTIFICATION);
+    return displayNotification(config.UPLOAD_PIECE_FAILURE_NOTIFICATION);
   };
 
   return (

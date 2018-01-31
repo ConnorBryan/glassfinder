@@ -73,7 +73,7 @@ class UploadImage extends Component {
 
     if (!account) return <Redirect to="/sign-in" />;
 
-    if (!account.linked) return <Redirect to="/my-account" />;
+    if (!(account.link || account.linked)) return <Redirect to="/my-account" />;
 
     const { image } = account.link;
 

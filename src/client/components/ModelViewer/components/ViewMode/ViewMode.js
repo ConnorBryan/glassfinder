@@ -57,8 +57,8 @@ function ViewMode({
         </Dropdown>
         <Dropdown item text="Sort by" {...{ upward }}>
           <Dropdown.Menu>
-            {sorts.map(({ icon, name, func }) => (
-              <Dropdown.Item onClick={() => sortCollection(func)}>
+            {sorts.map(({ icon, name, func }, index) => (
+              <Dropdown.Item key={index} onClick={() => sortCollection(func)}>
                 <Icon name={icon} /> {name}
               </Dropdown.Item>
             ))}

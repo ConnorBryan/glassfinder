@@ -5,10 +5,11 @@ import { ShopController } from "./";
 export const client = api => {
   const ShopRouter = express.Router();
 
+  api.get("/mapmarkers", ShopController.fetchMapMarkers);
+
   ShopRouter.get("/", ShopController.read);
   ShopRouter.get("/:id", ShopController.read);
   ShopRouter.get("/:id/pieces", ShopController.fetchPiecesForId);
-  ShopRouter.get("/mapmarkers", ShopController.fetchMapMarkers);
 
   api.use("/shops", ShopRouter);
 };

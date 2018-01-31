@@ -275,15 +275,15 @@ export default class API {
    * 
    * @param {string} id
    * @param {string} currentPassword 
-   * @param {object} config
+   * @param {object} configuration
    * @returns {object}
    */
-  static async becomeA(id, type, config) {
+  static async becomeA(id, type, configuration) {
     try {
       const url = `${config.API_ROOT}/users/${id}/link`;
       const { data: { payload: { data: account } } } = await axios.post(url, {
         type,
-        config: JSON.stringify(config)
+        config: JSON.stringify(configuration)
       });
 
       return account;
@@ -294,12 +294,12 @@ export default class API {
     }
   }
 
-  static becomeAShop = (id, config) =>
-    API.becomeA(id, config.LINK_TYPES.SHOP, config);
-  static becomeAnArtist = (id, config) =>
-    API.becomeA(id, config.LINK_TYPES.ARTIST, config);
-  static becomeABrand = (id, config) =>
-    API.becomeA(id, config.LINK_TYPES.BRAND, config);
+  static becomeAShop = (id, configuration) =>
+    API.becomeA(id, config.LINK_TYPES.SHOP, configuration);
+  static becomeAnArtist = (id, configuration) =>
+    API.becomeA(id, config.LINK_TYPES.ARTIST, configuration);
+  static becomeABrand = (id, configuration) =>
+    API.becomeA(id, config.LINK_TYPES.BRAND, configuration);
 
   /**
    * @param {string} id

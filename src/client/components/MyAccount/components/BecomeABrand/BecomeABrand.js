@@ -61,7 +61,7 @@ function BecomeABrand({
 
   const onSubmit = async values => {
     const updatedAccount = await API.becomeABrand(account.id, values);
-
+    console.log(updateAccount, "!!!");
     if (updatedAccount) {
       updateAccount("linked", true);
 

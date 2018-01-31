@@ -116,7 +116,6 @@ export default class ExploreMode extends Component {
   }
 
   componentDidMount() {
-    console.log("hit");
     const { collection, page } = this.state;
 
     return (collection[page] || []).length > 0
