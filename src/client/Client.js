@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import * as config from "../config";
-import { removeFromCache, CacheProvider } from "../util";
+import { CacheProvider } from "../util";
 import API from "./services";
 import AgeGate from "./components/AgeGate";
 import Layout from "./components/Layout";
@@ -169,13 +169,6 @@ export default class Client extends Component {
       CacheProvider.remove(config.ACCOUNT_CACHE_KEY);
       CacheProvider.remove(config.TOKEN_CACHE_KEY);
       CacheProvider.remove(config.MY_PIECES_CACHE_KEY);
-
-      removeFromCache(
-        "myPieces",
-        "myPiecesById",
-        "myPiecesPerPage",
-        "myPiecesTotalPages"
-      );
 
       this.displayNotification(config.SIGN_OUT_NOTIFICATION);
     });
