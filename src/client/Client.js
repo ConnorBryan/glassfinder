@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import API from "./services";
 import { updateCache, retrieveFromCache, removeFromCache } from "./util";
+import AgeGate from "./components/AgeGate";
 import Layout from "./components/Layout";
 
 export default class Client extends Component {
@@ -11,6 +12,7 @@ export default class Client extends Component {
 
     const account = retrieveFromCache("account");
     const token = retrieveFromCache("token");
+    const hasDismissedAgeGate = retrieveFromCache("hasDismissedAgeGate");
 
     if (!account || !token) removeFromCache("account", "token");
 
@@ -19,7 +21,8 @@ export default class Client extends Component {
       mobileNavigationActive: false,
       account: account && token ? JSON.parse(account) : null,
       token: token || null,
-      error: null
+      error: null,
+      hasDismissedAgeGate: !!hasDismissedAgeGate
     };
   }
 
@@ -48,6 +51,13 @@ export default class Client extends Component {
     this.setState({ mobileNavigationActive });
   showMobileNavigation = () => this.setMobileNavigationActive(true);
   hideMobileNavigation = () => this.setMobileNavigationActive(false);
+
+  // Age Gate
+  dismissAgeGate = () => {
+    this.setState({ hasDismissedAgeGate: true }, () =>
+      updateCache("hasDismissedAgeGate", true)
+    );
+  };
 
   // Authentication
   updateAccount = (key, value) => {
@@ -99,7 +109,9 @@ export default class Client extends Component {
   };
 
   render() {
-    return (
+    const { hasDismissedAgeGate } = this.state;
+
+    return hasDismissedAgeGate ? (
       <BrowserRouter>
         <Layout
           {...this.state}
@@ -112,6 +124,8 @@ export default class Client extends Component {
           signup={this.signup}
         />
       </BrowserRouter>
+    ) : (
+      <AgeGate dismiss={this.dismissAgeGate} />
     );
   }
 }

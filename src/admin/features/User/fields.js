@@ -1,5 +1,3 @@
-import Yup from "yup";
-
 import * as formatters from "../../../client/validators";
 
 export default [

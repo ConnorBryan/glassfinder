@@ -4,43 +4,24 @@
  *        V A L U E S
  */
 export const ENVIRONMENT = process.env.NODE_ENV || "development";
-
 export const IS_ADMIN = !!process.env.REACT_APP_IS_ADMIN;
-
 export const JWT_SECRET = process.env.JWT_SECRET;
-
 export const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION;
-
 export const SALT_ROUNDS = process.env.SALT_ROUNDS;
-
 export const USER_BUCKET = process.env.USER_BUCKET;
-
 export const PIECE_BUCKET = process.env.PIECE_BUCKET;
-
 export const SPACES_ENDPOINT = process.env.SPACES_ENDPOINT;
-
 export const USER_IMAGES_SPACES_URL = process.env.USER_IMAGES_SPACES_URL;
-
 export const PIECE_IMAGES_SPACES_URL = process.env.PIECE_IMAGES_SPACES_URL;
-
 export const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY;
-
 export const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN;
-
 export const API_ROOT = process.env.REACT_APP_API;
-
 export const API_PORT = process.env.API_PORT || 6166;
-
 export const URL = process.env.URL;
-
 export const TRANSPORTER_EMAIL_ADDRESS = "do_not_reply@glassfinder.com";
-
 export const CONTACT_EMAIL_ADDRESS = "cchromium@gmail.com";
-
 export const PLACEHOLDER_IMAGE = "https://placehold.it/400x400";
-
 export const PLACEHOLDER_SITE = "https://google.com";
-
 export const MODEL_LIST = [
   "User",
   "Shop",
@@ -53,36 +34,28 @@ export const MODEL_LIST = [
   "Verbiage",
   "LinkRequest"
 ];
-
 export const MODEL_READ_LIMIT = 6;
-
 export const POPULATION_COUNT = 10;
-
 export const PIECE_COUNT = 3;
-
 export const DEFAULT_PASSWORD = "111111";
-
 export const LINK_TYPES = {
   SHOP: "SHOP",
   ARTIST: "ARTIST",
   BRAND: "BRAND",
   PIECE: "PIECE"
 };
-
 export const LINK_TYPES_TO_RESOURCES = {
   [LINK_TYPES.SHOP]: "shops",
   [LINK_TYPES.ARTIST]: "artists",
   [LINK_TYPES.BRANDS]: "brands",
   [LINK_TYPES.PIECES]: "pieces"
 };
-
 export const ICON_SET = {
   [LINK_TYPES.SHOP]: "shopping cart",
   [LINK_TYPES.ARTIST]: "paint brush",
   [LINK_TYPES.BRAND]: "building",
   [LINK_TYPES.PIECE]: "puzzle"
 };
-
 export const NAVIGATION_LINKS = [
   {
     to: "/about",
@@ -101,7 +74,6 @@ export const NAVIGATION_LINKS = [
     content: "Contact"
   }
 ];
-
 export const STATES = Object.keys({
   AL: "Alabama",
   AK: "Alaska",
