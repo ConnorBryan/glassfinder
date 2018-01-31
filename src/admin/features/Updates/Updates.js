@@ -2,7 +2,7 @@ import React from "react";
 import { Item } from "semantic-ui-react";
 import { partial } from "lodash";
 
-import { UpdateItem } from "../../../main/components/Updates/Updates";
+import { UpdateItem } from "../../../client/components/Updates/Updates";
 import AdminAPI from "../../services";
 import ModelManager from "../../components/ModelManager";
 

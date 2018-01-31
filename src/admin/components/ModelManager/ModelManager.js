@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { fancy, centered } from "../../../main/styles/snippets";
+import { fancy, centered } from "../../../client/styles/snippets";
 
 const Styles = styled.div`
   .viewport {

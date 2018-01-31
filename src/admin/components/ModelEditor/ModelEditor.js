@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Container, Segment, Loader } from "semantic-ui-react";
 
-import ScreenHeader from "../../../main/components/ScreenHeader";
-import AbstractForm from "../../../main/components/AbstractForm";
+import ScreenHeader from "../../../client/components/ScreenHeader";
+import AbstractForm from "../../../client/components/AbstractForm";
 
 export default class ModelEditor extends Component {
   static propTypes = {

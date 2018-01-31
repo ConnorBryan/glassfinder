@@ -5,6 +5,8 @@
  */
 export const ENVIRONMENT = process.env.NODE_ENV || "development";
 
+export const IS_ADMIN = !!process.env.REACT_APP_IS_ADMIN;
+
 export const JWT_SECRET = process.env.JWT_SECRET;
 
 export const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION;

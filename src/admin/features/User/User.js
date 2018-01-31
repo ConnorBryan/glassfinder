@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card } from "semantic-ui-react";
 import { partial } from "lodash";
 
-import { AboutItem } from "../../../main/components/About/About";
+import { AboutItem } from "../../../client/components/About/About";
 import AdminAPI from "../../services";
 import ModelManager from "../../components/ModelManager";
 

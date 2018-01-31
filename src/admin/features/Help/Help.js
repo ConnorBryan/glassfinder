@@ -2,7 +2,7 @@ import React from "react";
 import { Accordion, Item } from "semantic-ui-react";
 import { partial } from "lodash";
 
-import { HelpItem } from "../../../main/components/Help/Help";
+import { HelpItem } from "../../../client/components/Help/Help";
 import AdminAPI from "../../services";
 import ModelManager from "../../components/ModelManager";
 

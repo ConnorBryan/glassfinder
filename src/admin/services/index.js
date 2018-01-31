@@ -1,7 +1,7 @@
 import axios from "axios";
 import { partial } from "lodash";
 
-import API from "../../main/services";
+import API from "../../client/services";
 import { ADMIN_API_ROOT } from "../config";
 
 export default class AdminAPI extends API {

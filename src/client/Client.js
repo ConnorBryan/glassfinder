@@ -5,7 +5,7 @@ import API from "./services";
 import { updateCache, retrieveFromCache, removeFromCache } from "./util";
 import Layout from "./components/Layout";
 
-export default class Main extends Component {
+export default class Client extends Component {
   constructor(props) {
     super(props);
 

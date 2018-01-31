@@ -1,14 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Main from "./main";
+import Client from "./client";
 import Admin from "./admin";
 import "./semantic/dist/semantic.min.css";
 import "./index.css";
 
-const Component = 0 ? Admin : Main;
+const isAdmin = process.env.REACT_APP_IS_ADMIN;
+const Main = isAdmin ? Admin : Client;
 
-ReactDOM.render(
-  React.createElement(Component),
-  document.getElementById("root")
-);
+ReactDOM.render(React.createElement(Main), document.getElementById("root"));

@@ -15,8 +15,8 @@ import { partial, escapeRegExp } from "lodash";
 import styled from "styled-components";
 import uuid from "uuid/v4";
 
-import { LINK_TYPES, ICON_SET } from "../main/config";
-import { centered, fancy } from "../main/styles/snippets";
+import { LINK_TYPES, ICON_SET } from "../client/config";
+import { centered, fancy } from "../client/styles/snippets";
 import AdminAPI from "./services";
 
 import LinkRequests from "./features/LinkRequests";

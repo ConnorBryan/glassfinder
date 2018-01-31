@@ -1,6 +1,6 @@
 import Yup from "yup";
 
-import * as formatters from "../../../main/validators";
+import * as formatters from "../../../client/validators";
 
 export default [
   {
