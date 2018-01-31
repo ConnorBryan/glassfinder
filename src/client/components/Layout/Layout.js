@@ -15,6 +15,7 @@ import styled from "styled-components";
 import routes, { RecursiveRoutes } from "../../routes";
 import Navbar from "../Navbar";
 import MobileNavigation from "../MobileNavigation";
+import Notification from "../Notification";
 
 const Styles = styled.div`
   .pushable {
@@ -55,6 +56,7 @@ class Layout extends Component {
     hideMobileNavigation: PropTypes.func.isRequired,
     account: PropTypes.object,
     token: PropTypes.string,
+    notification: PropTypes.string,
     updateAccount: PropTypes.func.isRequired,
     updateAccountLink: PropTypes.func.isRequired,
     signin: PropTypes.func.isRequired,
@@ -86,6 +88,8 @@ class Layout extends Component {
       hideMobileNavigation,
       account,
       token,
+      notification: message,
+      hideNotification: dismiss,
       updateAccount,
       updateAccountLink,
       signin,
@@ -116,6 +120,7 @@ class Layout extends Component {
 
     return (
       <Styles>
+        {message && <Notification {...{ dismiss, message }} />}
         <section ref={this.handleContext}>
           <Container className="main" fluid>
             <Segment className="Navbar-segment" basic>

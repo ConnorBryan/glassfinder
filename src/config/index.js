@@ -34,6 +34,7 @@ export const MODEL_LIST = [
   "Verbiage",
   "LinkRequest"
 ];
+export const NOTIFICATION_TIMEOUT = 4000;
 export const MODEL_READ_LIMIT = 6;
 export const POPULATION_COUNT = 10;
 export const PIECE_COUNT = 3;

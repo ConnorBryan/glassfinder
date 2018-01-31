@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter } from "react-router-dom";
 
+import * as config from "../config";
 import API from "./services";
 import { updateCache, retrieveFromCache, removeFromCache } from "./util";
 import AgeGate from "./components/AgeGate";
@@ -22,12 +23,14 @@ export default class Client extends Component {
       account: account && token ? JSON.parse(account) : null,
       token: token || null,
       error: null,
+      notification: null,
       hasDismissedAgeGate: !!hasDismissedAgeGate
     };
   }
 
   componentDidMount() {
     this.setVerbiage();
+    this.displayNotification("Damn");
   }
 
   // Text content
@@ -57,6 +60,25 @@ export default class Client extends Component {
     this.setState({ hasDismissedAgeGate: true }, () =>
       updateCache("hasDismissedAgeGate", true)
     );
+  };
+
+  // Notifications
+  displayNotification = notification => {
+    if (this.goingToHideNotification)
+      clearTimeout(this.goingToHideNotification);
+
+    this.setState(
+      { notification },
+      () =>
+        (this.goingToHideNotification = setTimeout(
+          this.hideNotification,
+          config.NOTIFICATION_TIMEOUT
+        ))
+    );
+  };
+
+  hideNotification = () => {
+    this.setState({ notification: null });
   };
 
   // Authentication
@@ -109,12 +131,13 @@ export default class Client extends Component {
   };
 
   render() {
-    const { hasDismissedAgeGate } = this.state;
+    const { hasDismissedAgeGate, notification } = this.state;
 
     return hasDismissedAgeGate ? (
       <BrowserRouter>
         <Layout
           {...this.state}
+          hideNotification={this.hideNotification}
           showMobileNavigation={this.showMobileNavigation}
           hideMobileNavigation={this.hideMobileNavigation}
           updateAccount={this.updateAccount}
