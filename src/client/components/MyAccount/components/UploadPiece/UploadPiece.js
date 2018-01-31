@@ -3,7 +3,7 @@ import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
 import { Container, Segment } from "semantic-ui-react";
 
-import { LINK_TYPES, ICON_SET } from "../../../../config";
+import * as config from "../../../../../config";
 import API from "../../../../services";
 import { removeFromCache } from "../../../../util";
 import ScreenHeader from "../../../ScreenHeader";
@@ -54,7 +54,7 @@ const FIELDS = [
   }
 ];
 
-function UploadPiece({ verbiage, account, history }) {
+function UploadPiece({ verbiage, account, history, displayLocation }) {
   if (!account) return <Redirect to="/sign-in" />;
 
   const onSubmit = async ({ name, maker, price, description, location }) => {
@@ -67,18 +67,23 @@ function UploadPiece({ verbiage, account, history }) {
       location
     );
 
-    // Clear cache to show entry on reloading Pieces view.
-    removeFromCache("myPieces", "myPiecesById");
+    if (piece) {
+      // Clear cache to show entry on reloading Pieces view.
+      removeFromCache("myPieces", "myPiecesById");
 
-    history.push(`/my-account/view-my-pieces/${piece.id}/upload-image`, {
-      piece
-    });
+      history.push(`/my-account/view-my-pieces/${piece.id}/upload-image`, {
+        piece
+      });
+
+      return displayLocation(config.UPLOAD_PIECE_SUCCESS_NOTIFICATION);
+    }
+    return displayLocation(config.UPLOAD_PIECE_FAILURE_NOTIFICATION);
   };
 
   return (
     <Container as={Segment}>
       <ScreenHeader
-        icon={ICON_SET[LINK_TYPES.PIECE]}
+        icon={config.ICON_SET[config.LINK_TYPES.PIECE]}
         title={verbiage.UploadPiece_title}
         description={verbiage.UploadPiece_description}
       />

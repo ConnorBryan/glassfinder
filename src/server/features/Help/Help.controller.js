@@ -1,5 +1,5 @@
 import { CRUR } from "../../../util";
-import models from "../../models";
+import models from "../../database/models";
 
 const { Help } = models;
 const config = {

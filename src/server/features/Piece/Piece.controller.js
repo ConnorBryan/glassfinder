@@ -8,7 +8,7 @@ import {
   userNotLinked
 } from "../../../util";
 import multerS3 from "../../../util/upload";
-import models from "../../models";
+import models from "../../database/models";
 import { genericPaginatedRead, genericReadAll } from "../common";
 
 const { User, Piece } = models;

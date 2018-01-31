@@ -3,7 +3,7 @@ import { withRouter, Redirect } from "react-router-dom";
 import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
-import { LINK_TYPES, ICON_SET } from "../../../../config";
+import * as config from "../../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
 import ScreenHeader from "../../../ScreenHeader";
@@ -42,7 +42,8 @@ function UpdateArtistInformation({
   verbiage,
   account,
   updateAccountLink,
-  history
+  history,
+  displayNotification
 }) {
   if (!account) return <Redirect to="/sign-in" />;
 
@@ -54,15 +55,23 @@ function UpdateArtistInformation({
   const onSubmit = async values => {
     const link = await API.updateInformation(account.id, values);
 
-    if (link) updateAccountLink(link);
+    if (link) {
+      updateAccountLink(link);
 
-    history.push("/my-account");
+      history.push("/my-account");
+
+      return displayNotification(
+        config.UPDATE_INFORMATION_SUCCESS_NOTIFICATION
+      );
+    }
+
+    return displayNotification(config.UPDATE_INFORMATION_FAILURE_NOTIFICATION);
   };
 
   return (
     <Container as={Segment}>
       <ScreenHeader
-        icon={ICON_SET[LINK_TYPES.ARTIST0]}
+        icon={config.ICON_SET[config.LINK_TYPES.ARTIST0]}
         title={verbiage.UpdateArtistInformation_title}
         description={verbiage.UpdateArtistInformation_description}
       />

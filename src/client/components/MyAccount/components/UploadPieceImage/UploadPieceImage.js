@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { LINK_TYPES, ICON_SET } from "../../../../config";
+import * as config from "../../../../../config";
 import API from "../../../../services";
 import { retrieveFromCache, removeFromCache } from "../../../../util";
 import ScreenHeader from "../../../ScreenHeader";
@@ -64,7 +64,7 @@ class UploadPieceImage extends Component {
   };
 
   submit = async () => {
-    const { history } = this.props;
+    const { history, displayNotification } = this.props;
     const { id, image } = this.state;
 
     if (this.isValid()) {
@@ -74,7 +74,11 @@ class UploadPieceImage extends Component {
       removeFromCache("myPieces", "myPiecesById");
 
       history.push("/my-account/view-my-pieces");
+
+      return displayNotification(config.UPLOAD_IMAGE_SUCCESS_NOTIFICATION);
     }
+
+    return displayNotification(config.UPLOAD_IMAGE_FAILURE_NOTIFICATION);
   };
 
   render() {
@@ -91,7 +95,7 @@ class UploadPieceImage extends Component {
       <Styles>
         <Container as={Segment}>
           <ScreenHeader
-            icon={ICON_SET[LINK_TYPES.PIECE]}
+            icon={config.ICON_SET[config.LINK_TYPES.PIECE]}
             title={verbiage.UploadPieceImage_title}
             description={verbiage.UploadPieceImage_description}
           />

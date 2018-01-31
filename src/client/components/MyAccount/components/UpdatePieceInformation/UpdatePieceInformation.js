@@ -3,7 +3,7 @@ import { withRouter, Redirect } from "react-router-dom";
 import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
-import { LINK_TYPES, ICON_SET } from "../../../../config";
+import * as config from "../../../../../config";
 import API from "../../../../services";
 import { removeFromCache } from "../../../../util";
 import ScreenHeader from "../../../ScreenHeader";
@@ -58,7 +58,8 @@ function UpdatePieceInformation({
   verbiage,
   account,
   history,
-  location: { state }
+  location: { state },
+  displayNotification
 }) {
   if (!account) return <Redirect to="/sign-in" />;
 
@@ -70,18 +71,29 @@ function UpdatePieceInformation({
   }));
 
   const onSubmit = async values => {
-    await API.updatePieceInformation(state.piece.id, values);
+    const wasSuccessful = await API.updatePieceInformation(
+      state.piece.id,
+      values
+    );
 
-    // Clear cache to show entry on reloading Pieces view.
-    removeFromCache("myPieces", "myPiecesById");
+    if (wasSuccessful) {
+      // Clear cache to show entry on reloading Pieces view.
+      removeFromCache("myPieces", "myPiecesById");
 
-    history.push("/my-account");
+      history.push("/my-account");
+
+      return displayNotification(
+        config.UPDATE_INFORMATION_SUCCESS_NOTIFICATION
+      );
+    }
+
+    return displayNotification(config.UPDATE_INFORMATION_FAILURE_NOTIFICATION);
   };
 
   return (
     <Container as={Segment}>
       <ScreenHeader
-        icon={ICON_SET[LINK_TYPES.PIECE]}
+        icon={config.ICON_SET[config.LINK_TYPES.PIECE]}
         title={verbiage.UpdatePieceInformation_title}
         description={verbiage.UpdatePieceInformatione_description}
       />

@@ -7,7 +7,7 @@ import * as config from "../../config";
 const chance = new Chance();
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-module.exports = async function({
+export default async function({
   User,
   Shop,
   Artist,
@@ -354,7 +354,7 @@ module.exports = async function({
       Brand
     );
   });
-};
+}
 
 async function createSafePassword(password) {
   return new Promise((resolve, reject) => {

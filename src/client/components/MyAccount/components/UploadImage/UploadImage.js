@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
+import * as config from "../../../../../config";
 import API from "../../../../services";
 import ScreenHeader from "../../../ScreenHeader";
 import UploadField from "../../../../components/AbstractForm/components/UploadField";
@@ -46,7 +47,12 @@ class UploadImage extends Component {
   };
 
   submit = async () => {
-    const { account, updateAccountLink, history } = this.props;
+    const {
+      account,
+      updateAccountLink,
+      history,
+      displayNotification
+    } = this.props;
     const { image } = this.state;
 
     if (this.isValid()) {
@@ -55,7 +61,10 @@ class UploadImage extends Component {
       updateAccountLink(link);
 
       history.push("/my-account");
+
+      return displayNotification(config.UPLOAD_IMAGE_SUCCESS_NOTIFICATION);
     }
+    return displayNotification(config.UPLOAD_IMAGE_FAILURE_NOTIFICATION);
   };
 
   render() {

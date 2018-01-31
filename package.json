@@ -54,6 +54,10 @@
   "scripts": {
     "start": "react-scripts start",
     "admin": "PORT=3001 REACT_APP_IS_ADMIN=true react-scripts start",
+    "build:backend":
+      "npx babel src -d backend --ignore admin,client,semantic,index.css",
+    "server":
+      "yarn build:backend && ENVIRONMENT=development nodejs -r dotenv/config ./backend/server dotenv_config_path=.env.development",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

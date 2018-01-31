@@ -3,7 +3,7 @@ import { withRouter, Redirect } from "react-router-dom";
 import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
-import { LINK_TYPES, ICON_SET } from "../../../../config";
+import * as config from "../../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
 import ScreenHeader from "../../../ScreenHeader";
@@ -54,7 +54,8 @@ function BecomeABrand({
   account,
   updateAccount,
   updateAccountLink,
-  history
+  history,
+  displayNotification
 }) {
   if (!account) return <Redirect to="/sign-in" />;
 
@@ -63,14 +64,19 @@ function BecomeABrand({
 
     if (updatedAccount) {
       updateAccount("linked", true);
+
       history.push("/my-account");
+
+      return displayNotification(config.LINK_REQUEST_SUCCESS_NOTIFICATION);
     }
+
+    return displayNotification(config.LINK_REQUEST_FAILURE_NOTIFICATION);
   };
 
   return (
     <Container as={Segment}>
       <ScreenHeader
-        icon={ICON_SET[LINK_TYPES.BRAND]}
+        icon={config.ICON_SET[config.LINK_TYPES.BRAND]}
         title={verbiage.BecomeABrand_title}
         description={verbiage.BecomeABrand_description}
       />

@@ -1,4 +1,4 @@
-import models from "../../models";
+import models from "../../database/models";
 import { genericPaginatedRead, genericReadAll, genericRemove } from "../common";
 
 const { Artist } = models;

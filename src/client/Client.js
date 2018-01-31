@@ -119,9 +119,20 @@ export default class Client extends Component {
    * Make changes to the storaged account whenever a form completes.
    */
   updateAccount = (key, value) => {
-    this.setState(prevState => ({
-      account: { ...prevState.account, [key]: value }
-    }));
+    this.setState(
+      prevState => ({
+        account: { ...prevState.account, [key]: value }
+      }),
+      () => {
+        const { account } = this.state;
+
+        CacheProvider.update(
+          config.ACCOUNT_CACHE_KEY,
+          account,
+          config.ACCOUNT_CACHE_EXPIRATION
+        );
+      }
+    );
   };
 
   updateAccountLink = link => this.updateAccount("link", link);

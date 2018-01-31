@@ -38,6 +38,24 @@ export const CONTACT_MESSAGE_SUCCESS_NOTIFICATION =
   "Thank you so much for your feedback!";
 export const CONTACT_MESSAGE_FAILURE_NOTIFICATION =
   "Your message was unable to be sent. Please try again later.";
+export const LINK_REQUEST_SUCCESS_NOTIFICATION =
+  "A request has been made to the Glassfinder team. Please allow 24-48 hours for approval. Thank you for your patience.";
+export const LINK_REQUEST_FAILURE_NOTIFICATION =
+  "We were unable to send your request. Please try again later.";
+export const BAD_ADDRESS_NOTIFICATION =
+  "That address doesn't seem to be a real place. Please try again.";
+export const UPDATE_INFORMATION_SUCCESS_NOTIFICATION =
+  "Successfully updated your information.";
+export const UPDATE_INFORMATION_FAILURE_NOTIFICATION =
+  "We were unable to update your information. Please try again later.";
+export const UPLOAD_IMAGE_SUCCESS_NOTIFICATION =
+  "Successfully uploaded an image.";
+export const UPLOAD_IMAGE_FAILURE_NOTIFICATION =
+  "We were unable to upload your image. Please try again later.";
+export const UPLOAD_PIECE_SUCCESS_NOTIFICATION =
+  "Successfully uploaded a piece.";
+export const UPLOAD_PIECE_FAILURE_NOTIFICATION =
+  "We were unable to upload your piece. Please try again later.";
 export const MODEL_LIST = [
   "User",
   "Shop",

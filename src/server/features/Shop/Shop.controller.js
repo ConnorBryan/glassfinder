@@ -1,5 +1,5 @@
 import { respondWith, requireProperties, success } from "../../../util";
-import models from "../../models";
+import models from "../../database/models";
 import { genericPaginatedRead, genericReadAll, genericRemove } from "../common";
 
 const { Shop, User, Piece } = models;

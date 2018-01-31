@@ -12,7 +12,7 @@ import {
 } from "../../../util";
 import multerS3 from "../../../util/upload";
 import { createSafePassword, confirmPassword } from "../../passport";
-import models from "../../models";
+import models from "../../database/models";
 import { genericPaginatedRead } from "../common";
 
 const upload = multerS3(config.USER_BUCKET);
@@ -168,9 +168,9 @@ function verify(req, res) {
 function link(req, res) {
   return respondWith(res, async () => {
     const { id } = req.params;
-    const { type, config } = req.body;
+    const { type, config: bodyConfig } = req.body;
 
-    requireProperties({ id, type, config });
+    requireProperties({ id, type, bodyConfig });
 
     const isValidType = config.LINK_TYPES[type];
 
@@ -185,7 +185,7 @@ function link(req, res) {
         return error(res, `User#${id} is already linked as ${user.type}`);
     }
 
-    const parsedConfig = JSON.parse(config);
+    const parsedConfig = JSON.parse(bodyConfig);
 
     // Set the placeholder image prior to user upload.
     parsedConfig.image = "https://placehold.it/400x400";

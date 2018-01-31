@@ -3,7 +3,7 @@ import { withRouter, Redirect } from "react-router-dom";
 import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
-import { LINK_TYPES, ICON_SET, STATES } from "../../../../config";
+import * as config from "../../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
 import ScreenHeader from "../../../ScreenHeader";
@@ -66,7 +66,7 @@ const FIELDS = [
     value: "",
     options: [
       { key: "select", value: "", text: "Select a state" },
-      STATES.map(state => ({
+      config.STATES.map(state => ({
         key: state,
         value: state,
         text: state
@@ -91,7 +91,8 @@ function BecomeAShop({
   account,
   updateAccount,
   updateAccountLink,
-  history
+  history,
+  displayNotification
 }) {
   if (!account) return <Redirect to="/sign-in" />;
 
@@ -116,20 +117,24 @@ function BecomeAShop({
         updateAccountLink(updatedAccount.link);
 
         history.push("/my-account/upload-image");
-      } else {
-        history.push("/my-account");
+
+        return displayNotification(config.LINK_REQUEST_SUCCESS_NOTIFICATION);
       }
-    } else {
-      alert("That address doesn't seem to be a real place.\nPlease try again.");
 
       history.push("/my-account");
+
+      return displayNotification(config.LINK_REQUEST_FAILURE_NOTIFICATION);
     }
+
+    history.push("/my-account");
+
+    return displayNotification(config.BAD_ADDRESS_NOTIFICATION);
   };
 
   return (
     <Container as={Segment}>
       <ScreenHeader
-        icon={ICON_SET[LINK_TYPES.SHOP]}
+        icon={config.ICON_SET[config.LINK_TYPES.SHOP]}
         title={verbiage.BecomeAShop_title}
         description={verbiage.BecomeAShop_description}
       />

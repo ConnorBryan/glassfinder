@@ -1,5 +1,4 @@
 import * as configuration from "../../../config";
-import db from "../../models";
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define("User", {

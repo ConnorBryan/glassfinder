@@ -3,8 +3,8 @@ import path from "path";
 import Sequelize from "sequelize";
 
 import * as config from "../../config";
-import database from "../database";
-import populate from "../database/populate";
+import database from "./";
+import populate from "./populate";
 
 const basename = path.basename(__dirname);
 const env = config.ENVIRONMENT;
@@ -36,8 +36,8 @@ db.Sequelize = Sequelize;
 
 if (env === "development") {
   (async () => {
-    await sequelize.sync({ force: true });
-    populate(db);
+    // await sequelize.sync({ force: true });
+    // populate(db);
   })();
 }
 

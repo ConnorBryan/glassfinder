@@ -1,6 +1,6 @@
 import * as config from "../../config";
 import { respondWith, error, success, requireProperties } from "../../util";
-import models from "../models";
+import models from "../database/models";
 
 const { Shop, Artist } = models;
 

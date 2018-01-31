@@ -5,7 +5,7 @@ import uuid from "uuid/v4";
 
 import * as config from "../../config";
 import { transporter } from "../../util";
-import models from "../models";
+import models from "../database/models";
 
 const { User } = models;
 const { Strategy: LocalStrategy } = localPassport;

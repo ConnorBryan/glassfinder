@@ -3,7 +3,7 @@ import { withRouter, Redirect } from "react-router-dom";
 import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
-import { LINK_TYPES, ICON_SET, STATES } from "../../../../config";
+import * as config from "../../../../../config";
 import { removeFromCache } from "../../../../util";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
@@ -67,7 +67,7 @@ const FIELDS = [
     value: "",
     options: [
       { key: "select", value: "", text: "Select a state" },
-      STATES.map(state => ({
+      config.STATES.map(state => ({
         key: state,
         value: state,
         text: state
@@ -92,7 +92,8 @@ function UpdateShopInformation({
   account,
   updateAccountLink,
   history,
-  redirect = "/my-account"
+  redirect = "/my-account",
+  displayNotification
 }) {
   if (!account) return <Redirect to="/sign-in" />;
 
@@ -116,20 +117,29 @@ function UpdateShopInformation({
 
       const link = await API.updateInformation(account.id, values);
 
-      if (link) updateAccountLink(link);
+      if (link) {
+        updateAccountLink(link);
 
-      removeFromCache("shops", "shopsById");
-    } else {
-      alert("That address doesn't seem to be a real place.\nPlease try again.");
+        removeFromCache("shops", "shopsById");
+
+        history.push(redirect);
+
+        return displayNotification(
+          config.UPDATE_INFORMATION_SUCCESS_NOTIFICATION
+        );
+      }
+
+      return displayNotification(
+        config.UPDATE_INFORMATION_FAILURE_NOTIFICATION
+      );
     }
-
-    history.push(redirect);
+    return displayNotification(config.BAD_ADDRESS_NOTIFICATION);
   };
 
   return (
     <Container as={Segment}>
       <ScreenHeader
-        icon={ICON_SET[LINK_TYPES.SHOP]}
+        icon={config.ICON_SET[config.LINK_TYPES.SHOP]}
         title={verbiage.UpdateShopInformation_title}
         description={verbiage.UpdateShopInformation_description}
       />

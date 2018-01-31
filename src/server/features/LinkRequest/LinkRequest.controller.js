@@ -1,5 +1,5 @@
 import { CRUR, respondWith, requireProperties, success } from "../../../util";
-import models from "../../models";
+import models from "../../database/models";
 
 const { User, LinkRequest } = models;
 
