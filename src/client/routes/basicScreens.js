@@ -8,7 +8,7 @@ import About from "../screens/About";
 import Help from "../screens/Help";
 import Updates from "../screens/Updates";
 import Contact from "../screens/Contact";
-import Signin from "../components/Signin";
+import Signin from "../screens/Signin";
 import Signup from "../components/Signup";
 import Verification from "../components/Verification";
 
