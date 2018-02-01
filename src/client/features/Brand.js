@@ -45,7 +45,7 @@ export function BrandViewer({ verbiage }) {
   };
 
   return (
-    <Container as={Segment}>
+    <Container>
       <ScreenHeader
         icon={config.ICON_SET[config.LINK_TYPES.BRAND]}
         title={verbiage.ExploreBrands_title}

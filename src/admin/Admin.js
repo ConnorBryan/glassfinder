@@ -52,6 +52,10 @@ export const LINK_TYPES_TO_DELETE_SERVICES = {
 };
 
 const Styles = styled.div`
+  body {
+    background: url(/background.png) !important;
+  }
+
   .navbar .item {
     ${fancy};
   }

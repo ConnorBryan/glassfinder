@@ -8,7 +8,7 @@ import FeaturedSet from "../FeaturedSet";
 const Styles = styled.div`
   .wrapper {
     padding: 0 !important;
-    margin-top: -4.05rem !important;
+    margin-top: -5rem !important;
   }
 `;
 

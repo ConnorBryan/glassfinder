@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Sidebar, Menu, Divider, Image } from "semantic-ui-react";
+import { Sidebar, Header, Menu, Divider, Image } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 
 import * as config from "../../../config";
+import { fancy } from "../../styles/snippets";
 
 const Styles = styled.div`
   .menu .item {
@@ -14,6 +15,10 @@ const Styles = styled.div`
   }
   .spaced {
     margin-top: 1.5rem !important;
+  }
+  .fancy {
+    color: white !important;
+    ${fancy};
   }
 `;
 
@@ -30,10 +35,11 @@ function MobileNavigation({
         visible={mobileNavigationActive}
         animation="scale down"
         width="wide"
+        inverted
         vertical
       >
         <Menu.Item header>
-          <Image size="small" src="/logo.png" />
+          <Header as="h1" className="fancy" content="Glassfinder" />
         </Menu.Item>
         <Divider hidden />
         <Menu.Item header>

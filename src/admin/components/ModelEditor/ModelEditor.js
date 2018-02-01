@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Container, Segment, Loader } from "semantic-ui-react";
 
-import ScreenHeader from "../../../client/components/ScreenHeader";
-import AbstractForm from "../../../client/components/AbstractForm";
+import FormScreen from "../../../client/components/FormScreen";
 
 export default class ModelEditor extends Component {
   static propTypes = {
@@ -64,15 +63,20 @@ export default class ModelEditor extends Component {
       history.push(redirect);
     };
 
-    return (
-      <Container as={Segment}>
-        <ScreenHeader {...{ icon, title, description }} />
-        {loading || !fetched ? (
-          <Loader active />
-        ) : (
-          <AbstractForm {...{ fields, onSubmit }} />
-        )}
-      </Container>
-    );
+    const screenHeader = { icon, title, description };
+    const abstractForm = { fields, onSubmit };
+
+    return <FormScreen {...{ screenHeader, abstractForm }} />;
+
+    // return (
+    //   <Container>
+    //     {loading || !fetched ? (
+    //       <Loader active />
+    //     <ScreenHeader {...{ icon, title, description }} />
+    //     ) : (
+    //       <AbstractForm {...{ fields, onSubmit }} />
+    //     )}
+    //   </Container>
+    // );
   }
 }

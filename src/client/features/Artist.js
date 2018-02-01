@@ -45,7 +45,7 @@ export function ArtistViewer({ verbiage }) {
   };
 
   return (
-    <Container as={Segment}>
+    <Container>
       <ScreenHeader
         icon={config.ICON_SET[config.LINK_TYPES.ARTIST]}
         title={verbiage.ExploreArtists_title}

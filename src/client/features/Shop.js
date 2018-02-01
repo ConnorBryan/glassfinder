@@ -160,7 +160,7 @@ export class ShopViewer extends Component {
     };
 
     return (
-      <Container as={Segment}>
+      <Container>
         <ScreenHeader
           icon={config.ICON_SET[config.LINK_TYPES.SHOP]}
           title={verbiage.ExploreShops_title}

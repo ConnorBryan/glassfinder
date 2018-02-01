@@ -66,7 +66,7 @@ export class CacheProvider {
     return value;
   };
 
-  static remove = key => store.remove(key);
+  static remove = (...keys) => keys.forEach(store.remove.bind(store));
 
   static removeAll = () => store.clearAll();
 }

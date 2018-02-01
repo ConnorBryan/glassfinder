@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Container, Segment } from "semantic-ui-react";
 
-import ScreenHeader from "../../../client/components/ScreenHeader";
-import AbstractForm from "../../../client/components/AbstractForm";
+import FormScreen from "../../../client/components/FormScreen";
 
 function ModelCreator({
   history,
@@ -20,12 +19,10 @@ function ModelCreator({
     history.push(redirect);
   };
 
-  return (
-    <Container as={Segment}>
-      <ScreenHeader {...{ icon, title, description }} />
-      <AbstractForm {...{ onSubmit, fields }} />
-    </Container>
-  );
+  const screenHeader = { icon, title, description };
+  const abstractForm = { onSubmit, fields };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 ModelCreator.propTypes = {

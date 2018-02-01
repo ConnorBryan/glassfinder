@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
-import { Menu, Image, Button, Icon, Dropdown } from "semantic-ui-react";
+import { Menu, Header, Image, Button, Icon, Dropdown } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 
@@ -13,16 +13,13 @@ const Styles = styled.div`
   .fancy > span {
     text-transform: uppercase !important;
     letter-spacing: 0.33rem !important;
-    &.header.item:hover {
-      background: inherit !important;
-      color: inherit !important;
-    }
   }
   .Navbar-container {
-    background: white !important;
     margin: 0 !important;
-    border-bottom: ${({ showBorder }) =>
-      showBorder ? "1px solid rgb(212, 212, 212)" : "none"} !important;
+    background: rgba(22, 22, 22, 0.7) !important;
+  }
+  .header {
+    color: white !important;
   }
 `;
 
@@ -33,10 +30,10 @@ function DesktopNavbar({
   location: { pathname }
 }) {
   return (
-    <Styles showBorder={showBorder}>
-      <Menu className="Navbar-container" borderless secondary>
+    <Styles>
+      <Menu className="Navbar-container" borderless secondary inverted>
         <Menu.Item header as={Link} to="/">
-          <Image size="small" src="/logo.png" />
+          <Header as="h1" className="fancy" content="Glassfinder" />
         </Menu.Item>
         <Menu.Menu>
           {config.NAVIGATION_LINKS.map(({ to, content }, index) => (
@@ -81,7 +78,7 @@ function DesktopNavbar({
           {account ? (
             <Aux>
               <Menu.Item>
-                <Button className="fancy" onClick={signout} primary basic>
+                <Button className="fancy" onClick={signout}>
                   Sign out <Icon name="sign out" />
                 </Button>
               </Menu.Item>
@@ -94,13 +91,13 @@ function DesktopNavbar({
           ) : (
             <Aux>
               <Menu.Item>
-                <Button as={Link} to="/sign-in" primary basic>
+                <Button as={Link} to="/sign-in" size="large">
                   Sign in <Icon name="sign in" />
                 </Button>
               </Menu.Item>
               <Menu.Item>
-                <Button as={Link} to="/sign-up" primary>
-                  Sign up <Icon name="send" />
+                <Button as={Link} to="/sign-up" size="large" primary>
+                  Get started <Icon name="send" />
                 </Button>
               </Menu.Item>
             </Aux>

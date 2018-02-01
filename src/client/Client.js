@@ -24,8 +24,7 @@ export default class Client extends Component {
 
     // For authentication, both account and token must be present.
     if (!account || !token) {
-      CacheProvider.remove(config.ACCOUNT_CACHE_KEY);
-      CacheProvider.remove(config.TOKEN_CACHE_KEY);
+      CacheProvider.remove(config.ACCOUNT_CACHE_KEY, config.TOKEN_CACHE_KEY);
     }
 
     return {
@@ -170,9 +169,11 @@ export default class Client extends Component {
 
   signout = () => {
     this.setState({ token: null, account: null }, () => {
-      CacheProvider.remove(config.ACCOUNT_CACHE_KEY);
-      CacheProvider.remove(config.TOKEN_CACHE_KEY);
-      CacheProvider.remove(config.MY_PIECES_CACHE_KEY);
+      CacheProvider.remove(
+        config.ACCOUNT_CACHE_KEY,
+        config.TOKEN_CACHE_KEY,
+        config.MY_PIECES_CACHE_KEY
+      );
 
       this.displayNotification(config.SIGN_OUT_NOTIFICATION);
     });

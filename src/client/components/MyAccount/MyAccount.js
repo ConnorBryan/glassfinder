@@ -199,8 +199,8 @@ function MyAccount({ verbiage, account }) {
           {linkedAsArtist && <MyAccountArtistMenu verbiage={verbiage} />}
           {linkedAsBrand && <MyAccountBrandMenu verbiage={verbiage} />}
           {waitingOnLinkConfirmation && (
-            <Segment>
-              <Icon name="chevron right" />
+            <Segment inverted>
+              <Icon name="chain" />
               Your link request is being processed. Please allow 24-48 hours to
               be approved.
             </Segment>

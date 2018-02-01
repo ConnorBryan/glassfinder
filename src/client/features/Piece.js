@@ -70,7 +70,7 @@ export function PieceViewer({ verbiage }) {
   };
 
   return (
-    <Container as={Segment}>
+    <Container>
       <ScreenHeader
         icon={config.ICON_SET[config.LINK_TYPES.PIECE]}
         title={verbiage.ExplorePieces_title}
