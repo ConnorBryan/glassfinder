@@ -235,6 +235,24 @@ export default class API {
 
   /**
    * 
+   * @param {string} email 
+   */
+  static async resendVerification(email) {
+    try {
+      const url = `${config.API_ROOT}/resend-verification`;
+
+      await axios.post(url, { email });
+
+      return true;
+    } catch (e) {
+      console.error(e);
+
+      return false;
+    }
+  }
+
+  /**
+   * 
    * @param {string} name 
    * @param {string} email 
    * @param {string} message 

@@ -1,26 +1,71 @@
 import React, { Component } from "react";
 import { Redirect, withRouter } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment, Loader } from "semantic-ui-react";
 
 import * as config from "../../../config";
+import * as Validators from "../../validators";
 import API from "../../services";
+import ScreenHeader from "../ScreenHeader";
+import AbstractForm from "../AbstractForm";
+
+const FIELDS = [
+  {
+    name: "email",
+    type: "email",
+    label: "Email",
+    placeholder: "Enter email",
+    value: "",
+    validation: Validators.email
+  }
+];
 
 function VerificationLoading() {
-  return <p>Loading...</p>;
+  return (
+    <Segment>
+      <Loader active />
+    </Segment>
+  );
 }
 
 function VerificationVerifying() {
-  return <p>Verifying...</p>;
+  return (
+    <Segment>
+      <Loader active />
+    </Segment>
+  );
 }
 
 function VerificationPostSignup({ displayNotification }) {
-  displayNotification(config.SIGNUP_SUCCESS_NOTIFICATION);
+  displayNotification(config.SIGN_UP_SUCCESS_NOTIFICATION);
 
   return <Redirect to="/sign-in" />;
 }
 
-function VerificationResend() {
-  return <p>Resend...</p>;
+function VerificationResend({ history, displayNotification }) {
+  const onSubmit = async ({ email }) => {
+    const wasSuccessful = await API.resendVerification(email);
+
+    if (wasSuccessful) {
+      history.push("/sign-in");
+
+      return displayNotification(
+        config.RESEND_VERIFICATION_SUCCESS_NOTIFICATION
+      );
+    }
+
+    return displayNotification(config.RESEND_VERIFICATION_ERROR_NOTIFICATION);
+  };
+
+  return (
+    <Segment>
+      <ScreenHeader
+        icon="eye"
+        title="Resend verification"
+        description="Sometimes things get lost in the shuffle. We can send out another email to get you verified and ready to go."
+      />
+      <AbstractForm fields={FIELDS} {...{ onSubmit }} />
+    </Segment>
+  );
 }
 
 function VerificationError() {

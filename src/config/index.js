@@ -59,8 +59,12 @@ export const UPLOAD_PIECE_SUCCESS_NOTIFICATION =
   "Successfully uploaded a piece.";
 export const UPLOAD_PIECE_FAILURE_NOTIFICATION =
   "We were unable to upload your piece. Please try again later.";
-export const SIGNUP_SUCCESS_NOTIFICATION =
+export const SIGN_UP_SUCCESS_NOTIFICATION =
   "Thanks for signing up! Check your email inbox for your activation link.";
+export const RESEND_VERIFICATION_SUCCESS_NOTIFICATION =
+  "We've sent you a new verification email. Please check your inbox shortly.";
+export const RESEND_VERIFICATION_ERROR_NOTIFICATION =
+  "We were unable to send you a new verification email. Are you sure you've signed up?";
 export const MODEL_LIST = [
   "User",
   "Shop",
@@ -198,3 +202,5 @@ export const UNVERIFIED_USER_SIGN_IN_ATTEMPT_ERROR =
   "An unverified account cannot sign in. Please check your inbox for the verification code.";
 export const VERIFY_TO_SIGN_IN_NOTIFICATION =
   "You've signed up, but you haven't verified your email. Please check your inbox. If you need another email sent out, press the button below.";
+export const RESEND_VERIFICATION_USER_VERIFIED_ERROR =
+  "The user with the provided email has already been verified.";

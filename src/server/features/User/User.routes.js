@@ -7,6 +7,7 @@ export const client = api => {
 
   api.post("/signup", UserController.signup);
   api.post("/sign-in", UserController.signin);
+  api.post("/resend-verification", UserController.resendVerification);
 
   UserRouter.get("/", UserController.read);
   UserRouter.get("/:id", UserController.read);

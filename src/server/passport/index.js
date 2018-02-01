@@ -37,15 +37,8 @@ export const localSignupStrategy = new LocalStrategy(
 
       const { id } = newUser;
 
-      const mailOptions = {
-        from: config.TRANSPORTER_EMAIL_ADDRESS,
-        to: email.trim(),
-        subject: "Please verify your new Glassfinder account",
-        html: composeMessage(id, verificationCode)
-      };
-
       return transporter.sendMail(
-        mailOptions,
+        verificationMailOptions(email, id, verificationCode),
         err => (err ? done(err) : done(null, id))
       );
     } catch (e) {
@@ -121,6 +114,13 @@ export async function confirmPassword(incomingPassword, correctPassword) {
     });
   });
 }
+
+export const verificationMailOptions = (email, id, verificationCode) => ({
+  from: config.TRANSPORTER_EMAIL_ADDRESS,
+  to: email.trim(),
+  subject: "Please verify your new Glassfinder account",
+  html: composeMessage(id, verificationCode)
+});
 
 export function composeMessage(id, verificationCode) {
   return `

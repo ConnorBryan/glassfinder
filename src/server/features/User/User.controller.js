@@ -1,4 +1,5 @@
 import passport from "passport";
+import uuid from "uuid/v4";
 
 import * as config from "../../../config";
 import {
@@ -11,8 +12,13 @@ import {
   CRUR
 } from "../../../util";
 import multerS3 from "../../../util/upload";
-import { createSafePassword, confirmPassword } from "../../passport";
+import {
+  createSafePassword,
+  confirmPassword,
+  verificationMailOptions
+} from "../../passport";
 import models from "../../database/models";
+import transporter from "../../transporter";
 import { genericPaginatedRead } from "../common";
 
 const upload = multerS3(config.USER_BUCKET);
@@ -155,6 +161,40 @@ function verify(req, res) {
     });
 
     return success(res, `Successfully verified User#${id}`);
+  });
+}
+
+/**
+ * @func resendVerification
+ * @desc Send out a new email containing verification instructons.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ */
+function resendVerification(req, res) {
+  return respondWith(res, async () => {
+    const { email } = req.body;
+
+    requireProperties({ email });
+
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return userNotFound(res);
+    } else if (user.verified) {
+      return error(res, config.RESEND_VERIFICATION_USER_VERIFIED_ERROR);
+    }
+
+    const verificationCode = uuid();
+
+    await user.update({ verificationCode });
+
+    return transporter.sendMail(
+      verificationMailOptions(email, user.id, verificationCode),
+      err =>
+        err
+          ? error(res, err)
+          : success(res, `Successfully resent verification code for ${email}`)
+    );
   });
 }
 
@@ -392,6 +432,7 @@ export default {
   update,
   uploadImage,
   verify,
+  resendVerification,
   fetchMyPieces,
   fetchPiecesForId
 };
