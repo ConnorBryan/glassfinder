@@ -16,7 +16,6 @@ import styled from "styled-components";
 import * as config from "../../config";
 import { fancy, slightlyBiggerText } from "../styles/snippets";
 import ScreenHeader from "../components/ScreenHeader";
-import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
 import ShopMap from "../components/ShopMap";
 import API from "../services";
@@ -26,20 +25,6 @@ import {
   renderGenericItem,
   renderGenericCard
 } from "./common";
-
-export function ShopHero({ verbiage }) {
-  const props = {
-    image: "/shops.jpg",
-    title: verbiage.Home_shopFeatureHeader,
-    description: verbiage.Home_shopFeatureDescription,
-    flipped: false,
-    buttonContent: verbiage.Home_shopFeatureButton,
-    icon: config.ICON_SET[config.LINK_TYPES.SHOP],
-    link: "/shops"
-  };
-
-  return <Featured {...props} />;
-}
 
 export class ShopViewer extends Component {
   shouldShowMap = () => {

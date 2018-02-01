@@ -3,7 +3,6 @@ import { Container, Divider } from "semantic-ui-react";
 
 import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
-import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
 import API from "../services";
 import {
@@ -12,20 +11,6 @@ import {
   renderGenericItem,
   renderGenericCard
 } from "./common";
-
-export function ArtistHero({ verbiage }) {
-  const props = {
-    image: "https://placehold.it/400x400",
-    title: verbiage.Home_artistFeatureHeader,
-    description: verbiage.Home_artistFeatureDescription,
-    flipped: true,
-    buttonContent: verbiage.Home_artistFeatureButton,
-    icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
-    link: "/artists"
-  };
-
-  return <Featured {...props} />;
-}
 
 export function ArtistViewer({ verbiage }) {
   const props = {

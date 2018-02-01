@@ -10,7 +10,6 @@ import {
 
 import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
-import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
 import API from "../services";
 import {
@@ -19,20 +18,6 @@ import {
   renderGenericItem,
   renderGenericCard
 } from "./common";
-
-export function PieceHero({ verbiage }) {
-  const props = {
-    image: "/pieces.jpg",
-    title: verbiage.Home_pieceFeatureHeader,
-    description: verbiage.Home_pieceFeatureDescription,
-    flipped: true,
-    buttonContent: verbiage.Home_pieceFeatureButton,
-    icon: config.ICON_SET[config.LINK_TYPES.PIECE],
-    link: "/pieces"
-  };
-
-  return <Featured {...props} />;
-}
 
 export function PieceViewer({ verbiage }) {
   const props = {

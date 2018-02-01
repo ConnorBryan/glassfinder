@@ -3,7 +3,6 @@ import { Container, Divider } from "semantic-ui-react";
 
 import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
-import Featured from "../components/Featured";
 import ModelViewer from "../components/ModelViewer";
 import API from "../services";
 import {
@@ -12,20 +11,6 @@ import {
   renderGenericItem,
   renderGenericCard
 } from "./common";
-
-export function BrandHero({ verbiage }) {
-  const props = {
-    image: "/brands.jpg",
-    title: verbiage.Home_brandFeatureHeader,
-    description: verbiage.Home_brandFeatureDescription,
-    flipped: false,
-    buttonContent: verbiage.Home_brandFeatureButton,
-    icon: config.ICON_SET[config.LINK_TYPES.BRAND],
-    link: "/brands"
-  };
-
-  return <Featured {...props} />;
-}
 
 export function BrandViewer({ verbiage }) {
   const props = {
