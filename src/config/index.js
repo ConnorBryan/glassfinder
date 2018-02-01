@@ -238,3 +238,6 @@ export const HOME_TILES = [
 ];
 export const CONTACT_FORM_SCREEN_SPLASH = "/contact_form_screen_splash.jpeg";
 export const SIGN_IN_FORM_SCREEN_SPLASH = "/sign_in_form_screen_splash.jpg";
+export const SIGN_UP_FORM_SCREEN_SPLASH = "/sign_up_form_screen_splash.jpg";
+export const RESEND_VERIFICATION_FORM_SCREEN_SPLASH =
+  "/resend_verification_form_screen_splash.jpg";
