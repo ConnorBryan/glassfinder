@@ -21,16 +21,16 @@ const FIELDS = [
 
 function VerificationLoading() {
   return (
-    <Segment>
-      <Loader active />
+    <Segment style={{ minHeight: "70vh", fontSize: "1.2rem" }}>
+      <Loader active content="Loading..." />
     </Segment>
   );
 }
 
 function VerificationVerifying() {
   return (
-    <Segment>
-      <Loader active />
+    <Segment style={{ minHeight: "70vh", fontSize: "1.2rem" }}>
+      <Loader active content="Verifying..." />
     </Segment>
   );
 }
@@ -68,8 +68,10 @@ function VerificationResend({ history, displayNotification }) {
   );
 }
 
-function VerificationError() {
-  return <p>Error...</p>;
+function VerificationError({ displayNotification }) {
+  displayNotification(config.USER_VERIFICATION_ERROR_NOTIFICATION);
+
+  return <Redirect to="/sign-in" />;
 }
 
 class Verification extends Component {
@@ -106,15 +108,17 @@ class Verification extends Component {
   }
 
   async verify() {
-    const { history } = this.props;
+    const { history, displayNotification } = this.props;
     const { id, verificationCode } = this.state;
     const verified = await API.verify(id, verificationCode);
 
     if (verified) {
       history.push("/");
-    } else {
-      this.setState({ mode: Verification.Modes.Error });
+
+      return displayNotification(config.USER_VERIFICATION_SUCCESS_NOTIFICATION);
     }
+
+    return this.setState({ mode: Verification.Modes.Error });
   }
 
   getRenderMode() {

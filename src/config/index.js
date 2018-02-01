@@ -204,3 +204,7 @@ export const VERIFY_TO_SIGN_IN_NOTIFICATION =
   "You've signed up, but you haven't verified your email. Please check your inbox. If you need another email sent out, press the button below.";
 export const RESEND_VERIFICATION_USER_VERIFIED_ERROR =
   "The user with the provided email has already been verified.";
+export const USER_VERIFICATION_SUCCESS_NOTIFICATION =
+  "Your account was successfully verified. You may now sign in.";
+export const USER_VERIFICATION_ERROR_NOTIFICATION =
+  "We were unable to verify you. Please ensure the URL in the address bar is correct.";
