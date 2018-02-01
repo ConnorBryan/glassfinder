@@ -11,6 +11,8 @@ import Contact from "../screens/Contact";
 import Signin from "../screens/Signin";
 import Signup from "../screens/Signup";
 import Verification from "../screens/Verification";
+import TermsAndConditions from "../screens/TermsAndConditions";
+import PrivacyPolicy from "../screens/PrivacyPolicy";
 
 export default [
   {
@@ -48,16 +50,16 @@ export default [
     exact: true,
     component: Signup
   },
-  // {
-  //   path: "/terms-and-conditions",
-  //   exact: true,
-  //   component: TermsAndConditions
-  // },
-  // {
-  //   path: "/privacy-policy",
-  //   exact: true,
-  //   component: PrivacyPolicy
-  // },
+  {
+    path: "/terms-and-conditions",
+    exact: true,
+    component: TermsAndConditions
+  },
+  {
+    path: "/privacy-policy",
+    exact: true,
+    component: PrivacyPolicy
+  },
   {
     path: "/verification/:id?/:verificationCode?",
     exact: true,
