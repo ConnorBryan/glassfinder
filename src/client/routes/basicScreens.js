@@ -5,7 +5,7 @@
  */
 import Home from "../screens/Home";
 import About from "../screens/About";
-import Help from "../components/Help";
+import Help from "../screens/Help";
 import Updates from "../components/Updates";
 import Contact from "../components/Contact";
 import Signin from "../components/Signin";
