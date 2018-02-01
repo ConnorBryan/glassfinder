@@ -13,6 +13,7 @@ import {
 import styled from "styled-components";
 
 import routes, { RecursiveRoutes } from "../../routes";
+import { blue as palette } from "../../styles/palettes";
 import Navbar from "../Navbar";
 import MobileNavigation from "../MobileNavigation";
 import Notification from "../Notification";
@@ -24,11 +25,7 @@ const Styles = styled.div`
   }
   .main {
     min-height: 100vh !important;
-    background: url(/background.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: url(/background.png);
   }
   .footer {
     border-top: 1px solid rgb(220, 220, 220);
@@ -120,84 +117,94 @@ class Layout extends Component {
     const closeSidebar = () => mobileNavigationActive && hideMobileNavigation();
     const scrollToTop = () => window.scrollTo(0, 0);
 
+    const navbar = (
+      <Segment className="Navbar-segment" basic>
+        <Sticky
+          context={context}
+          onStick={this.showNavbarBorder}
+          onUnstick={this.hideNavbarBorder}
+        >
+          <Navbar
+            showBorder={showNavbarBorder}
+            {...navigationProps}
+            {...additionalProps}
+          />
+        </Sticky>
+        <MobileNavigation {...navigationProps} {...additionalProps} />
+      </Segment>
+    );
+
+    const viewport = (
+      <Sidebar.Pushable>
+        <div onClick={closeSidebar}>
+          <Sidebar.Pusher as={Switch}>
+            {routes.map((route, i) => (
+              <RecursiveRoutes
+                key={i}
+                additionalProps={additionalProps}
+                {...route}
+              />
+            ))}
+          </Sidebar.Pusher>
+        </div>
+      </Sidebar.Pushable>
+    );
+
+    const footer = (
+      <Container className="footer" fluid>
+        <Segment inverted clearing>
+          <Container>
+            <List size="big" inverted>
+              <List.Item
+                as={Link}
+                to="/terms-and-conditions"
+                icon="chevron right"
+                content="Terms and Conditions"
+              />
+              <List.Item
+                as={Link}
+                to="/privacy-policy"
+                icon="chevron right"
+                content="Privacy Policy"
+              />
+            </List>
+            <Divider inverted />
+            <List size="big" inverted>
+              <List.Item icon="users" content="Glassfinder" />
+              <List.Item icon="marker" content="Dallas, TX" />
+              <List.Item
+                icon="mail"
+                content={
+                  <a href="mailto:hello@glassfinder.com">
+                    hello@glassfinder.com
+                  </a>
+                }
+              />
+              <List.Item
+                icon="linkify"
+                content={<a href="https://glassfinder.com">glassfinder.com</a>}
+              />
+            </List>
+            <Button
+              icon="chevron up"
+              floated="right"
+              content="Back to top"
+              onClick={scrollToTop}
+              primary
+            />
+          </Container>
+        </Segment>
+      </Container>
+    );
+
     return (
       <Styles>
         {message && <Notification {...{ dismiss, message }} />}
         <section ref={this.handleContext}>
           <Container className="main" fluid>
-            <Segment className="Navbar-segment" basic>
-              <Sticky
-                context={context}
-                onStick={this.showNavbarBorder}
-                onUnstick={this.hideNavbarBorder}
-              >
-                <Navbar
-                  showBorder={showNavbarBorder}
-                  {...navigationProps}
-                  {...additionalProps}
-                />
-              </Sticky>
-              <MobileNavigation {...navigationProps} {...additionalProps} />
-            </Segment>
-            <Sidebar.Pushable>
-              <div onClick={closeSidebar}>
-                <Sidebar.Pusher as={Switch}>
-                  {routes.map((route, i) => (
-                    <RecursiveRoutes
-                      key={i}
-                      additionalProps={additionalProps}
-                      {...route}
-                    />
-                  ))}
-                </Sidebar.Pusher>
-              </div>
-            </Sidebar.Pushable>
-          </Container>
-          <Container className="footer" fluid>
-            <Segment inverted clearing>
-              <Container>
-                <List size="big" inverted>
-                  <List.Item
-                    as={Link}
-                    to="/terms-and-conditions"
-                    icon="chevron right"
-                    content="Terms and Conditions"
-                  />
-                  <List.Item
-                    as={Link}
-                    to="/privacy-policy"
-                    icon="chevron right"
-                    content="Privacy Policy"
-                  />
-                </List>
-                <Divider inverted />
-                <List size="big" inverted>
-                  <List.Item icon="users" content="Glassfinder" />
-                  <List.Item icon="marker" content="Dallas, TX" />
-                  <List.Item
-                    icon="mail"
-                    content={
-                      <a href="mailto:hello@glassfinder.com">
-                        hello@glassfinder.com
-                      </a>
-                    }
-                  />
-                  <List.Item
-                    icon="linkify"
-                    content={
-                      <a href="https://glassfinder.com">glassfinder.com</a>
-                    }
-                  />
-                </List>
-                <Button
-                  icon="chevron up"
-                  floated="right"
-                  content="Back to top"
-                  onClick={scrollToTop}
-                  primary
-                />
-              </Container>
-            </Segment>
+            {navbar}
+            {viewport}
+            {footer}
           </Container>
         </section>
       </Styles>

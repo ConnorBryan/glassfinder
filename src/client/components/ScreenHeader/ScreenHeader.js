@@ -6,9 +6,14 @@ import styled from "styled-components";
 import { fancy, slightlyBiggerText } from "../../styles/snippets";
 
 const Styles = styled.div`
+  .segments {
+    border: 1px solid white !important;
+  }
+
   .header {
     ${fancy};
   }
+
   .ScreenHeader-description {
     ${slightlyBiggerText};
   }
@@ -17,14 +22,20 @@ const Styles = styled.div`
 function ScreenHeader({ icon, title, description }) {
   return (
     <Styles>
-      <Segment attached="top" inverted>
-        <Header as="h3">
-          <Icon name={icon} /> {title}
-        </Header>
-      </Segment>
-      <Segment attached="bottom" className="ScreenHeader-description">
-        {description}
-      </Segment>
+      <Segment.Group>
+        <Segment attached="top" inverted>
+          <Header as="h3">
+            <Icon name={icon} /> {title}
+          </Header>
+        </Segment>
+        <Segment
+          attached="bottom"
+          inverted
+          className="ScreenHeader-description"
+        >
+          {description}
+        </Segment>
+      </Segment.Group>
     </Styles>
   );
 }

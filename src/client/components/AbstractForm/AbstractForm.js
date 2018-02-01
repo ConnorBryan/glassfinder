@@ -4,23 +4,51 @@ import Yup from "yup";
 import {
   Icon,
   Form,
+  Menu,
   Divider,
   Segment,
   Button,
   Message,
-  Dropdown
+  Dropdown,
+  Responsive
 } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { fancy } from "../../styles/snippets";
+import { tabletSized } from "../../../util";
+import { fancy, evenBiggerText } from "../../styles/snippets";
 
 const Styles = styled.div`
   label {
     ${fancy};
+    ${evenBiggerText};
+    margin-bottom: 1.5rem !important;
   }
 
-  .button {
+  input {
+    border: 1px solid white !important;
+  }
+
+  .item {
     ${fancy};
+  }
+
+  .menu {
+    border: 1px solid white !important;
+  }
+
+  .fieldview {
+    padding: 0 !important;
+  }
+
+  .seethrough input,
+  .textareaWrapper textarea {
+    color: white !important;
+    background-color: transparent !important;
+    border: 1px solid white !important;
+
+    &:focus {
+      border: 1px solid white !important;
+    }
   }
 `;
 
@@ -40,7 +68,13 @@ function AbstractFormField({
   };
   const [, options] = inputProps.options || [];
   const inputTypes = {
-    textarea: () => <Form.Field control="textarea" {...inputProps} />,
+    textarea: () => (
+      <Form.Field
+        className="textareaWrapper"
+        control="textarea"
+        {...inputProps}
+      />
+    ),
     select: () => (
       <Form.Field>
         <label>{inputProps.label}</label>
@@ -59,11 +93,11 @@ function AbstractFormField({
     setFieldValue(inputProps.name, value);
 
   return (
-    <Segment attached="bottom" color="blue" key={field.name}>
+    <Segment key={field.name} inverted>
       {inputTypes[field.type] ? (
         inputTypes[field.type]()
       ) : (
-        <Form.Input {...inputProps} />
+        <Form.Input className="seethrough" {...inputProps} />
       )}
       {touched[field.name] &&
       errors[field.name] && (
@@ -100,43 +134,44 @@ function AbstractForm({ fields, onSubmit, actions }) {
         isSubmitting
       }) => (
         <Styles>
-          <Divider hidden />
-          <Form onSubmit={handleSubmit}>
-            <Segment.Group stacked>
-              {fields.map((field, index) => (
-                <AbstractFormField
-                  key={index}
-                  {...{
-                    field,
-                    values,
-                    touched,
-                    errors,
-                    handleChange,
-                    setFieldValue
-                  }}
-                />
-              ))}
-              <Segment attached="bottom" color="blue">
-                <Button.Group fluid>
-                  <Button type="submit" disabled={isSubmitting} primary>
-                    Send <Icon name="send outline" />
-                  </Button>
-                  <Button.Or />
-                  <Button
-                    icon="refresh"
-                    onClick={handleReset}
-                    content="Reset"
-                    disabled={isSubmitting}
+          <Form onSubmit={handleSubmit} inverted>
+            <Segment attached="top" className="fieldview">
+              <Segment.Group>
+                {fields.map((field, index) => (
+                  <AbstractFormField
+                    key={index}
+                    {...{
+                      field,
+                      values,
+                      touched,
+                      errors,
+                      handleChange,
+                      setFieldValue
+                    }}
                   />
-                </Button.Group>
-              </Segment>
-              {actions &&
-                actions.map((action, index) => (
-                  <Segment key={index} attached="bottom" color="blue">
-                    <Button {...action} fluid />
-                  </Segment>
                 ))}
-            </Segment.Group>
+              </Segment.Group>
+            </Segment>
+            <Menu attached="bottom" inverted widths={2}>
+              <Menu.Item
+                icon="send outline"
+                content="Send"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+              />
+              <Menu.Item
+                icon="refresh"
+                onClick={handleReset}
+                content="Reset"
+                disabled={isSubmitting}
+              />
+            </Menu>
+            {actions &&
+              actions.map((action, index) => (
+                <Segment key={index} color="black">
+                  <Button {...action} fluid />
+                </Segment>
+              ))}
           </Form>
         </Styles>
       )}

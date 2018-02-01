@@ -12,3 +12,7 @@ export const fancy = `
 export const slightlyBiggerText = `
   font-size: 1.2rem !important;
 `;
+
+export const evenBiggerText = `
+  font-size: 1.5rem !important;
+`;

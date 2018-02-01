@@ -38,7 +38,7 @@ function DesktopNavbar({
         <Menu.Item header as={Link} to="/">
           <Image size="small" src="/logo.png" />
         </Menu.Item>
-        <Menu.Menu position="right">
+        <Menu.Menu>
           {config.NAVIGATION_LINKS.map(({ to, content }, index) => (
             <Menu.Item
               key={index}
@@ -76,6 +76,8 @@ function DesktopNavbar({
               />
             </Dropdown.Menu>
           </Dropdown>
+        </Menu.Menu>
+        <Menu.Menu position="right">
           {account ? (
             <Aux>
               <Menu.Item>

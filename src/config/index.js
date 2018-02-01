@@ -32,7 +32,7 @@ export const GOOD_SIGN_IN_NOTIFICATION = "Welcome back!";
 export const BAD_SIGN_IN_NOTIFICATION =
   "Incorrect email or password. Please try again.";
 export const SIGN_OUT_NOTIFICATION = "See ya later!";
-export const BAD_SIGN_UP_NOTIFICATION = "That email was already taken.";
+export const BAD_SIGN_UP_NOTIFICATION = "That email is already taken.";
 export const UPDATE_PASSWORD_SUCCESS_NOTIFICATION =
   "Your password was successfully updated.";
 export const UPDATE_PASSWORD_FAILURE_NOTIFICATION =
