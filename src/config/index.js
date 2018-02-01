@@ -215,24 +215,24 @@ export const HOME_TILES = [
     icon: ICON_SET[LINK_TYPES.SHOP],
     link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.SHOP]}`,
     title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.SHOP]),
-    image: "https://placehold.it/1000x1000"
+    image: "/shops_tile.jpg"
   },
   {
     icon: ICON_SET[LINK_TYPES.ARTIST],
     link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.ARTIST]}`,
     title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.ARTIST]),
-    image: "https://placehold.it/1000x1000"
+    image: "/artists_tile.jpg"
   },
   {
     icon: ICON_SET[LINK_TYPES.BRAND],
     link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.BRAND]}`,
     title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.BRAND]),
-    image: "https://placehold.it/1000x1000"
+    image: "/brands_tile.jpg"
   },
   {
     icon: ICON_SET[LINK_TYPES.PIECE],
     link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.PIECE]}`,
     title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.PIECE]),
-    image: "https://placehold.it/1000x1000"
+    image: "/pieces_tile.jpg"
   }
 ];
