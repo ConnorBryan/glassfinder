@@ -236,3 +236,4 @@ export const HOME_TILES = [
     image: "/pieces_tile.jpg"
   }
 ];
+export const CONTACT_FORM_SCREEN_SPLASH = "/contact_form_screen_splash.jpeg";

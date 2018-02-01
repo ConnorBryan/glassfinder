@@ -1,11 +1,12 @@
 import React from "react";
-import { Responsive, Divider, Container, Grid } from "semantic-ui-react";
+import { Responsive, Divider, Container, Grid, Image } from "semantic-ui-react";
 import styled from "styled-components";
+import Aux from "react-aux";
 
 import ScreenHeader from "../ScreenHeader";
 import AbstractForm from "../AbstractForm";
 
-function FormScreen({ screenHeader, abstractForm }) {
+function FormScreen({ splash, screenHeader, abstractForm }) {
   const header = <ScreenHeader {...screenHeader} />;
   const form = <AbstractForm {...abstractForm} />;
 
@@ -16,6 +17,11 @@ function FormScreen({ screenHeader, abstractForm }) {
     .grid {
       padding: 0 3rem 0 3rem !important;
     }
+
+    .image {
+      margin-top: 2rem !important;
+      border: 1px solid white !important;
+    }
   `;
 
   return (
@@ -24,6 +30,12 @@ function FormScreen({ screenHeader, abstractForm }) {
         <div className="mobile">
           {header}
           <Divider hidden />
+          {splash && (
+            <Aux>
+              <Image src={splash} fluid />
+              <Divider hidden />
+            </Aux>
+          )}
           {form}
         </div>
       </Responsive>
@@ -36,6 +48,7 @@ function FormScreen({ screenHeader, abstractForm }) {
           <Grid.Row>
             <Grid.Column width={8} stretched>
               {header}
+              {splash && <Image src={splash} fluid />}
             </Grid.Column>
             <Grid.Column width={8}>{form}</Grid.Column>
           </Grid.Row>
