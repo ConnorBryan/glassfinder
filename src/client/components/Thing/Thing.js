@@ -21,6 +21,7 @@ const Styles = styled.div`
   }
 
   .Thing-menu {
+    margin: 0 !important;
     border: 1px solid white !important;
     border-radius: 0 !important;
   }
