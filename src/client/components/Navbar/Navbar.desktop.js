@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
-import { Menu, Header, Image, Button, Icon, Dropdown } from "semantic-ui-react";
+import { Menu, Header, Button, Icon, Dropdown } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 

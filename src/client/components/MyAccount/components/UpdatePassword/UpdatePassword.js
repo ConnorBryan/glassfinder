@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container, Segment } from "semantic-ui-react";
 
 import * as config from "../../../../../config";
 import API from "../../../../services";

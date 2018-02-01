@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, withRouter } from "react-router-dom";
-import { Container, Segment, Loader } from "semantic-ui-react";
+import { Segment, Loader } from "semantic-ui-react";
 
 import * as config from "../../../config";
 import * as Validators from "../../validators";

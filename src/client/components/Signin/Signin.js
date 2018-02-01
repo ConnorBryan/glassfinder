@@ -1,6 +1,5 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { Container, Segment } from "semantic-ui-react";
 
 import * as Validators from "../../validators";
 import FormScreen from "../FormScreen";

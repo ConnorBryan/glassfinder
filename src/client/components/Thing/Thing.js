@@ -1,5 +1,5 @@
 import React from "react";
-import { Segment, Grid, Image, Menu } from "semantic-ui-react";
+import { Segment, Grid, Image, Menu, Responsive } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { slightlyBiggerText } from "../../styles/snippets";
@@ -29,6 +29,16 @@ const Styles = styled.div`
     padding: 1rem !important;
     ${slightlyBiggerText};
   }
+
+  .Thing-bottom {
+    position: absolute !important;
+    bottom: 0 !important;
+    right: 0 !important;
+  }
+
+  .Thing-bottom_menu {
+    font-size: 0.8rem !important;
+  }
 `;
 
 function Thing({ image, title, top, content, bottom }) {
@@ -43,18 +53,49 @@ function Thing({ image, title, top, content, bottom }) {
             <Grid.Column className="Thing-column" computer={12} mobile={16}>
               <Menu className="Thing-menu" attached="top" inverted>
                 <Menu.Item header content={title} />
+                <Responsive
+                  as={Menu.Menu}
+                  position="right"
+                  minWidth={Responsive.onlyTablet.minWidth}
+                >
+                  <Menu.Item header content={top} />
+                </Responsive>
+              </Menu>
+              <Responsive
+                as={Menu}
+                maxWidth={Responsive.onlyMobile.maxWidth}
+                className="Thing-menu"
+                width={16}
+                inverted
+              >
+                {bottom && (
+                  <Menu.Item
+                    className="Thing-bottom_menu"
+                    header
+                    content={bottom}
+                  />
+                )}
                 <Menu.Menu position="right">
                   <Menu.Item header content={top} />
                 </Menu.Menu>
-              </Menu>
-              <div className="Thing-content">{content}</div>
-              {bottom && (
-                <Menu attached="bottom" inverted>
-                  <Menu.Menu position="right">
-                    <Menu.Item header content={bottom} />
-                  </Menu.Menu>
-                </Menu>
-              )}
+              </Responsive>
+              <div
+                className="Thing-content"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+              <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+                {bottom && (
+                  <Grid.Row className="Thing-bottom">
+                    <Grid.Column width={16}>
+                      <Menu inverted>
+                        <Menu.Menu position="right">
+                          <Menu.Item header content={bottom} />
+                        </Menu.Menu>
+                      </Menu>
+                    </Grid.Column>
+                  </Grid.Row>
+                )}
+              </Responsive>
             </Grid.Column>
           </Grid.Row>
         </Grid>

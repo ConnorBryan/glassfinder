@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Segment, Divider } from "semantic-ui-react";
+import { Container, Divider } from "semantic-ui-react";
 
 import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";

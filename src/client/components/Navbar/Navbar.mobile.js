@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Menu, Image, Header, Icon, Divider } from "semantic-ui-react";
+import { Menu, Header, Icon, Divider } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { fancy } from "../../styles/snippets";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Segment, Card, Image } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import styled from "styled-components";
 
 import * as config from "../../../config";

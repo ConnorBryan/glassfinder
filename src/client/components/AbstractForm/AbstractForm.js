@@ -6,7 +6,6 @@ import {
   Divider,
   Menu,
   Segment,
-  Button,
   Message,
   Dropdown
 } from "semantic-ui-react";

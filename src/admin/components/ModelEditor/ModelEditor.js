@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Container, Segment, Loader } from "semantic-ui-react";
 
 import FormScreen from "../../../client/components/FormScreen";
 
@@ -51,7 +50,7 @@ export default class ModelEditor extends Component {
       title,
       description
     } = this.props;
-    const { loading, fetched, model } = this.state;
+    const { model } = this.state;
     const id = pathname.split("/")[2];
     const fields = formFields.map(field => ({
       ...field,
@@ -67,16 +66,5 @@ export default class ModelEditor extends Component {
     const abstractForm = { fields, onSubmit };
 
     return <FormScreen {...{ screenHeader, abstractForm }} />;
-
-    // return (
-    //   <Container>
-    //     {loading || !fetched ? (
-    //       <Loader active />
-    //     <ScreenHeader {...{ icon, title, description }} />
-    //     ) : (
-    //       <AbstractForm {...{ fields, onSubmit }} />
-    //     )}
-    //   </Container>
-    // );
   }
 }

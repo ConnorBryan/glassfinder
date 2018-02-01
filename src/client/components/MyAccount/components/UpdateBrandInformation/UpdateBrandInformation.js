@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { Container, Segment } from "semantic-ui-react";
 import Yup from "yup";
 
 import * as config from "../../../../../config";
@@ -86,7 +85,7 @@ function UpdateBrandInformation({
 
   const abstractForm = {
     onSubmit,
-    fields: FIELDS
+    fields
   };
 
   return <FormScreen {...{ screenHeader, abstractForm }} />;

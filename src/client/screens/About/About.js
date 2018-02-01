@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Container, Item, Segment } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import styled from "styled-components";
 
 import * as config from "../../../config";
@@ -18,35 +18,6 @@ const Styles = styled.div`
     ${slightlyBiggerText};
   }
 `;
-
-export function AboutItem({
-  admin,
-  edit,
-  remove,
-  image,
-  name,
-  title,
-  description
-}) {
-  return (
-    <Item>
-      <Item.Image circular size="medium" src={image} />
-      <Item.Content>
-        <Item.Header as="h3">{name}</Item.Header>
-        <Item.Description>
-          <em>{title}</em>
-        </Item.Description>
-        <Item.Description>{description}</Item.Description>
-        {admin && (
-          <Item.Extra>
-            <Button icon="pencil" content="Edit" primary onClick={edit} />
-            <Button icon="trash" content="Remove" negative onClick={remove} />
-          </Item.Extra>
-        )}
-      </Item.Content>
-    </Item>
-  );
-}
 
 class About extends Component {
   state = {

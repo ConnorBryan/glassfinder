@@ -1,14 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  Grid,
-  Icon,
-  Header,
-  Segment,
-  Image,
-  Button,
-  Menu
-} from "semantic-ui-react";
+import { Grid, Icon, Segment, Image, Menu } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { fancy } from "../../../../styles/snippets";
