@@ -3,7 +3,7 @@
  * "Basic screens" are screens that do not require authorization
  * and are unrelated to the core functionality of the product.
  */
-import Home from "../components/Home";
+import Home from "../screens/Home";
 import About from "../components/About";
 import Help from "../components/Help";
 import Updates from "../components/Updates";

@@ -22,7 +22,8 @@ const Styles = styled.div`
     }
 
     .segment {
-      background: rgba(255, 255, 255, 0.5) !important;
+      background: rgba(22, 22, 22, 0.7) !important;
+      border: 1px solid white !important;
     }
 
     button {
@@ -35,11 +36,17 @@ function Splash({ verbiage }) {
   return (
     <Styles>
       <Container className="Splash-wrapper">
-        <Segment className="Splash-main" padded="very" textAlign="center" basic>
+        <Segment
+          className="Splash-main"
+          padded="very"
+          textAlign="center"
+          basic
+          inverted
+        >
           <Header>{verbiage.Home_tagline}</Header>
           <Header content={verbiage.Home_subTagline} />
           <Button.Group>
-            <Button as={Link} to="/sign-up" primary>
+            <Button as={Link} to="/sign-up" size="huge" primary>
               {verbiage.Home_getStartedButton} <Icon name="chevron right" />
             </Button>
           </Button.Group>

@@ -1,3 +1,5 @@
+import { capitalize } from "../util";
+
 /**
  * I S O M O R P H I C
  *    C O N F I G U R A T I O N
@@ -91,8 +93,8 @@ export const LINK_TYPES = {
 export const LINK_TYPES_TO_RESOURCES = {
   [LINK_TYPES.SHOP]: "shops",
   [LINK_TYPES.ARTIST]: "artists",
-  [LINK_TYPES.BRANDS]: "brands",
-  [LINK_TYPES.PIECES]: "pieces"
+  [LINK_TYPES.BRAND]: "brands",
+  [LINK_TYPES.PIECE]: "pieces"
 };
 export const ICON_SET = {
   [LINK_TYPES.SHOP]: "shopping cart",
@@ -208,3 +210,29 @@ export const USER_VERIFICATION_SUCCESS_NOTIFICATION =
   "Your account was successfully verified. You may now sign in.";
 export const USER_VERIFICATION_ERROR_NOTIFICATION =
   "We were unable to verify you. Please ensure the URL in the address bar is correct.";
+export const HOME_TILES = [
+  {
+    icon: ICON_SET[LINK_TYPES.SHOP],
+    link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.SHOP]}`,
+    title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.SHOP]),
+    image: "https://placehold.it/1000x1000"
+  },
+  {
+    icon: ICON_SET[LINK_TYPES.ARTIST],
+    link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.ARTIST]}`,
+    title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.ARTIST]),
+    image: "https://placehold.it/1000x1000"
+  },
+  {
+    icon: ICON_SET[LINK_TYPES.BRAND],
+    link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.BRAND]}`,
+    title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.BRAND]),
+    image: "https://placehold.it/1000x1000"
+  },
+  {
+    icon: ICON_SET[LINK_TYPES.PIECE],
+    link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.PIECE]}`,
+    title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.PIECE]),
+    image: "https://placehold.it/1000x1000"
+  }
+];

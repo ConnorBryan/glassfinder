@@ -5,3 +5,4 @@ export * from "./cache";
 export { default as logger } from "./logger";
 export * from "./responsive";
 export { default as genericSetItems } from "./setItems";
+export { default as capitalize } from "./capitalize";
