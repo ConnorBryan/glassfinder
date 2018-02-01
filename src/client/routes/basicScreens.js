@@ -4,7 +4,7 @@
  * and are unrelated to the core functionality of the product.
  */
 import Home from "../screens/Home";
-import About from "../components/About";
+import About from "../screens/About";
 import Help from "../components/Help";
 import Updates from "../components/Updates";
 import Contact from "../components/Contact";
