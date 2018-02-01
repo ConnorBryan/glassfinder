@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Container, Divider, Item, Segment } from "semantic-ui-react";
+import { Button, Container, Item, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
 import * as config from "../../../config";
@@ -29,7 +29,7 @@ export function AboutItem({
 }) {
   return (
     <Item>
-      <Item.Image circular size="small" src={image} />
+      <Item.Image circular size="medium" src={image} />
       <Item.Content>
         <Item.Header as="h3">{name}</Item.Header>
         <Item.Description>
@@ -70,13 +70,12 @@ class About extends Component {
 
     return (
       <Styles>
-        <Container as={Segment}>
+        <Container>
           <ScreenHeader
             icon="question circle"
             title={verbiage.About_title}
             description={verbiage.About_description}
           />
-          <Divider hidden />
           <Segment>
             <Item.Group divided relaxed="very">
               {items.map(about => <AboutItem key={about.name} {...about} />)}

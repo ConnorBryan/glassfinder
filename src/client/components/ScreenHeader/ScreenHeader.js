@@ -14,7 +14,12 @@ const Styles = styled.div`
     ${fancy};
   }
 
+  .huh {
+    border-color: white !important;
+  }
+
   .ScreenHeader-description {
+    border-color: white !important;
     ${slightlyBiggerText};
   }
 `;
@@ -23,7 +28,7 @@ function ScreenHeader({ icon, title, description }) {
   return (
     <Styles>
       <Segment.Group>
-        <Segment attached="top" inverted>
+        <Segment className="huh" attached="top" inverted>
           <Header as="h3">
             <Icon name={icon} /> {title}
           </Header>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Segment, Loader, Search } from "semantic-ui-react";
+import { Container, Segment, Loader, Search } from "semantic-ui-react";
 import styled from "styled-components";
 import queryString from "query-string";
 import { flatten, times, escapeRegExp } from "lodash";
@@ -403,24 +403,26 @@ export default class ExploreMode extends Component {
 
     return (
       <Styles>
-        <Segment.Group>
-          <section className="fancy">
-            <ConfiguredViewMode />
-            <ConfiguredSearch />
-            <ConfiguredPagination />
-          </section>
-          <Segment className="viewport">
-            {loading ? (
-              <Loader active />
-            ) : (
-              this.getRenderFunc()(collection[page], this.onClick)
-            )}
-          </Segment>
-          <section className="fancy">
-            <ConfiguredPagination />
-            <ConfiguredViewMode upward />
-          </section>
-        </Segment.Group>
+        <Container>
+          <Segment.Group>
+            <section className="fancy">
+              <ConfiguredViewMode />
+              <ConfiguredSearch />
+              <ConfiguredPagination />
+            </section>
+            <Segment className="viewport">
+              {loading ? (
+                <Loader active />
+              ) : (
+                this.getRenderFunc()(collection[page], this.onClick)
+              )}
+            </Segment>
+            <section className="fancy">
+              <ConfiguredPagination />
+              <ConfiguredViewMode upward />
+            </section>
+          </Segment.Group>
+        </Container>
       </Styles>
     );
   }

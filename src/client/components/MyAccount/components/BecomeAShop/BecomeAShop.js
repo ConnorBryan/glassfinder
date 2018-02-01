@@ -6,8 +6,7 @@ import Yup from "yup";
 import * as config from "../../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
-import ScreenHeader from "../../../ScreenHeader";
-import AbstractForm from "../../../AbstractForm";
+import FormScreen from "../../../FormScreen";
 
 const FIELDS = [
   {
@@ -131,16 +130,18 @@ function BecomeAShop({
     return displayNotification(config.BAD_ADDRESS_NOTIFICATION);
   };
 
-  return (
-    <Container as={Segment}>
-      <ScreenHeader
-        icon={config.ICON_SET[config.LINK_TYPES.SHOP]}
-        title={verbiage.BecomeAShop_title}
-        description={verbiage.BecomeAShop_description}
-      />
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-    </Container>
-  );
+  const screenHeader = {
+    icon: config.ICON_SET[config.LINK_TYPES.SHOP],
+    title: verbiage.BecomeAShop_title,
+    description: verbiage.BecomeAShop_description
+  };
+
+  const abstractForm = {
+    onSubmit,
+    fields: FIELDS
+  };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 export default withRouter(BecomeAShop);

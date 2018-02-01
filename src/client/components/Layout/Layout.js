@@ -13,7 +13,6 @@ import {
 import styled from "styled-components";
 
 import routes, { RecursiveRoutes } from "../../routes";
-import { blue as palette } from "../../styles/palettes";
 import Navbar from "../Navbar";
 import MobileNavigation from "../MobileNavigation";
 import Notification from "../Notification";

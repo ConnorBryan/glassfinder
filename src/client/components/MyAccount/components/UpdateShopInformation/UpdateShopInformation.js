@@ -7,8 +7,7 @@ import * as config from "../../../../../config";
 import { removeFromCache } from "../../../../../util";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
-import ScreenHeader from "../../../ScreenHeader";
-import AbstractForm from "../../../AbstractForm";
+import FormScreen from "../../../FormScreen";
 
 const FIELDS = [
   {
@@ -136,16 +135,18 @@ function UpdateShopInformation({
     return displayNotification(config.BAD_ADDRESS_NOTIFICATION);
   };
 
-  return (
-    <Container as={Segment}>
-      <ScreenHeader
-        icon={config.ICON_SET[config.LINK_TYPES.SHOP]}
-        title={verbiage.UpdateShopInformation_title}
-        description={verbiage.UpdateShopInformation_description}
-      />
-      <AbstractForm onSubmit={onSubmit} fields={fields} />
-    </Container>
-  );
+  const screenHeader = {
+    icon: config.ICON_SET[config.LINK_TYPES.SHOP],
+    title: verbiage.UpdateShopInformation_title,
+    description: verbiage.UpdateShopInformation_description
+  };
+
+  const abstractForm = {
+    onSubmit,
+    fields: FIELDS
+  };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 export default withRouter(UpdateShopInformation);

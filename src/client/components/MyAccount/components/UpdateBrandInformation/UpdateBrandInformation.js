@@ -6,8 +6,7 @@ import Yup from "yup";
 import * as config from "../../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
-import ScreenHeader from "../../../ScreenHeader";
-import AbstractForm from "../../../AbstractForm";
+import FormScreen from "../../../FormScreen";
 
 const FIELDS = [
   {
@@ -79,16 +78,18 @@ function UpdateBrandInformation({
     return displayNotification(config.UPDATE_INFORMATION_FAILURE_NOTIFICATION);
   };
 
-  return (
-    <Container as={Segment}>
-      <ScreenHeader
-        icon={config.ICON_SET[config.LINK_TYPES.BRAND]}
-        title={verbiage.UpdateBrandInformation_title}
-        description={verbiage.UpdateBrandInformation_description}
-      />
-      <AbstractForm onSubmit={onSubmit} fields={fields} />
-    </Container>
-  );
+  const screenHeader = {
+    icon: config.ICON_SET[config.LINK_TYPES.BRAND],
+    title: verbiage.UpdateBrandInformation_title,
+    description: verbiage.UpdateBrandInformation_description
+  };
+
+  const abstractForm = {
+    onSubmit,
+    fields: FIELDS
+  };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 export default withRouter(UpdateBrandInformation);

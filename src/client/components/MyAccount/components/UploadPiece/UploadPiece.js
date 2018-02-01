@@ -6,8 +6,7 @@ import { Container, Segment } from "semantic-ui-react";
 import * as config from "../../../../../config";
 import { removeFromCache } from "../../../../../util";
 import API from "../../../../services";
-import ScreenHeader from "../../../ScreenHeader";
-import AbstractForm from "../../../AbstractForm";
+import FormScreen from "../../../FormScreen";
 
 const FIELDS = [
   {
@@ -80,16 +79,18 @@ function UploadPiece({ verbiage, account, history, displayNotification }) {
     return displayNotification(config.UPLOAD_PIECE_FAILURE_NOTIFICATION);
   };
 
-  return (
-    <Container as={Segment}>
-      <ScreenHeader
-        icon={config.ICON_SET[config.LINK_TYPES.PIECE]}
-        title={verbiage.UploadPiece_title}
-        description={verbiage.UploadPiece_description}
-      />
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-    </Container>
-  );
+  const screenHeader = {
+    icon: config.ICON_SET[config.LINK_TYPES.PIECE],
+    title: verbiage.UploadPiece_title,
+    description: verbiage.UploadPiece_description
+  };
+
+  const abstractForm = {
+    onSubmit,
+    fields: FIELDS
+  };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 export default withRouter(UploadPiece);

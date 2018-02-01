@@ -13,6 +13,10 @@ const Styles = styled.div`
     text-transform: uppercase !important;
     letter-spacing: 0.25rem !important;
   }
+
+  .segment {
+    border: 1px solid white !important;
+  }
 `;
 
 function MyAccountHeaderItem({ icon, title }) {
@@ -34,14 +38,14 @@ function MyAccountItem({ to, title }) {
 function MyAccountBasics({ verbiage }) {
   return (
     <Aux>
-      <Segment attached="top" color="blue">
+      <Segment inverted attached="top">
         <MyAccountHeaderItem
           icon="book"
           title={verbiage.MyAccount_basicsTitle}
         />
       </Segment>
-      <Segment attached="bottom">
-        <Menu color="blue" vertical fluid>
+      <Segment inverted attached="bottom">
+        <Menu inverted vertical fluid>
           <MyAccountItem
             to="/my-account/update-password"
             title={verbiage.MyAccount_updatePassword}
@@ -55,14 +59,14 @@ function MyAccountBasics({ verbiage }) {
 function MyAccountUnlinked({ verbiage }) {
   return (
     <Aux>
-      <Segment attached="top" color="blue">
+      <Segment inverted attached="top">
         <MyAccountHeaderItem
           icon="chain"
           title={verbiage.MyAccount_linkAccountTitle}
         />
       </Segment>
-      <Segment attached="bottom">
-        <Menu color="blue" vertical fluid>
+      <Segment inverted attached="bottom">
+        <Menu inverted vertical fluid>
           <MyAccountItem
             to="/my-account/become-a-shop"
             title={verbiage.MyAccount_becomeAShop}
@@ -84,14 +88,14 @@ function MyAccountUnlinked({ verbiage }) {
 function MyAccountShopMenu({ verbiage }) {
   return (
     <Aux>
-      <Segment attached="top" color="blue">
+      <Segment inverted attached="top">
         <MyAccountHeaderItem
           icon={config.ICON_SET.SHOP}
           title={verbiage.MyAccount_shopOptionsTitle}
         />
       </Segment>
-      <Segment attached="bottom">
-        <Menu color="blue" vertical fluid>
+      <Segment inverted attached="bottom">
+        <Menu inverted vertical fluid>
           <MyAccountItem
             to="/my-account/update-shop-information"
             title={verbiage.MyAccount_updateShopInformation}
@@ -114,14 +118,14 @@ function MyAccountShopMenu({ verbiage }) {
 function MyAccountArtistMenu({ verbiage }) {
   return (
     <Aux>
-      <Segment attached="top" color="blue">
+      <Segment inverted attached="top">
         <MyAccountHeaderItem
           icon={config.ICON_SET.ARTIST}
           title={verbiage.MyAccount_artistOptionsTitle}
         />
       </Segment>
-      <Segment attached="bottom">
-        <Menu color="blue" vertical fluid>
+      <Segment inverted attached="bottom">
+        <Menu inverted vertical fluid>
           <MyAccountItem
             to="/my-account/update-artist-information"
             title={verbiage.MyAccount_updateArtistInformation}
@@ -144,14 +148,14 @@ function MyAccountArtistMenu({ verbiage }) {
 function MyAccountBrandMenu({ verbiage }) {
   return (
     <Aux>
-      <Segment attached="top" color="blue">
+      <Segment inverted attached="top">
         <MyAccountHeaderItem
           icon={config.ICON_SET.BRAND}
           title={verbiage.MyAccount_brandOptionsTitle}
         />
       </Segment>
-      <Segment attached="bottom">
-        <Menu color="blue" vertical fluid>
+      <Segment inverted attached="bottom">
+        <Menu inverted vertical fluid>
           <MyAccountItem
             to="/my-account/update-brand-information"
             title={verbiage.MyAccount_updateBrandInformation}
@@ -182,7 +186,7 @@ function MyAccount({ verbiage, account }) {
 
   return (
     <Styles>
-      <Container as={Segment}>
+      <Container>
         <ScreenHeader
           icon="settings"
           title={verbiage.MyAccount_title}

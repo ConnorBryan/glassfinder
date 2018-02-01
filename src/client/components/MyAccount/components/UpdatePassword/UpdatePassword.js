@@ -5,8 +5,7 @@ import { Container, Segment } from "semantic-ui-react";
 import * as config from "../../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
-import ScreenHeader from "../../../ScreenHeader";
-import AbstractForm from "../../../AbstractForm";
+import FormScreen from "../../../FormScreen";
 
 const FIELDS = [
   {
@@ -46,16 +45,18 @@ function UpdatePassword({ verbiage, account, history, displayNotification }) {
     return displayNotification(config.UPDATE_PASSWORD_FAILURE_NOTIFICATION);
   };
 
-  return (
-    <Container as={Segment}>
-      <ScreenHeader
-        icon="lock"
-        title={verbiage.UpdatePassword_title}
-        description={verbiage.UpdatePassword_description}
-      />
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-    </Container>
-  );
+  const screenHeader = {
+    icon: "lock",
+    title: verbiage.UpdatePassword_title,
+    description: verbiage.UpdatePassword_description
+  };
+
+  const abstractForm = {
+    onSubmit,
+    fields: FIELDS
+  };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 export default withRouter(UpdatePassword);

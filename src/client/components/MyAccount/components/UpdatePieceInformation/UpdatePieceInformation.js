@@ -6,8 +6,7 @@ import Yup from "yup";
 import * as config from "../../../../../config";
 import { removeFromCache } from "../../../../../util";
 import API from "../../../../services";
-import ScreenHeader from "../../../ScreenHeader";
-import AbstractForm from "../../../AbstractForm";
+import FormScreen from "../../../FormScreen";
 
 const FIELDS = [
   {
@@ -90,16 +89,18 @@ function UpdatePieceInformation({
     return displayNotification(config.UPDATE_INFORMATION_FAILURE_NOTIFICATION);
   };
 
-  return (
-    <Container as={Segment}>
-      <ScreenHeader
-        icon={config.ICON_SET[config.LINK_TYPES.PIECE]}
-        title={verbiage.UpdatePieceInformation_title}
-        description={verbiage.UpdatePieceInformatione_description}
-      />
-      <AbstractForm onSubmit={onSubmit} fields={fields} />
-    </Container>
-  );
+  const screenHeader = {
+    icon: config.ICON_SET[config.LINK_TYPES.PIECE],
+    title: verbiage.UpdatePieceInformation_title,
+    description: verbiage.UpdatePieceInformatione_description
+  };
+
+  const abstractForm = {
+    onSubmit,
+    fields: FIELDS
+  };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 export default withRouter(UpdatePieceInformation);

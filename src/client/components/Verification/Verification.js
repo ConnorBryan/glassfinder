@@ -5,8 +5,7 @@ import { Container, Segment, Loader } from "semantic-ui-react";
 import * as config from "../../../config";
 import * as Validators from "../../validators";
 import API from "../../services";
-import ScreenHeader from "../ScreenHeader";
-import AbstractForm from "../AbstractForm";
+import FormScreen from "../FormScreen";
 
 const FIELDS = [
   {
@@ -56,16 +55,19 @@ function VerificationResend({ history, displayNotification }) {
     return displayNotification(config.RESEND_VERIFICATION_ERROR_NOTIFICATION);
   };
 
-  return (
-    <Segment>
-      <ScreenHeader
-        icon="eye"
-        title="Resend verification"
-        description="Sometimes things get lost in the shuffle. We can send out another email to get you verified and ready to go."
-      />
-      <AbstractForm fields={FIELDS} {...{ onSubmit }} />
-    </Segment>
-  );
+  const screenHeader = {
+    icon: "eye",
+    title: "Resend verification",
+    description:
+      "Sometimes things get lost in the shuffle. We can send out another email to get you verified and ready to go."
+  };
+
+  const abstractForm = {
+    onSubmit,
+    fields: FIELDS
+  };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 function VerificationError({ displayNotification }) {
@@ -144,7 +146,7 @@ class Verification extends Component {
   render() {
     const renderMode = this.getRenderMode();
 
-    return <Container>{renderMode()}</Container>;
+    return renderMode();
   }
 }
 

@@ -2,19 +2,16 @@ import React from "react";
 import { Formik } from "formik";
 import Yup from "yup";
 import {
-  Icon,
   Form,
-  Menu,
   Divider,
+  Menu,
   Segment,
   Button,
   Message,
-  Dropdown,
-  Responsive
+  Dropdown
 } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { tabletSized } from "../../../util";
 import { fancy, evenBiggerText } from "../../styles/snippets";
 
 const Styles = styled.div`
@@ -79,6 +76,7 @@ function AbstractFormField({
       <Form.Field>
         <label>{inputProps.label}</label>
         <Dropdown
+          inverted
           placeholder={inputProps.placeholder}
           search
           selection
@@ -152,7 +150,8 @@ function AbstractForm({ fields, onSubmit, actions }) {
                 ))}
               </Segment.Group>
             </Segment>
-            <Menu attached="bottom" inverted widths={2}>
+            <Divider hidden />
+            <Menu attached="top" inverted widths={2}>
               <Menu.Item
                 icon="send outline"
                 content="Send"
@@ -168,9 +167,9 @@ function AbstractForm({ fields, onSubmit, actions }) {
             </Menu>
             {actions &&
               actions.map((action, index) => (
-                <Segment key={index} color="black">
-                  <Button {...action} fluid />
-                </Segment>
+                <Menu attached="bottom" inverted widths={1}>
+                  <Menu.Item {...action} />
+                </Menu>
               ))}
           </Form>
         </Styles>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Segment, Divider, Item, Button } from "semantic-ui-react";
+import { Container, Segment, Item, Button } from "semantic-ui-react";
 import styled from "styled-components";
 import moment from "moment";
 
@@ -101,13 +101,12 @@ class Updates extends Component {
 
     return (
       <Styles>
-        <Container as={Segment}>
+        <Container>
           <ScreenHeader
             icon="newspaper"
             title={verbiage.Updates_title}
             description={verbiage.Updates_description}
           />
-          <Divider hidden />
           <Segment>
             <Item.Group as={Segment} relaxed="very" basic divided>
               {items.map(update => (

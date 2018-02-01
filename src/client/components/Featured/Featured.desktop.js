@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Item, Icon, Button, Segment, Transition } from "semantic-ui-react";
+import { Item, Icon, Button, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
 const Styles = styled.div`

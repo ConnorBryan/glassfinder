@@ -3,8 +3,7 @@ import Yup from "yup";
 import { Container, Segment } from "semantic-ui-react";
 
 import * as Validators from "../../validators";
-import ScreenHeader from "../ScreenHeader";
-import AbstractForm from "../AbstractForm";
+import FormScreen from "../FormScreen";
 
 const FIELDS = [
   {
@@ -52,16 +51,18 @@ function Signup({ verbiage, signup, history }) {
     }
   };
 
-  return (
-    <Container as={Segment}>
-      <ScreenHeader
-        icon="question circle"
-        title={verbiage.Signup_title}
-        description={verbiage.Signup_description}
-      />
-      <AbstractForm fields={FIELDS} {...{ onSubmit }} />
-    </Container>
-  );
+  const screenHeader = {
+    icon: "question circle",
+    title: verbiage.Signup_title,
+    description: verbiage.Signup_title
+  };
+
+  const abstractForm = {
+    onSubmit,
+    fields: FIELDS
+  };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 export default Signup;

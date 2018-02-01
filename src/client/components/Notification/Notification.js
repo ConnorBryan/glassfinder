@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   TransitionablePortal,
+  Icon,
   Responsive,
   Label,
   Segment
@@ -20,7 +21,8 @@ function Notification({ dismiss, message }) {
           onClick: dismiss
         }}
       />
-      <span style={{ fontSize: "1.2rem" }}>{message}</span>
+      <Icon name="envelope" />
+      <span style={{ fontSize: "1.2rem", marginLeft: "1rem" }}>{message}</span>
     </Aux>
   );
 
@@ -32,15 +34,15 @@ function Notification({ dismiss, message }) {
         open
       >
         <Segment
-          color="blue"
+          inverted
           style={{
+            border: "1px solid white",
             position: "fixed",
             zIndex: 1000,
             width: "80%",
             left: "10%",
             top: "10%"
           }}
-          content={interior}
         />
       </Responsive>
       <Responsive
@@ -49,8 +51,9 @@ function Notification({ dismiss, message }) {
         open
       >
         <Segment
-          color="blue"
+          inverted
           style={{
+            border: "1px solid white",
             position: "fixed",
             zIndex: 1000,
             width: "40%",

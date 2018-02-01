@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Segment,
-  Button,
-  Divider,
-  Accordion,
-  Icon
-} from "semantic-ui-react";
+import { Container, Segment, Button, Accordion, Icon } from "semantic-ui-react";
 import Aux from "react-aux";
 import styled from "styled-components";
 
@@ -25,6 +18,13 @@ const Styles = styled.div`
 
     ul {
       line-height: 3rem !important;
+    }
+  }
+  .Help-accordion {
+    border: 1px solid white !important;
+
+    & .accordion {
+      background: transparent !important;
     }
   }
 `;
@@ -98,22 +98,23 @@ class Help extends Component {
 
     return (
       <Styles>
-        <Container as={Segment}>
+        <Container>
           <ScreenHeader
             icon="list ul"
             title={verbiage.Help_title}
             description={verbiage.Help_description}
           />
-          <Divider hidden />
-          <Accordion styled fluid>
-            {items.map(({ title, content }, index) => (
-              <HelpItem
-                key={index}
-                {...{ index, activeIndex, title, content }}
-                handleClick={this.handleClick}
-              />
-            ))}
-          </Accordion>
+          <Segment className="Help-accordion" inverted>
+            <Accordion styled fluid inverted>
+              {items.map(({ title, content }, index) => (
+                <HelpItem
+                  key={index}
+                  {...{ index, activeIndex, title, content }}
+                  handleClick={this.handleClick}
+                />
+              ))}
+            </Accordion>
+          </Segment>
         </Container>
       </Styles>
     );

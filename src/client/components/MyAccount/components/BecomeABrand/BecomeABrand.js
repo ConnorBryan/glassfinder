@@ -6,8 +6,7 @@ import Yup from "yup";
 import * as config from "../../../../../config";
 import API from "../../../../services";
 import * as Validators from "../../../../validators";
-import ScreenHeader from "../../../ScreenHeader";
-import AbstractForm from "../../../AbstractForm";
+import FormScreen from "../../../FormScreen";
 
 const FIELDS = [
   {
@@ -61,7 +60,7 @@ function BecomeABrand({
 
   const onSubmit = async values => {
     const updatedAccount = await API.becomeABrand(account.id, values);
-    console.log(updateAccount, "!!!");
+
     if (updatedAccount) {
       updateAccount("linked", true);
 
@@ -73,16 +72,18 @@ function BecomeABrand({
     return displayNotification(config.LINK_REQUEST_FAILURE_NOTIFICATION);
   };
 
-  return (
-    <Container as={Segment}>
-      <ScreenHeader
-        icon={config.ICON_SET[config.LINK_TYPES.BRAND]}
-        title={verbiage.BecomeABrand_title}
-        description={verbiage.BecomeABrand_description}
-      />
-      <AbstractForm onSubmit={onSubmit} fields={FIELDS} />
-    </Container>
-  );
+  const screenHeader = {
+    icon: config.ICON_SET[config.LINK_TYPES.BRAND],
+    title: verbiage.BecomeABrand_title,
+    description: verbiage.BecomeABrand_description
+  };
+
+  const abstractForm = {
+    onSubmit,
+    fields: FIELDS
+  };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 export default withRouter(BecomeABrand);

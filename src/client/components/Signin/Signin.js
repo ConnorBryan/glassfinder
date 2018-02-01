@@ -3,8 +3,7 @@ import { Redirect } from "react-router-dom";
 import { Container, Segment } from "semantic-ui-react";
 
 import * as Validators from "../../validators";
-import ScreenHeader from "../ScreenHeader";
-import AbstractForm from "../AbstractForm";
+import FormScreen from "../FormScreen";
 
 const FIELDS = [
   {
@@ -37,21 +36,24 @@ function Signin({ verbiage, account, history, signin }) {
   const actions = [
     {
       icon: "envelope",
-      content: "I need another verification email",
+      content: "Send new verification",
       onClick: () => history.push("/verification")
     }
   ];
 
-  return (
-    <Container as={Segment}>
-      <ScreenHeader
-        icon="sign in"
-        title={verbiage.Signin_title}
-        description={verbiage.Signin_description}
-      />
-      <AbstractForm {...{ onSubmit, actions }} fields={FIELDS} />
-    </Container>
-  );
+  const screenHeader = {
+    icon: "sign in",
+    title: verbiage.Signin_title,
+    description: verbiage.Signin_description
+  };
+
+  const abstractForm = {
+    onSubmit,
+    actions,
+    fields: FIELDS
+  };
+
+  return <FormScreen {...{ screenHeader, abstractForm }} />;
 }
 
 export default Signin;
