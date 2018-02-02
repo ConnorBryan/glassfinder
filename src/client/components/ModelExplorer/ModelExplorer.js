@@ -58,8 +58,11 @@ export default class ModelExplorer extends Component {
   };
 
   state = {
+    sort: config.SORT_DATE_ASCENDING,
     models: [],
-    currentPage: 0
+    currentPage: 0,
+    totalPages: 0,
+    perPage: config.MODEL_READ_LIMIT
   };
 
   fetchModels = this.props.fetchModels;
@@ -72,6 +75,7 @@ export default class ModelExplorer extends Component {
   }
 
   setModels = async () => {
+    const { currentPage, sort } = this.state;
     // const cachedModels = CacheProvider.retrieve(this.cacheKey);
 
     // if (cachedModels && !CacheProvider.hasExpired(cachedModels)) {
@@ -82,7 +86,10 @@ export default class ModelExplorer extends Component {
     //   });
     // }
 
-    const { page: models, totalPages, perPage } = await this.fetchModels();
+    const { page: models, totalPages, perPage } = await this.fetchModels(
+      currentPage,
+      sort
+    );
 
     // CacheProvider.update(this.cacheKey, models, this.cacheExpiration);
 
@@ -98,15 +105,43 @@ export default class ModelExplorer extends Component {
     );
 
     this.setState({
+      sort,
       models,
       totalPages,
       perPage
     });
   };
 
+  loadPage = currentPage => this.setState({ currentPage }, this.setModels);
+
+  loadFirstPage = () => this.loadPage(0);
+  loadPreviousPage = () => {
+    const { currentPage } = this.state;
+    const nextPage = currentPage - 1;
+
+    if (nextPage > -1) {
+      this.loadPage(nextPage);
+    }
+  };
+  loadNextPage = () => {
+    const { currentPage, totalPages } = this.state;
+    const nextPage = currentPage + 1;
+
+    if (nextPage < totalPages) {
+      this.loadPage(nextPage);
+    }
+  };
+  loadLastPage = () => this.loadPage(this.state.totalPages - 1);
+
   render() {
+    const {
+      loadFirstPage,
+      loadPreviousPage,
+      loadNextPage,
+      loadLastPage
+    } = this;
     const { renderItems, resource } = this.props;
-    const { models } = this.state;
+    const { models, currentPage, totalPages } = this.state;
 
     return (
       <Styles>
@@ -116,7 +151,19 @@ export default class ModelExplorer extends Component {
         <Grid inverted divided columns={12}>
           <Grid.Row className="ModelExplorer-row">
             <ExplorerOptions sort={this.sortModels} />
-            <Explorer {...{ renderItems, resource, models }} />
+            <Explorer
+              {...{
+                loadFirstPage,
+                loadPreviousPage,
+                loadNextPage,
+                loadLastPage,
+                currentPage,
+                totalPages,
+                renderItems,
+                resource,
+                models
+              }}
+            />
             <ExplorerMap />
           </Grid.Row>
         </Grid>
