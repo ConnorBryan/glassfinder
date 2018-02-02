@@ -137,9 +137,13 @@ export default class API {
   static fetchBrands = partial(API.fetchModels, "brands");
   static fetchPieces = partial(API.fetchModels, "pieces");
 
-  static async fetchPiecesForId(id, page = 0) {
+  static async fetchPiecesForId(
+    id,
+    page = 0,
+    sort = config.SORT_DATE_ASCENDING
+  ) {
     try {
-      const url = `${config.API_ROOT}/users/${id}/pieces?page=${page}`;
+      const url = `${config.API_ROOT}/users/${id}/pieces?page=${page}&sort=${sort}`;
       const {
         data: { payload: { count, pages: totalPages, pieces, perPage } }
       } = await axios.get(url);
@@ -156,6 +160,31 @@ export default class API {
       return null;
     }
   }
+
+  static async fetchModelPieces(
+    resource,
+    page = 0,
+    sort = config.SORT_DATE_ASCENDING,
+    id
+  ) {
+    try {
+      const url = `${config.API_ROOT}/${resource}/${id}/pieces?page=${page}&sort=${sort}`;
+      const { data: { payload } } = await axios.get(url);
+
+      return { ...payload };
+    } catch (e) {
+      console.error(e);
+
+      return {
+        page: [],
+        totalPages: 1,
+        perPage: 0
+      };
+    }
+  }
+
+  static fetchShopPieces = partial(API.fetchModelPieces, "shops");
+  static fetchArtistPieces = partial(API.fetchModelPieces, "artists");
 
   /**
    * 

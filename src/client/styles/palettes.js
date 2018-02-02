@@ -4,5 +4,6 @@ export const blue = {
   secondary: "#13002C !important",
   secondaryLightest: "#2F006E !important",
   complement: "#403000 !important",
-  complementLightest: "#A37A00 !important"
+  complementLightest: "#A37A00 !important",
+  invertedBackground: "#1b1c1d !important"
 };

@@ -23,6 +23,44 @@ import {
   renderGenericCard
 } from "./common";
 
+export function PieceThing(props) {
+  const {
+    id,
+    name: title,
+    image,
+    price: top,
+    location: bottom,
+    description: content
+  } = props;
+  const actions = [
+    {
+      icon: "eye",
+      content: "View",
+      as: Link,
+      to: `/pieces/${id}`
+    },
+    {
+      icon: "dollar",
+      content: "Purchase",
+      as: Link,
+      to: `/pieces/${id}/purchase`
+    }
+  ];
+
+  return (
+    <Thing
+      {...{
+        title,
+        image,
+        top: accounting.formatMoney(top),
+        bottom,
+        content,
+        actions
+      }}
+    />
+  );
+}
+
 export function PieceExplorer() {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.PIECE],
@@ -32,48 +70,7 @@ export function PieceExplorer() {
     cacheKey: config.PIECE_CACHE_KEY,
     cacheExpiration: config.PIECE_CACHE_EXPIRATION,
     renderItems: (models = []) =>
-      models.map(
-        (
-          {
-            id,
-            name: title,
-            image,
-            price: top,
-            location: bottom,
-            description: content
-          },
-          index
-        ) => {
-          const actions = [
-            {
-              icon: "eye",
-              content: "View",
-              as: Link,
-              to: `/pieces/${id}`
-            },
-            {
-              icon: "dollar",
-              content: "Purchase",
-              as: Link,
-              to: `/pieces/${id}/purchase`
-            }
-          ];
-
-          return (
-            <Thing
-              key={index}
-              {...{
-                title,
-                image,
-                top: accounting.formatMoney(top),
-                bottom,
-                content,
-                actions
-              }}
-            />
-          );
-        }
-      )
+      models.map((model, index) => <PieceThing key={index} {...model} />)
   };
 
   return <ModelExplorer {...props} />;

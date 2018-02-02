@@ -1,4 +1,5 @@
 import * as config from "../../../config";
+import { requireProperties } from "../../../util";
 import models from "../../database/models";
 import {
   genericSortedRead,
@@ -7,7 +8,7 @@ import {
   genericRemove
 } from "../common";
 
-const { Artist } = models;
+const { Artist, Piece } = models;
 
 /**
  * @func read
@@ -37,6 +38,29 @@ function readSorted(req, res) {
 }
 
 /**
+ * @func readPiecesSorted
+ * @desc Provides a page from a sorted collection.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Array<Piece>}
+ */
+async function readPiecesSorted(req, res) {
+  const { id } = req.params;
+
+  requireProperties({ id });
+
+  const { userId } = await Artist.findById(+id);
+
+  return genericSortedRead(
+    req,
+    res,
+    Piece,
+    config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.PIECE],
+    userId
+  );
+}
+
+/**
  * @func readAll
  * @desc Retrieves all instances of Artist.
  * @param {ExpressRequest} req 
@@ -61,5 +85,6 @@ export default {
   read,
   readAll,
   readSorted,
+  readPiecesSorted,
   remove
 };

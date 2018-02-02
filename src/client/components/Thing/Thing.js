@@ -1,6 +1,7 @@
 import React from "react";
 import { Segment, Grid, Image, Menu, Responsive } from "semantic-ui-react";
 import styled from "styled-components";
+import Aux from "react-aux";
 
 import { fancy, slightlyBiggerText } from "../../styles/snippets";
 
@@ -119,16 +120,33 @@ function Thing({ image, title, top, content, bottom, actions }) {
           </Grid>
         </Segment>
         {actions && (
-          <Menu
-            className="Thing-actions"
-            attached="bottom"
-            widths={actions.length}
-            inverted
-          >
-            {actions.map((action, index) => (
-              <Menu.Item key={index} {...action} />
-            ))}
-          </Menu>
+          <Aux>
+            <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
+              <Menu
+                className="Thing-actions"
+                attached="bottom"
+                widths={actions.length}
+                inverted
+              >
+                {actions.map((action, index) => (
+                  <Menu.Item key={index} {...action} />
+                ))}
+              </Menu>
+            </Responsive>
+            <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+              <Menu
+                stackable
+                className="Thing-actions"
+                attached="bottom"
+                widths={actions.length}
+                inverted
+              >
+                {actions.map((action, index) => (
+                  <Menu.Item key={index} {...action} />
+                ))}
+              </Menu>
+            </Responsive>
+          </Aux>
         )}
       </div>
     </Styles>

@@ -9,7 +9,7 @@ export const client = api => {
 
   ShopRouter.get("/", ShopController.readSorted);
   ShopRouter.get("/:id", ShopController.read);
-  ShopRouter.get("/:id/pieces", ShopController.fetchPiecesForId);
+  ShopRouter.get("/:id/pieces", ShopController.readPiecesSorted);
 
   api.use("/shops", ShopRouter);
 };

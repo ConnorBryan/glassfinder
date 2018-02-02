@@ -38,6 +38,29 @@ function readSorted(req, res) {
 }
 
 /**
+ * @func readPiecesSorted
+ * @desc Provides a page from a sorted collection.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Array<Piece>}
+ */
+async function readPiecesSorted(req, res) {
+  const { id } = req.params;
+
+  requireProperties({ id });
+
+  const { userId } = await Shop.findById(+id);
+
+  return genericSortedRead(
+    req,
+    res,
+    Piece,
+    config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.PIECE],
+    userId
+  );
+}
+
+/**
  * @func readAll
  * @desc Retrieves all instances of Shop.
  * @param {ExpressRequest} req 
@@ -105,6 +128,7 @@ export default {
   read,
   readAll,
   readSorted,
+  readPiecesSorted,
   remove,
   fetchPiecesForId,
   fetchMapMarkers

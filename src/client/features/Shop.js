@@ -9,15 +9,18 @@ import {
   Button,
   Icon,
   Segment,
-  Menu
+  Menu,
+  Loader
 } from "semantic-ui-react";
 import styled from "styled-components";
+import accounting from "accounting";
 
 import * as config from "../../config";
 import { fancy, slightlyBiggerText } from "../styles/snippets";
 import ScreenHeader from "../components/ScreenHeader";
 import Thing from "../components/Thing";
 import ModelExplorer from "../components/ModelExplorer";
+import ModelDetail from "../components/ModelDetail";
 import ModelViewer from "../components/ModelViewer";
 import ShopMap from "../components/ShopMap";
 import API from "../services";
@@ -27,212 +30,77 @@ import {
   renderGenericItem,
   renderGenericCard
 } from "./common";
+import { PieceThing } from "./Piece";
 
-class ShopDetail extends Component {
-  render() {
-    return <p>Detail</p>;
+const Styles = styled.div`
+  .ModelDetail-main {
+    padding: 0 !important;
   }
+`;
+
+function ShopThing(props) {
+  const {
+    id,
+    image,
+    name: title,
+    email,
+    description: content,
+    phone,
+    street,
+    city,
+    state,
+    zip
+  } = props;
+  const top = `${street}, ${city}, ${state} ${zip}`;
+  const actions = [
+    {
+      icon: "phone",
+      content: "Call",
+      as: "a",
+      href: `tel://${phone}`
+    },
+    {
+      icon: "envelope",
+      content: "Email",
+      href: `mailto://${email}`
+    },
+    {
+      icon: config.ICON_SET[config.LINK_TYPES.SHOP],
+      content: "Visit",
+      as: Link,
+      to: `/shops/${id}`
+    }
+  ];
+
+  return <Thing {...{ image, title, top, content, actions }} />;
+}
+
+function ShopDetail({ id }) {
+  const props = {
+    id,
+    fetchModel: API.fetchShop,
+    render: model => <ShopThing {...model} />
+  };
+
+  return <ModelDetail {...props} />;
 }
 
 export function ShopExplorer({ history }) {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.SHOP],
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.SHOP]}`,
-    detailTitle: name => `${name}'s Pieces`,
+    detailTitle: `Available Pieces`,
     resource: config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.SHOP],
     fetchModels: API.fetchShops,
+    fetchDetailModels: API.fetchShopPieces,
+    renderDetail: id => <ShopDetail {...{ id }} />,
     cacheKey: config.SHOP_CACHE_KEY,
     cacheExpiration: config.SHOP_CACHE_EXPIRATION,
     renderItems: (models = []) =>
-      models.map(
-        (
-          {
-            id,
-            image,
-            name: title,
-            email,
-            description: content,
-            phone,
-            street,
-            city,
-            state,
-            zip
-          },
-          index
-        ) => {
-          const top = `${street}, ${city}, ${state} ${zip}`;
-          const actions = [
-            {
-              icon: "phone",
-              content: "Call",
-              as: "a",
-              href: `tel://${phone}`
-            },
-            {
-              icon: "envelope",
-              content: "Email",
-              href: `mailto://${email}`
-            },
-            {
-              icon: config.ICON_SET[config.LINK_TYPES.SHOP],
-              content: "Visit",
-              as: Link,
-              to: `/shops/${id}`
-            }
-          ];
-
-          return (
-            <Thing key={index} {...{ image, title, top, content, actions }} />
-          );
-        }
-      ),
-    renderDetail: () => <ShopDetail />
+      models.map((model, index) => <ShopThing key={index} {...model} />),
+    renderDetailItems: (models = []) =>
+      models.map((model, index) => <PieceThing key={index} {...model} />)
   };
 
   return <ModelExplorer {...props} />;
-}
-
-export class ShopViewer extends Component {
-  shouldShowMap = () => {
-    const { location: { pathname } } = window;
-
-    return pathname.split("/").length === 2;
-  };
-
-  render() {
-    const { verbiage } = this.props;
-
-    const props = {
-      exploreService: API.fetchShops,
-      detailService: API.fetchShop,
-      uri: "/shops",
-      plural: "shops",
-      singular: "shop",
-      icon: "cart",
-      sorts: genericSorts,
-      renderTile: renderGenericTile,
-      renderItem: renderGenericItem,
-      renderCard: renderGenericCard,
-      renderDetail: ({
-        id,
-        name,
-        street,
-        city,
-        state,
-        zip,
-        image,
-        description,
-        phone,
-        email,
-        lat,
-        lng
-      }) => {
-        const Styles = styled.div`
-          .item {
-            ${fancy};
-          }
-
-          .menu {
-            border-radius: 0 !important;
-          }
-
-          .Shop-wrapper {
-            margin: 0 !important;
-            padding: 0 !important;
-
-            .image {
-              max-height: 50vh !important;
-            }
-          }
-
-          .Shop-address {
-            margin-bottom: 0 !important;
-            font-size: 0.8rem !important;
-          }
-
-          .Shop-description {
-            ${slightlyBiggerText} line-height: 2.5rem !important;
-          }
-        `;
-
-        const mapsUrl = `https://www.google.com/maps/@${lat},${lng},8z`;
-        const address = `${street} ${city}, ${state} ${zip}`;
-        const telephoneHref = `tel:${phone}`;
-        const emailHref = `mailto:${email}`;
-        const piecesLink = `/pieces?userId=${id}&type=SHOP`;
-
-        return (
-          <Styles>
-            <Menu attached="top" inverted>
-              <Menu.Item header content={name} />
-              <Menu.Item
-                as={Responsive}
-                minWidth={Responsive.onlyTablet.minWidth}
-                position="right"
-              >
-                <Icon name="globe" /> {address}
-              </Menu.Item>
-            </Menu>
-            <Menu
-              as={Responsive}
-              maxWidth={Responsive.onlyMobile.maxWidth}
-              attached="bottom"
-              className="Shop-address"
-              inverted
-            >
-              <Menu.Item>
-                <Icon name="globe" /> {address}
-              </Menu.Item>
-            </Menu>
-            <Segment attached="bottom" className="Shop-wrapper">
-              <Image src={image} fluid />
-            </Segment>
-            <Menu attached="bottom" widths={3} stackable inverted>
-              <Menu.Item as="a" href={telephoneHref}>
-                <Icon name="phone" /> {phone}
-              </Menu.Item>
-              <Menu.Item as="a" href={emailHref}>
-                <Icon name="envelope" /> {email}
-              </Menu.Item>
-              <Menu.Item as="a" href={mapsUrl} target="_blank">
-                <Icon name="map pin" /> View on Google Maps
-              </Menu.Item>
-            </Menu>
-            <Segment attached="bottom" className="Shop-description" clearing>
-              {description}
-              <Divider hidden />
-              <Button as={Link} to={piecesLink} floated="right" primary>
-                <Icon name="puzzle" /> View pieces
-              </Button>
-            </Segment>
-          </Styles>
-        );
-      }
-    };
-
-    return (
-      <Container>
-        <ScreenHeader
-          icon={config.ICON_SET[config.LINK_TYPES.SHOP]}
-          title={verbiage.ExploreShops_title}
-          description={verbiage.ExploreShops_description}
-        />
-        <Divider hidden section />
-        {this.shouldShowMap() ? (
-          <Grid stackable>
-            <Grid.Row>
-              <Grid.Column width={10}>
-                <ModelViewer {...props} />
-              </Grid.Column>
-              <Grid.Column width={6}>
-                <ShopMap />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        ) : (
-          <ModelViewer {...props} />
-        )}
-      </Container>
-    );
-  }
 }

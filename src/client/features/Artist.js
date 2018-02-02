@@ -6,6 +6,7 @@ import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
 import Thing from "../components/Thing";
 import ModelExplorer from "../components/ModelExplorer";
+import ModelDetail from "../components/ModelDetail";
 import ModelViewer from "../components/ModelViewer";
 import API from "../services";
 import {
@@ -14,6 +15,32 @@ import {
   renderGenericItem,
   renderGenericCard
 } from "./common";
+import { PieceThing } from "./Piece";
+
+function ArtistThing(props) {
+  const { id, name: title, image, from: bottom, description: content } = props;
+
+  const actions = [
+    {
+      icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
+      content: "Visit profile",
+      as: Link,
+      to: `/artists/${id}`
+    }
+  ];
+
+  return <Thing {...{ title, image, bottom, content, actions }} />;
+}
+
+function ArtistDetail({ id }) {
+  const props = {
+    id,
+    fetchModel: API.fetchArtist,
+    render: model => <ArtistThing {...model} />
+  };
+
+  return <ModelDetail {...props} />;
+}
 
 export function ArtistExplorer() {
   const props = {
@@ -21,34 +48,17 @@ export function ArtistExplorer() {
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[
       config.LINK_TYPES.ARTIST
     ]}`,
-    detailTitle: name => `${name}'s Pieces`,
+    detailTitle: `Available Pieces`,
     resource: config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.ARTIST],
     fetchModels: API.fetchArtists,
+    fetchDetailModels: API.fetchArtistPieces,
+    renderDetail: id => <ArtistDetail {...{ id }} />,
     cacheKey: config.ARTIST_CACHE_KEY,
     cacheExpiration: config.ARTIST_CACHE_EXPIRATION,
     renderItems: (models = []) =>
-      models.map(
-        (
-          { id, name: title, image, from: bottom, description: content },
-          index
-        ) => {
-          const actions = [
-            {
-              icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
-              content: "Visit profile",
-              as: Link,
-              to: `/artists/${id}`
-            }
-          ];
-
-          return (
-            <Thing
-              key={index}
-              {...{ title, image, bottom, content, actions }}
-            />
-          );
-        }
-      )
+      models.map((model, index) => <ArtistThing key={index} {...model} />),
+    renderDetailItems: (models = []) =>
+      models.map((model, index) => <PieceThing key={index} {...model} />)
   };
 
   return <ModelExplorer {...props} />;

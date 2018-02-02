@@ -6,7 +6,7 @@ import models from "../database/models";
 
 const { Shop, Artist } = models;
 
-export const genericSortedRead = (req, res, Model, resource) => {
+export const genericSortedRead = (req, res, Model, resource, userId) => {
   return respondWith(res, async () => {
     const { page = 0, sort = config.SORT_DATE_ASCENDING } = req.query;
 
@@ -17,9 +17,15 @@ export const genericSortedRead = (req, res, Model, resource) => {
       [config.SORT_NAME_DESCENDING]: ["name", "DESC"]
     };
 
-    const models = await Model.findAll({
+    const search = {
       order: [sorts[sort]]
-    });
+    };
+
+    if (userId) {
+      search.where = { userId };
+    }
+
+    const models = await Model.findAll(search);
     const modelPages = chunk(models, config.MODEL_READ_LIMIT);
     const currentPage = modelPages[page];
 
