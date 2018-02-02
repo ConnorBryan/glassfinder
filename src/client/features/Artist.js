@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Container, Divider } from "semantic-ui-react";
 
 import * as config from "../../config";
@@ -14,12 +15,13 @@ import {
   renderGenericCard
 } from "./common";
 
-export function ArtistExplorer({ history }) {
+export function ArtistExplorer() {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[
       config.LINK_TYPES.ARTIST
     ]}`,
+    detailTitle: name => `${name}'s Pieces`,
     resource: config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.ARTIST],
     fetchModels: API.fetchArtists,
     cacheKey: config.ARTIST_CACHE_KEY,
@@ -33,8 +35,9 @@ export function ArtistExplorer({ history }) {
           const actions = [
             {
               icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
-              content: "Visit this artist",
-              onClick: () => history.push(`/artists/${id}`)
+              content: "Visit profile",
+              as: Link,
+              to: `/artists/${id}`
             }
           ];
 

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { Container, Menu, Grid } from "semantic-ui-react";
 import styled from "styled-components";
 
@@ -22,12 +23,21 @@ const Styles = styled.div`
     }
   }
 
+  .ModelExplorer-detail {
+    min-width: 30vw !important;
+    max-width: 30vw !important;
+    min-height: 80vh !important;
+    max-height: 80vh !important;
+    border: 1px solid white !important;
+    border-right: none !important;
+  }
+
   .ModelExplorer-row {
     flex-wrap: initial !important;
   }
 `;
 
-export default class ModelExplorer extends Component {
+class ModelExplorer extends Component {
   state = {
     loading: true,
     sort: config.SORT_DATE_ASCENDING,
@@ -35,7 +45,8 @@ export default class ModelExplorer extends Component {
     currentPage: 0,
     totalPages: 1,
     totalModels: 0,
-    perPage: config.MODEL_READ_LIMIT
+    perPage: config.MODEL_READ_LIMIT,
+    viewingDetail: this.props.location.pathname.split("/").length === 3
   };
 
   fetchModels = this.props.fetchModels;
@@ -96,14 +107,21 @@ export default class ModelExplorer extends Component {
       loadNextPage,
       loadLastPage
     } = this;
-    const { icon, title: content, renderItems, resource } = this.props;
+    const {
+      icon,
+      title: content,
+      renderItems,
+      resource,
+      renderDetail
+    } = this.props;
     const {
       loading,
       models,
       currentPage,
       perPage,
       totalPages,
-      totalModels
+      totalModels,
+      viewingDetail
     } = this.state;
 
     return (
@@ -113,9 +131,16 @@ export default class ModelExplorer extends Component {
         </Menu>
         <Grid inverted divided columns={12}>
           <Grid.Row className="ModelExplorer-row">
-            <ExplorerMap />
+            {viewingDetail ? (
+              <Grid.Column className="ModelExplorer-detail">
+                {renderDetail()}
+              </Grid.Column>
+            ) : (
+              <ExplorerMap />
+            )}
             <Explorer
               {...{
+                title: content,
                 loadFirstPage,
                 loadPreviousPage,
                 loadNextPage,
@@ -138,3 +163,5 @@ export default class ModelExplorer extends Component {
     );
   }
 }
+
+export default withRouter(ModelExplorer);

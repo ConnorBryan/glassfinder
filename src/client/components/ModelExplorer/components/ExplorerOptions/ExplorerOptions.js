@@ -7,8 +7,8 @@ import { fancy } from "../../../../styles/snippets";
 
 const Styles = styled.div`
   .ExplorerOptions {
-    min-width: 30vw !important;
-    max-width: 30vw !important;
+    min-width: 20vw !important;
+    max-width: 20vw !important;
     min-height: 80vh !important;
     max-height: 80vh !important;
     border: 1px solid white !important;

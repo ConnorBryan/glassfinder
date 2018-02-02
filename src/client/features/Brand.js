@@ -14,7 +14,7 @@ import {
   renderGenericCard
 } from "./common";
 
-export function BrandExplorer({ history }) {
+export function BrandExplorer() {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.BRAND],
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.BRAND]}`,
@@ -37,9 +37,9 @@ export function BrandExplorer({ history }) {
         ) => {
           const actions = [
             {
-              icon: config.ICON_SET[config.LINK_TYPES.PIECE],
-              content: "Visit this brand",
-              onClick: () => history.push(`/brands/${id}`)
+              icon: "download",
+              content: "Download catalog",
+              onClick: () => {}
             }
           ];
 

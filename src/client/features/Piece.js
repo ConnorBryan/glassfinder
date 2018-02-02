@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Container,
   Segment,
@@ -22,7 +23,7 @@ import {
   renderGenericCard
 } from "./common";
 
-export function PieceExplorer({ history }) {
+export function PieceExplorer() {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.PIECE],
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.PIECE]}`,
@@ -45,14 +46,16 @@ export function PieceExplorer({ history }) {
         ) => {
           const actions = [
             {
-              icon: config.ICON_SET[config.LINK_TYPES.BRAND],
-              content: "View this piece",
-              onClick: () => history.push(`/pieces/${id}`)
+              icon: "eye",
+              content: "View",
+              as: Link,
+              to: `/pieces/${id}`
             },
             {
               icon: "dollar",
-              content: "Purchase this piece",
-              onClick: () => history.push(`/pieces/${id}/purchase`)
+              content: "Purchase",
+              as: Link,
+              to: `/pieces/${id}/purchase`
             }
           ];
 

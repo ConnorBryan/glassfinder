@@ -1,23 +1,33 @@
 import React, { Component } from "react";
-import { Container, Menu, Segment, Grid, Loader } from "semantic-ui-react";
+import {
+  Container,
+  Menu,
+  Segment,
+  Header,
+  Divider,
+  Grid,
+  Loader
+} from "semantic-ui-react";
 import styled from "styled-components";
 
 const Styles = styled.div`
   .Explorer {
-    min-width: 40vw !important;
-    max-width: 40vw !important;
+    min-width: 50vw !important;
+    max-width: 50vw !important;
     min-height: 80vh !important;
     max-height: 80vh !important;
     overflow: scroll;
     border: 1px solid white !important;
   }
 
-  .Explorer-pagination {
+  .Explorer-pagination,
+  .Explorer-title {
     border-bottom: 1px solid white !important;
   }
 `;
 
 function Explorer({
+  title,
   loadFirstPage,
   loadPreviousPage,
   loadNextPage,
@@ -42,6 +52,11 @@ function Explorer({
   return (
     <Styles>
       <Segment className="Explorer" attached="bottom" inverted>
+        <Segment basic className="Explorer-title">
+          <Divider horizontal inverted>
+            {title}
+          </Divider>
+        </Segment>
         {pagination}
         {loading ? <Loader active content="Loading..." /> : renderItems(models)}
       </Segment>

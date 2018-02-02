@@ -28,10 +28,17 @@ import {
   renderGenericCard
 } from "./common";
 
+class ShopDetail extends Component {
+  render() {
+    return <p>Detail</p>;
+  }
+}
+
 export function ShopExplorer({ history }) {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.SHOP],
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.SHOP]}`,
+    detailTitle: name => `${name}'s Pieces`,
     resource: config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.SHOP],
     fetchModels: API.fetchShops,
     cacheKey: config.SHOP_CACHE_KEY,
@@ -43,8 +50,9 @@ export function ShopExplorer({ history }) {
             id,
             image,
             name: title,
-            email: top,
+            email,
             description: content,
+            phone,
             street,
             city,
             state,
@@ -52,23 +60,33 @@ export function ShopExplorer({ history }) {
           },
           index
         ) => {
-          const bottom = `${street}, ${city}, ${state} ${zip}`;
+          const top = `${street}, ${city}, ${state} ${zip}`;
           const actions = [
             {
+              icon: "phone",
+              content: "Call",
+              as: "a",
+              href: `tel://${phone}`
+            },
+            {
+              icon: "envelope",
+              content: "Email",
+              href: `mailto://${email}`
+            },
+            {
               icon: config.ICON_SET[config.LINK_TYPES.SHOP],
-              content: "Visit this shop",
-              onClick: () => history.push(`/shops/${id}`)
+              content: "Visit",
+              as: Link,
+              to: `/shops/${id}`
             }
           ];
 
           return (
-            <Thing
-              key={index}
-              {...{ image, title, top, content, bottom, actions }}
-            />
+            <Thing key={index} {...{ image, title, top, content, actions }} />
           );
         }
-      )
+      ),
+    renderDetail: () => <ShopDetail />
   };
 
   return <ModelExplorer {...props} />;
