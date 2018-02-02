@@ -16,6 +16,8 @@ import styled from "styled-components";
 import * as config from "../../config";
 import { fancy, slightlyBiggerText } from "../styles/snippets";
 import ScreenHeader from "../components/ScreenHeader";
+import Thing from "../components/Thing";
+import ModelExplorer from "../components/ModelExplorer";
 import ModelViewer from "../components/ModelViewer";
 import ShopMap from "../components/ShopMap";
 import API from "../services";
@@ -25,6 +27,41 @@ import {
   renderGenericItem,
   renderGenericCard
 } from "./common";
+
+export function ShopExplorer() {
+  const props = {
+    icon: config.ICON_SET[config.LINK_TYPES.SHOP],
+    title: `Explore ${config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.SHOP]}`,
+    resource: config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.SHOP],
+    fetchModels: API.fetchShops,
+    cacheKey: config.SHOP_CACHE_KEY,
+    cacheExpiration: config.SHOP_CACHE_EXPIRATION,
+    renderItems: (models = []) =>
+      models.map(
+        (
+          {
+            image,
+            name: title,
+            email: top,
+            description: content,
+            street,
+            city,
+            state,
+            zip
+          },
+          index
+        ) => {
+          const bottom = `${street}, ${city}, ${state} ${zip}`;
+
+          return (
+            <Thing key={index} {...{ image, title, top, content, bottom }} />
+          );
+        }
+      )
+  };
+
+  return <ModelExplorer {...props} />;
+}
 
 export class ShopViewer extends Component {
   shouldShowMap = () => {

@@ -24,7 +24,7 @@ function ExplorerOptions({ sort }) {
   return (
     <Styles>
       <Menu className="ExplorerOptions" vertical inverted>
-        <Menu.Item header content="Sort by" />
+        <Menu.Item header icon="chevron down" content="Sort by" />
         <Menu.Item
           icon="calendar"
           content="Date (Ascending)"

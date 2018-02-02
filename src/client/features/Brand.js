@@ -3,6 +3,8 @@ import { Container, Divider } from "semantic-ui-react";
 
 import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
+import Thing from "../components/Thing";
+import ModelExplorer from "../components/ModelExplorer";
 import ModelViewer from "../components/ModelViewer";
 import API from "../services";
 import {
@@ -11,6 +13,26 @@ import {
   renderGenericItem,
   renderGenericCard
 } from "./common";
+
+export function BrandExplorer() {
+  const props = {
+    icon: config.ICON_SET[config.LINK_TYPES.BRAND],
+    title: `Explore ${config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.BRAND]}`,
+    resource: config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.BRAND],
+    fetchModels: API.fetchBrands,
+    cacheKey: config.BRAND_CACHE_KEY,
+    cacheExpiration: config.BRAND_CACHE_EXPIRATION,
+    renderItems: (models = []) =>
+      models.map(
+        (
+          { name: title, image, site: bottom, from: top, description: content },
+          index
+        ) => <Thing key={index} {...{ title, image, top, bottom, content }} />
+      )
+  };
+
+  return <ModelExplorer {...props} />;
+}
 
 export function BrandViewer({ verbiage }) {
   const props = {

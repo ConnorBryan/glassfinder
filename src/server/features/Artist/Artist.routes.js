@@ -5,7 +5,7 @@ import { ArtistController } from "./";
 export const client = api => {
   const ArtistRouter = express.Router();
 
-  ArtistRouter.get("/", ArtistController.read);
+  ArtistRouter.get("/", ArtistController.readSorted);
   ArtistRouter.get("/:id", ArtistController.read);
 
   api.use("/artists", ArtistRouter);

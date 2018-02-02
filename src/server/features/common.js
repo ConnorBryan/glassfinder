@@ -1,8 +1,35 @@
+import { chunk } from "lodash";
+
 import * as config from "../../config";
 import { respondWith, error, success, requireProperties } from "../../util";
 import models from "../database/models";
 
 const { Shop, Artist } = models;
+
+export const genericSortedRead = (req, res, Model, resource) => {
+  return respondWith(res, async () => {
+    const { page = 0, sort = config.SORT_DATE_ASCENDING } = req.query;
+
+    const sorts = {
+      [config.SORT_DATE_ASCENDING]: ["createdAt", "ASC"],
+      [config.SORT_DATE_DESCENDING]: ["createdAt", "DESC"],
+      [config.SORT_NAME_ASCENDING]: ["name", "ASC"],
+      [config.SORT_NAME_DESCENDING]: ["name", "DESC"]
+    };
+
+    const models = await Model.findAll({
+      order: [sorts[sort]]
+    });
+    const modelPages = chunk(models, config.MODEL_READ_LIMIT);
+    const currentPage = modelPages[page];
+
+    return success(res, `Succesfully fetched sorted ${resource}`, {
+      page: currentPage,
+      totalPages: modelPages.length,
+      perPage: config.MODEL_READ_LIMIT
+    });
+  });
+};
 
 export const genericPaginatedRead = (req, res, Model, singular, plural) => {
   return respondWith(res, async () => {

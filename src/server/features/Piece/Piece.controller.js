@@ -9,7 +9,11 @@ import {
 } from "../../../util";
 import multerS3 from "../../../util/upload";
 import models from "../../database/models";
-import { genericPaginatedRead, genericReadAll } from "../common";
+import {
+  genericSortedRead,
+  genericPaginatedRead,
+  genericReadAll
+} from "../common";
 
 const { User, Piece } = models;
 const upload = multerS3(config.PIECE_BUCKET);
@@ -81,6 +85,22 @@ function read(req, res) {
  */
 function readAll(req, res) {
   return genericReadAll(req, res, Piece, "pieces");
+}
+
+/**
+ * @func readSorted
+ * @desc Provides a page from a sorted collection.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Array<Piece>}
+ */
+function readSorted(req, res) {
+  return genericSortedRead(
+    req,
+    res,
+    Piece,
+    config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.PIECE]
+  );
 }
 
 /**
@@ -167,6 +187,7 @@ export default {
   create,
   read,
   readAll,
+  readSorted,
   update,
   remove,
   uploadImage

@@ -6,7 +6,7 @@ export const client = api => {
   const PieceRouter = express.Router();
 
   PieceRouter.post("/", PieceController.create);
-  PieceRouter.get("/", PieceController.read);
+  PieceRouter.get("/", PieceController.readSorted);
   PieceRouter.get("/:id", PieceController.read);
   PieceRouter.post("/:id", PieceController.update);
   PieceRouter.delete("/:id", PieceController.remove);

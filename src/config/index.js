@@ -241,8 +241,14 @@ export const SIGN_IN_FORM_SCREEN_SPLASH = "/sign_in_form_screen_splash.jpg";
 export const SIGN_UP_FORM_SCREEN_SPLASH = "/sign_up_form_screen_splash.jpg";
 export const RESEND_VERIFICATION_FORM_SCREEN_SPLASH =
   "/resend_verification_form_screen_splash.jpg";
-export const SHOPS_CACHE_KEY = "SHOPS";
-export const SHOPS_CACHE_EXPIRATION = FIFTEEN_MINUTES;
+export const SHOP_CACHE_KEY = "SHOP";
+export const SHOP_CACHE_EXPIRATION = FIFTEEN_MINUTES;
+export const ARTIST_CACHE_KEY = "ARTIST";
+export const ARTIST_CACHE_EXPIRATION = FIFTEEN_MINUTES;
+export const BRAND_CACHE_KEY = "BRAND";
+export const BRAND_CACHE_EXPIRATION = FIFTEEN_MINUTES;
+export const PIECE_CACHE_KEY = "PIECE";
+export const PIECE_CACHE_EXPIRATION = FIFTEEN_MINUTES;
 export const SORT_DATE_ASCENDING = "SORT_DATE_ASCENDING";
 export const SORT_DATE_DESCENDING = "SORT_DATE_DESCENDING";
 export const SORT_NAME_ASCENDING = "SORT_NAME_ASCENDING";

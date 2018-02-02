@@ -1,62 +1,61 @@
 /**
  * @overview
  * "Feature screens" are screens that vary functionality
- * basic on signed-in status, and are related to the ModelViewer.
+ * basic on signed-in status, and are related to the ModelExplorer.
  */
 import {
-  // ShopViewer,
-  ArtistViewer,
-  BrandViewer,
-  PieceViewer
+  ShopExplorer,
+  ArtistExplorer,
+  BrandExplorer,
+  PieceExplorer
 } from "../features";
-import ShopViewer from "../components/ModelExplorer";
 
 export default [
   // Shops
   {
     path: "/shops",
     exact: true,
-    component: ShopViewer
+    component: ShopExplorer
   },
   {
     path: "/shops/:id",
     exact: true,
-    component: ShopViewer
+    component: ShopExplorer
   },
 
   // Artists
   {
     path: "/artists",
     exact: true,
-    component: ArtistViewer
+    component: ArtistExplorer
   },
   {
     path: "/artists/:id",
     exact: true,
-    component: ArtistViewer
+    component: ArtistExplorer
   },
 
   // Brands
   {
     path: "/brands",
     exact: true,
-    component: BrandViewer
+    component: BrandExplorer
   },
   {
     path: "/brands/:id?",
     exact: true,
-    component: BrandViewer
+    component: BrandExplorer
   },
 
   // Pieces
   {
     path: "/pieces",
     exact: true,
-    component: PieceViewer
+    component: PieceExplorer
   },
   {
     path: "/pieces/:id?",
     exact: true,
-    component: PieceViewer
+    component: PieceExplorer
   }
 ];

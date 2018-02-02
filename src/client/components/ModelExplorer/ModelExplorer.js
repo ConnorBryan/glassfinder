@@ -28,36 +28,8 @@ const Styles = styled.div`
 `;
 
 export default class ModelExplorer extends Component {
-  static defaultProps = {
-    resource: config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.SHOP],
-    fetchModels: API.fetchShops,
-    cacheKey: config.SHOPS_CACHE_KEY,
-    cacheExpiration: config.SHOPS_CACHE_EXPIRATION,
-    renderItems: (models = []) =>
-      models.map(
-        (
-          {
-            image,
-            name: title,
-            email: top,
-            description: content,
-            street,
-            city,
-            state,
-            zip
-          },
-          index
-        ) => {
-          const bottom = `${street}, ${city}, ${state} ${zip}`;
-
-          return (
-            <Thing key={index} {...{ image, title, top, content, bottom }} />
-          );
-        }
-      )
-  };
-
   state = {
+    loading: true,
     sort: config.SORT_DATE_ASCENDING,
     models: [],
     currentPage: 0,
@@ -74,41 +46,16 @@ export default class ModelExplorer extends Component {
     this.setModels();
   }
 
-  setModels = async () => {
-    const { currentPage, sort } = this.state;
-    // const cachedModels = CacheProvider.retrieve(this.cacheKey);
+  setModels = (sort = this.state.sort) => {
+    this.setState({ loading: true, sort }, async () => {
+      const { currentPage, sort } = this.state;
 
-    // if (cachedModels && !CacheProvider.hasExpired(cachedModels)) {
-    //   return this.setState({
-    //     models: cachedModels[this.resource],
-    //     totalPages: cachedModels.totalPages,
-    //     perPage: cachedModels.perPage
-    //   });
-    // }
+      const { page: models, totalPages, perPage } = await this.fetchModels(
+        currentPage,
+        sort
+      );
 
-    const { page: models, totalPages, perPage } = await this.fetchModels(
-      currentPage,
-      sort
-    );
-
-    // CacheProvider.update(this.cacheKey, models, this.cacheExpiration);
-
-    this.setState({ models, totalPages, perPage });
-  };
-
-  sortModels = async sort => {
-    const { currentPage } = this.state;
-
-    const { page: models, totalPages, perPage } = await this.fetchModels(
-      currentPage,
-      sort
-    );
-
-    this.setState({
-      sort,
-      models,
-      totalPages,
-      perPage
+      this.setState({ models, totalPages, perPage, loading: false });
     });
   };
 
@@ -140,17 +87,17 @@ export default class ModelExplorer extends Component {
       loadNextPage,
       loadLastPage
     } = this;
-    const { renderItems, resource } = this.props;
+    const { icon, title: content, renderItems, resource } = this.props;
     const { models, currentPage, totalPages } = this.state;
 
     return (
       <Styles>
         <Menu className="ModelExplorer-menu" attached="top" inverted>
-          <Menu.Item header icon="shopping cart" content="Explore Shops" />
+          <Menu.Item header {...{ icon, content }} />
         </Menu>
         <Grid inverted divided columns={12}>
           <Grid.Row className="ModelExplorer-row">
-            <ExplorerOptions sort={this.sortModels} />
+            <ExplorerOptions sort={this.setModels} />
             <Explorer
               {...{
                 loadFirstPage,

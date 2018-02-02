@@ -1,5 +1,11 @@
+import * as config from "../../../config";
 import models from "../../database/models";
-import { genericPaginatedRead, genericReadAll, genericRemove } from "../common";
+import {
+  genericSortedRead,
+  genericPaginatedRead,
+  genericReadAll,
+  genericRemove
+} from "../common";
 
 const { Artist } = models;
 
@@ -12,6 +18,22 @@ const { Artist } = models;
  */
 function read(req, res) {
   return genericPaginatedRead(req, res, Artist, "artist", "artists");
+}
+
+/**
+ * @func readSorted
+ * @desc Provides a page from a sorted collection.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Array<Artist>}
+ */
+function readSorted(req, res) {
+  return genericSortedRead(
+    req,
+    res,
+    Artist,
+    config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.ARTIST]
+  );
 }
 
 /**
@@ -38,5 +60,6 @@ function remove(req, res) {
 export default {
   read,
   readAll,
+  readSorted,
   remove
 };

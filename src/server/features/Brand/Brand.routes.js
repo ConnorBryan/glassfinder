@@ -5,7 +5,7 @@ import { BrandController } from "./";
 export const client = api => {
   const BrandRouter = express.Router();
 
-  BrandRouter.get("/", BrandController.read);
+  BrandRouter.get("/", BrandController.readSorted);
   BrandRouter.get("/:id", BrandController.read);
 
   api.use("/brands", BrandRouter);
