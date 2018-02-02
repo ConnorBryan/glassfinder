@@ -15,6 +15,10 @@ const Styles = styled.div`
     text-transform: uppercase !important;
     letter-spacing: 0.25rem !important;
   }
+
+  .menu {
+    border: 1px solid white !important;
+  }
 `;
 
 class ShopMap extends Component {
