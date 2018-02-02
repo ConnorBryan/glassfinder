@@ -2,8 +2,8 @@
  * @overview
  * "Account screens" are screens that do require authorization.
  */
-import MyAccount from "../components/MyAccount";
-import UpdatePassword from "../components/MyAccount/components/UpdatePassword";
+import MyAccount from "../myAccount";
+import UpdatePassword from "../myAccount/screens/UpdatePassword";
 import BecomeAShop from "../components/MyAccount/components/BecomeAShop";
 import BecomeAnArtist from "../components/MyAccount/components/BecomeAnArtist";
 import BecomeABrand from "../components/MyAccount/components/BecomeABrand";
