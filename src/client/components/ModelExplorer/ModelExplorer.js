@@ -82,21 +82,32 @@ export default class ModelExplorer extends Component {
     //   });
     // }
 
-    const models = await this.fetchModels();
+    const { page: models, totalPages, perPage } = await this.fetchModels();
 
     // CacheProvider.update(this.cacheKey, models, this.cacheExpiration);
 
+    this.setState({ models, totalPages, perPage });
+  };
+
+  sortModels = async sort => {
+    const { currentPage } = this.state;
+
+    const { page: models, totalPages, perPage } = await this.fetchModels(
+      currentPage,
+      sort
+    );
+
     this.setState({
-      models: models[this.resource],
-      totalPages: models.totalPages,
-      perPage: models.perPage
+      models,
+      totalPages,
+      perPage
     });
   };
 
   render() {
     const { renderItems, resource } = this.props;
     const { models } = this.state;
-    console.log(models);
+
     return (
       <Styles>
         <Menu className="ModelExplorer-menu" attached="top" inverted>
@@ -104,7 +115,7 @@ export default class ModelExplorer extends Component {
         </Menu>
         <Grid inverted divided columns={12}>
           <Grid.Row className="ModelExplorer-row">
-            <ExplorerOptions />
+            <ExplorerOptions sort={this.sortModels} />
             <Explorer {...{ renderItems, resource, models }} />
             <ExplorerMap />
           </Grid.Row>

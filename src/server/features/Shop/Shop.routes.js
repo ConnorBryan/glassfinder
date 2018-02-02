@@ -7,7 +7,7 @@ export const client = api => {
 
   api.get("/mapmarkers", ShopController.fetchMapMarkers);
 
-  ShopRouter.get("/", ShopController.read);
+  ShopRouter.get("/", ShopController.readSorted);
   ShopRouter.get("/:id", ShopController.read);
   ShopRouter.get("/:id/pieces", ShopController.fetchPiecesForId);
 

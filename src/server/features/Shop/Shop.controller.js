@@ -1,3 +1,6 @@
+import { chunk } from "lodash";
+
+import * as config from "../../../config";
 import { respondWith, requireProperties, success } from "../../../util";
 import models from "../../database/models";
 import { genericPaginatedRead, genericReadAll, genericRemove } from "../common";
@@ -13,6 +16,38 @@ const { Shop, User, Piece } = models;
  */
 function read(req, res) {
   return genericPaginatedRead(req, res, Shop, "shop", "shops");
+}
+
+/**
+ * @func readSorted
+ * @desc Provides a page from a sorted collection.
+ * @param {ExpressRequest} req 
+ * @param {ExpressResponse} res 
+ * @returns {Shop | Array<Shop>}
+ */
+function readSorted(req, res) {
+  return respondWith(res, async () => {
+    const { page = 0, sort = config.SORT_DATE_ASCENDING } = req.query;
+
+    const sorts = {
+      [config.SORT_DATE_ASCENDING]: ["createdAt", "ASC"],
+      [config.SORT_DATE_DESCENDING]: ["createdAt", "DESC"],
+      [config.SORT_NAME_ASCENDING]: ["name", "ASC"],
+      [config.SORT_NAME_DESCENDING]: ["name", "DESC"]
+    };
+
+    const shops = await Shop.findAll({
+      order: [sorts[sort]]
+    });
+    const shopPages = chunk(shops, config.MODEL_READ_LIMIT);
+    const currentPage = shopPages[page];
+
+    return success(res, `Succesfully fetched sorted shops`, {
+      page: currentPage,
+      totalPages: shopPages.length,
+      perPage: config.MODEL_READ_LIMIT
+    });
+  });
 }
 
 /**
@@ -82,6 +117,7 @@ function fetchMapMarkers(req, res) {
 export default {
   read,
   readAll,
+  readSorted,
   remove,
   fetchPiecesForId,
   fetchMapMarkers

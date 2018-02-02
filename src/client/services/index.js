@@ -110,24 +110,22 @@ export default class API {
    * @param {number} page 
    * @returns {object}
    */
-  static async fetchModels(plural, page = 0, userId, type) {
+  static async fetchModels(
+    plural,
+    page = 0,
+    sort = config.SORT_DATE_ASCENDING,
+    type
+  ) {
     try {
-      let url = `${config.API_ROOT}/${plural}?page=${page}`;
+      const url = `${config.API_ROOT}/${plural}?page=${page}&sort=${sort}`;
+      const { data: { payload } } = await axios.get(url);
 
-      if (typeof userId !== "undefined" && userId !== null) {
-        url += `&userId=${userId}&type=${type}`;
-      }
-
-      const {
-        data: { payload: { [plural]: models, pages: totalPages, perPage } }
-      } = await axios.get(url);
-
-      return { [plural]: models, totalPages, perPage };
+      return { ...payload };
     } catch (e) {
       logger(e);
 
       return {
-        [plural]: [],
+        page: [],
         totalPages: 1,
         perPage: 0
       };
