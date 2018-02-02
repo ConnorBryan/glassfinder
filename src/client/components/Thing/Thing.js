@@ -12,6 +12,7 @@ const Styles = styled.div`
 
     & img {
       border-right: 1px solid white !important;
+      border-bottom: 1px solid white !important;
     }
   }
 
@@ -28,6 +29,7 @@ const Styles = styled.div`
 
   .Thing-content {
     padding: 1rem !important;
+    margin-bottom: 3rem !important;
     ${slightlyBiggerText};
   }
 

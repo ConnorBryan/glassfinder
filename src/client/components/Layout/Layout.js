@@ -20,7 +20,7 @@ import Notification from "../Notification";
 const Styles = styled.div`
   .pushable {
     min-height: 80vh !important;
-    padding: 4rem 1rem 4rem 1rem !important;
+    padding: 4rem 0 4rem 0 !important;
   }
   .main {
     min-height: 100vh !important;

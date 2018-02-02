@@ -44,6 +44,12 @@ export function removeFromCache(...keys) {
 /* === */
 
 export class CacheProvider {
+  static hasExpired = ({ expiration }) => {
+    const now = new Date().getTime();
+
+    return now <= +expiration;
+  };
+
   static update = (key, value, expiration) => {
     const futureExpiration = new Date().getTime() + expiration;
 

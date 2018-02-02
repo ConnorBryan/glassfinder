@@ -4,11 +4,12 @@
  * basic on signed-in status, and are related to the ModelViewer.
  */
 import {
-  ShopViewer,
+  // ShopViewer,
   ArtistViewer,
   BrandViewer,
   PieceViewer
 } from "../features";
+import ShopViewer from "../components/ModelExplorer";
 
 export default [
   // Shops
