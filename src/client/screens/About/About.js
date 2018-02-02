@@ -44,7 +44,7 @@ class About extends Component {
       <Styles>
         <Container>
           <ScreenHeader
-            icon="question circle"
+            icon="users"
             title={verbiage.About_title}
             description={verbiage.About_description}
           />

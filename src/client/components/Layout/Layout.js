@@ -74,9 +74,6 @@ class Layout extends Component {
 
   handleContext = context => this.setState({ context });
 
-  showNavbarBorder = () => this.setState({ showNavbarBorder: true });
-  hideNavbarBorder = () => this.setState({ showNavbarBorder: false });
-
   render() {
     const {
       mobileNavigationActive,
