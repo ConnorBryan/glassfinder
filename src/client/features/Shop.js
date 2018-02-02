@@ -28,7 +28,7 @@ import {
   renderGenericCard
 } from "./common";
 
-export function ShopExplorer() {
+export function ShopExplorer({ history }) {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.SHOP],
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.SHOP]}`,
@@ -40,6 +40,7 @@ export function ShopExplorer() {
       models.map(
         (
           {
+            id,
             image,
             name: title,
             email: top,
@@ -52,9 +53,19 @@ export function ShopExplorer() {
           index
         ) => {
           const bottom = `${street}, ${city}, ${state} ${zip}`;
+          const actions = [
+            {
+              icon: config.ICON_SET[config.LINK_TYPES.SHOP],
+              content: "Visit this shop",
+              onClick: () => history.push(`/shops/${id}`)
+            }
+          ];
 
           return (
-            <Thing key={index} {...{ image, title, top, content, bottom }} />
+            <Thing
+              key={index}
+              {...{ image, title, top, content, bottom, actions }}
+            />
           );
         }
       )

@@ -33,7 +33,8 @@ export default class ModelExplorer extends Component {
     sort: config.SORT_DATE_ASCENDING,
     models: [],
     currentPage: 0,
-    totalPages: 0,
+    totalPages: 1,
+    totalModels: 0,
     perPage: config.MODEL_READ_LIMIT
   };
 
@@ -50,12 +51,20 @@ export default class ModelExplorer extends Component {
     this.setState({ loading: true, sort }, async () => {
       const { currentPage, sort } = this.state;
 
-      const { page: models, totalPages, perPage } = await this.fetchModels(
-        currentPage,
-        sort
-      );
+      const {
+        page: models,
+        totalPages,
+        perPage,
+        totalModels
+      } = await this.fetchModels(currentPage, sort);
 
-      this.setState({ models, totalPages, perPage, loading: false });
+      this.setState({
+        models,
+        totalPages,
+        perPage,
+        totalModels,
+        loading: false
+      });
     });
   };
 
@@ -88,7 +97,14 @@ export default class ModelExplorer extends Component {
       loadLastPage
     } = this;
     const { icon, title: content, renderItems, resource } = this.props;
-    const { models, currentPage, totalPages } = this.state;
+    const {
+      loading,
+      models,
+      currentPage,
+      perPage,
+      totalPages,
+      totalModels
+    } = this.state;
 
     return (
       <Styles>
@@ -97,7 +113,7 @@ export default class ModelExplorer extends Component {
         </Menu>
         <Grid inverted divided columns={12}>
           <Grid.Row className="ModelExplorer-row">
-            <ExplorerOptions sort={this.setModels} />
+            <ExplorerMap />
             <Explorer
               {...{
                 loadFirstPage,
@@ -108,10 +124,14 @@ export default class ModelExplorer extends Component {
                 totalPages,
                 renderItems,
                 resource,
+                loading,
                 models
               }}
             />
-            <ExplorerMap />
+            <ExplorerOptions
+              {...{ perPage, totalModels }}
+              sort={this.setModels}
+            />
           </Grid.Row>
         </Grid>
       </Styles>

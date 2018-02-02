@@ -14,7 +14,7 @@ import {
   renderGenericCard
 } from "./common";
 
-export function ArtistExplorer() {
+export function ArtistExplorer({ history }) {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[
@@ -26,9 +26,25 @@ export function ArtistExplorer() {
     cacheExpiration: config.ARTIST_CACHE_EXPIRATION,
     renderItems: (models = []) =>
       models.map(
-        ({ name: title, image, from: bottom, description: content }, index) => (
-          <Thing key={index} {...{ title, image, bottom, content }} />
-        )
+        (
+          { id, name: title, image, from: bottom, description: content },
+          index
+        ) => {
+          const actions = [
+            {
+              icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
+              content: "Visit this artist",
+              onClick: () => history.push(`/artists/${id}`)
+            }
+          ];
+
+          return (
+            <Thing
+              key={index}
+              {...{ title, image, bottom, content, actions }}
+            />
+          );
+        }
       )
   };
 

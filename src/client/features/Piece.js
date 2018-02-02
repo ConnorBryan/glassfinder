@@ -22,7 +22,7 @@ import {
   renderGenericCard
 } from "./common";
 
-export function PieceExplorer() {
+export function PieceExplorer({ history }) {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.PIECE],
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.PIECE]}`,
@@ -34,6 +34,7 @@ export function PieceExplorer() {
       models.map(
         (
           {
+            id,
             name: title,
             image,
             price: top,
@@ -41,18 +42,34 @@ export function PieceExplorer() {
             description: content
           },
           index
-        ) => (
-          <Thing
-            key={index}
-            {...{
-              title,
-              image,
-              top: accounting.formatMoney(top),
-              bottom,
-              content
-            }}
-          />
-        )
+        ) => {
+          const actions = [
+            {
+              icon: config.ICON_SET[config.LINK_TYPES.BRAND],
+              content: "View this piece",
+              onClick: () => history.push(`/pieces/${id}`)
+            },
+            {
+              icon: "dollar",
+              content: "Purchase this piece",
+              onClick: () => history.push(`/pieces/${id}/purchase`)
+            }
+          ];
+
+          return (
+            <Thing
+              key={index}
+              {...{
+                title,
+                image,
+                top: accounting.formatMoney(top),
+                bottom,
+                content,
+                actions
+              }}
+            />
+          );
+        }
       )
   };
 

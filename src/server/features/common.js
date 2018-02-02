@@ -26,7 +26,8 @@ export const genericSortedRead = (req, res, Model, resource) => {
     return success(res, `Succesfully fetched sorted ${resource}`, {
       page: currentPage,
       totalPages: modelPages.length,
-      perPage: config.MODEL_READ_LIMIT
+      perPage: config.MODEL_READ_LIMIT,
+      totalModels: models.length
     });
   });
 };

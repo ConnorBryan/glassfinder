@@ -14,7 +14,7 @@ import {
   renderGenericCard
 } from "./common";
 
-export function BrandExplorer() {
+export function BrandExplorer({ history }) {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.BRAND],
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.BRAND]}`,
@@ -25,9 +25,31 @@ export function BrandExplorer() {
     renderItems: (models = []) =>
       models.map(
         (
-          { name: title, image, site: bottom, from: top, description: content },
+          {
+            id,
+            name: title,
+            image,
+            site: bottom,
+            from: top,
+            description: content
+          },
           index
-        ) => <Thing key={index} {...{ title, image, top, bottom, content }} />
+        ) => {
+          const actions = [
+            {
+              icon: config.ICON_SET[config.LINK_TYPES.PIECE],
+              content: "Visit this brand",
+              onClick: () => history.push(`/brands/${id}`)
+            }
+          ];
+
+          return (
+            <Thing
+              key={index}
+              {...{ title, image, top, bottom, content, actions }}
+            />
+          );
+        }
       )
   };
 

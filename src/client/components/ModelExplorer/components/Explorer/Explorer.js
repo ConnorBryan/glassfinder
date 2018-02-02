@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Menu, Segment, Grid } from "semantic-ui-react";
+import { Container, Menu, Segment, Grid, Loader } from "semantic-ui-react";
 import styled from "styled-components";
 
 const Styles = styled.div`
@@ -26,6 +26,7 @@ function Explorer({
   totalPages,
   renderItems,
   resource,
+  loading,
   models
 }) {
   const pagination = (
@@ -42,7 +43,7 @@ function Explorer({
     <Styles>
       <Segment className="Explorer" attached="bottom" inverted>
         {pagination}
-        {renderItems(models)}
+        {loading ? <Loader active content="Loading..." /> : renderItems(models)}
       </Segment>
     </Styles>
   );

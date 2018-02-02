@@ -20,29 +20,31 @@ const Styles = styled.div`
   }
 `;
 
-function ExplorerOptions({ sort }) {
+function ExplorerOptions({ sort, perPage, totalModels }) {
   return (
     <Styles>
       <Menu className="ExplorerOptions" vertical inverted>
+        <Menu.Item header icon="cubes" content={`Total: ${totalModels}`} />
+        <Menu.Item header icon="eye" content={`Viewing ${perPage} per page`} />
         <Menu.Item header icon="chevron down" content="Sort by" />
         <Menu.Item
-          icon="calendar"
-          content="Date (Ascending)"
+          icon="sort ascending"
+          content="Oldest"
           onClick={() => sort(config.SORT_DATE_ASCENDING)}
         />
         <Menu.Item
-          icon="calendar"
-          content="Date (Descending)"
+          icon="sort descending"
+          content="Newest"
           onClick={() => sort(config.SORT_DATE_DESCENDING)}
         />
         <Menu.Item
           icon="sort alphabet ascending"
-          content="Name (Ascending)"
+          content="Name (A-Z)"
           onClick={() => sort(config.SORT_NAME_ASCENDING)}
         />
         <Menu.Item
           icon="sort alphabet descending"
-          content="Name (Descending)"
+          content="Name (Z-A)"
           onClick={() => sort(config.SORT_NAME_DESCENDING)}
         />
       </Menu>
