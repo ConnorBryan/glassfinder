@@ -18,7 +18,10 @@ import {
   verificationMailOptions
 } from "../../passport";
 import models from "../../database/models";
-import transporter from "../../transporter";
+import transporter, {
+  glassfinder,
+  slightlyBiggerText
+} from "../../transporter";
 import { genericPaginatedRead } from "../common";
 
 const upload = multerS3(config.USER_BUCKET);
@@ -242,9 +245,13 @@ function link(req, res) {
       link: null
     };
 
-    return success(res, `Successfully linked User#${id} as ${type}`, {
-      data
-    });
+    return transporter.sendMail(
+      linkRequestMail(user.email, type),
+      err =>
+        err
+          ? error(res, err)
+          : success(res, `Successfully linked User#${id} as ${type}`, { data })
+    );
   });
 }
 
@@ -436,3 +443,32 @@ export default {
   fetchMyPieces,
   fetchPiecesForId
 };
+
+function getPhrase(type) {
+  const model = type.toLowerCase();
+
+  return type === config.LINK_TYPES.ARTIST ? `an ${model}` : `a ${model}`;
+}
+
+function linkRequestMail(email, type) {
+  const phrase = getPhrase(type);
+
+  return {
+    from: config.TRANSPORTER_EMAIL_ADDRESS,
+    to: email.trim(),
+    subject: `Your request to become ${phrase} is being processed`,
+    html: composeMessage(type)
+  };
+}
+
+function composeMessage(type) {
+  const phrase = getPhrase(type);
+
+  return `
+    ${glassfinder}
+    <p ${slightlyBiggerText}>We have received your request to become ${phrase}.</p>
+    <p ${slightlyBiggerText}>Please allow 24-48 hours for your request to be processed.</p>
+    <p ${slightlyBiggerText}>We will send you another email to notify you when a decision has been made.</p>
+    <p ${slightlyBiggerText}>Thanks for using Glassfinder!</p>
+  `;
+}

@@ -11,4 +11,13 @@ const auth = {
 };
 const authSettings = mailgun(auth);
 
+export const fancy = `style="text-transform:uppercase; letter-spacing: 0.25rem"`;
+export const spacer = `style="margin: 0 1rem 1 0rem"`;
+export const slightlyBiggerText = `style="font-size: 1.2rem"`;
+export const glassfinder = `
+<h1>
+  <span ${fancy}>GLASSFINDER</span> <span ${spacer}>|</span> Paraphernalia, revolutionized.
+</h1>
+`;
+
 export default nodemailer.createTransport(authSettings);

@@ -4,7 +4,7 @@ import localPassport from "passport-local";
 import uuid from "uuid/v4";
 
 import * as config from "../../config";
-import transporter from "../transporter";
+import transporter, { glassfinder, slightlyBiggerText } from "../transporter";
 import models from "../database/models";
 
 const { User } = models;
@@ -124,9 +124,10 @@ export const verificationMailOptions = (email, id, verificationCode) => ({
 
 export function composeMessage(id, verificationCode) {
   return `
-    <h1>Welcome to Glassfinder!</h1>
-    <p>In order to ensure you are a real human being, please click the link below to verify your account.</p>
-    <a href="${config.URL}/verification/${id}/${verificationCode}">Verify my account</a>
-    <p><em>If you did not sign up for a Glassfinder account, please ignore this message.</em></p>
+    ${glassfinder}
+    <p ${slightlyBiggerText}>Welcome to Glassfinder!</p>
+    <p ${slightlyBiggerText}>In order to ensure you are a real human being, please click the link below to verify your account.</p>
+    <p ${slightlyBiggerText}><a href="${config.URL}/verification/${id}/${verificationCode}">Verify my account</a></p>
+    <p ${slightlyBiggerText}><em>If you did not sign up for a Glassfinder account, please ignore this message.</em></p>
   `;
 }

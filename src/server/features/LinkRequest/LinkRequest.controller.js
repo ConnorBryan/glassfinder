@@ -1,5 +1,10 @@
+import * as config from "../../../config";
 import { CRUR, respondWith, requireProperties, success } from "../../../util";
 import models from "../../database/models";
+import transporter, {
+  glassfinder,
+  slightlyBiggerText
+} from "../../transporter";
 
 const { User, LinkRequest } = models;
 
@@ -40,7 +45,13 @@ function approve(req, res) {
     await linkRequest.destroy();
     await user.linkAs(type, parsedConfig);
 
-    return success(res, `Successfully approved LinkRequest#${id}`);
+    return transporter.sendMail(
+      requestApprovedMailOptions(user.email),
+      err =>
+        err
+          ? error(res, err)
+          : success(res, `Successfully approved LinkRequest#${id}`)
+    );
   });
 }
 
@@ -65,7 +76,13 @@ function deny(req, res) {
       link: null
     });
 
-    return success(res, `Successfully denied LinkRequest#${id}`);
+    return transporter.sendMail(
+      requestDeniedMailOptions(user.email),
+      err =>
+        err
+          ? error(res, err)
+          : success(res, `Successfully denied LinkRequest#${id}`)
+    );
   });
 }
 
@@ -74,3 +91,37 @@ export default {
   approve,
   deny
 };
+
+function requestApprovedMailOptions(email) {
+  return {
+    from: config.TRANSPORTER_EMAIL_ADDRESS,
+    to: email.trim(),
+    subject: "Congratulations, your application was approved!",
+    html: composeApprovedMessage()
+  };
+}
+
+function composeApprovedMessage() {
+  return `
+    ${glassfinder}
+    <p ${slightlyBiggerText}>We have approved your request. You may now log in and see new options.</p>
+    <p ${slightlyBiggerText}>Thanks for using Glassfinder!</p>
+  `;
+}
+
+function requestDeniedMailOptions(email) {
+  return {
+    from: config.TRANSPORTER_EMAIL_ADDRESS,
+    to: email.trim(),
+    subject: "Unfortunately, your application was denied",
+    html: composeDeniedMessage()
+  };
+}
+
+function composeDeniedMessage() {
+  return `
+    ${glassfinder}
+    <p ${slightlyBiggerText}>We regret to inform you that we could not approve your request. We encourage you to try again at a later date.</p>
+    <p ${slightlyBiggerText}>Thanks for using Glassfinder!</p>
+  `;
+}

@@ -14,6 +14,7 @@ import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
 import Thing from "../components/Thing";
 import ModelExplorer from "../components/ModelExplorer";
+import ModelDetail from "../components/ModelDetail";
 import ModelViewer from "../components/ModelViewer";
 import API from "../services";
 import {
@@ -61,6 +62,16 @@ export function PieceThing(props) {
   );
 }
 
+function PieceDetail({ id }) {
+  const props = {
+    id,
+    fetchModel: API.fetchPiece,
+    render: model => <PieceThing {...model} />
+  };
+
+  return <ModelDetail {...props} />;
+}
+
 export function PieceExplorer() {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.PIECE],
@@ -70,7 +81,20 @@ export function PieceExplorer() {
     cacheKey: config.PIECE_CACHE_KEY,
     cacheExpiration: config.PIECE_CACHE_EXPIRATION,
     renderItems: (models = []) =>
-      models.map((model, index) => <PieceThing key={index} {...model} />)
+      models.map((model, index) => <PieceThing key={index} {...model} />),
+
+    detailTitle: `Pictures`,
+    fetchDetailModels: async () => ({
+      page: [],
+      totalPages: 1,
+      totalModels: 0,
+      perPage: 6
+    }),
+    renderDetail: id => <PieceDetail {...{ id }} />,
+    renderDetailItems: (models = []) =>
+      models.map((model, index) => {
+        return <p key={index}>Derp</p>;
+      })
   };
 
   return <ModelExplorer {...props} />;
