@@ -88,7 +88,12 @@ function UpdateBrandInformation({
     fields
   };
 
-  return <FormScreen {...{ screenHeader, abstractForm }} />;
+  return (
+    <FormScreen
+      withImage
+      {...{ splash: config.BRAND_SPLASH, screenHeader, abstractForm }}
+    />
+  );
 }
 
 export default withRouter(UpdateBrandInformation);

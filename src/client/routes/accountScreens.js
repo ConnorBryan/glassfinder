@@ -7,13 +7,11 @@ import UpdatePassword from "../myAccount/screens/UpdatePassword";
 import BecomeAShop from "../myAccount/screens/BecomeAShop";
 import BecomeAnArtist from "../myAccount/screens/BecomeAnArtist";
 import BecomeABrand from "../myAccount/screens/BecomeABrand";
-import UpdateShopInformation from "../components/MyAccount/components/UpdateShopInformation";
-import UpdateArtistInformation from "../components/MyAccount/components/UpdateArtistInformation";
-import UpdateBrandInformation from "../components/MyAccount/components/UpdateBrandInformation";
-import UploadImage from "../components/MyAccount/components/UploadImage";
+import UpdateShopInformation from "../myAccount/screens/UpdateShopInformation";
+import UpdateArtistInformation from "../myAccount/screens/UpdateArtistInformation";
+import UpdateBrandInformation from "../myAccount/screens/UpdateBrandInformation";
 import UploadPiece from "../myAccount/screens/UploadPiece";
 import MyPiecesViewer from "../components/MyAccount/components/ViewMyPieces";
-import UploadPieceImage from "../components/MyAccount/components/UploadPieceImage";
 import UpdatePieceInformation from "../components/MyAccount/components/UpdatePieceInformation";
 
 export default [
@@ -58,11 +56,6 @@ export default [
     component: UpdateBrandInformation
   },
   {
-    path: "/my-account/upload-image",
-    exact: true,
-    component: UploadImage
-  },
-  {
     path: "/my-account/upload-piece",
     exact: true,
     component: UploadPiece
@@ -76,11 +69,6 @@ export default [
     path: "/my-account/view-my-pieces/:id?",
     exact: true,
     component: MyPiecesViewer
-  },
-  {
-    path: "/my-account/view-my-pieces/:id/upload-image",
-    exact: true,
-    component: UploadPieceImage
   },
   {
     path: "/my-account/view-my-pieces/:id/update-information",

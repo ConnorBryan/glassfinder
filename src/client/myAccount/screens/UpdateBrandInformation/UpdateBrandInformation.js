@@ -2,25 +2,25 @@ import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
 
-import * as config from "../../../../../config";
-import API from "../../../../services";
-import * as Validators from "../../../../validators";
-import FormScreen from "../../../FormScreen";
+import * as config from "../../../../config";
+import API from "../../../services";
+import * as Validators from "../../../validators";
+import FormScreen from "../../../components/FormScreen";
 
 const FIELDS = [
   {
     name: "name",
     type: "text",
-    label: "Artist name",
-    placeholder: "What do you prefer to go by?",
+    label: "Brand name",
+    placeholder: "Enter the name of your brand",
     value: "",
-    validation: Yup.string().required("An artist name is required.")
+    validation: Yup.string().required("A brand name is required.")
   },
   {
     name: "description",
     type: "textarea",
     label: "Description",
-    placeholder: "Tell the world about what you have to offer",
+    placeholder: "Tell the world about what your brand has to offer",
     value: "",
     validation: Validators.description
   },
@@ -33,10 +33,21 @@ const FIELDS = [
     validation: Yup.string().required(
       "A 'from' location is required. You don't have to get too specific."
     )
+  },
+  {
+    name: "site",
+    type: "text",
+    label: "Web site",
+    placeholder: "Where are you based out of?",
+    value: "",
+    validation: Yup.string().matches(
+      /[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/,
+      "A brand website must be a valid URL."
+    )
   }
 ];
 
-function UpdateArtistInformation({
+function UpdateBrandInformation({
   verbiage,
   account,
   updateAccountLink,
@@ -67,9 +78,9 @@ function UpdateArtistInformation({
   };
 
   const screenHeader = {
-    icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
-    title: verbiage.UpdateArtistInformation_title,
-    description: verbiage.UpdateArtistInformation_description
+    icon: config.ICON_SET[config.LINK_TYPES.BRAND],
+    title: verbiage.UpdateBrandInformation_title,
+    description: verbiage.UpdateBrandInformation_description
   };
 
   const abstractForm = {
@@ -80,9 +91,9 @@ function UpdateArtistInformation({
   return (
     <FormScreen
       withImage
-      {...{ splash: config.ARTIST_SPLASH, screenHeader, abstractForm }}
+      {...{ splash: config.BRAND_SPLASH, screenHeader, abstractForm }}
     />
   );
 }
 
-export default withRouter(UpdateArtistInformation);
+export default withRouter(UpdateBrandInformation);
