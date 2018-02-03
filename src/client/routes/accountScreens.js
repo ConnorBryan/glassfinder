@@ -4,9 +4,9 @@
  */
 import MyAccount from "../myAccount";
 import UpdatePassword from "../myAccount/screens/UpdatePassword";
-import BecomeAShop from "../components/MyAccount/components/BecomeAShop";
-import BecomeAnArtist from "../components/MyAccount/components/BecomeAnArtist";
-import BecomeABrand from "../components/MyAccount/components/BecomeABrand";
+import BecomeAShop from "../myAccount/screens/BecomeAShop";
+import BecomeAnArtist from "../myAccount/screens/BecomeAnArtist";
+import BecomeABrand from "../myAccount/screens/BecomeABrand";
 import UpdateShopInformation from "../components/MyAccount/components/UpdateShopInformation";
 import UpdateArtistInformation from "../components/MyAccount/components/UpdateArtistInformation";
 import UpdateBrandInformation from "../components/MyAccount/components/UpdateBrandInformation";

@@ -2,10 +2,10 @@ import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
 
-import * as config from "../../../../../config";
-import API from "../../../../services";
-import * as Validators from "../../../../validators";
-import FormScreen from "../../../FormScreen";
+import * as config from "../../../../config";
+import API from "../../../services";
+import * as Validators from "../../../validators";
+import FormScreen from "../../../components/FormScreen";
 
 const FIELDS = [
   {

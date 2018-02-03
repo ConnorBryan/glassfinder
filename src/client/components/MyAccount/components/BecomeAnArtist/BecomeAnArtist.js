@@ -54,7 +54,7 @@ function BecomeAnArtist({
       updateAccount("type", updatedAccount.type);
       updateAccountLink(updatedAccount.link);
 
-      history.push("/my-account/upload-image");
+      history.push("/my-account");
 
       return displayNotification(config.LINK_REQUEST_SUCCESS_NOTIFICATION);
     }
@@ -75,7 +75,12 @@ function BecomeAnArtist({
     fields: FIELDS
   };
 
-  return <FormScreen {...{ screenHeader, abstractForm }} />;
+  return (
+    <FormScreen
+      withImage
+      {...{ splash: config.ARTIST_SPLASH, screenHeader, abstractForm }}
+    />
+  );
 }
 
 export default withRouter(BecomeAnArtist);

@@ -36,8 +36,8 @@ db.Sequelize = Sequelize;
 
 if (env === "development") {
   (async () => {
-    // await sequelize.sync({ force: true });
-    // populate(db);
+    await sequelize.sync({ force: true });
+    populate(db);
   })();
 }
 

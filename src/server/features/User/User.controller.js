@@ -230,9 +230,6 @@ function link(req, res) {
 
     const parsedConfig = JSON.parse(bodyConfig);
 
-    // Set the placeholder image prior to user upload.
-    parsedConfig.image = "https://placehold.it/400x400";
-
     // Send out the request to be confirmed.
     user.requestLink(type, JSON.stringify(parsedConfig));
 

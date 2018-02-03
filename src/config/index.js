@@ -216,30 +216,34 @@ export const USER_VERIFICATION_ERROR_NOTIFICATION =
 export const SELECTED_IMAGE_NOTIFICATION = "You've selected an image.";
 export const UPLOADED_IMAGE_NOTIFICATION = `You've uploaded an image. Press "Finish" below to continue.`;
 export const INVALID_IMAGE_UPLOAD_NOTIFICATION = `Something went wrong while trying to upload an image`;
+export const SHOP_SPLASH = "/shops_tile.jpg";
+export const ARTIST_SPLASH = "/artists_tile.jpg";
+export const BRAND_SPLASH = "/brands_tile.jpg";
+export const PIECE_SPLASH = "/pieces_tile.jpg";
 export const HOME_TILES = [
   {
     icon: ICON_SET[LINK_TYPES.SHOP],
     link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.SHOP]}`,
     title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.SHOP]),
-    image: "/shops_tile.jpg"
+    image: SHOP_SPLASH
   },
   {
     icon: ICON_SET[LINK_TYPES.ARTIST],
     link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.ARTIST]}`,
     title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.ARTIST]),
-    image: "/artists_tile.jpg"
+    image: ARTIST_SPLASH
   },
   {
     icon: ICON_SET[LINK_TYPES.BRAND],
     link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.BRAND]}`,
     title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.BRAND]),
-    image: "/brands_tile.jpg"
+    image: BRAND_SPLASH
   },
   {
     icon: ICON_SET[LINK_TYPES.PIECE],
     link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.PIECE]}`,
     title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.PIECE]),
-    image: "/pieces_tile.jpg"
+    image: PIECE_IMAGES_SPACES_URL
   }
 ];
 export const CONTACT_FORM_SCREEN_SPLASH = "/contact_form_screen_splash.jpeg";

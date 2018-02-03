@@ -2,25 +2,25 @@ import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
 
-import * as config from "../../../../../config";
-import API from "../../../../services";
-import * as Validators from "../../../../validators";
-import FormScreen from "../../../FormScreen";
+import * as config from "../../../../config";
+import API from "../../../services";
+import * as Validators from "../../../validators";
+import FormScreen from "../../../components/FormScreen";
 
 const FIELDS = [
   {
     name: "name",
     type: "text",
     label: "Name",
-    placeholder: "Enter the name of your brand",
+    placeholder: "What do you prefer to go by?",
     value: "",
-    validation: Yup.string().required("A brand name is required.")
+    validation: Yup.string().required("An artist name is required.")
   },
   {
     name: "description",
     type: "textarea",
     label: "Description",
-    placeholder: "Tell the world about what your brand has to offer",
+    placeholder: "Tell the world about what you have to offer",
     value: "",
     validation: Validators.description
   },
@@ -33,21 +33,10 @@ const FIELDS = [
     validation: Yup.string().required(
       "A 'from' location is required. You don't have to get too specific."
     )
-  },
-  {
-    name: "site",
-    type: "text",
-    label: "Site",
-    placeholder: "Where can we find you on the web?",
-    value: "",
-    validation: Yup.string().matches(
-      /[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/,
-      "A brand website must be a valid URL."
-    )
   }
 ];
 
-function BecomeABrand({
+function BecomeAnArtist({
   verbiage,
   account,
   updateAccount,
@@ -58,10 +47,12 @@ function BecomeABrand({
   if (!account) return <Redirect to="/sign-in" />;
 
   const onSubmit = async values => {
-    const updatedAccount = await API.becomeABrand(account.id, values);
+    const updatedAccount = await API.becomeAnArtist(account.id, values);
 
     if (updatedAccount) {
       updateAccount("linked", true);
+      updateAccount("type", updatedAccount.type);
+      updateAccountLink(updatedAccount.link);
 
       history.push("/my-account");
 
@@ -74,9 +65,9 @@ function BecomeABrand({
   };
 
   const screenHeader = {
-    icon: config.ICON_SET[config.LINK_TYPES.BRAND],
-    title: verbiage.BecomeABrand_title,
-    description: verbiage.BecomeABrand_description
+    icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
+    title: verbiage.BecomeAnArtist_title,
+    description: verbiage.BecomeAnArtist_description
   };
 
   const abstractForm = {
@@ -87,9 +78,9 @@ function BecomeABrand({
   return (
     <FormScreen
       withImage
-      {...{ splash: config.BRAND_SPLASH, screenHeader, abstractForm }}
+      {...{ splash: config.ARTIST_SPLASH, screenHeader, abstractForm }}
     />
   );
 }
 
-export default withRouter(BecomeABrand);
+export default withRouter(BecomeAnArtist);
