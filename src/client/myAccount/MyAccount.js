@@ -100,10 +100,6 @@ function MyAccountShopMenu({ verbiage }) {
             to="/my-account/update-shop-information"
             title={verbiage.MyAccount_updateShopInformation}
           />
-          <MyAccountItem
-            to="/my-account/upload-image"
-            title={verbiage.MyAccount_uploadImage}
-          />
           <MyAccountItem to="/my-account/upload-piece" title="Upload a piece" />
           <MyAccountItem
             to="/my-account/view-my-pieces"
@@ -130,10 +126,6 @@ function MyAccountArtistMenu({ verbiage }) {
             to="/my-account/update-artist-information"
             title={verbiage.MyAccount_updateArtistInformation}
           />
-          <MyAccountItem
-            to="/my-account/upload-image"
-            title={verbiage.MyAccount_uploadImage}
-          />
           <MyAccountItem to="/my-account/upload-piece" title="Upload a piece" />
           <MyAccountItem
             to="/my-account/view-my-pieces"
@@ -159,10 +151,6 @@ function MyAccountBrandMenu({ verbiage }) {
           <MyAccountItem
             to="/my-account/update-brand-information"
             title={verbiage.MyAccount_updateBrandInformation}
-          />
-          <MyAccountItem
-            to="/my-account/upload-image"
-            title={verbiage.MyAccount_uploadImage}
           />
           <MyAccountItem
             to="/my-account/upload-catalog"

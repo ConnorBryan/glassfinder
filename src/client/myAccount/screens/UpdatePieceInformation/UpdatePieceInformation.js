@@ -2,11 +2,10 @@ import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
 
-import * as config from "../../../../../config";
-import { removeFromCache } from "../../../../../util";
-import API from "../../../../services";
-import FormScreen from "../../../FormScreen";
-import AbstractFormWithImage from "../../../AbstractFormWithImage";
+import * as config from "../../../../config";
+import API from "../../../services";
+import * as Validators from "../../../validators";
+import FormScreen from "../../../components/FormScreen";
 
 const FIELDS = [
   {
@@ -37,7 +36,7 @@ const FIELDS = [
   },
   {
     name: "description",
-    type: "textarea",
+    type: "text",
     label: "Description",
     placeholder: "Enter description",
     value: "",
@@ -53,58 +52,56 @@ const FIELDS = [
   }
 ];
 
-function UploadPiece({ verbiage, account, history, displayNotification }) {
+function UpdatePieceInformation({
+  verbiage,
+  account,
+  history,
+  location: { state },
+  displayNotification
+}) {
   if (!account) return <Redirect to="/sign-in" />;
 
-  const onSubmit = async ({
-    name,
-    maker,
-    price,
-    description,
-    location,
-    image
-  }) => {
-    const piece = await API.uploadPiece(
-      account.id,
-      name,
-      maker,
-      price,
-      description,
-      location,
-      image
+  if (!state.piece) return <Redirect to="/my-account/view-my-pieces" />;
+
+  const fields = FIELDS.map(prop => ({
+    ...prop,
+    value: state.piece[prop.name] || prop.value
+  }));
+
+  const onSubmit = async values => {
+    const wasSuccessful = await API.updatePieceInformation(
+      state.piece.id,
+      values
     );
 
-    if (piece) {
-      history.push(`/my-account/view-my-pieces/${piece.id}`, {
-        piece
-      });
+    if (wasSuccessful) {
+      history.push("/my-account");
 
-      return displayNotification(config.UPLOAD_PIECE_SUCCESS_NOTIFICATION);
+      return displayNotification(
+        config.UPDATE_INFORMATION_SUCCESS_NOTIFICATION
+      );
     }
-    return displayNotification(config.UPLOAD_PIECE_FAILURE_NOTIFICATION);
+
+    return displayNotification(config.UPDATE_INFORMATION_FAILURE_NOTIFICATION);
   };
 
   const screenHeader = {
     icon: config.ICON_SET[config.LINK_TYPES.PIECE],
-    title: verbiage.UploadPiece_title,
-    description: verbiage.UploadPiece_description
+    title: verbiage.UpdatePieceInformation_title,
+    description: verbiage.UpdatePieceInformatione_description
   };
 
   const abstractForm = {
     onSubmit,
-    fields: FIELDS
+    fields
   };
 
   return (
     <FormScreen
       withImage
-      {...{
-        splash: "https://placehold.it/600x600",
-        screenHeader,
-        abstractForm
-      }}
+      {...{ splash: config.PIECE_SPLASH, screenHeader, abstractForm }}
     />
   );
 }
 
-export default withRouter(UploadPiece);
+export default withRouter(UpdatePieceInformation);

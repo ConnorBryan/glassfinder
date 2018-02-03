@@ -11,8 +11,8 @@ import UpdateShopInformation from "../myAccount/screens/UpdateShopInformation";
 import UpdateArtistInformation from "../myAccount/screens/UpdateArtistInformation";
 import UpdateBrandInformation from "../myAccount/screens/UpdateBrandInformation";
 import UploadPiece from "../myAccount/screens/UploadPiece";
-import MyPiecesViewer from "../components/MyAccount/components/ViewMyPieces";
-import UpdatePieceInformation from "../components/MyAccount/components/UpdatePieceInformation";
+import MyPiecesViewer from "../myAccount/screens/ViewMyPieces";
+import UpdatePieceInformation from "../myAccount/screens/UpdatePieceInformation";
 
 export default [
   {

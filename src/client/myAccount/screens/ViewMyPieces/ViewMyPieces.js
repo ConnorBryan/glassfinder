@@ -11,17 +11,16 @@ import {
 import { partial } from "lodash";
 import styled from "styled-components";
 
-import * as config from "../../../../../config";
-import { removeFromCache } from "../../../../../util";
-import API from "../../../../services";
+import * as config from "../../../../config";
+import API from "../../../services";
 import {
   genericSorts,
   renderGenericTile,
   renderGenericItem,
   renderGenericCard
-} from "../../../../features/common";
-import ModelViewer from "../../../ModelViewer";
-import ScreenHeader from "../../../ScreenHeader";
+} from "../../../features/common";
+import ModelViewer from "../../../components/ModelViewer";
+import ScreenHeader from "../../../components/ScreenHeader";
 
 export default function MyPiecesViewer({ verbiage, account, history }) {
   if (!account) return <Redirect to="/sign-in" />;
@@ -66,15 +65,11 @@ export default function MyPiecesViewer({ verbiage, account, history }) {
         );
 
         if (removeConfirmed) {
-          const successful = await API.removePiece(id);
+          const wasSuccessful = await API.removePiece(id);
 
-          if (successful) {
-            removeFromCache("myPieces");
-
-            history.push("/my-account/view-my-pieces");
-          } else {
-            alert(verbiage.ViewMyPieces_unableToRemove);
-          }
+          wasSuccessful
+            ? history.push("/my-account/view-my-pieces")
+            : alert(verbiage.ViewMyPieces_unableToRemove);
         }
       };
 
@@ -109,10 +104,7 @@ export default function MyPiecesViewer({ verbiage, account, history }) {
                   </Item>
                 </Item.Group>
               </Segment>
-              <Menu attached="bottom" widths={3} stackable>
-                <Menu.Item className="fancy" onClick={onUploadImageClick}>
-                  <Icon name="picture" /> {verbiage.ViewMyPieces_uploadImage}
-                </Menu.Item>
+              <Menu attached="bottom" widths={2} stackable>
                 <Menu.Item className="fancy" onClick={onUpdateInformationClick}>
                   <Icon name="pencil" /> {verbiage.ViewMyPieces_editPiece}
                 </Menu.Item>
