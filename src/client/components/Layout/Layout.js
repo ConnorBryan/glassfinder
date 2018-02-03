@@ -18,7 +18,7 @@ import MobileNavigation from "../MobileNavigation";
 import Notification from "../Notification";
 
 const Styles = styled.div`
-  .pushable {
+  .Layout-pushable {
     min-height: 80vh !important;
     padding: 4rem 0 4rem 0 !important;
   }
@@ -131,7 +131,7 @@ class Layout extends Component {
     );
 
     const viewport = (
-      <Sidebar.Pushable>
+      <Sidebar.Pushable className="Layout-pushable">
         <div onClick={closeSidebar}>
           <Sidebar.Pusher as={Switch}>
             {routes.map((route, i) => (

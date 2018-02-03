@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Menu, Grid } from "semantic-ui-react";
+import { Sidebar, Menu, Grid } from "semantic-ui-react";
 import styled from "styled-components";
 
 import * as config from "../../../config";
@@ -15,18 +15,16 @@ const Styles = styled.div`
     padding: 0 !important;
     border: 1px solid white !important;
     border-bottom: none !important;
+    margin: 0 !important;
 
-    .header {
+    .header,
+    .item {
       ${fancy};
     }
   }
 
   .ModelExplorer-detail {
     padding: 0 !important;
-    min-width: 30vw !important;
-    max-width: 30vw !important;
-    min-height: 80vh !important;
-    max-height: 80vh !important;
     border: 1px solid white !important;
     border-right: none !important;
     background: ${palette.invertedBackground};
@@ -43,6 +41,8 @@ class ModelExplorer extends Component {
     loading: true,
     sort: config.SORT_DATE_ASCENDING,
     models: [],
+    showingMap: false,
+    showingMap: false,
     currentPage: 0,
     totalPages: 1,
     totalModels: 0,
@@ -58,6 +58,17 @@ class ModelExplorer extends Component {
   componentDidMount() {
     this.setModels();
   }
+
+  toggleMap = () =>
+    this.setState(prevState => ({
+      showingMap: !prevState.showingMap,
+      showingSettings: false
+    }));
+  toggleSettings = () =>
+    this.setState(prevState => ({
+      showingSettings: !prevState.showingSettings,
+      showingMap: false
+    }));
 
   setModels = (sort = this.state.sort) => {
     this.setState({ loading: true, sort }, async () => {
@@ -111,6 +122,7 @@ class ModelExplorer extends Component {
       loadLastPage
     } = this;
     const {
+      compact,
       icon,
       title,
       detailTitle,
@@ -123,6 +135,8 @@ class ModelExplorer extends Component {
       id,
       loading,
       models,
+      showingMap,
+      showingSettings,
       currentPage,
       perPage,
       totalPages,
@@ -131,38 +145,59 @@ class ModelExplorer extends Component {
     } = this.state;
 
     return (
-      <Styles>
+      <Styles {...{ compact }}>
         <Menu className="ModelExplorer-menu" attached="top" inverted>
           <Menu.Item header {...{ icon, content: title }} />
         </Menu>
+        {compact && (
+          <Menu className="ModelExplorer-menu" inverted widths={2}>
+            <Menu.Item
+              icon="map"
+              content="Map"
+              active={showingMap}
+              onClick={this.toggleMap}
+            />
+            <Menu.Item
+              icon="settings"
+              content="Settings"
+              active={showingSettings}
+              onClick={this.toggleSettings}
+            />
+          </Menu>
+        )}
         <Grid inverted divided columns={12}>
           <Grid.Row className="ModelExplorer-row">
-            {viewingDetail ? (
-              <Grid.Column className="ModelExplorer-detail">
-                {renderDetail(id)}
-              </Grid.Column>
-            ) : (
-              <ExplorerMap />
-            )}
-            <Explorer
-              {...{
-                title: viewingDetail ? detailTitle : title,
-                loadFirstPage,
-                loadPreviousPage,
-                loadNextPage,
-                loadLastPage,
-                currentPage,
-                totalPages: +totalPages <= 0 ? 1 : totalPages,
-                renderItems: viewingDetail ? renderDetailItems : renderItems,
-                resource,
-                loading,
-                models
-              }}
-            />
-            <ExplorerOptions
-              {...{ perPage, totalModels }}
-              sort={this.setModels}
-            />
+            <Sidebar.Pushable>
+              {viewingDetail ? (
+                <Grid.Column className="ModelExplorer-detail">
+                  {renderDetail(id)}
+                </Grid.Column>
+              ) : (
+                <ExplorerMap visible={showingMap} {...{ compact }} />
+              )}
+              <Explorer
+                {...{
+                  compact,
+                  title: viewingDetail ? detailTitle : title,
+                  loadFirstPage,
+                  loadPreviousPage,
+                  loadNextPage,
+                  loadLastPage,
+                  currentPage,
+                  totalPages: +totalPages <= 0 ? 1 : totalPages,
+                  renderItems: viewingDetail ? renderDetailItems : renderItems,
+                  resource,
+                  loading,
+                  models
+                }}
+              />
+              <ExplorerOptions
+                {...{ compact, perPage, totalModels }}
+                visible={showingSettings}
+                sort={this.setModels}
+                toggle={this.toggleSettings}
+              />
+            </Sidebar.Pushable>
           </Grid.Row>
         </Grid>
       </Styles>
