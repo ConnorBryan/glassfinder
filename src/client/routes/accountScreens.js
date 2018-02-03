@@ -11,7 +11,7 @@ import UpdateShopInformation from "../components/MyAccount/components/UpdateShop
 import UpdateArtistInformation from "../components/MyAccount/components/UpdateArtistInformation";
 import UpdateBrandInformation from "../components/MyAccount/components/UpdateBrandInformation";
 import UploadImage from "../components/MyAccount/components/UploadImage";
-import UploadPiece from "../components/MyAccount/components/UploadPiece";
+import UploadPiece from "../myAccount/screens/UploadPiece";
 import MyPiecesViewer from "../components/MyAccount/components/ViewMyPieces";
 import UploadPieceImage from "../components/MyAccount/components/UploadPieceImage";
 import UpdatePieceInformation from "../components/MyAccount/components/UpdatePieceInformation";

@@ -249,6 +249,8 @@ export const RESEND_VERIFICATION_FORM_SCREEN_SPLASH =
   "/resend_verification_form_screen_splash.jpg";
 export const UPDATE_PASSWORD_FORM_SCREEN_SPLASH =
   "/update_password_form_screen_splash.jpg";
+export const UPLOAD_PIECE_FORM_SCREEN_SPLASH =
+  "/upload_piece_form_screen_splash.jpg";
 export const SHOP_CACHE_KEY = "SHOP";
 export const SHOP_CACHE_EXPIRATION = FIFTEEN_MINUTES;
 export const ARTIST_CACHE_KEY = "ARTIST";
