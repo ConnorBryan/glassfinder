@@ -37,7 +37,7 @@ const FIELDS = [
   },
   {
     name: "description",
-    type: "text",
+    type: "textarea",
     label: "Description",
     placeholder: "Enter description",
     value: "",
@@ -95,7 +95,16 @@ function UploadPiece({ verbiage, account, history, displayNotification }) {
     fields: FIELDS
   };
 
-  return <AbstractFormWithImage {...{ displayNotification, abstractForm }} />;
+  return (
+    <FormScreen
+      withImage
+      {...{
+        splash: "https://placehold.it/600x600",
+        screenHeader,
+        abstractForm
+      }}
+    />
+  );
 }
 
 export default withRouter(UploadPiece);

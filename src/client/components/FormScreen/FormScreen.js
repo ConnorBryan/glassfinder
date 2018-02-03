@@ -5,10 +5,21 @@ import Aux from "react-aux";
 
 import ScreenHeader from "../ScreenHeader";
 import AbstractForm from "../AbstractForm";
+import AbstractFormWithImage from "../AbstractFormWithImage";
 
-function FormScreen({ splash, screenHeader, abstractForm }) {
+function FormScreen({
+  splash,
+  screenHeader,
+  abstractForm,
+  displayNotification,
+  withImage
+}) {
   const header = <ScreenHeader {...screenHeader} />;
-  const form = <AbstractForm {...abstractForm} />;
+  const form = withImage ? (
+    <AbstractFormWithImage {...{ displayNotification, abstractForm }} />
+  ) : (
+    <AbstractForm {...abstractForm} />
+  );
 
   const Styles = styled.div`
     .mobile {
