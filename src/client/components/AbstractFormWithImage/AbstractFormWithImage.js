@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Segment, Responsive, Image, Menu } from "semantic-ui-react";
-import Aux from "react-aux";
-import uuid from "uuid/v4";
 
-import * as config from "../../../config";
-import API from "../../services";
 import AbstractForm from "../AbstractForm";
 import ImageUpload from "../ImageUpload";
 
 export default class AbstractFormWithImage extends Component {
   static propTypes = {
-    displayNotification: PropTypes.func.isRequired,
     abstractForm: PropTypes.shape({
       onSubmit: PropTypes.func.isRequired,
       fields: PropTypes.arrayOf(PropTypes.object).isRequired
@@ -42,7 +36,7 @@ export default class AbstractFormWithImage extends Component {
   };
 
   render() {
-    const { displayNotification, abstractForm } = this.props;
+    const { abstractForm } = this.props;
     const { stage } = this.state;
 
     const modifiedAbstractForm = { ...abstractForm };

@@ -1,10 +1,47 @@
 import React from "react";
-import { Accordion, Item } from "semantic-ui-react";
+import { Accordion, Item, Icon, Segment, Button } from "semantic-ui-react";
 import { partial } from "lodash";
+import Aux from "react-aux";
 
-import { HelpItem } from "../../../client/components/Help/Help";
 import AdminAPI from "../../services";
 import ModelManager from "../../components/ModelManager";
+
+function HelpItem({
+  admin,
+  edit,
+  remove,
+  index,
+  activeIndex,
+  handleClick,
+  title,
+  content
+}) {
+  return (
+    <Aux>
+      <Accordion.Title
+        className="Help-item"
+        active={activeIndex === index}
+        index={index}
+        onClick={handleClick}
+      >
+        <Icon name="dropdown" /> {title}
+      </Accordion.Title>
+      <Accordion.Content
+        className="Help-content"
+        active={activeIndex === index}
+        dangerouslySetInnerHTML={{
+          __html: content
+        }}
+      />
+      {admin && (
+        <Segment basic>
+          <Button icon="pencil" content="Edit" primary onClick={edit} />
+          <Button icon="trash" content="Remove" negative onClick={remove} />
+        </Segment>
+      )}
+    </Aux>
+  );
+}
 
 export default function HelpManager({ history }) {
   const config = {

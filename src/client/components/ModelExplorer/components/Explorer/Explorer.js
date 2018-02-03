@@ -1,13 +1,5 @@
-import React, { Component } from "react";
-import {
-  Container,
-  Menu,
-  Segment,
-  Header,
-  Divider,
-  Grid,
-  Loader
-} from "semantic-ui-react";
+import React from "react";
+import { Menu, Segment, Divider, Loader } from "semantic-ui-react";
 import styled from "styled-components";
 
 const Styles = styled.div`

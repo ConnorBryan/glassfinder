@@ -114,7 +114,7 @@ function BecomeAShop({
         updateAccount("type", updatedAccount.type);
         updateAccountLink(updatedAccount.link);
 
-        history.push("/my-accounT");
+        history.push("/my-account");
 
         return displayNotification(config.LINK_REQUEST_SUCCESS_NOTIFICATION);
       }

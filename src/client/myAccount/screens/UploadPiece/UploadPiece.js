@@ -3,10 +3,8 @@ import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
 
 import * as config from "../../../../config";
-import { removeFromCache } from "../../../../util";
 import API from "../../../services";
 import FormScreen from "../../../components/FormScreen";
-import AbstractFormWithImage from "../../../components/AbstractFormWithImage";
 
 const FIELDS = [
   {

@@ -1,10 +1,30 @@
 import React from "react";
-import { Item } from "semantic-ui-react";
+import { Button, Item } from "semantic-ui-react";
 import { partial } from "lodash";
 
-import { AboutItem } from "../../../client/components/About/About";
 import AdminAPI from "../../services";
 import ModelManager from "../../components/ModelManager";
+
+function AboutItem({ admin, edit, remove, image, name, title, description }) {
+  return (
+    <Item>
+      <Item.Image circular size="medium" src={image} />
+      <Item.Content>
+        <Item.Header as="h3">{name}</Item.Header>
+        <Item.Description>
+          <em>{title}</em>
+        </Item.Description>
+        <Item.Description>{description}</Item.Description>
+        {admin && (
+          <Item.Extra>
+            <Button icon="pencil" content="Edit" primary onClick={edit} />
+            <Button icon="trash" content="Remove" negative onClick={remove} />
+          </Item.Extra>
+        )}
+      </Item.Content>
+    </Item>
+  );
+}
 
 export default function AboutManager({ history }) {
   const config = {

@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Container, Menu, Grid } from "semantic-ui-react";
+import { Menu, Grid } from "semantic-ui-react";
 import styled from "styled-components";
 
 import * as config from "../../../config";
-import { CacheProvider } from "../../../util";
 import { centered, fancy } from "../../styles/snippets";
 import { blue as palette } from "../../styles/palettes";
-import API from "../../services";
-import Thing from "../../components/Thing";
 import ExplorerOptions from "./components/ExplorerOptions";
 import Explorer from "./components/Explorer";
 import ExplorerMap from "./components/ExplorerMap";

@@ -1,42 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import {
-  Container,
-  Grid,
-  Responsive,
-  Image,
-  Divider,
-  Button,
-  Icon,
-  Segment,
-  Menu,
-  Loader
-} from "semantic-ui-react";
-import styled from "styled-components";
-import accounting from "accounting";
 
 import * as config from "../../config";
-import { fancy, slightlyBiggerText } from "../styles/snippets";
-import ScreenHeader from "../components/ScreenHeader";
 import Thing from "../components/Thing";
 import ModelExplorer from "../components/ModelExplorer";
 import ModelDetail from "../components/ModelDetail";
-import ModelViewer from "../components/ModelViewer";
-import ShopMap from "../components/ShopMap";
 import API from "../services";
-import {
-  genericSorts,
-  renderGenericTile,
-  renderGenericItem,
-  renderGenericCard
-} from "./common";
 import { PieceThing } from "./Piece";
-
-const Styles = styled.div`
-  .ModelDetail-main {
-    padding: 0 !important;
-  }
-`;
 
 function ShopThing(props) {
   const {

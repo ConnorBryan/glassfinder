@@ -5,7 +5,6 @@ import styled from "styled-components";
 import Aux from "react-aux";
 import uuid from "uuid/v4";
 
-import * as config from "../../../config";
 import API from "../../services";
 import { fancy, slightlyBiggerText, centered } from "../../styles/snippets";
 
@@ -59,7 +58,6 @@ export default class ImageUpload extends Component {
   isValid = () => !!this.state.image;
 
   uploadImage = async () => {
-    const { onSubmit } = this.props;
     const { image } = this.state;
 
     if (this.isValid()) {
