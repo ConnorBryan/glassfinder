@@ -1,17 +1,5 @@
 import React from "react";
 import { Sidebar, Menu, Segment, Divider, Loader } from "semantic-ui-react";
-import styled from "styled-components";
-
-const Styles = styled.div`
-  .Explorer {
-    border: 1px solid white !important;
-  }
-
-  .Explorer-pagination,
-  .Explorer-title {
-    border-bottom: 1px solid white !important;
-  }
-`;
 
 function Explorer({
   compact,
@@ -27,8 +15,37 @@ function Explorer({
   loading,
   models
 }) {
+  const borderStyle = {
+    border: "1px solid white"
+  };
+
+  const borderBottomStyle = {
+    borderBottom: "1px solid white"
+  };
+
+  const mobileExplorerStyle = {
+    minWidth: "100vw",
+    maxWidth: "100vw",
+    ...borderStyle
+  };
+
+  const desktopExplorerStyle = {
+    minWidth: "40vw",
+    maxWidth: "40vw",
+    minHeight: "80vh",
+    maxHeight: "80vh",
+    overflowY: "scroll",
+    overflowX: "hidden",
+    ...borderBottomStyle
+  };
+
+  const loaderStyle = {
+    minHeight: "40vh",
+    maxHeight: "40vh"
+  };
+
   const pagination = (
-    <Menu className="Explorer-pagination" widths={5} inverted>
+    <Menu style={borderBottomStyle} widths={5} inverted>
       <Menu.Item icon="fast backward" onClick={loadFirstPage} />
       <Menu.Item icon="backward" onClick={loadPreviousPage} />
       <Menu.Item header content={`${currentPage + 1} / ${totalPages}`} />
@@ -38,23 +55,27 @@ function Explorer({
   );
 
   return (
-    <Styles {...{ compact }}>
-      <Segment className="Explorer" attached="bottom" inverted>
-        <Sidebar.Pusher>
-          <Segment basic className="Explorer-title">
-            <Divider horizontal inverted>
-              {title}
-            </Divider>
-          </Segment>
-          {pagination}
-          {loading ? (
+    <Segment
+      style={compact ? mobileExplorerStyle : desktopExplorerStyle}
+      attached="bottom"
+      inverted
+    >
+      <Sidebar.Pusher>
+        <Segment basic style={borderBottomStyle}>
+          <Divider horizontal inverted>
+            {title}
+          </Divider>
+        </Segment>
+        {pagination}
+        {loading ? (
+          <Segment style={loaderStyle} inverted>
             <Loader active content="Loading..." />
-          ) : (
-            renderItems(models)
-          )}
-        </Sidebar.Pusher>
-      </Segment>
-    </Styles>
+          </Segment>
+        ) : (
+          renderItems(models)
+        )}
+      </Sidebar.Pusher>
+    </Segment>
   );
 }
 

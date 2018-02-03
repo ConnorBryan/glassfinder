@@ -1,19 +1,8 @@
 import React from "react";
 import { Sidebar, Menu } from "semantic-ui-react";
-import styled from "styled-components";
 import Aux from "react-aux";
 
 import * as config from "../../../../../config";
-import { fancy } from "../../../../styles/snippets";
-
-const Styles = styled.div`
-  .ExplorerOptions {
-    border: 1px solid white !important;
-    border-right: none !important;
-    margin-top: 1.5rem !important;
-    min-width: 100vw !important;
-  }
-`;
 
 function ExplorerOptions({
   compact,
@@ -23,9 +12,17 @@ function ExplorerOptions({
   perPage,
   totalModels
 }) {
-  const menuStyle = {
+  const mobileMenuStyle = {
     border: "1px solid white",
     maxHeight: "60vh"
+  };
+
+  const desktopMenuStyle = {
+    border: "1px solid white",
+    minWidth: "30vw",
+    maxWidth: "30vw",
+    minHeight: "80vh",
+    maxHeight: "80vh"
   };
 
   const fancyStyle = {
@@ -88,7 +85,7 @@ function ExplorerOptions({
       as={Menu}
       animation="overlay"
       width="wide"
-      style={menuStyle}
+      style={mobileMenuStyle}
       vertical
       inverted
       {...{ visible }}
@@ -96,11 +93,9 @@ function ExplorerOptions({
       {options}
     </Sidebar>
   ) : (
-    <Styles>
-      <Menu className="ExplorerOptions" vertical inverted>
-        {options}
-      </Menu>
-    </Styles>
+    <Menu style={desktopMenuStyle} vertical inverted>
+      {options}
+    </Menu>
   );
 }
 

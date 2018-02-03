@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Sidebar, Menu, Grid } from "semantic-ui-react";
 import styled from "styled-components";
+import Aux from "react-aux";
 
 import * as config from "../../../config";
 import { centered, fancy } from "../../styles/snippets";
@@ -34,6 +35,10 @@ const Styles = styled.div`
   .ModelExplorer-row {
     flex-wrap: initial !important;
   }
+
+  .column {
+    padding: 0 !important;
+  }
 `;
 
 class ModelExplorer extends Component {
@@ -42,7 +47,7 @@ class ModelExplorer extends Component {
     sort: config.SORT_DATE_ASCENDING,
     models: [],
     showingMap: false,
-    showingMap: false,
+    showingSettings: false,
     currentPage: 0,
     totalPages: 1,
     totalModels: 0,
@@ -144,13 +149,56 @@ class ModelExplorer extends Component {
       viewingDetail
     } = this.state;
 
+    const left = viewingDetail ? (
+      renderDetail(id)
+    ) : (
+      <ExplorerMap visible={showingMap} {...{ compact }} />
+    );
+
+    const center = (
+      <Explorer
+        {...{
+          compact,
+          title: viewingDetail ? detailTitle : title,
+          loadFirstPage,
+          loadPreviousPage,
+          loadNextPage,
+          loadLastPage,
+          currentPage,
+          totalPages: +totalPages <= 0 ? 1 : totalPages,
+          renderItems: viewingDetail ? renderDetailItems : renderItems,
+          resource,
+          loading,
+          models
+        }}
+      />
+    );
+
+    const right = (
+      <ExplorerOptions
+        {...{ compact, perPage, totalModels }}
+        visible={showingSettings}
+        sort={this.setModels}
+        toggle={this.toggleSettings}
+      />
+    );
+
     return (
       <Styles {...{ compact }}>
-        <Menu className="ModelExplorer-menu" attached="top" inverted>
+        <Menu
+          className="ModelExplorer-menu"
+          attached="top"
+          inverted
+          widths={compact ? 1 : 2}
+        >
           <Menu.Item header {...{ icon, content: title }} />
         </Menu>
         {compact && (
-          <Menu className="ModelExplorer-menu" inverted widths={2}>
+          <Menu
+            className="ModelExplorer-menu ModelExplorer-menu_bottom"
+            inverted
+            widths={2}
+          >
             <Menu.Item
               icon="map"
               content="Map"
@@ -165,41 +213,29 @@ class ModelExplorer extends Component {
             />
           </Menu>
         )}
-        <Grid inverted divided columns={12}>
-          <Grid.Row className="ModelExplorer-row">
-            <Sidebar.Pushable>
-              {viewingDetail ? (
-                <Grid.Column className="ModelExplorer-detail">
-                  {renderDetail(id)}
+        <Sidebar.Pushable>
+          {compact ? (
+            <Aux>
+              {left}
+              {center}
+              {right}
+            </Aux>
+          ) : (
+            <Grid>
+              <Grid.Row>
+                <Grid.Column style={{ minWidth: "30vw", maxWidth: "30vw" }}>
+                  {left}
                 </Grid.Column>
-              ) : (
-                <ExplorerMap visible={showingMap} {...{ compact }} />
-              )}
-              <Explorer
-                {...{
-                  compact,
-                  title: viewingDetail ? detailTitle : title,
-                  loadFirstPage,
-                  loadPreviousPage,
-                  loadNextPage,
-                  loadLastPage,
-                  currentPage,
-                  totalPages: +totalPages <= 0 ? 1 : totalPages,
-                  renderItems: viewingDetail ? renderDetailItems : renderItems,
-                  resource,
-                  loading,
-                  models
-                }}
-              />
-              <ExplorerOptions
-                {...{ compact, perPage, totalModels }}
-                visible={showingSettings}
-                sort={this.setModels}
-                toggle={this.toggleSettings}
-              />
-            </Sidebar.Pushable>
-          </Grid.Row>
-        </Grid>
+                <Grid.Column style={{ minWidth: "40vw", maxWidth: "40vw" }}>
+                  {center}
+                </Grid.Column>
+                <Grid.Column style={{ minWidth: "30vw", maxWidth: "30vw" }}>
+                  {right}
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          )}
+        </Sidebar.Pushable>
       </Styles>
     );
   }
