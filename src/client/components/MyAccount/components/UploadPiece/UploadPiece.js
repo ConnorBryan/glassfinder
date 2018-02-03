@@ -6,6 +6,7 @@ import * as config from "../../../../../config";
 import { removeFromCache } from "../../../../../util";
 import API from "../../../../services";
 import FormScreen from "../../../FormScreen";
+import AbstractFormWithImage from "../../../AbstractFormWithImage";
 
 const FIELDS = [
   {
@@ -55,21 +56,26 @@ const FIELDS = [
 function UploadPiece({ verbiage, account, history, displayNotification }) {
   if (!account) return <Redirect to="/sign-in" />;
 
-  const onSubmit = async ({ name, maker, price, description, location }) => {
+  const onSubmit = async ({
+    name,
+    maker,
+    price,
+    description,
+    location,
+    image
+  }) => {
     const piece = await API.uploadPiece(
       account.id,
       name,
       maker,
       price,
       description,
-      location
+      location,
+      image
     );
 
     if (piece) {
-      // Clear cache to show entry on reloading Pieces view.
-      removeFromCache("myPieces", "myPiecesById");
-
-      history.push(`/my-account/view-my-pieces/${piece.id}/upload-image`, {
+      history.push(`/my-account/view-my-pieces/${piece.id}`, {
         piece
       });
 
@@ -89,7 +95,7 @@ function UploadPiece({ verbiage, account, history, displayNotification }) {
     fields: FIELDS
   };
 
-  return <FormScreen {...{ screenHeader, abstractForm }} />;
+  return <AbstractFormWithImage {...{ displayNotification, abstractForm }} />;
 }
 
 export default withRouter(UploadPiece);

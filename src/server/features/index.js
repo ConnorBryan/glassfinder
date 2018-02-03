@@ -11,6 +11,7 @@ import { addLinkRequestAdminRoutes } from "./LinkRequest";
 import { addAboutRoutes, addAboutAdminRoutes } from "./About";
 import { addHelpRoutes, addHelpAdminRoutes } from "./Help";
 import { addUpdateRoutes, addUpdateAdminRoutes } from "./Update";
+import { addImageRoutes, addImageAdminRoutes } from "./Image";
 
 export default function addFeatures(app) {
   const api = express.Router();
@@ -28,6 +29,7 @@ export default function addFeatures(app) {
   addAboutRoutes(api);
   addHelpRoutes(api);
   addUpdateRoutes(api);
+  addImageRoutes(api);
 
   const admin = express.Router();
 
@@ -45,6 +47,7 @@ export default function addFeatures(app) {
   addUpdateAdminRoutes(admin);
 
   addLinkRequestAdminRoutes(admin);
+  addImageAdminRoutes(admin);
 
   api.use("/admin", admin);
   app.use("/api", api);

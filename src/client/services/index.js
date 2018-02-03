@@ -405,7 +405,15 @@ export default class API {
    * @param {string} description
    * @param {string} location
    */
-  static async uploadPiece(id, name, maker, price, description, location) {
+  static async uploadPiece(
+    id,
+    name,
+    maker,
+    price,
+    description,
+    location,
+    image
+  ) {
     try {
       const url = `${config.API_ROOT}/pieces?userId=${id}`;
       const { data: { payload: { piece } } } = await axios.post(url, {
@@ -413,7 +421,8 @@ export default class API {
         maker,
         price,
         description,
-        location
+        location,
+        image
       });
 
       return piece;
@@ -519,6 +528,26 @@ export default class API {
         return null;
       }
     } catch (e) {
+      return null;
+    }
+  }
+
+  static async genericImageUpload(image) {
+    try {
+      const formData = new FormData();
+
+      formData.append("image", image);
+
+      const url = `${config.API_ROOT}/images`;
+      const { data: { payload: { imagePath } } } = await axios.post(
+        url,
+        formData
+      );
+
+      return imagePath;
+    } catch (e) {
+      console.error(e);
+
       return null;
     }
   }

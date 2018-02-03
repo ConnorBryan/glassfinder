@@ -10,9 +10,11 @@ export const IS_ADMIN = !!process.env.REACT_APP_IS_ADMIN;
 export const JWT_SECRET = process.env.JWT_SECRET;
 export const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION;
 export const SALT_ROUNDS = process.env.SALT_ROUNDS;
+export const IMAGE_BUCKET = process.env.IMAGE_BUCKET;
 export const USER_BUCKET = process.env.USER_BUCKET;
 export const PIECE_BUCKET = process.env.PIECE_BUCKET;
 export const SPACES_ENDPOINT = process.env.SPACES_ENDPOINT;
+export const GENERIC_IMAGES_SPACES_URL = process.env.GENERIC_IMAGES_SPACES_URL;
 export const USER_IMAGES_SPACES_URL = process.env.USER_IMAGES_SPACES_URL;
 export const PIECE_IMAGES_SPACES_URL = process.env.PIECE_IMAGES_SPACES_URL;
 export const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY;
@@ -77,7 +79,8 @@ export const MODEL_LIST = [
   "Help",
   "Update",
   "Verbiage",
-  "LinkRequest"
+  "LinkRequest",
+  "Image"
 ];
 export const NOTIFICATION_TIMEOUT = 4000;
 export const MODEL_READ_LIMIT = 6;
@@ -210,6 +213,9 @@ export const USER_VERIFICATION_SUCCESS_NOTIFICATION =
   "Your account was successfully verified. You may now sign in.";
 export const USER_VERIFICATION_ERROR_NOTIFICATION =
   "We were unable to verify you. Please ensure the URL in the address bar is correct.";
+export const SELECTED_IMAGE_NOTIFICATION = "You've selected an image.";
+export const UPLOADED_IMAGE_NOTIFICATION = `You've uploaded an image. Press "Finish" below to continue.`;
+export const INVALID_IMAGE_UPLOAD_NOTIFICATION = `Something went wrong while trying to upload an image`;
 export const HOME_TILES = [
   {
     icon: ICON_SET[LINK_TYPES.SHOP],

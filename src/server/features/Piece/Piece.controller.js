@@ -28,9 +28,17 @@ const upload = multerS3(config.PIECE_BUCKET);
 function create(req, res) {
   return respondWith(res, async () => {
     const { userId } = req.query;
-    const { name, description, maker, price, location } = req.body;
+    const { name, description, maker, price, location, image } = req.body;
 
-    requireProperties({ userId, name, description, maker, price, location });
+    requireProperties({
+      userId,
+      name,
+      description,
+      maker,
+      price,
+      location,
+      image
+    });
 
     const user = await User.findById(+userId);
 
@@ -49,7 +57,7 @@ function create(req, res) {
 
     const piece = await Piece.create({
       userId,
-      image: config.PLACEHOLDER_IMAGE,
+      image,
       name,
       description,
       maker,

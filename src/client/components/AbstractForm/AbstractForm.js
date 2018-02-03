@@ -104,7 +104,7 @@ function AbstractFormField({
   );
 }
 
-function AbstractForm({ fields, onSubmit, actions }) {
+function AbstractForm({ fields, onSubmit, actions, sendText }) {
   const initialValues = fields.reduce(
     (values, field) => ({ ...values, [field.name]: field.value }),
     {}
@@ -153,7 +153,7 @@ function AbstractForm({ fields, onSubmit, actions }) {
             <Menu attached="top" inverted widths={2}>
               <Menu.Item
                 icon="send outline"
-                content="Send"
+                content={sendText || "Send"}
                 onClick={handleSubmit}
                 disabled={isSubmitting}
               />
