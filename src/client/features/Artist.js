@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Divider } from "semantic-ui-react";
+import { Responsive, Container, Divider } from "semantic-ui-react";
+import Aux from "react-aux";
 
 import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
@@ -61,7 +62,16 @@ export function ArtistExplorer() {
       models.map((model, index) => <PieceThing key={index} {...model} />)
   };
 
-  return <ModelExplorer {...props} />;
+  return (
+    <Aux>
+      <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
+        <ModelExplorer compact {...props} />
+      </Responsive>
+      <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        <ModelExplorer {...props} />
+      </Responsive>
+    </Aux>
+  );
 }
 
 export function ArtistViewer({ verbiage }) {

@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Divider } from "semantic-ui-react";
+import { Responsive, Container, Divider } from "semantic-ui-react";
+import Aux from "react-aux";
 
 import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
@@ -53,7 +54,16 @@ export function BrandExplorer() {
       )
   };
 
-  return <ModelExplorer {...props} />;
+  return (
+    <Aux>
+      <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
+        <ModelExplorer compact {...props} />
+      </Responsive>
+      <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        <ModelExplorer {...props} />
+      </Responsive>
+    </Aux>
+  );
 }
 
 export function BrandViewer({ verbiage }) {

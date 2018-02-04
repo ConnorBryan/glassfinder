@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { Sidebar, Menu, Grid } from "semantic-ui-react";
+import { Link, withRouter } from "react-router-dom";
+import { Sidebar, Segment, Menu, Grid } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 
@@ -149,8 +149,30 @@ class ModelExplorer extends Component {
       viewingDetail
     } = this.state;
 
+    const detailWrapperMobileStyle = {
+      padding: 0,
+      border: "1px solid white",
+      minWidth: "100vw",
+      maxWidth: "100vw"
+    };
+
+    const detailWrapperDesktopStyle = {
+      padding: 0,
+      border: "1px solid white",
+      borderLeft: "none",
+      minWidth: "30vw",
+      maxWidth: "30vw",
+      minHeight: "80vh",
+      maxHeight: "80vh"
+    };
+
     const left = viewingDetail ? (
-      renderDetail(id)
+      <Segment
+        inverted
+        style={compact ? detailWrapperMobileStyle : detailWrapperDesktopStyle}
+      >
+        {renderDetail(id)}
+      </Segment>
     ) : (
       <ExplorerMap visible={showingMap} {...{ compact }} />
     );
@@ -199,12 +221,21 @@ class ModelExplorer extends Component {
             inverted
             widths={2}
           >
-            <Menu.Item
-              icon="map"
-              content="Map"
-              active={showingMap}
-              onClick={this.toggleMap}
-            />
+            {viewingDetail ? (
+              <Menu.Item
+                icon="block layout"
+                content={`View all ${resource}`}
+                as={Link}
+                to={`/${resource}`}
+              />
+            ) : (
+              <Menu.Item
+                icon="map"
+                content="Map"
+                active={showingMap}
+                onClick={this.toggleMap}
+              />
+            )}
             <Menu.Item
               icon="settings"
               content="Settings"

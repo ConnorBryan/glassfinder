@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
+  Responsive,
   Container,
   Segment,
   Divider,
@@ -8,6 +9,7 @@ import {
   Item,
   Icon
 } from "semantic-ui-react";
+import Aux from "react-aux";
 import accounting from "accounting";
 
 import * as config from "../../config";
@@ -97,7 +99,16 @@ export function PieceExplorer() {
       })
   };
 
-  return <ModelExplorer {...props} />;
+  return (
+    <Aux>
+      <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
+        <ModelExplorer compact {...props} />
+      </Responsive>
+      <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        <ModelExplorer {...props} />
+      </Responsive>
+    </Aux>
+  );
 }
 
 export function PieceViewer({ verbiage }) {
