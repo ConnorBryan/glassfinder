@@ -19,8 +19,8 @@ function ExplorerOptions({
 
   const desktopMenuStyle = {
     border: "1px solid white",
-    minWidth: "30vw",
-    maxWidth: "30vw",
+    minWidth: "15vw",
+    maxWidth: "15vw",
     minHeight: "80vh",
     maxHeight: "80vh"
   };

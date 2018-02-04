@@ -248,10 +248,10 @@ class ModelExplorer extends Component {
                 <Grid.Column style={{ minWidth: "30vw", maxWidth: "30vw" }}>
                   {left}
                 </Grid.Column>
-                <Grid.Column style={{ minWidth: "40vw", maxWidth: "40vw" }}>
+                <Grid.Column style={{ minWidth: "55vw", maxWidth: "55vw" }}>
                   {center}
                 </Grid.Column>
-                <Grid.Column style={{ minWidth: "30vw", maxWidth: "30vw" }}>
+                <Grid.Column style={{ minWidth: "15vw", maxWidth: "15vw" }}>
                   {right}
                 </Grid.Column>
               </Grid.Row>

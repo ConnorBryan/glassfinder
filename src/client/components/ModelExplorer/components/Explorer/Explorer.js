@@ -30,8 +30,8 @@ function Explorer({
   };
 
   const desktopExplorerStyle = {
-    minWidth: "40vw",
-    maxWidth: "40vw",
+    minWidth: "55vw",
+    maxWidth: "55vw",
     minHeight: "80vh",
     maxHeight: "80vh",
     overflowY: "scroll",
