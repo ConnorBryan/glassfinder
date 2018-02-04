@@ -32,10 +32,6 @@ const Styles = styled.div`
     ${centered};
   }
 
-  .ModelExplorer-row {
-    flex-wrap: initial !important;
-  }
-
   .column {
     padding: 0 !important;
   }
@@ -207,12 +203,7 @@ class ModelExplorer extends Component {
 
     return (
       <Styles {...{ compact }}>
-        <Menu
-          className="ModelExplorer-menu"
-          attached="top"
-          inverted
-          widths={compact ? 1 : 2}
-        >
+        <Menu className="ModelExplorer-menu" attached="top" inverted widths={1}>
           <Menu.Item header {...{ icon, content: title }} />
         </Menu>
         {compact && (

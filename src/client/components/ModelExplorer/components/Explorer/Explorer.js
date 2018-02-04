@@ -36,7 +36,7 @@ function Explorer({
     maxHeight: "80vh",
     overflowY: "scroll",
     overflowX: "hidden",
-    ...borderBottomStyle
+    ...borderStyle
   };
 
   const loaderStyle = {

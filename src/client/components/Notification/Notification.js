@@ -43,6 +43,7 @@ function Notification({ dismiss, message }) {
             left: "10%",
             top: "10%"
           }}
+          content={interior}
         />
       </Responsive>
       <Responsive

@@ -243,7 +243,7 @@ export const HOME_TILES = [
     icon: ICON_SET[LINK_TYPES.PIECE],
     link: `/${LINK_TYPES_TO_RESOURCES[LINK_TYPES.PIECE]}`,
     title: capitalize(LINK_TYPES_TO_RESOURCES[LINK_TYPES.PIECE]),
-    image: PIECE_IMAGES_SPACES_URL
+    image: PIECE_SPLASH
   }
 ];
 export const CONTACT_FORM_SCREEN_SPLASH = "/contact_form_screen_splash.jpeg";
