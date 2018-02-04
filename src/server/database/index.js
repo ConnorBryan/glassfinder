@@ -1,26 +1,28 @@
+import * as config from "../../config";
+
 export default {
   development: {
-    username: "development",
-    password: "1Qazmlp01!",
-    database: "development",
-    host: "165.227.183.212",
-    port: 5432,
-    dialect: "postgres"
+    username: config.DATABASE_DEVELOPMENT_USERNAME,
+    password: config.DATABASE_DEVELOPMENT_PASSWORD,
+    database: config.DATABASE_DEVELOPMENT_DATABASE,
+    host: config.DATABASE_DEVELOPMENT_HOST,
+    port: config.DATABASE_DEVELOPMENT_PORT,
+    dialect: config.DATABASE_DEVELOPMENT_DIALECT
   },
   test: {
-    username: "development",
-    password: "1Qazmlp01!",
-    database: "development",
-    host: "165.227.183.212",
-    port: 5432,
-    dialect: "postgres"
+    username: config.DATABASE_TEST_USERNAME,
+    password: config.DATABASE_TEST_PASSWORD,
+    database: config.DATABASE_TEST_DATABASE,
+    host: config.DATABASE_TEST_HOST,
+    port: config.DATABASE_TEST_PORT,
+    dialect: config.DATABASE_TEST_DIALECT
   },
   production: {
-    username: "development",
-    password: "1Qazmlp01!",
-    database: "development",
-    host: "165.227.183.212",
-    port: 5432,
-    dialect: "postgres"
+    username: config.DATABASE_PRODUCTION_USERNAME,
+    password: config.DATABASE_PRODUCTION_PASSWORD,
+    database: config.DATABASE_PRODUCTION_DATABASE,
+    host: config.DATABASE_PRODUCTION_HOST,
+    port: config.DATABASE_PRODUCTION_PORT,
+    dialect: config.DATABASE_PRODUCTION_DIALECT
   }
 };
