@@ -35,7 +35,7 @@ const FIELDS = [
   },
   {
     name: "description",
-    type: "text",
+    type: "textarea",
     label: "Description",
     placeholder: "Enter description",
     value: "",
@@ -95,10 +95,17 @@ function UpdatePieceInformation({
     fields
   };
 
+  const initialImage = state.piece && state.piece.image;
+
   return (
     <FormScreen
       withImage
-      {...{ splash: config.PIECE_SPLASH, screenHeader, abstractForm }}
+      {...{
+        splash: config.PIECE_SPLASH,
+        initialImage,
+        screenHeader,
+        abstractForm
+      }}
     />
   );
 }

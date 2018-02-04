@@ -12,11 +12,14 @@ function FormScreen({
   screenHeader,
   abstractForm,
   displayNotification,
+  initialImage,
   withImage
 }) {
   const header = <ScreenHeader {...screenHeader} />;
   const form = withImage ? (
-    <AbstractFormWithImage {...{ displayNotification, abstractForm }} />
+    <AbstractFormWithImage
+      {...{ initialImage, displayNotification, abstractForm }}
+    />
   ) : (
     <AbstractForm {...abstractForm} />
   );

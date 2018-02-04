@@ -88,10 +88,17 @@ function UpdateBrandInformation({
     fields
   };
 
+  const initialImage = account && account.link && account.link.image;
+
   return (
     <FormScreen
       withImage
-      {...{ splash: config.BRAND_SPLASH, screenHeader, abstractForm }}
+      {...{
+        splash: config.BRAND_SPLASH,
+        initialImage,
+        screenHeader,
+        abstractForm
+      }}
     />
   );
 }

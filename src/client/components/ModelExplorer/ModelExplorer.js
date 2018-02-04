@@ -38,23 +38,34 @@ const Styles = styled.div`
 `;
 
 class ModelExplorer extends Component {
-  state = {
-    loading: true,
-    sort: config.SORT_DATE_ASCENDING,
-    models: [],
-    showingMap: false,
-    showingSettings: false,
-    currentPage: 0,
-    totalPages: 1,
-    totalModels: 0,
-    perPage: config.MODEL_READ_LIMIT,
-    viewingDetail: this.props.location.pathname.split("/").length === 3,
-    id: this.props.location.pathname.split("/")[2]
-  };
+  state = this.getInitialState();
 
   resource = this.props.resource;
   cacheKey = this.props.cacheKey;
   cacheExpiration = this.props.cacheExpiration;
+
+  getInitialState() {
+    const { location: { pathname } } = this.props;
+
+    const isViewMyPieces = pathname.includes("view-my-pieces");
+    const splitPath = pathname.split("/");
+    const viewingDetail = splitPath.length === (isViewMyPieces ? 4 : 3);
+    const id = splitPath[isViewMyPieces ? 3 : 2];
+
+    return {
+      loading: true,
+      sort: config.SORT_DATE_ASCENDING,
+      models: [],
+      showingMap: false,
+      showingSettings: false,
+      currentPage: 0,
+      totalPages: 1,
+      totalModels: 0,
+      perPage: config.MODEL_READ_LIMIT,
+      viewingDetail,
+      id
+    };
+  }
 
   componentDidMount() {
     this.setModels();

@@ -144,20 +144,17 @@ export default class API {
   ) {
     try {
       const url = `${config.API_ROOT}/users/${id}/pieces?page=${page}&sort=${sort}`;
-      const {
-        data: { payload: { count, pages: totalPages, pieces, perPage } }
-      } = await axios.get(url);
+      const { data: { payload } } = await axios.get(url);
 
-      return {
-        count,
-        totalPages,
-        pieces,
-        perPage
-      };
+      return { ...payload };
     } catch (e) {
       console.error(e);
 
-      return null;
+      return {
+        page: [],
+        totalPages: 1,
+        perPage: 0
+      };
     }
   }
 

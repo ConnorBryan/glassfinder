@@ -77,12 +77,23 @@ function UpdateArtistInformation({
     fields
   };
 
+  const initialImage = account && account.link && account.link.image;
+
   return (
     <FormScreen
       withImage
-      {...{ splash: config.ARTIST_SPLASH, screenHeader, abstractForm }}
+      {...{
+        splash: config.ARTIST_SPLASH,
+        initialImage,
+        screenHeader,
+        abstractForm
+      }}
     />
   );
 }
+
+UpdateArtistInformation.defaultProps = {
+  account: {}
+};
 
 export default withRouter(UpdateArtistInformation);

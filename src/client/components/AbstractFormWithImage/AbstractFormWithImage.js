@@ -8,7 +8,8 @@ export default class AbstractFormWithImage extends Component {
   static propTypes = {
     abstractForm: PropTypes.shape({
       onSubmit: PropTypes.func.isRequired,
-      fields: PropTypes.arrayOf(PropTypes.object).isRequired
+      fields: PropTypes.arrayOf(PropTypes.object).isRequired,
+      initialImage: PropTypes.string
     })
   };
 
@@ -36,7 +37,7 @@ export default class AbstractFormWithImage extends Component {
   };
 
   render() {
-    const { abstractForm } = this.props;
+    const { initialImage, abstractForm } = this.props;
     const { stage } = this.state;
 
     const modifiedAbstractForm = { ...abstractForm };
@@ -51,7 +52,10 @@ export default class AbstractFormWithImage extends Component {
     return stage === 0 ? (
       <AbstractForm sendText="Upload image" {...modifiedAbstractForm} />
     ) : (
-      <ImageUpload onSubmit={imagePath => this.finish(imagePath)} />
+      <ImageUpload
+        {...{ initialImage }}
+        onSubmit={imagePath => this.finish(imagePath)}
+      />
     );
   }
 }

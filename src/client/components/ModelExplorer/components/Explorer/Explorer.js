@@ -26,6 +26,7 @@ function Explorer({
   const mobileExplorerStyle = {
     minWidth: "100vw",
     maxWidth: "100vw",
+    margin: 0,
     ...borderStyle
   };
 
@@ -36,6 +37,7 @@ function Explorer({
     maxHeight: "80vh",
     overflowY: "scroll",
     overflowX: "hidden",
+    margin: 0,
     ...borderStyle
   };
 

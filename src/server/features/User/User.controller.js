@@ -22,7 +22,7 @@ import transporter, {
   glassfinder,
   slightlyBiggerText
 } from "../../transporter";
-import { genericPaginatedRead } from "../common";
+import { genericSortedRead, genericPaginatedRead } from "../common";
 
 const upload = multerS3(config.USER_BUCKET);
 const { Shop, Artist, Brand, Piece, User, LinkRequest } = models;
@@ -103,30 +103,13 @@ function read(req, res) {
  * @returns {Array<Piece>}
  */
 function fetchPiecesForId(req, res) {
-  return respondWith(res, async () => {
-    const { id } = req.params;
-    const { page = 0 } = req.query;
-
-    requireProperties({ id });
-
-    const limit = config.MODEL_READ_LIMIT;
-    const offset = +page * limit;
-    const userId = +id;
-    const { count, rows } = await Piece.findAndCountAll({
-      offset,
-      limit,
-      $sort: { id: 1 },
-      where: { userId }
-    });
-    const pages = Math.ceil(count / limit);
-
-    return success(res, `Successfully fetched pieces for User#${userId}`, {
-      count,
-      pages,
-      pieces: rows,
-      perPage: config.MODEL_READ_LIMIT
-    });
-  });
+  return genericSortedRead(
+    req,
+    res,
+    Piece,
+    config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.PIECE],
+    req.params.id
+  );
 }
 
 /**

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Segment, Responsive, Image, Menu, Divider } from "semantic-ui-react";
+import { Segment, Image, Menu, Divider } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 import uuid from "uuid/v4";
@@ -12,6 +12,7 @@ const Styles = styled.div`
   .ImageUpload-menu {
     border: 1px solid white !important;
     margin-top: 0 !important;
+    margin-bottom: 0 !important;
 
     .item {
       ${fancy};
@@ -35,12 +36,14 @@ const Styles = styled.div`
 
 export default class ImageUpload extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    initialImage: PropTypes.string
   };
 
   state = {
     image: null,
-    imagePath: null,
+    imagePath: this.props.initialImage || null,
+    initiallyHadImage: !!this.props.initialImage,
     uploading: false,
     ready: false
   };
@@ -69,15 +72,15 @@ export default class ImageUpload extends Component {
 
   finish = () => {
     const { onSubmit } = this.props;
-    const { imagePath, ready } = this.state;
+    const { imagePath, initiallyHadImage, ready } = this.state;
 
-    if (ready) {
+    if (ready || initiallyHadImage) {
       onSubmit(imagePath);
     }
   };
 
   render() {
-    const { image, imagePath, ready } = this.state;
+    const { image, imagePath, initiallyHadImage, ready } = this.state;
 
     const formContentText = image ? (
       <p>
@@ -119,30 +122,19 @@ export default class ImageUpload extends Component {
       </Menu>
     ) : (
       <Aux>
-        <Responsive
-          as={Menu}
-          className="ImageUpload-menu"
-          maxWidth={Responsive.onlyMobile.maxWidth}
-        >
-          {uploadButton}
-        </Responsive>
-        <Responsive
-          as={Menu}
-          className="ImageUpload-menu"
-          maxWidth={Responsive.onlyMobile.maxWidth}
-        >
-          {clearButton}
-        </Responsive>
-        <Responsive
-          as={Menu}
-          className="ImageUpload-menu"
-          minWidth={Responsive.onlyTablet.minWidth}
-          widths={2}
-          inverted
-        >
+        <Menu className="ImageUpload-menu" widths={2} inverted>
           {uploadButton}
           {clearButton}
-        </Responsive>
+        </Menu>
+        {initiallyHadImage && (
+          <Menu className="ImageUpload-menu" widths={1} inverted>
+            <Menu.Item
+              icon="checkmark"
+              content="Keep current image"
+              onClick={this.finish}
+            />
+          </Menu>
+        )}
       </Aux>
     );
 

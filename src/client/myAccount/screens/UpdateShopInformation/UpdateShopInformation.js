@@ -142,10 +142,17 @@ function UpdateShopInformation({
     fields
   };
 
+  const initialImage = account && account.link && account.link.image;
+
   return (
     <FormScreen
       withImage
-      {...{ splash: config.SHOP_SPLASH, screenHeader, abstractForm }}
+      {...{
+        splash: config.SHOP_SPLASH,
+        initialImage,
+        screenHeader,
+        abstractForm
+      }}
     />
   );
 }
