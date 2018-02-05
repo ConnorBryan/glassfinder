@@ -15,7 +15,6 @@ import styled from "styled-components";
 import routes, { RecursiveRoutes } from "../../routes";
 import Navbar from "../Navbar";
 import MobileNavigation from "../MobileNavigation";
-import Notification from "../Notification";
 
 const Styles = styled.div`
   .Layout-pushable {
@@ -81,9 +80,7 @@ class Layout extends Component {
       hideMobileNavigation,
       account,
       token,
-      notification: message,
       displayNotification,
-      hideNotification: dismiss,
       updateAccount,
       updateAccountLink,
       signin,
@@ -195,7 +192,6 @@ class Layout extends Component {
 
     return (
       <Styles>
-        {message && <Notification {...{ dismiss, message }} />}
         <section ref={this.handleContext}>
           <Container className="main" fluid>
             {navbar}

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { BrowserRouter } from "react-router-dom";
+import Aux from "react-aux";
 
 import * as config from "../config";
 import { CacheProvider } from "../util";
 import API from "./services";
 import AgeGate from "./components/AgeGate";
+import NotificationProvider from "./components/NotificationProvider";
 import Layout from "./components/Layout";
 
 export default class Client extends Component {
@@ -94,25 +96,10 @@ export default class Client extends Component {
   };
 
   /**
-   * Notifications appear at the top of the screen and alert the user to some happening.
+   * Two way hack to prevent notifications from affecting overall state.
    */
-  displayNotification = notification => {
-    if (this.goingToHideNotification)
-      clearTimeout(this.goingToHideNotification);
-
-    this.setState(
-      { notification },
-      () =>
-        (this.goingToHideNotification = setTimeout(
-          this.hideNotification,
-          config.NOTIFICATION_TIMEOUT
-        ))
-    );
-  };
-
-  hideNotification = () => {
-    this.setState({ notification: null });
-  };
+  setDisplayNotification = func => (this.displayNotification = func);
+  setHideNotification = func => (this.hideNotification = func);
 
   /**
    * Make changes to the storaged account whenever a form completes.
@@ -186,23 +173,30 @@ export default class Client extends Component {
   };
 
   render() {
+    const { setDisplayNotification, setHideNotification } = this;
     const { hasDismissedAgeGate } = this.state;
 
     return hasDismissedAgeGate ? (
-      <BrowserRouter>
-        <Layout
-          {...this.state}
-          displayNotification={this.displayNotification}
-          hideNotification={this.hideNotification}
-          showMobileNavigation={this.showMobileNavigation}
-          hideMobileNavigation={this.hideMobileNavigation}
-          updateAccount={this.updateAccount}
-          updateAccountLink={this.updateAccountLink}
-          signin={this.signin}
-          signout={this.signout}
-          signup={this.signup}
+      <Aux>
+        <NotificationProvider
+          {...{ setDisplayNotification, setHideNotification }}
         />
-      </BrowserRouter>
+        <BrowserRouter>
+          <Layout
+            {...this.state}
+            displayNotification={this.displayNotification}
+            hideNotification={this.hideNotification}
+            showMobileNavigation={this.showMobileNavigation}
+            hideMobileNavigation={this.hideMobileNavigation}
+            updateAccount={this.updateAccount}
+            setHideDisplayNotification
+            updateAccountLink={this.updateAccountLink}
+            signin={this.signin}
+            signout={this.signout}
+            signup={this.signup}
+          />
+        </BrowserRouter>
+      </Aux>
     ) : (
       <AgeGate dismiss={this.dismissAgeGate} />
     );
