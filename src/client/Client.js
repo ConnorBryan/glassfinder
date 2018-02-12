@@ -97,6 +97,7 @@ export default class Client extends Component {
   /**
    * Two way hack to prevent notifications from affecting overall state.
    */
+  displayNotification = () => {};
   setDisplayNotification = func => (this.displayNotification = func);
   setHideNotification = func => (this.hideNotification = func);
 
