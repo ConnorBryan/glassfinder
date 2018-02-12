@@ -48,7 +48,6 @@ export default class Client extends Component {
 
     this.setState(this.getInitialState(), () => {
       this.setVerbiage();
-      this.displayNotification(config.CATASTROPHIC_ERROR_NOTIFICATION);
     });
   }
 
