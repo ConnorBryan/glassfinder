@@ -10,7 +10,7 @@ import BecomeABrand from "../myAccount/screens/BecomeABrand";
 import UpdateShopInformation from "../myAccount/screens/UpdateShopInformation";
 import UpdateArtistInformation from "../myAccount/screens/UpdateArtistInformation";
 import UpdateBrandInformation from "../myAccount/screens/UpdateBrandInformation";
-import UploadPiece from "../myAccount/screens/UploadPiece";
+import UploadPiece from "../myAccount/screens/_UploadPiece";
 import MyPiecesViewer from "../myAccount/screens/ViewMyPieces";
 import UpdatePieceInformation from "../myAccount/screens/UpdatePieceInformation";
 

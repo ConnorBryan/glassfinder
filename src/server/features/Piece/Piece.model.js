@@ -5,13 +5,23 @@ export default (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     maker: DataTypes.STRING,
     price: DataTypes.DOUBLE,
-    location: DataTypes.STRING
+    location: DataTypes.STRING,
+    artistEntry: DataTypes.STRING,
+    brandEntry: DataTypes.STRING
   });
 
   Piece.associate = models => {
     Piece.belongsTo(models.User, {
       foreignKey: "userId",
       as: "piece"
+    });
+    Piece.belongsTo(models.Artist, {
+      foreignKey: "artistId",
+      as: "artist"
+    });
+    Piece.belongsTo(models.Brand, {
+      foreignKey: "brandId",
+      as: "brand"
     });
   };
 
