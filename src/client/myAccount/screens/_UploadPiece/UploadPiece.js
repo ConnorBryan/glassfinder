@@ -1,5 +1,25 @@
 import React, { Component } from "react";
 import { Formik, Field } from "formik";
+import styled from "styled-components";
+
+import ImageUpload from "../../../components/ImageUpload";
+
+const Styles = styled.div`
+  margin: 0 10vw;
+
+  pre {
+    color: white;
+  }
+
+  fieldset {
+    border: none;
+
+    label {
+      display: block;
+      color: white;
+    }
+  }
+`;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const required = value => (value ? undefined : "Required");
@@ -56,31 +76,34 @@ class Wizard extends Component {
     const isLastPage = page === React.Children.count(children) - 1;
 
     return (
-      <Formik
-        initialValues={values}
-        enableReinitialize={false}
-        validate={this.validate}
-        onSubmit={this.handleSubmit}
-        render={({ values, handleSubmit, isSubmitting, handleReset }) => (
-          <form onSubmit={handleSubmit}>
-            {activePage}
-            <section className="buttons">
-              {page > 0 && (
-                <button type="button" onClick={this.previous}>
-                  Previous
-                </button>
-              )}
-              {!isLastPage && <button type="submit">Next</button>}
-              {isLastPage && (
-                <button type="submit" disabled={isSubmitting}>
-                  Finish
-                </button>
-              )}
-            </section>
-            <pre>{JSON.stringify(values, null, 2)}</pre>
-          </form>
-        )}
-      />
+      <Styles>
+        <Formik
+          className="Wizard"
+          initialValues={values}
+          enableReinitialize={false}
+          validate={this.validate}
+          onSubmit={this.handleSubmit}
+          render={({ values, handleSubmit, isSubmitting, handleReset }) => (
+            <form onSubmit={handleSubmit}>
+              {activePage}
+              <section className="buttons">
+                {page > 0 && (
+                  <button type="button" onClick={this.previous}>
+                    Previous
+                  </button>
+                )}
+                {!isLastPage && <button type="submit">Next</button>}
+                {isLastPage && (
+                  <button type="submit" disabled={isSubmitting}>
+                    Finish
+                  </button>
+                )}
+              </section>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
+            </form>
+          )}
+        />
+      </Styles>
     );
   }
 }
@@ -96,12 +119,10 @@ export default class UploadPiece extends Component {
             maker: "",
             price: "",
             location: "",
-
             artist: "",
             artistEntry: "",
             brand: "",
             brandEntry: "",
-
             image: ""
           }}
           onSubmit={(values, actions) => {
@@ -111,6 +132,7 @@ export default class UploadPiece extends Component {
             });
           }}
         >
+          {/* Page 1: Basic Information */}
           <Wizard.Page>
             <fieldset>
               <label>Name</label>
@@ -162,29 +184,33 @@ export default class UploadPiece extends Component {
               />
             </fieldset>
           </Wizard.Page>
+          {/* Page 2: Association */}
           <Wizard.Page>
             <fieldset>
-              <label>Name</label>
+              <label>Artist Entry</label>
               <Field
-                name="name"
+                name="artistEntry"
                 component="input"
                 type="text"
-                placeholder="Name"
-                validate={required}
+                placeholder="Enter an artist..."
+              />
+            </fieldset>
+            <fieldset>
+              <label>Brand Entry</label>
+              <Field
+                name="brandEntry"
+                component="input"
+                type="text"
+                placeholder="Enter a brand..."
               />
             </fieldset>
           </Wizard.Page>
+          {/* Page 3: Association */}
           <Wizard.Page>
-            <fieldset>
-              <label>Maker</label>
-              <Field
-                name="maker"
-                component="input"
-                type="text"
-                placeholder="Maker"
-                validate={required}
-              />
-            </fieldset>
+            <ImageUpload
+              onSubmit={url => console.log("URL!", url)}
+              initialImage="https://placehold.it/300x300"
+            />
           </Wizard.Page>
         </Wizard>
       </div>
