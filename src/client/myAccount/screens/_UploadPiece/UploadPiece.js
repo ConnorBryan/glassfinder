@@ -136,9 +136,11 @@ export default class UploadPiece extends Component {
           }}
           onSubmit={values => {
             sleep(300).then(() => {
+              const { account: { id } } = this.props;
+              const finalValues = { ...values, id };
               // window.alert(JSON.stringify(values, null, 2));
               // actions.setSubmitting(false);
-              API.uploadPiece(values)
+              API.uploadPiece(finalValues)
                 .then(() => console.log("Done!"))
                 .catch(err => console.error(err));
             });

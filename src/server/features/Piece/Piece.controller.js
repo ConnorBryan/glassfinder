@@ -21,14 +21,23 @@ const upload = multerS3(config.PIECE_BUCKET);
 /**
  * @func create
  * @desc Add a new instance of Piece to the database.
- * @param {ExpressRequest} req 
- * @param {ExpressRequest} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressRequest} res
  * @returns {Piece}
  */
 function create(req, res) {
   return respondWith(res, async () => {
     const { userId } = req.query;
-    const { name, description, maker, price, location, image } = req.body;
+    const {
+      name,
+      description,
+      maker,
+      price,
+      location,
+      artistEntry,
+      brandEntry,
+      image
+    } = req.body;
 
     requireProperties({
       userId,
@@ -37,6 +46,8 @@ function create(req, res) {
       maker,
       price,
       location,
+      artistEntry,
+      brandEntry,
       image
     });
 
@@ -62,7 +73,9 @@ function create(req, res) {
       description,
       maker,
       price,
-      location
+      location,
+      artistEntry,
+      brandEntry
     });
 
     return success(
@@ -76,8 +89,8 @@ function create(req, res) {
 /**
  * @func read
  * @desc Provides either a single or multiple instances of Piece.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Piece | Array<Piece>}
  */
 function read(req, res) {
@@ -87,8 +100,8 @@ function read(req, res) {
 /**
  * @func readAll
  * @desc Retrieves all instances of Piece.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Array<Piece>}
  */
 function readAll(req, res) {
@@ -98,8 +111,8 @@ function readAll(req, res) {
 /**
  * @func readSorted
  * @desc Provides a page from a sorted collection.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Array<Piece>}
  */
 function readSorted(req, res) {
@@ -113,8 +126,8 @@ function readSorted(req, res) {
 
 /**
  * @func update
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {object}
  */
 function update(req, res) {
@@ -158,8 +171,8 @@ function remove(req, res) {
 /**
  * @func uploadImage
  * @desc Replace the primary image of a Piece.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Piece | Array<Piece>}
  */
 function uploadImage(req, res) {
