@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Formik, Field } from "formik";
 import styled from "styled-components";
 
+import API from "../../../services";
 import ImageUpload from "../../../components/ImageUpload";
 
 const Styles = styled.div`
@@ -35,6 +36,10 @@ function Error({ name }) {
   );
 }
 
+window.GLASSFINDER_GLOBAL_SHARE = {
+  imageUpload: null
+};
+
 class Wizard extends Component {
   static Page = ({ children }) => children;
 
@@ -63,10 +68,14 @@ class Wizard extends Component {
     const { children, onSubmit } = this.props;
     const { page } = this.state;
     const isLastPage = page === React.Children.count(children) - 1;
-
+    const finalValues = {
+      ...values,
+      image: window.GLASSFINDER_GLOBAL_SHARE.imageUpload || values.image || ""
+    };
+    console.log("Final values are", finalValues);
     return isLastPage
-      ? onSubmit(values)
-      : this.next(values) || bag.setSubmitting(false);
+      ? onSubmit(finalValues)
+      : this.next(finalValues) || bag.setSubmitting(false);
   };
 
   render() {
@@ -125,10 +134,13 @@ export default class UploadPiece extends Component {
             brandEntry: "",
             image: ""
           }}
-          onSubmit={(values, actions) => {
+          onSubmit={values => {
             sleep(300).then(() => {
-              window.alert(JSON.stringify(values, null, 2));
-              actions.setSubmitting(false);
+              // window.alert(JSON.stringify(values, null, 2));
+              // actions.setSubmitting(false);
+              API.uploadPiece(values)
+                .then(() => console.log("Done!"))
+                .catch(err => console.error(err));
             });
           }}
         >
@@ -208,7 +220,9 @@ export default class UploadPiece extends Component {
           {/* Page 3: Association */}
           <Wizard.Page>
             <ImageUpload
-              onSubmit={url => console.log("URL!", url)}
+              onSubmit={image =>
+                (window.GLASSFINDER_GLOBAL_SHARE.imageUpload = image)
+              }
               initialImage="https://placehold.it/300x300"
             />
           </Wizard.Page>

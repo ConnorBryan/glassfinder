@@ -82,7 +82,7 @@ export default class API {
    * @desc Retrieve a single instance of a model from the database.
    * @param {string} singular
    * @param {string} plural
-   * @param {number} id 
+   * @param {number} id
    */
   static async fetchModel(singular, plural, id) {
     try {
@@ -106,8 +106,8 @@ export default class API {
    * @async
    * @method fetchModels
    * @desc Retrieve a collection of models from the database.
-   * @param {string} plural 
-   * @param {number} page 
+   * @param {string} plural
+   * @param {number} page
    * @returns {object}
    */
   static async fetchModels(
@@ -143,7 +143,9 @@ export default class API {
     sort = config.SORT_DATE_ASCENDING
   ) {
     try {
-      const url = `${config.API_ROOT}/users/${id}/pieces?page=${page}&sort=${sort}`;
+      const url = `${
+        config.API_ROOT
+      }/users/${id}/pieces?page=${page}&sort=${sort}`;
       const { data: { payload } } = await axios.get(url);
 
       return { ...payload };
@@ -165,7 +167,9 @@ export default class API {
     id
   ) {
     try {
-      const url = `${config.API_ROOT}/${resource}/${id}/pieces?page=${page}&sort=${sort}`;
+      const url = `${
+        config.API_ROOT
+      }/${resource}/${id}/pieces?page=${page}&sort=${sort}`;
       const { data: { payload } } = await axios.get(url);
 
       return { ...payload };
@@ -184,20 +188,21 @@ export default class API {
   static fetchArtistPieces = partial(API.fetchModelPieces, "artists");
 
   /**
-   * 
-   * @param {string} email 
-   * @param {string} password 
+   *
+   * @param {string} email
+   * @param {string} password
    * @returns {object}
    */
   static async signin(email, password) {
     try {
       const url = `${config.API_ROOT}/sign-in`;
-      const {
-        data: { payload: { token, data: account } }
-      } = await axios.post(url, {
-        email,
-        password
-      });
+      const { data: { payload: { token, data: account } } } = await axios.post(
+        url,
+        {
+          email,
+          password
+        }
+      );
 
       return { token, account };
     } catch (e) {
@@ -219,9 +224,9 @@ export default class API {
   }
 
   /**
-   * 
-   * @param {string} email 
-   * @param {string} password 
+   *
+   * @param {string} email
+   * @param {string} password
    * @returns {number}
    */
   static async signup(email, password) {
@@ -240,9 +245,9 @@ export default class API {
   }
 
   /**
-   * 
-   * @param {string} id 
-   * @param {string} verificationCode 
+   *
+   * @param {string} id
+   * @param {string} verificationCode
    */
   static async verify(id, verificationCode) {
     try {
@@ -258,8 +263,8 @@ export default class API {
   }
 
   /**
-   * 
-   * @param {string} email 
+   *
+   * @param {string} email
    */
   static async resendVerification(email) {
     try {
@@ -276,10 +281,10 @@ export default class API {
   }
 
   /**
-   * 
-   * @param {string} name 
-   * @param {string} email 
-   * @param {string} message 
+   *
+   * @param {string} name
+   * @param {string} email
+   * @param {string} message
    */
   static async sendContactMessage(name, email, message) {
     try {
@@ -300,9 +305,9 @@ export default class API {
   }
 
   /**
-   * 
+   *
    * @param {string} id
-   * @param {string} currentPassword 
+   * @param {string} currentPassword
    * @param {string} newPassword
    */
   static async updatePassword(id, currentPassword, newPassword) {
@@ -323,9 +328,9 @@ export default class API {
   }
 
   /**
-   * 
+   *
    * @param {string} id
-   * @param {string} currentPassword 
+   * @param {string} currentPassword
    * @param {object} configuration
    * @returns {object}
    */
@@ -402,15 +407,17 @@ export default class API {
    * @param {string} description
    * @param {string} location
    */
-  static async uploadPiece(
+  static async uploadPiece({
     id,
     name,
     maker,
     price,
     description,
     location,
+    artistEntry,
+    brandEntry,
     image
-  ) {
+  }) {
     try {
       const url = `${config.API_ROOT}/pieces?userId=${id}`;
       const { data: { payload: { piece } } } = await axios.post(url, {
@@ -419,6 +426,8 @@ export default class API {
         price,
         description,
         location,
+        artistEntry,
+        brandEntry,
         image
       });
 
@@ -431,7 +440,7 @@ export default class API {
   }
 
   /**
-   * @param {string} pieceId 
+   * @param {string} pieceId
    * @returns {boolean}
    */
   static async removePiece(pieceId) {
@@ -509,7 +518,7 @@ export default class API {
   }
 
   /**
-   * @param {string} address 
+   * @param {string} address
    * @returns {?object}
    */
   static async transformAddressToCoordinates(address) {
