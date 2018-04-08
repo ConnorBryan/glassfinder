@@ -8,7 +8,15 @@ const { Shop, Artist } = models;
 
 export const genericSortedRead = (req, res, Model, resource, userId) => {
   return respondWith(res, async () => {
-    const { page = 0, sort = config.SORT_DATE_ASCENDING } = req.query;
+    const { page = 0, sort = config.SORT_DATE_ASCENDING, all } = req.query;
+
+    if (all) {
+      const models = await Model.findAll();
+
+      return success(res, `Successfully retrieved all in collection.`, {
+        collection: models
+      });
+    }
 
     const sorts = {
       [config.SORT_DATE_ASCENDING]: ["createdAt", "ASC"],
@@ -41,7 +49,7 @@ export const genericSortedRead = (req, res, Model, resource, userId) => {
 export const genericPaginatedRead = (req, res, Model, singular, plural) => {
   return respondWith(res, async () => {
     const { id } = req.params;
-    const { userId, type } = req.query;
+    const { userId, type, all } = req.query;
     const modelType = capitalize(singular);
 
     if (id) {
@@ -54,6 +62,13 @@ export const genericPaginatedRead = (req, res, Model, singular, plural) => {
 
       return success(res, `Successfully retrieved ${modelType}#${id}`, {
         [singular]: model
+      });
+    } else if (all) {
+      // Fetch all
+      const models = await Model.findAll();
+
+      return success(res, `Successfully retrieved all ${modelType}s`, {
+        [plural]: models
       });
     } else {
       // Fetch multiple.

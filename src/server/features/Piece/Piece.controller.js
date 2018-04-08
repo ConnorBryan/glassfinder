@@ -34,8 +34,10 @@ function create(req, res) {
       maker,
       price,
       location,
-      artistEntry,
-      brandEntry,
+      artist,
+      artistEntry = "",
+      brand,
+      brandEntry = "",
       image
     } = req.body;
 
@@ -46,8 +48,6 @@ function create(req, res) {
       maker,
       price,
       location,
-      artistEntry,
-      brandEntry,
       image
     });
 
@@ -74,7 +74,9 @@ function create(req, res) {
       maker,
       price,
       location,
+      artistId: artist || null,
       artistEntry,
+      brandId: brand || null,
       brandEntry
     });
 

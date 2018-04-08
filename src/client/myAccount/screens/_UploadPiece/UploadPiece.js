@@ -9,7 +9,7 @@ import ImageUpload from "../../../components/ImageUpload";
 /** */
 class InputWithDropdown extends Component {
   render() {
-    const { term, onChange } = this.props;
+    const { term, onChange, options } = this.props;
 
     return (
       <Dropdown
@@ -18,18 +18,7 @@ class InputWithDropdown extends Component {
         search
         onChange={(event, data) => onChange(data.value)}
         noResultsMessage={`No ${term}s found. Enter the artist in in the input below.`}
-        options={[
-          {
-            key: "a",
-            value: "A",
-            text: "Ayy"
-          },
-          {
-            key: "b",
-            value: "B",
-            text: "Bee"
-          }
-        ]}
+        options={options}
       />
     );
   }
@@ -151,10 +140,49 @@ class Wizard extends Component {
 
 export default class UploadPiece extends Component {
   state = {
-    loading: true
+    loading: true,
+    originalArtists: [],
+    artists: [],
+    originalBrands: [],
+    brands: []
   };
 
+  componentDidMount() {
+    this.fetchArtistsAndBrands();
+  }
+
+  fetchArtistsAndBrands = async () => {
+    const [artists, brands] = await Promise.all([
+      API.retrieveAllArtists(),
+      API.retrieveAllBrands()
+    ]);
+    const formattedArtists = this.formatData(artists);
+    const formattedBrands = this.formatData(brands);
+
+    this.setState(
+      {
+        loading: false,
+        artists: formattedArtists,
+        originalArtists: formattedArtists,
+        brands: formattedBrands,
+        originalBrands: formattedBrands
+      },
+      () => console.log(this.state)
+    );
+  };
+
+  formatData = data =>
+    data.map(datum => ({
+      key: datum.name,
+      value: datum.id,
+      text: datum.name
+    }));
+
   render() {
+    const { loading, artists, brands } = this.state;
+
+    if (loading) return <Loader>Loading...</Loader>;
+
     return (
       <div className="UploadPiece">
         <Wizard
@@ -248,7 +276,11 @@ export default class UploadPiece extends Component {
                     });
 
                   return (
-                    <InputWithDropdown term="artist" onChange={onChange} />
+                    <InputWithDropdown
+                      term="artist"
+                      onChange={onChange}
+                      options={artists}
+                    />
                   );
                 }}
               />
@@ -273,7 +305,13 @@ export default class UploadPiece extends Component {
                       brand
                     });
 
-                  return <InputWithDropdown term="brand" onChange={onChange} />;
+                  return (
+                    <InputWithDropdown
+                      term="brand"
+                      onChange={onChange}
+                      options={brands}
+                    />
+                  );
                 }}
               />
             </fieldset>

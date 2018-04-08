@@ -414,7 +414,9 @@ export default class API {
     price,
     description,
     location,
+    artist,
     artistEntry,
+    brand,
     brandEntry,
     image
   }) {
@@ -426,7 +428,9 @@ export default class API {
         price,
         description,
         location,
+        artist,
         artistEntry,
+        brand,
         brandEntry,
         image
       });
@@ -555,6 +559,30 @@ export default class API {
       console.error(e);
 
       return null;
+    }
+  }
+
+  static async retrieveAllArtists() {
+    try {
+      const url = `${config.API_ROOT}/artists?all=true`;
+      const { data: { payload: { collection } } } = await axios.get(url);
+
+      return collection;
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
+  }
+
+  static async retrieveAllBrands() {
+    try {
+      const url = `${config.API_ROOT}/brands?all=true`;
+      const { data: { payload: { collection } } } = await axios.get(url);
+
+      return collection;
+    } catch (e) {
+      console.error(e);
+      return [];
     }
   }
 }
