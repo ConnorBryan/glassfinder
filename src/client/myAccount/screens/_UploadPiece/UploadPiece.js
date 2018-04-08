@@ -1,9 +1,41 @@
 import React, { Component } from "react";
 import { Formik, Field } from "formik";
 import styled from "styled-components";
+import { Dropdown, Loader } from "semantic-ui-react";
 
 import API from "../../../services";
 import ImageUpload from "../../../components/ImageUpload";
+
+/** */
+class InputWithDropdown extends Component {
+  render() {
+    const { term, onChange } = this.props;
+
+    return (
+      <Dropdown
+        placeholder={`Enter ${term}`}
+        fluid
+        search
+        onChange={(event, data) => onChange(data.value)}
+        noResultsMessage={`No ${term}s found. Enter the artist in in the input below.`}
+        options={[
+          {
+            key: "a",
+            value: "A",
+            text: "Ayy"
+          },
+          {
+            key: "b",
+            value: "B",
+            text: "Bee"
+          }
+        ]}
+      />
+    );
+  }
+}
+
+/** */
 
 const Styles = styled.div`
   margin: 0 10vw;
@@ -72,7 +104,7 @@ class Wizard extends Component {
       ...values,
       image: window.GLASSFINDER_GLOBAL_SHARE.imageUpload || values.image || ""
     };
-    console.log("Final values are", finalValues);
+
     return isLastPage
       ? onSubmit(finalValues)
       : this.next(finalValues) || bag.setSubmitting(false);
@@ -118,6 +150,10 @@ class Wizard extends Component {
 }
 
 export default class UploadPiece extends Component {
+  state = {
+    loading: true
+  };
+
   render() {
     return (
       <div className="UploadPiece">
@@ -201,12 +237,44 @@ export default class UploadPiece extends Component {
           {/* Page 2: Association */}
           <Wizard.Page>
             <fieldset>
+              <label>Artist</label>
+              <Field
+                name="artist"
+                render={renderProps => {
+                  const onChange = artist =>
+                    renderProps.form.setValues({
+                      ...renderProps.form.values,
+                      artist
+                    });
+
+                  return (
+                    <InputWithDropdown term="artist" onChange={onChange} />
+                  );
+                }}
+              />
+            </fieldset>
+            <fieldset>
               <label>Artist Entry</label>
               <Field
                 name="artistEntry"
                 component="input"
                 type="text"
                 placeholder="Enter an artist..."
+              />
+            </fieldset>
+            <fieldset>
+              <label>Brand</label>
+              <Field
+                name="brand"
+                render={renderProps => {
+                  const onChange = brand =>
+                    renderProps.form.setValues({
+                      ...renderProps.form.values,
+                      brand
+                    });
+
+                  return <InputWithDropdown term="brand" onChange={onChange} />;
+                }}
               />
             </fieldset>
             <fieldset>
