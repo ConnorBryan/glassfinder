@@ -8,6 +8,7 @@ export const client = api => {
   ArtistRouter.get("/", ArtistController.readSorted);
   ArtistRouter.get("/:id", ArtistController.read);
   ArtistRouter.get("/:id/pieces", ArtistController.readPiecesSorted);
+  ArtistRouter.get("/:id/all_pieces", ArtistController.getPiecesForArtist);
 
   api.use("/artists", ArtistRouter);
 };

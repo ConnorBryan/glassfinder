@@ -1,5 +1,5 @@
 import * as config from "../../../config";
-import { requireProperties } from "../../../util";
+import { requireProperties, success, error } from "../../../util";
 import models from "../../database/models";
 import {
   genericSortedRead,
@@ -13,8 +13,8 @@ const { Artist, Piece } = models;
 /**
  * @func read
  * @desc Provides either a single or multiple instances of Artist.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Artist | Array<Artist>}
  */
 function read(req, res) {
@@ -24,8 +24,8 @@ function read(req, res) {
 /**
  * @func readSorted
  * @desc Provides a page from a sorted collection.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Array<Artist>}
  */
 function readSorted(req, res) {
@@ -40,8 +40,8 @@ function readSorted(req, res) {
 /**
  * @func readPiecesSorted
  * @desc Provides a page from a sorted collection.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Array<Piece>}
  */
 async function readPiecesSorted(req, res) {
@@ -63,8 +63,8 @@ async function readPiecesSorted(req, res) {
 /**
  * @func readAll
  * @desc Retrieves all instances of Artist.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Array<Artist>}
  */
 function readAll(req, res) {
@@ -74,17 +74,42 @@ function readAll(req, res) {
 /**
  * @func remove
  * @desc Destroys an instance of Artist.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  */
 function remove(req, res) {
   return genericRemove(req, res, Artist, "artist");
 }
+
+/* === */
+
+async function getPiecesForArtist(req, res) {
+  try {
+    const { id } = req.params;
+
+    // All of the Artist's User account's pieces
+    const { userId } = await Artist.findById(+id);
+    const usersPieces = await Piece.findAll({ where: { userId } });
+
+    // All Pieces that are credited to the Artist
+    const artistsPieces = await Piece.findAll({ where: { artistId: id } });
+
+    return success(res, "Derpa derp", {
+      fromUser: usersPieces,
+      fromArtist: artistsPieces
+    });
+  } catch (e) {
+    return error(res, "Whoops");
+  }
+}
+
+/* === */
 
 export default {
   read,
   readAll,
   readSorted,
   readPiecesSorted,
-  remove
+  remove,
+  getPiecesForArtist
 };
