@@ -585,4 +585,16 @@ export default class API {
       return [];
     }
   }
+
+  static async getCreditedPieces(id) {
+    try {
+      const url = `${config.API_ROOT}/artists/${id}/all_pieces`;
+      const { data: { payload: { fromArtist } } } = await axios.get(url);
+
+      return fromArtist;
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
+  }
 }

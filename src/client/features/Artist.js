@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Responsive, Container, Divider } from "semantic-ui-react";
 import Aux from "react-aux";
@@ -43,35 +43,80 @@ function ArtistDetail({ id }) {
   return <ModelDetail {...props} />;
 }
 
-export function ArtistExplorer() {
-  const props = {
-    icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
-    title: `Explore ${config.LINK_TYPES_TO_RESOURCES[
-      config.LINK_TYPES.ARTIST
-    ]}`,
-    detailTitle: `Available Pieces`,
-    resource: config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.ARTIST],
-    fetchModels: API.fetchArtists,
-    fetchDetailModels: API.fetchArtistPieces,
-    renderDetail: id => <ArtistDetail {...{ id }} />,
-    cacheKey: config.ARTIST_CACHE_KEY,
-    cacheExpiration: config.ARTIST_CACHE_EXPIRATION,
-    renderItems: (models = []) =>
-      models.map((model, index) => <ArtistThing key={index} {...model} />),
-    renderDetailItems: (models = []) =>
-      models.map((model, index) => <PieceThing key={index} {...model} />)
+export class ArtistExplorer extends Component {
+  state = {
+    loadingCreditedPieces: true,
+    creditedPieces: []
   };
 
-  return (
-    <Aux>
-      <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
-        <ModelExplorer compact {...props} />
-      </Responsive>
-      <Responsive minWidth={Responsive.onlyComputer.minWidth}>
-        <ModelExplorer {...props} />
-      </Responsive>
-    </Aux>
-  );
+  componentDidMount() {
+    this.fetchCreditedPieces();
+  }
+
+  fetchCreditedPieces = async () => {
+    try {
+      const id = this.props.location.pathname.split("/")[2];
+      const fromArtist = await API.getCreditedPieces(id);
+
+      this.setState({
+        loadingCreditedPieces: false,
+        creditedPieces: fromArtist
+      });
+    } catch (e) {
+      this.setState({
+        loadingCreditedPieces: false,
+        creditedPieces: []
+      });
+    }
+  };
+
+  render() {
+    const { creditedPieces } = this.state;
+    const props = {
+      icon: config.ICON_SET[config.LINK_TYPES.ARTIST],
+      title: `Explore ${
+        config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.ARTIST]
+      }`,
+      detailTitle: `Available Pieces`,
+      resource: config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.ARTIST],
+      fetchModels: API.fetchArtists,
+      fetchDetailModels: API.fetchArtistPieces,
+      renderDetail: id => <ArtistDetail {...{ id }} />,
+      cacheKey: config.ARTIST_CACHE_KEY,
+      cacheExpiration: config.ARTIST_CACHE_EXPIRATION,
+      renderItems: (models = []) =>
+        models.map((model, index) => <ArtistThing key={index} {...model} />),
+      renderDetailItems: (models = []) =>
+        models.map((model, index) => <PieceThing key={index} {...model} />)
+    };
+
+    return (
+      <Aux>
+        <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
+          <ModelExplorer compact {...props} />
+          {creditedPieces.length > 0 && (
+            <Aux>
+              <h1>Credited Pieces</h1>
+              {creditedPieces.map(piece => (
+                <PieceThing key={piece.name} {...piece} />
+              ))}
+            </Aux>
+          )}
+        </Responsive>
+        <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+          <ModelExplorer {...props} />
+          {creditedPieces.length > 0 && (
+            <Aux>
+              <h1>Credited Pieces</h1>
+              {creditedPieces.map(piece => (
+                <PieceThing key={piece.name} {...piece} />
+              ))}
+            </Aux>
+          )}
+        </Responsive>
+      </Aux>
+    );
+  }
 }
 
 export function ArtistViewer({ verbiage }) {
