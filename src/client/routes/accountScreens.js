@@ -4,6 +4,7 @@
  */
 import MyAccount from "../myAccount";
 import UpdatePassword from "../myAccount/screens/UpdatePassword";
+import UpdateAssociations from "../myAccount/screens/UpdateAssociations";
 import BecomeAShop from "../myAccount/screens/BecomeAShop";
 import BecomeAnArtist from "../myAccount/screens/BecomeAnArtist";
 import BecomeABrand from "../myAccount/screens/BecomeABrand";
@@ -24,6 +25,11 @@ export default [
     path: "/my-account/update-password",
     exact: true,
     component: UpdatePassword
+  },
+  {
+    path: "/my-account/update-my-associations",
+    exact: true,
+    component: UpdateAssociations
   },
   {
     path: "/my-account/become-a-shop",

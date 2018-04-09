@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Responsive, Container, Divider } from "semantic-ui-react";
 import Aux from "react-aux";
+import styled from "styled-components";
 
 import * as config from "../../config";
 import ScreenHeader from "../components/ScreenHeader";
@@ -89,29 +90,31 @@ export class ArtistExplorer extends Component {
       renderDetailItems: (models = []) =>
         models.map((model, index) => <PieceThing key={index} {...model} />)
     };
-
+    const CreditedPieces = styled.div`
+      color: white;
+    `;
     return (
       <Aux>
         <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
           <ModelExplorer compact {...props} />
           {creditedPieces.length > 0 && (
-            <Aux>
+            <CreditedPieces>
               <h1>Credited Pieces</h1>
               {creditedPieces.map(piece => (
                 <PieceThing key={piece.name} {...piece} />
               ))}
-            </Aux>
+            </CreditedPieces>
           )}
         </Responsive>
         <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <ModelExplorer {...props} />
           {creditedPieces.length > 0 && (
-            <Aux>
+            <CreditedPieces>
               <h1>Credited Pieces</h1>
               {creditedPieces.map(piece => (
                 <PieceThing key={piece.name} {...piece} />
               ))}
-            </Aux>
+            </CreditedPieces>
           )}
         </Responsive>
       </Aux>

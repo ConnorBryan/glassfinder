@@ -7,7 +7,7 @@ import API from "../../../services";
 import ImageUpload from "../../../components/ImageUpload";
 
 /** */
-class InputWithDropdown extends Component {
+export class InputWithDropdown extends Component {
   render() {
     const { term, onChange, options } = this.props;
 

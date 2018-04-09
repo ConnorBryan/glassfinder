@@ -105,6 +105,10 @@ function MyAccountShopMenu({ verbiage }) {
             to="/my-account/view-my-pieces"
             title={verbiage.MyAccount_viewMyPieces}
           />
+          <MyAccountItem
+            to="/my-account/update-my-associations"
+            title="Update my brand associations"
+          />
         </Menu>
       </Segment>
     </Aux>
