@@ -62,4 +62,34 @@ export default class ShopToBrandController {
       return error(res, e);
     }
   };
+
+  static disassociateShopWithBrand = async (req, res) => {
+    try {
+      const { id, brandId } = req.params;
+
+      requireProperties({ id, brandId });
+
+      // Does the association even exist?
+      const existingShopToBrand = await ShopToBrand.findOne({
+        where: { shopId: id, brandId }
+      });
+
+      if (!existingShopToBrand) {
+        return error(
+          res,
+          `Shop#${id} and Brand#${brandId} are not associated.`
+        );
+      }
+
+      await existingShopToBrand.destroy();
+
+      return success(
+        res,
+        `Succesfully disassociated Shop#${id} and Brand#${brandId}.`
+      );
+    } catch (e) {
+      console.error(e);
+      return error(res, e);
+    }
+  };
 }

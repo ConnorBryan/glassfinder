@@ -15,6 +15,11 @@ export const client = api => {
     ShopToBrandController.associateShopWithBrand
   );
 
+  ShopToBrandRouter.delete(
+    "/:id/brands/:brandId",
+    ShopToBrandController.disassociateShopWithBrand
+  );
+
   api.use("/shops", ShopToBrandRouter);
 };
 
