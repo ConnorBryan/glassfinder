@@ -12,7 +12,19 @@ export default class ShopToBrandController {
 
       requireProperties({ id });
 
-      const brands = await ShopToBrand.findAll({ where: { shopId: id } });
+      const initialBrands = await ShopToBrand.findAll({
+        where: { shopId: id }
+      });
+      const brands = await Promise.all(
+        initialBrands.map(async (brand, index) => {
+          const storedBrand = await Brand.findById(brand.id);
+
+          return {
+            id: storedBrand.id,
+            name: storedBrand.name
+          };
+        })
+      );
 
       return success(
         res,

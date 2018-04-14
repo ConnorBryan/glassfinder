@@ -52,13 +52,36 @@ export default class UpdateAssociations extends Component {
       }
     } = this.props;
 
-    console.log("Doing an action for Shop#", id);
-
     if (window.confirm(`Associate with ${BRAND_ID_TO_NAME[value]}?`)) {
       const association = await API.associateShopWithBrand(id, value);
 
       console.log(association);
+
+      window.location.reload();
     }
+  };
+
+  handleDisassociateBrandChange = async ({ target: { value } }) => {
+    const {
+      account: {
+        link: { id }
+      }
+    } = this.props;
+
+    if (window.confirm(`Disassociate with ${BRAND_ID_TO_NAME[value]}?`)) {
+      await API.disassociateShopWithBrand(id, value);
+
+      window.location.reload();
+    }
+  };
+
+  filter = brands => {
+    const { associatedBrands } = this.state;
+    const existingIds = associatedBrands.reduce((prev, next) => {
+      return { ...prev, [next.id]: true };
+    }, {});
+
+    return brands.filter(brand => !existingIds[brand.id]);
   };
 
   render() {
@@ -69,12 +92,19 @@ export default class UpdateAssociations extends Component {
     return (
       <Styles>
         <p>Associated brands</p>
-        <select name="brand">
-          {associatedBrands.map((brand, index) => (
-            <option key={index} name="brand" value={brand.id}>
-              {brand.name}
-            </option>
-          ))}
+        <select name="brand" onChange={this.handleDisassociateBrandChange}>
+          <option name="brand" value={null}>
+            Select an associated brand to disassociate with it.
+          </option>
+          {associatedBrands.map((brand, index) => {
+            BRAND_ID_TO_NAME[brand.id] = brand.name;
+
+            return (
+              <option key={index} name="brand" value={brand.id}>
+                {brand.name}
+              </option>
+            );
+          })}
         </select>
 
         <p>Associate with a brand</p>
@@ -83,9 +113,9 @@ export default class UpdateAssociations extends Component {
           onChange={this.handleAssociateBrandChange}
         >
           <option name="associateBrand" value={null}>
-            Select a brand
+            Select a brand to associate with it.
           </option>
-          {allBrands.map((brand, index) => {
+          {this.filter(allBrands).map((brand, index) => {
             // Use dictionary for handling the change.
             BRAND_ID_TO_NAME[brand.id] = brand.name;
 
