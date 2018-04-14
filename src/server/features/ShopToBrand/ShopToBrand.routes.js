@@ -10,6 +10,11 @@ export const client = api => {
     ShopToBrandController.getAssociatedBrands
   );
 
+  ShopToBrandRouter.post(
+    "/:id/brands/:brandId",
+    ShopToBrandController.associateShopWithBrand
+  );
+
   api.use("/shops", ShopToBrandRouter);
 };
 
