@@ -12,6 +12,7 @@ import { addAboutRoutes, addAboutAdminRoutes } from "./About";
 import { addHelpRoutes, addHelpAdminRoutes } from "./Help";
 import { addUpdateRoutes, addUpdateAdminRoutes } from "./Update";
 import { addImageRoutes, addImageAdminRoutes } from "./Image";
+import { addShopToBrandRoutes, addShopToBrandAdminRoutes } from "./ShopToBrand";
 
 export default function addFeatures(app) {
   const api = express.Router();
@@ -31,6 +32,8 @@ export default function addFeatures(app) {
   addUpdateRoutes(api);
   addImageRoutes(api);
 
+  addShopToBrandRoutes(api);
+
   const admin = express.Router();
 
   addUserAdminRoutes(admin);
@@ -48,6 +51,8 @@ export default function addFeatures(app) {
 
   addLinkRequestAdminRoutes(admin);
   addImageAdminRoutes(admin);
+
+  addShopToBrandAdminRoutes(admin);
 
   api.use("/admin", admin);
   app.use("/api", api);

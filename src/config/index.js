@@ -80,7 +80,8 @@ export const MODEL_LIST = [
   "Update",
   "Verbiage",
   "LinkRequest",
-  "Image"
+  "Image",
+  "ShopToBrand"
 ];
 export const NOTIFICATION_TIMEOUT = 4000;
 export const MODEL_READ_LIMIT = 6;
