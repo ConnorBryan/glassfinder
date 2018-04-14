@@ -13,7 +13,11 @@ export default class API {
   static async fetchVerbiage() {
     try {
       const url = `${config.API_ROOT}/verbiage`;
-      const { data: { payload: { verbiage } } } = await axios.get(url);
+      const {
+        data: {
+          payload: { verbiage }
+        }
+      } = await axios.get(url);
 
       return verbiage;
     } catch (e) {
@@ -31,7 +35,11 @@ export default class API {
   static async fetchAboutItems() {
     try {
       const url = `${config.API_ROOT}/about`;
-      const { data: { payload: { about } } } = await axios.get(url);
+      const {
+        data: {
+          payload: { about }
+        }
+      } = await axios.get(url);
 
       return about;
     } catch (e) {
@@ -49,7 +57,11 @@ export default class API {
   static async fetchHelpItems() {
     try {
       const url = `${config.API_ROOT}/help`;
-      const { data: { payload: { help } } } = await axios.get(url);
+      const {
+        data: {
+          payload: { help }
+        }
+      } = await axios.get(url);
 
       return help;
     } catch (e) {
@@ -67,7 +79,11 @@ export default class API {
   static async fetchUpdateItems() {
     try {
       const url = `${config.API_ROOT}/updates`;
-      const { data: { payload: { update } } } = await axios.get(url);
+      const {
+        data: {
+          payload: { update }
+        }
+      } = await axios.get(url);
 
       return update;
     } catch (e) {
@@ -87,7 +103,11 @@ export default class API {
   static async fetchModel(singular, plural, id) {
     try {
       const url = `${config.API_ROOT}/${plural}/${id}`;
-      const { data: { payload: { [singular]: model } } } = await axios.get(url);
+      const {
+        data: {
+          payload: { [singular]: model }
+        }
+      } = await axios.get(url);
 
       return model;
     } catch (e) {
@@ -118,7 +138,9 @@ export default class API {
   ) {
     try {
       const url = `${config.API_ROOT}/${plural}?page=${page}&sort=${sort}`;
-      const { data: { payload } } = await axios.get(url);
+      const {
+        data: { payload }
+      } = await axios.get(url);
 
       return { ...payload };
     } catch (e) {
@@ -146,7 +168,9 @@ export default class API {
       const url = `${
         config.API_ROOT
       }/users/${id}/pieces?page=${page}&sort=${sort}`;
-      const { data: { payload } } = await axios.get(url);
+      const {
+        data: { payload }
+      } = await axios.get(url);
 
       return { ...payload };
     } catch (e) {
@@ -170,7 +194,9 @@ export default class API {
       const url = `${
         config.API_ROOT
       }/${resource}/${id}/pieces?page=${page}&sort=${sort}`;
-      const { data: { payload } } = await axios.get(url);
+      const {
+        data: { payload }
+      } = await axios.get(url);
 
       return { ...payload };
     } catch (e) {
@@ -196,13 +222,14 @@ export default class API {
   static async signin(email, password) {
     try {
       const url = `${config.API_ROOT}/sign-in`;
-      const { data: { payload: { token, data: account } } } = await axios.post(
-        url,
-        {
-          email,
-          password
+      const {
+        data: {
+          payload: { token, data: account }
         }
-      );
+      } = await axios.post(url, {
+        email,
+        password
+      });
 
       return { token, account };
     } catch (e) {
@@ -232,7 +259,11 @@ export default class API {
   static async signup(email, password) {
     try {
       const url = `${config.API_ROOT}/signup`;
-      const { data: { payload: { id } } } = await axios.post(url, {
+      const {
+        data: {
+          payload: { id }
+        }
+      } = await axios.post(url, {
         email,
         password
       });
@@ -337,7 +368,11 @@ export default class API {
   static async becomeA(id, type, configuration) {
     try {
       const url = `${config.API_ROOT}/users/${id}/link`;
-      const { data: { payload: { data: account } } } = await axios.post(url, {
+      const {
+        data: {
+          payload: { data: account }
+        }
+      } = await axios.post(url, {
         type,
         config: JSON.stringify(configuration)
       });
@@ -365,7 +400,11 @@ export default class API {
   static async updateInformation(id, values) {
     try {
       const url = `${config.API_ROOT}/users/${id}`;
-      const { data: { payload: { link } } } = await axios.post(url, {
+      const {
+        data: {
+          payload: { link }
+        }
+      } = await axios.post(url, {
         values: JSON.stringify(values)
       });
 
@@ -389,7 +428,11 @@ export default class API {
       formData.append("image", image);
 
       const url = `${config.API_ROOT}/users/${id}/upload-image`;
-      const { data: { payload: { link } } } = await axios.post(url, formData);
+      const {
+        data: {
+          payload: { link }
+        }
+      } = await axios.post(url, formData);
 
       return link;
     } catch (e) {
@@ -422,7 +465,11 @@ export default class API {
   }) {
     try {
       const url = `${config.API_ROOT}/pieces?userId=${id}`;
-      const { data: { payload: { piece } } } = await axios.post(url, {
+      const {
+        data: {
+          payload: { piece }
+        }
+      } = await axios.post(url, {
         name,
         maker,
         price,
@@ -473,7 +520,11 @@ export default class API {
       formData.append("image", image);
 
       const url = `${config.API_ROOT}/pieces/${id}/upload-image`;
-      const { data: { payload: { piece } } } = await axios.post(url, formData);
+      const {
+        data: {
+          payload: { piece }
+        }
+      } = await axios.post(url, formData);
 
       return piece;
     } catch (e) {
@@ -494,7 +545,11 @@ export default class API {
   static async updatePieceInformation(id, values) {
     try {
       const url = `${config.API_ROOT}/pieces/${id}`;
-      const { data: { payload: { piece } } } = await axios.post(url, {
+      const {
+        data: {
+          payload: { piece }
+        }
+      } = await axios.post(url, {
         values: JSON.stringify(values)
       });
 
@@ -512,7 +567,11 @@ export default class API {
   static async fetchMapMarkers() {
     try {
       const url = `${config.API_ROOT}/mapmarkers`;
-      const { data: { payload: { markers } } } = await axios.get(url);
+      const {
+        data: {
+          payload: { markers }
+        }
+      } = await axios.get(url);
 
       return markers;
     } catch (e) {
@@ -528,10 +587,16 @@ export default class API {
   static async transformAddressToCoordinates(address) {
     try {
       const url = `${config.GOOGLE_MAPS_GEOCODE_URL}${address}`;
-      const { data: { status, results } } = await axios.get(url);
+      const {
+        data: { status, results }
+      } = await axios.get(url);
 
       if (status === "OK" && results[0]) {
-        const { geometry: { location: { lat, lng } } } = results[0];
+        const {
+          geometry: {
+            location: { lat, lng }
+          }
+        } = results[0];
 
         return { lat, lng };
       } else {
@@ -549,10 +614,11 @@ export default class API {
       formData.append("image", image);
 
       const url = `${config.API_ROOT}/images`;
-      const { data: { payload: { imagePath } } } = await axios.post(
-        url,
-        formData
-      );
+      const {
+        data: {
+          payload: { imagePath }
+        }
+      } = await axios.post(url, formData);
 
       return imagePath;
     } catch (e) {
@@ -565,7 +631,11 @@ export default class API {
   static async retrieveAllArtists() {
     try {
       const url = `${config.API_ROOT}/artists?all=true`;
-      const { data: { payload: { collection } } } = await axios.get(url);
+      const {
+        data: {
+          payload: { collection }
+        }
+      } = await axios.get(url);
 
       return collection;
     } catch (e) {
@@ -577,7 +647,11 @@ export default class API {
   static async retrieveAllBrands() {
     try {
       const url = `${config.API_ROOT}/brands?all=true`;
-      const { data: { payload: { collection } } } = await axios.get(url);
+      const {
+        data: {
+          payload: { collection }
+        }
+      } = await axios.get(url);
 
       return collection;
     } catch (e) {
@@ -589,12 +663,61 @@ export default class API {
   static async getCreditedPieces(id) {
     try {
       const url = `${config.API_ROOT}/artists/${id}/all_pieces`;
-      const { data: { payload: { fromArtist } } } = await axios.get(url);
+      const {
+        data: {
+          payload: { fromArtist }
+        }
+      } = await axios.get(url);
 
       return fromArtist;
     } catch (e) {
       console.error(e);
       return [];
+    }
+  }
+
+  static async getShopToBrandAssociations(shopId) {
+    try {
+      const url = `${config.API_ROOT}/shops/${shopId}/brands`;
+      const {
+        data: {
+          payload: { brands }
+        }
+      } = await axios.get(url);
+
+      return brands;
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
+  }
+
+  static async associateShopWithBrand(shopId, brandId) {
+    try {
+      const url = `${config.API_ROOT}/shops/${shopId}/brands/${brandId}`;
+      const {
+        data: {
+          payload: { association }
+        }
+      } = await axios.post(url);
+
+      return association;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  static async disassociateShopWithBrand(shopId, brandId) {
+    try {
+      const url = `${config.API_ROOT}/shops/${shopId}/brands/${brandId}`;
+
+      await axios.delete(url);
+
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
     }
   }
 }
