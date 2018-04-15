@@ -676,6 +676,22 @@ export default class API {
     }
   }
 
+  static async getAllShopToBrands() {
+    try {
+      const url = `${config.API_ROOT}/shop-to-brands`;
+      const {
+        data: {
+          payload: { shopToBrands }
+        }
+      } = await axios.get(url);
+
+      return shopToBrands;
+    } catch (e) {
+      console.error(e);
+      return {};
+    }
+  }
+
   static async getShopToBrandAssociations(shopId) {
     try {
       const url = `${config.API_ROOT}/shops/${shopId}/brands`;

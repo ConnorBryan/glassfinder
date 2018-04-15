@@ -6,6 +6,27 @@ import models from "../../database/models";
 const { ShopToBrand, Artist, Brand } = models;
 
 export default class ShopToBrandController {
+  static getAllShopToBrands = async (req, res) => {
+    try {
+      const rawShopToBrands = await ShopToBrand.findAll();
+      const shopToBrands = rawShopToBrands.reduce((prev, next) => {
+        const existingEntry = prev[next.shopId] || [];
+        const newEntry = existingEntry.concat(next.brandId);
+
+        prev[next.shopId] = newEntry;
+
+        return prev;
+      }, {});
+
+      return success(res, `Successfully retrieved all shopToBrands`, {
+        shopToBrands
+      });
+    } catch (e) {
+      console.error(e);
+      return error(res, e);
+    }
+  };
+
   static getAssociatedBrands = async (req, res) => {
     try {
       const { id } = req.params;

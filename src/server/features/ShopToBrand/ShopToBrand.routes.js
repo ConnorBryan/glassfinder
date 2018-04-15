@@ -5,6 +5,8 @@ import { ShopToBrandController } from "./";
 export const client = api => {
   const ShopToBrandRouter = express.Router();
 
+  api.get("/shop-to-brands", ShopToBrandController.getAllShopToBrands);
+
   ShopToBrandRouter.get(
     "/:id/brands",
     ShopToBrandController.getAssociatedBrands

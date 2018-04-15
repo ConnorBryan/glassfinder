@@ -25,12 +25,14 @@ class ShopMap extends Component {
   state = {
     markers: [],
     allBrands: [],
+    shopToBrands: {},
     filteredBrand: null
   };
 
   componentDidMount() {
     window.google.maps ? this.initMap() : (window.initMap = this.initMap);
     this.loadAllBrands();
+    this.loadShopToBrands();
   }
 
   initMap = async () => {
@@ -61,7 +63,7 @@ class ShopMap extends Component {
 
       return marker;
     });
-    setTimeout(this.clearMarkersFromMap, 5000);
+
     this.setState({ markers: finalMarkers }, this.addMarkersToMap);
   };
 
@@ -69,6 +71,12 @@ class ShopMap extends Component {
     const allBrands = await API.retrieveAllBrands();
 
     this.setState({ allBrands });
+  };
+
+  loadShopToBrands = async () => {
+    const shopToBrands = await API.getAllShopToBrands();
+
+    this.setState({ shopToBrands });
   };
 
   cacheMarkers = markers => {
@@ -94,15 +102,26 @@ class ShopMap extends Component {
   };
 
   handleFilteredBrandChange = ({ target: { value: filteredBrand } }) =>
-    this.setState({ filteredBrand }, this.addMarkersToMap);
+    this.setState(
+      { filteredBrand: parseInt(filteredBrand) === -1 ? null : filteredBrand },
+      this.addMarkersToMap
+    );
 
   addMarkersToMap = () => {
-    const { markers, filteredBrand } = this.state;
+    const { markers, filteredBrand, shopToBrands } = this.state;
 
     this.clearMarkersFromMap();
 
     markers.forEach(marker => {
-      if (marker) marker.setMap(this.map);
+      if (filteredBrand) {
+        const shop = shopToBrands[marker.id.toString()];
+
+        if (Array.isArray(shop) && shop.includes(+filteredBrand)) {
+          marker.setMap(this.map);
+        }
+      } else {
+        marker.setMap(this.map);
+      }
     });
   };
 
@@ -129,7 +148,7 @@ class ShopMap extends Component {
         </Container>
         <Container>
           <select name="filterBrand" onChange={this.handleFilteredBrandChange}>
-            <option name="filterBrand">
+            <option name="filterBrand" value={-1}>
               -- Select a brand to filter the map pins --
             </option>
             {allBrands.map(brand => (
