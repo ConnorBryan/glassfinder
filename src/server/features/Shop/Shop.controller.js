@@ -8,13 +8,13 @@ import {
   genericRemove
 } from "../common";
 
-const { Shop, User, Piece } = models;
+const { Shop, User, Piece, ShopToBrand } = models;
 
 /**
  * @func read
  * @desc Provides either a single or multiple instances of Shop.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Shop | Array<Shop>}
  */
 function read(req, res) {
@@ -24,8 +24,8 @@ function read(req, res) {
 /**
  * @func readSorted
  * @desc Provides a page from a sorted collection.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Array<Shop>}
  */
 function readSorted(req, res) {
@@ -40,8 +40,8 @@ function readSorted(req, res) {
 /**
  * @func readPiecesSorted
  * @desc Provides a page from a sorted collection.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Array<Piece>}
  */
 async function readPiecesSorted(req, res) {
@@ -63,8 +63,8 @@ async function readPiecesSorted(req, res) {
 /**
  * @func readAll
  * @desc Retrieves all instances of Shop.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Array<Shop>}
  */
 function readAll(req, res) {
@@ -74,8 +74,8 @@ function readAll(req, res) {
 /**
  * @func remove
  * @desc Destroys an instance of Shop.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  */
 function remove(req, res) {
   return genericRemove(req, res, Shop, "shop");
@@ -84,8 +84,8 @@ function remove(req, res) {
 /**
  * @func fetchPiecesForId
  * @desc Retrieves all pieces related to a Shop.
- * @param {ExpressRequest} req 
- * @param {ExpressResponse} res 
+ * @param {ExpressRequest} req
+ * @param {ExpressResponse} res
  * @returns {Array<Piece>}
  */
 function fetchPiecesForId(req, res) {
@@ -108,7 +108,7 @@ function fetchPiecesForId(req, res) {
 /**
  * @func fetchMapMarkers
  * @desc Retrieves objects containing information relevant to Google Maps.
- * @param {ExpressRequest} req 
+ * @param {ExpressRequest} req
  * @param {ExpressResponse} res
  * @returns {Array<object>}
  */
@@ -116,6 +116,19 @@ function fetchMapMarkers(req, res) {
   return respondWith(res, async () => {
     const markers = await Shop.findAll({
       attributes: ["lat", "lng", "id"]
+    }).map(item => item.dataValues);
+    const shopToBrands = await ShopToBrand.findAll().map(
+      item => item.dataValues
+    );
+
+    markers.forEach(marker => {
+      marker.brands = [];
+
+      shopToBrands.forEach(shopToBrand => {
+        if (shopToBrand.shopId === marker.id) {
+          marker.brands.push(shopToBrand.brandId);
+        }
+      });
     });
 
     return success(res, `Successfully fetched mapmarkers`, {

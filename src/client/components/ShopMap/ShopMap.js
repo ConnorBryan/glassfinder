@@ -111,6 +111,13 @@ class ShopMap extends Component {
             />
           </Menu>
         </Container>
+        <Container>
+          <select name="filterBrand">
+            <option name="filterBrand">
+              -- Select a brand to filter the map pins --
+            </option>
+          </select>
+        </Container>
       </Styles>
     );
   }
