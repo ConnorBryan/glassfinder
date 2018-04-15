@@ -55,9 +55,9 @@ export default class UpdateAssociations extends Component {
     if (window.confirm(`Associate with ${BRAND_ID_TO_NAME[value]}?`)) {
       const association = await API.associateShopWithBrand(id, value);
 
-      console.log(association);
-
       window.location.reload();
+    } else {
+      this.associateSelect.value = "Select a brand to associate with it.";
     }
   };
 
@@ -68,10 +68,15 @@ export default class UpdateAssociations extends Component {
       }
     } = this.props;
 
+    if (!value) return;
+
     if (window.confirm(`Disassociate with ${BRAND_ID_TO_NAME[value]}?`)) {
       await API.disassociateShopWithBrand(id, value);
 
       window.location.reload();
+    } else {
+      this.dissociateSelect.value =
+        "Select an associated brand to disassociate with it.";
     }
   };
 
@@ -92,7 +97,11 @@ export default class UpdateAssociations extends Component {
     return (
       <Styles>
         <p>Associated brands</p>
-        <select name="brand" onChange={this.handleDisassociateBrandChange}>
+        <select
+          ref={node => (this.dissociateSelect = node)}
+          name="brand"
+          onChange={this.handleDisassociateBrandChange}
+        >
           <option name="brand" value={null}>
             Select an associated brand to disassociate with it.
           </option>
@@ -109,6 +118,7 @@ export default class UpdateAssociations extends Component {
 
         <p>Associate with a brand</p>
         <select
+          ref={node => (this.associateSelect = node)}
           name="associateBrand"
           onChange={this.handleAssociateBrandChange}
         >

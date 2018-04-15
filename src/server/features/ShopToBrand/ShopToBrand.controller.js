@@ -12,17 +12,15 @@ export default class ShopToBrandController {
 
       requireProperties({ id });
 
-      const initialBrands = await ShopToBrand.findAll({
+      const shopToBrands = await ShopToBrand.findAll({
         where: { shopId: id }
       });
       const brands = await Promise.all(
-        initialBrands.map(async (brand, index) => {
-          const storedBrand = await Brand.findById(brand.id);
+        shopToBrands.map(async shopToBrand => {
+          const { brandId } = shopToBrand;
+          const brand = await Brand.findById(brandId);
 
-          return {
-            id: storedBrand.id,
-            name: storedBrand.name
-          };
+          return brand;
         })
       );
 
@@ -50,6 +48,8 @@ export default class ShopToBrandController {
         where: { shopId: id, brandId }
       });
 
+      console.log("Already exists", existingShopToBrand);
+
       if (existingShopToBrand) {
         return error(
           res,
@@ -75,7 +75,7 @@ export default class ShopToBrandController {
     }
   };
 
-  static disassociateShopWithBrand = async (req, res) => {
+  static dissociateShopWithBrand = async (req, res) => {
     try {
       const { id, brandId } = req.params;
 

@@ -34,9 +34,9 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-(async () => {
-  await sequelize.sync({ force: true });
-  populate(db);
-})();
+// (async () => {
+//   await sequelize.sync({ force: true });
+//   populate(db);
+// })();
 
 export default db;
