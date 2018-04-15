@@ -22,8 +22,15 @@ const Styles = styled.div`
 `;
 
 class ShopMap extends Component {
+  state = {
+    markers: [],
+    allBrands: [],
+    filteredBrand: null
+  };
+
   componentDidMount() {
     window.google.maps ? this.initMap() : (window.initMap = this.initMap);
+    this.loadAllBrands();
   }
 
   initMap = async () => {
@@ -39,41 +46,29 @@ class ShopMap extends Component {
     this.findMyLocation();
   };
 
-  addMarkerToMap = ({ lat, lng, id }) => {
+  loadMarkers = async () => {
     const { history } = this.props;
+    const markers = await API.fetchMapMarkers();
+    const finalMarkers = markers.map(({ lat, lng, id }) => {
+      const marker = new window.google.maps.Marker({
+        id,
+        position: { lat, lng }
+      });
 
-    const marker = new window.google.maps.Marker({
-      id,
-      position: { lat, lng },
-      map: this.map
+      marker.addListener("click", function() {
+        history.push(`/shops/${this.id}`);
+      });
+
+      return marker;
     });
-
-    marker.addListener("click", function() {
-      history.push(`/shops/${this.id}`);
-    });
-
-    return marker;
+    setTimeout(this.clearMarkersFromMap, 5000);
+    this.setState({ markers: finalMarkers }, this.addMarkersToMap);
   };
 
-  loadMarkers = async () => {
-    let markers;
+  loadAllBrands = async () => {
+    const allBrands = await API.retrieveAllBrands();
 
-    const cachedMarkers = JSON.parse(retrieveFromCache("markers") || "[]");
-    const markersExpiration =
-      retrieveFromCache("markersExpiration") || String(new Date().getTime());
-    const expired = new Date().getTime() - +markersExpiration >= 0;
-
-    if (cachedMarkers.length > 0 && !expired) {
-      markers = cachedMarkers;
-    } else {
-      removeFromCache("markers", "markersExpiration");
-
-      markers = await API.fetchMapMarkers();
-
-      this.cacheMarkers(markers);
-    }
-
-    markers.forEach(marker => this.addMarkerToMap(marker));
+    this.setState({ allBrands });
   };
 
   cacheMarkers = markers => {
@@ -98,7 +93,28 @@ class ShopMap extends Component {
     );
   };
 
+  handleFilteredBrandChange = ({ target: { value: filteredBrand } }) =>
+    this.setState({ filteredBrand }, this.addMarkersToMap);
+
+  addMarkersToMap = () => {
+    const { markers, filteredBrand } = this.state;
+
+    this.clearMarkersFromMap();
+
+    markers.forEach(marker => {
+      if (marker) marker.setMap(this.map);
+    });
+  };
+
+  clearMarkersFromMap = () => {
+    const { markers } = this.state;
+
+    markers.forEach(marker => marker.setMap(null));
+  };
+
   render() {
+    const { allBrands, filteredBrand } = this.state;
+
     return (
       <Styles>
         <Container>
@@ -112,10 +128,15 @@ class ShopMap extends Component {
           </Menu>
         </Container>
         <Container>
-          <select name="filterBrand">
+          <select name="filterBrand" onChange={this.handleFilteredBrandChange}>
             <option name="filterBrand">
               -- Select a brand to filter the map pins --
             </option>
+            {allBrands.map(brand => (
+              <option name="filterBrand" value={brand.id}>
+                {brand.name}
+              </option>
+            ))}
           </select>
         </Container>
       </Styles>
