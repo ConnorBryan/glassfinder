@@ -99,12 +99,12 @@ function BecomeAShop({
     const address = window.encodeURIComponent(
       `${street}, ${city}, ${state} ${zip}`
     );
-    // const coordinates = await API.transformAddressToCoordinates(address);
+    const coordinates = await API.transformAddressToCoordinates(address);
     // TODO: Google API bullshit
-    const coordinates = {
-      lat: 0,
-      lng: 0
-    };
+    // const coordinates = {
+    //   lat: 0,
+    //   lng: 0
+    // };
 
     if (coordinates) {
       const { lat, lng } = coordinates;
