@@ -23,24 +23,6 @@ function Explorer({
     borderBottom: "1px solid white"
   };
 
-  const mobileExplorerStyle = {
-    minWidth: "100vw",
-    maxWidth: "100vw",
-    margin: 0,
-    ...borderStyle
-  };
-
-  const desktopExplorerStyle = {
-    minWidth: "55vw",
-    maxWidth: "55vw",
-    minHeight: "80vh",
-    maxHeight: "80vh",
-    overflowY: "scroll",
-    overflowX: "hidden",
-    margin: 0,
-    ...borderStyle
-  };
-
   const loaderStyle = {
     minHeight: "40vh",
     maxHeight: "40vh"
@@ -57,11 +39,7 @@ function Explorer({
   );
 
   return (
-    <Segment
-      style={compact ? mobileExplorerStyle : desktopExplorerStyle}
-      attached="bottom"
-      inverted
-    >
+    <Segment attached="bottom" inverted>
       <Sidebar.Pusher>
         <Segment basic style={borderBottomStyle}>
           <Divider horizontal inverted>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Sidebar, Segment, Menu, Grid } from "semantic-ui-react";
+import { Sidebar, Segment, Menu, Container, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 
@@ -14,7 +14,7 @@ import ExplorerMap from "./components/ExplorerMap";
 const Styles = styled.div`
   .ModelExplorer-menu {
     padding: 0 !important;
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
     border-bottom: none !important;
     margin: 0 !important;
 
@@ -32,8 +32,12 @@ const Styles = styled.div`
     ${centered};
   }
 
-  .column {
-    padding: 0 !important;
+  .map-options-wrapper {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .explorer-wrapper {
   }
 `;
 
@@ -158,35 +162,13 @@ class ModelExplorer extends Component {
       viewingDetail
     } = this.state;
 
-    const detailWrapperMobileStyle = {
-      padding: 0,
-      border: "1px solid white",
-      minWidth: "100vw",
-      maxWidth: "100vw"
-    };
-
-    const detailWrapperDesktopStyle = {
-      padding: 0,
-      border: "1px solid white",
-      borderLeft: "none",
-      minWidth: "30vw",
-      maxWidth: "30vw",
-      minHeight: "80vh",
-      maxHeight: "80vh"
-    };
-
-    const left = viewingDetail ? (
-      <Segment
-        inverted
-        style={compact ? detailWrapperMobileStyle : detailWrapperDesktopStyle}
-      >
-        {renderDetail(id)}
-      </Segment>
+    const map = viewingDetail ? (
+      <Segment inverted>{renderDetail(id)}</Segment>
     ) : (
       <ExplorerMap visible={showingMap} {...{ compact }} />
     );
 
-    const center = (
+    const explorer = (
       <Explorer
         {...{
           compact,
@@ -205,7 +187,7 @@ class ModelExplorer extends Component {
       />
     );
 
-    const right = (
+    const options = (
       <ExplorerOptions
         {...{ compact, perPage, totalModels }}
         visible={showingSettings}
@@ -216,61 +198,64 @@ class ModelExplorer extends Component {
 
     return (
       <Styles {...{ compact }}>
-        <Menu className="ModelExplorer-menu" attached="top" inverted widths={1}>
-          <Menu.Item header {...{ icon, content: title }} />
-        </Menu>
-        {compact && (
+        <Container
+          style={{
+            borderLeft: "1px solid #555",
+            borderRight: "1px solid #555"
+          }}
+        >
           <Menu
-            className="ModelExplorer-menu ModelExplorer-menu_bottom"
+            className="ModelExplorer-menu"
+            attached="top"
             inverted
-            widths={2}
+            widths={1}
           >
-            {viewingDetail ? (
-              <Menu.Item
-                icon="block layout"
-                content={`View all ${resource}`}
-                as={Link}
-                to={`/${resource}`}
-              />
-            ) : (
-              <Menu.Item
-                icon="map"
-                content="Map"
-                active={showingMap}
-                onClick={this.toggleMap}
-              />
-            )}
-            <Menu.Item
-              icon="settings"
-              content="Settings"
-              active={showingSettings}
-              onClick={this.toggleSettings}
-            />
+            <Menu.Item header>
+              <h2>
+                <Icon name={icon} /> {title}
+              </h2>
+            </Menu.Item>
           </Menu>
-        )}
-        <Sidebar.Pushable>
-          {compact ? (
-            <Aux>
-              {left}
-              {center}
-              {right}
-            </Aux>
-          ) : (
-            <Grid>
-              <Grid.Row>
-                <Grid.Column style={{ minWidth: "30vw", maxWidth: "30vw" }}>
-                  {left}
-                </Grid.Column>
-                <Grid.Column style={{ minWidth: "55vw", maxWidth: "55vw" }}>
-                  {center}
-                </Grid.Column>
-                <Grid.Column style={{ minWidth: "15vw", maxWidth: "15vw" }}>
-                  {right}
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
+          {compact && (
+            <Menu
+              className="ModelExplorer-menu ModelExplorer-menu_bottom"
+              inverted
+              widths={2}
+            >
+              {viewingDetail ? (
+                <Menu.Item
+                  icon="block layout"
+                  content={`View all ${resource}`}
+                  as={Link}
+                  to={`/${resource}`}
+                />
+              ) : (
+                <Menu.Item
+                  icon="map"
+                  content="Map"
+                  active={showingMap}
+                  onClick={this.toggleMap}
+                />
+              )}
+              <Menu.Item
+                icon="settings"
+                content="Settings"
+                active={showingSettings}
+                onClick={this.toggleSettings}
+              />
+            </Menu>
           )}
-        </Sidebar.Pushable>
+          <Sidebar.Pushable>
+            <div
+              className="map-options-wrapper"
+              style={{ backgroundColor: "#1b1c1d" }}
+            >
+              {map}
+              {options}
+            </div>
+            <div className="explorer-wrapper">{explorer}</div>
+          </Sidebar.Pushable>
+        </Container>
       </Styles>
     );
   }

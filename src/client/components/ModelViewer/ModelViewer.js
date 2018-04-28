@@ -22,7 +22,9 @@ class ModelViewer extends Component {
   }
 
   determineIdAndMode() {
-    const { location: { pathname } } = this.props;
+    const {
+      location: { pathname }
+    } = this.props;
 
     const isViewMyPieces = pathname.includes("view-my-pieces");
     const offset = isViewMyPieces ? 3 : 2;

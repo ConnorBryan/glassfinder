@@ -12,19 +12,6 @@ function ExplorerOptions({
   perPage,
   totalModels
 }) {
-  const mobileMenuStyle = {
-    border: "1px solid white",
-    maxHeight: "60vh"
-  };
-
-  const desktopMenuStyle = {
-    border: "1px solid white",
-    minWidth: "15vw",
-    maxWidth: "15vw",
-    minHeight: "80vh",
-    maxHeight: "80vh"
-  };
-
   const fancyStyle = {
     textTransform: "uppercase",
     letterSpacing: "0.25rem"
@@ -85,7 +72,6 @@ function ExplorerOptions({
       as={Menu}
       animation="overlay"
       width="wide"
-      style={mobileMenuStyle}
       vertical
       inverted
       {...{ visible }}
@@ -93,7 +79,7 @@ function ExplorerOptions({
       {options}
     </Sidebar>
   ) : (
-    <Menu style={desktopMenuStyle} vertical inverted>
+    <Menu style={{ margin: 0, width: "50vw" }} vertical inverted>
       {options}
     </Menu>
   );

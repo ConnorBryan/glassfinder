@@ -170,7 +170,7 @@ class ShopMap extends Component {
           <InputDropdown
             placeholder="Enter a brand to filter the map."
             minimumCharactersForDropdown={0}
-            width="20rem"
+            width="40rem"
             service={API.retrieveAllBrands}
             onSubmit={this.handleFilteredBrandChange}
           />
