@@ -26,6 +26,7 @@ const Styles = styled.div`
     padding: 2rem !important;
     max-width: 50rem !important;
     font-size: 1.2rem !important;
+    border: 1px solid #555 !important;
 
     p {
       height: 5rem !important;

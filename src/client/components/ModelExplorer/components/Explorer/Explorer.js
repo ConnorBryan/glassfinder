@@ -15,12 +15,8 @@ function Explorer({
   loading,
   models
 }) {
-  const borderStyle = {
-    border: "1px solid white"
-  };
-
-  const borderBottomStyle = {
-    borderBottom: "1px solid white"
+  const borderedStyle = {
+    border: "1px solid #555"
   };
 
   const loaderStyle = {
@@ -29,7 +25,7 @@ function Explorer({
   };
 
   const pagination = (
-    <Menu style={borderBottomStyle} widths={5} inverted>
+    <Menu style={borderedStyle} widths={5} inverted>
       <Menu.Item icon="fast backward" onClick={loadFirstPage} />
       <Menu.Item icon="backward" onClick={loadPreviousPage} />
       <Menu.Item header content={`${currentPage + 1} / ${totalPages}`} />
@@ -41,7 +37,7 @@ function Explorer({
   return (
     <Segment attached="bottom" inverted>
       <Sidebar.Pusher>
-        <Segment basic style={borderBottomStyle}>
+        <Segment basic>
           <Divider horizontal inverted>
             {title}
           </Divider>

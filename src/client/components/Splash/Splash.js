@@ -23,7 +23,7 @@ const Styles = styled.div`
 
     .segment {
       background: rgba(22, 22, 22, 0.7) !important;
-      border: 1px solid white !important;
+      border: 1px solid #555 !important;
     }
 
     button {

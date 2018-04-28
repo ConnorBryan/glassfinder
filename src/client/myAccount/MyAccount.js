@@ -15,7 +15,7 @@ const Styles = styled.div`
   }
 
   .segment {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
   }
 `;
 

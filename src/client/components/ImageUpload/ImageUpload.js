@@ -10,7 +10,7 @@ import { fancy, slightlyBiggerText, centered } from "../../styles/snippets";
 
 const Styles = styled.div`
   .ImageUpload-menu {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 
@@ -20,7 +20,7 @@ const Styles = styled.div`
   }
 
   .ImageUpload-content {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
     min-height: 30vh !important;
     ${slightlyBiggerText} ${centered};
 

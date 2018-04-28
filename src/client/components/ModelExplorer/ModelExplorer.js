@@ -26,7 +26,7 @@ const Styles = styled.div`
 
   .ModelExplorer-detail {
     padding: 0 !important;
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
     border-right: none !important;
     background: ${palette.invertedBackground};
     ${centered};

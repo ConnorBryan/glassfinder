@@ -26,7 +26,7 @@ const Styles = styled.div`
     background: url(/background.png);
   }
   .footer {
-    border-top: 1px solid rgb(220, 220, 220);
+    border-top: 1px solid #555;
 
     .segment {
       min-height: 30vh !important;

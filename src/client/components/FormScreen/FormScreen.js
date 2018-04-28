@@ -34,7 +34,7 @@ function FormScreen({
 
     .image {
       margin-top: 2rem !important;
-      border: 1px solid white !important;
+      border: 1px solid #555 !important;
     }
   `;
 

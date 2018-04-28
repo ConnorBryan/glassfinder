@@ -7,7 +7,7 @@ import { fancy } from "../../../../styles/snippets";
 
 const Styles = styled.div`
   border-radius: 0 !important;
-  border: 1px solid white !important;
+  border: 1px solid #555 !important;
   padding: 0 !important;
 
   .header,
@@ -16,7 +16,7 @@ const Styles = styled.div`
   }
 
   .HomeTile-menu {
-    border-bottom: 1px solid white !important;
+    border-bottom: 1px solid #555 !important;
   }
 `;
 

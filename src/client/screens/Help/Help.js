@@ -21,7 +21,7 @@ const Styles = styled.div`
     }
   }
   .Help-accordion {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
 
     & .accordion {
       background: transparent !important;

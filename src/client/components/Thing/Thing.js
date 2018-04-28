@@ -8,12 +8,9 @@ import { fancy, slightlyBiggerText } from "../../styles/snippets";
 const Styles = styled.div`
   .Thing {
     margin: 2rem 0 4rem 0 !important;
-    border: 1px solid white !important;
-    border-radius: 0 !important;
 
-    & img {
-      border-right: 1px solid white !important;
-      border-bottom: 1px solid white !important;
+    .segment {
+      border: none !important;
     }
   }
 
@@ -23,9 +20,7 @@ const Styles = styled.div`
   }
 
   .Thing-menu {
-    margin: 0 !important;
-    border: 1px solid white !important;
-    border-radius: 0 !important;
+    border-bottom: 1px solid #555 !important;
   }
 
   .Thing-title {
@@ -49,9 +44,8 @@ const Styles = styled.div`
   }
 
   .Thing-actions {
-    border-left: 1px solid white !important;
-    border-right: 1px solid white !important;
     ${slightlyBiggerText};
+    border: 1px solid #555 !important;
 
     .item {
       ${fancy};
@@ -64,7 +58,7 @@ function Thing({ image, title, top, content, bottom, actions }) {
     <Styles>
       <div className="Thing">
         <Segment attached="top" inverted>
-          <Grid>
+          <Grid style={{ overflowX: "hidden", border: "1px solid #555" }}>
             <Grid.Row className="Thing-row">
               <Grid.Column className="Thing-column" computer={4} mobile={16}>
                 <Image fluid src={image} />
@@ -74,7 +68,6 @@ function Thing({ image, title, top, content, bottom, actions }) {
                   <Menu.Item header className="Thing-title" content={title} />
                   <Responsive
                     as={Menu.Menu}
-                    position="right"
                     minWidth={Responsive.onlyTablet.minWidth}
                   >
                     <Menu.Item header content={top} />

@@ -21,7 +21,7 @@ const Styles = styled.div`
   }
 
   input {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
   }
 
   .item {
@@ -29,7 +29,7 @@ const Styles = styled.div`
   }
 
   .menu {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
   }
 
   .fieldview {
@@ -40,10 +40,10 @@ const Styles = styled.div`
   .textareaWrapper textarea {
     color: white !important;
     background-color: transparent !important;
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
 
     &:focus {
-      border: 1px solid white !important;
+      border: 1px solid #555 !important;
     }
   }
 `;
@@ -97,9 +97,9 @@ function AbstractFormField({
         <Form.Input className="seethrough" {...inputProps} />
       )}
       {touched[field.name] &&
-      errors[field.name] && (
-        <Message icon="warning sign" header={errors[field.name]} negative />
-      )}
+        errors[field.name] && (
+          <Message icon="warning sign" header={errors[field.name]} negative />
+        )}
     </Segment>
   );
 }
@@ -132,8 +132,12 @@ function AbstractForm({ fields, onSubmit, actions, sendText }) {
       }) => (
         <Styles>
           <Form onSubmit={handleSubmit} inverted>
-            <Segment attached="top" className="fieldview">
-              <Segment.Group>
+            <Segment
+              attached="top"
+              className="fieldview"
+              style={{ border: "1px solid #555" }}
+            >
+              <Segment.Group style={{ border: "none" }}>
                 {fields.map((field, index) => (
                   <AbstractFormField
                     key={index}

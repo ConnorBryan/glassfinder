@@ -7,7 +7,7 @@ import { fancy, slightlyBiggerText } from "../../styles/snippets";
 
 const Styles = styled.div`
   .segments {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
   }
 
   .header {
@@ -15,11 +15,12 @@ const Styles = styled.div`
   }
 
   .huh {
-    border-color: white !important;
+    border-color: #555 !important;
   }
 
   .ScreenHeader-description {
-    border-color: white !important;
+    border-color: #555 !important;
+    border-bottom: none !important;
     ${slightlyBiggerText};
   }
 `;

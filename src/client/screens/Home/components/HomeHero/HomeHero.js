@@ -7,7 +7,7 @@ import Splash from "../../../../components/Splash";
 
 const Styles = styled.div`
   .HomeHero {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
     padding: 0 !important;
   }
 

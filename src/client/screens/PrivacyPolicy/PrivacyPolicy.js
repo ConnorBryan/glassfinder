@@ -10,7 +10,7 @@ const Styles = styled.div`
   }
 
   .PrivacyPolicy-menu {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
 
     & .header {
       ${fancy};
@@ -18,7 +18,7 @@ const Styles = styled.div`
   }
 
   .PrivacyPolicy-content {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
     ${slightlyBiggerText};
   }
 `;

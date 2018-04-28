@@ -17,7 +17,7 @@ const Styles = styled.div`
   .Navbar-container {
     margin: 0 !important;
     background: rgba(22, 22, 22, 0.7) !important;
-    border-bottom: 1px solid white !important;
+    border-bottom: 1px solid #555 !important;
   }
   .header {
     color: white !important;

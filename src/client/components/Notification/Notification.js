@@ -36,7 +36,7 @@ function Notification({ dismiss, message }) {
         <Segment
           inverted
           style={{
-            border: "1px solid white",
+            border: "1px solid #555",
             position: "fixed",
             zIndex: 1000,
             width: "80%",
@@ -54,7 +54,7 @@ function Notification({ dismiss, message }) {
         <Segment
           inverted
           style={{
-            border: "1px solid white",
+            border: "1px solid #555",
             position: "fixed",
             zIndex: 1000,
             width: "40%",
