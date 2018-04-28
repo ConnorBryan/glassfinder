@@ -4,8 +4,14 @@ import styled from "styled-components";
 import { Button, Loader } from "semantic-ui-react";
 
 const Styles = styled.div`
+  .empty-collection-message-wrapper {
+    display: flex;
+    align-items: center;
+    height: ${props => props.height};
+    font-size: 1.4rem;
+  }
+
   .wrapper {
-    position: relative;
     width: ${props => props.width};
     height: ${props => props.height};
     display: flex;
@@ -15,6 +21,10 @@ const Styles = styled.div`
       width: 100%;
       height: 100%;
     }
+  }
+
+  .input-wrapper {
+    position: relative;
   }
 
   input {
@@ -29,10 +39,12 @@ const Styles = styled.div`
   }
 
   button {
+    margin: 0 !important;
     width: 5rem !important;
     height: ${props => `${props.height} !important`};
     border: 1px solid white !important;
     border-left: none !important;
+    border-radius: 0 !important;
   }
 
   .loading-dropdown {
@@ -83,6 +95,8 @@ export default class InputDropdown extends Component {
     labelProperty: PropTypes.string,
     placeholder: PropTypes.string,
     filtered: PropTypes.bool,
+    hideIfEmptyCollection: PropTypes.bool,
+    emptyCollectionMessage: PropTypes.string,
     service: PropTypes.func,
     onSubmit: PropTypes.func.isRequired
   };
@@ -95,6 +109,8 @@ export default class InputDropdown extends Component {
     labelProperty: "name",
     placeholder: "",
     filtered: true,
+    hideIfEmptyCollection: false,
+    emptyCollectionMessage: "",
     service: () => Promise.resolve([])
   };
 
@@ -159,6 +175,8 @@ export default class InputDropdown extends Component {
     setTimeout(() => onSubmit(valueToSubmit, label), 0);
   };
 
+  handleClear = () => this.setValue("");
+
   checkDropdownStatus = () => {
     const { minimumCharactersForDropdown } = this.props;
     const { value, dropdownVisible } = this.state;
@@ -210,7 +228,14 @@ export default class InputDropdown extends Component {
     }, Object.create(null));
 
   render() {
-    const { service, onSubmit, placeholder, ...styles } = this.props;
+    const {
+      service,
+      onSubmit,
+      placeholder,
+      hideIfEmptyCollection,
+      emptyCollectionMessage,
+      ...styles
+    } = this.props;
     const {
       value,
       isLoading,
@@ -225,29 +250,48 @@ export default class InputDropdown extends Component {
     ) : (
       <ul>{this.renderDropdownItems()}</ul>
     );
+    const emptyAfterAttemptingToLoad =
+      hideIfEmptyCollection && !isLoading && collection.length === 0;
 
     return (
       <Styles {...styles}>
-        <div className="wrapper">
-          <div>
-            <input
-              ref={node => (this.input = node)}
-              type="text"
-              placeholder={placeholder}
-              value={value}
-              onChange={this.handleInputChange}
-              onFocus={this.handleInputFocus}
-              onBlur={this.handleInputBlur}
-              onKeyDown={this.handleInputKeydown}
-              onClick={this.handleInputFocus}
-            />
-            {isFocused &&
-              dropdownVisible &&
-              collection.length > 0 &&
-              dropdownContent}
+        {emptyAfterAttemptingToLoad ? (
+          <div className="empty-collection-message-wrapper">
+            <em>{emptyCollectionMessage}</em>
           </div>
-          <Button secondary icon="chevron right" onClick={this.handleSubmit} />
-        </div>
+        ) : (
+          <div className="wrapper">
+            <div className="input-wrapper">
+              <input
+                ref={node => (this.input = node)}
+                type="text"
+                placeholder={placeholder}
+                value={value}
+                onChange={this.handleInputChange}
+                onFocus={this.handleInputFocus}
+                onBlur={this.handleInputBlur}
+                onKeyDown={this.handleInputKeydown}
+                onClick={this.handleInputFocus}
+              />
+              {isFocused &&
+                dropdownVisible &&
+                collection.length > 0 &&
+                dropdownContent}
+            </div>
+            <Button
+              secondary
+              title="Submit"
+              icon="chevron right"
+              onClick={this.handleSubmit}
+            />
+            <Button
+              secondary
+              title="Clear"
+              icon="trash"
+              onClick={this.handleClear}
+            />
+          </div>
+        )}
       </Styles>
     );
   }

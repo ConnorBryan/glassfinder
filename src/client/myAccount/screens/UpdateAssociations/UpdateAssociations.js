@@ -7,8 +7,6 @@ import API from "../../../services";
 import InputDropdown from "../../../components/InputDropdown";
 import { InputWithDropdown } from "../_UploadPiece";
 
-const BRAND_ID_TO_NAME = {};
-
 const Styles = styled.div`
   color: white;
 
@@ -43,11 +41,9 @@ export default class UpdateAssociations extends Component {
       }
     } = this.props;
 
-    if (window.confirm(`Associate with ${label}?`)) {
-      const association = await API.associateShopWithBrand(id, value);
+    await API.associateShopWithBrand(id, value);
 
-      window.location.reload();
-    }
+    window.location.reload();
   };
 
   handleDissociateBrandChange = async (value, label) => {
@@ -59,11 +55,9 @@ export default class UpdateAssociations extends Component {
 
     if (!value) return;
 
-    if (window.confirm(`Dissociate with ${label}?`)) {
-      await API.disassociateShopWithBrand(id, value);
+    await API.disassociateShopWithBrand(id, value);
 
-      window.location.reload();
-    }
+    window.location.reload();
   };
 
   render() {
@@ -88,7 +82,7 @@ export default class UpdateAssociations extends Component {
               the Shop view.
             </p>
             <InputDropdown
-              placeholder="Enter a brand to associate with it."
+              placeholder="Enter a brand to associate with."
               minimumCharactersForDropdown={0}
               service={API.retrieveAllBrands}
               onSubmit={this.handleAssociateBrandChange}
@@ -103,9 +97,11 @@ export default class UpdateAssociations extends Component {
               map when it is filtered by that brand.
             </p>
             <InputDropdown
-              placeholder="Enter a brand to dissociate with it."
+              placeholder="Enter a brand to dissociate with."
               minimumCharactersForDropdown={0}
               service={associatedBrandService}
+              hideIfEmptyCollection
+              emptyCollectionMessage="Your shop has no associated brands."
               onSubmit={this.handleDissociateBrandChange}
             />
           </Segment>
