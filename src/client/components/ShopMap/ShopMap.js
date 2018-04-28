@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { retrieveFromCache, removeFromCache, updateCache } from "../../../util";
 import API from "../../services";
+import InputDropdown from "../InputDropdown";
 
 const Styles = styled.div`
   #map {
@@ -18,6 +19,18 @@ const Styles = styled.div`
 
   .menu {
     border: 1px solid white !important;
+  }
+
+  .filter-input {
+    margin: 0 !important;
+    padding: 2rem !important;
+    max-width: 50rem !important;
+    font-size: 1.2rem !important;
+
+    h2 {
+      text-transform: uppercase;
+      letter-spacing: 0.2rem;
+    }
   }
 `;
 
@@ -101,9 +114,11 @@ class ShopMap extends Component {
     );
   };
 
-  handleFilteredBrandChange = ({ target: { value: filteredBrand } }) =>
+  handleFilteredBrandChange = filteredBrand =>
     this.setState(
-      { filteredBrand: parseInt(filteredBrand) === -1 ? null : filteredBrand },
+      {
+        filteredBrand: parseInt(filteredBrand, 10) === -1 ? null : filteredBrand
+      },
       this.addMarkersToMap
     );
 
@@ -146,18 +161,20 @@ class ShopMap extends Component {
             />
           </Menu>
         </Container>
-        <Container>
-          <select name="filterBrand" onChange={this.handleFilteredBrandChange}>
-            <option name="filterBrand" value={-1}>
-              -- Select a brand to filter the map pins --
-            </option>
-            {allBrands.map(brand => (
-              <option name="filterBrand" value={brand.id}>
-                {brand.name}
-              </option>
-            ))}
-          </select>
-        </Container>
+        <div className="filter-input">
+          <h2>Filter map pins by brand</h2>
+          <p>
+            Select a brand from this dropdown to only display shops that carry
+            that brand.
+          </p>
+          <InputDropdown
+            placeholder="Enter a brand to filter the map."
+            minimumCharactersForDropdown={0}
+            width="20rem"
+            service={API.retrieveAllBrands}
+            onSubmit={this.handleFilteredBrandChange}
+          />
+        </div>
       </Styles>
     );
   }

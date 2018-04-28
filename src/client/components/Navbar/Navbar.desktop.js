@@ -79,12 +79,12 @@ function DesktopNavbar({
           {account ? (
             <Aux>
               <Menu.Item>
-                <Button className="fancy" onClick={signout}>
+                <Button className="fancy" onClick={signout} secondary>
                   Sign out <Icon name="sign out" />
                 </Button>
               </Menu.Item>
               <Menu.Item>
-                <Button as={Link} to="/my-account" primary>
+                <Button as={Link} to="/my-account" secondary>
                   My account <Icon name="user" />
                 </Button>
               </Menu.Item>
@@ -92,12 +92,12 @@ function DesktopNavbar({
           ) : (
             <Aux>
               <Menu.Item>
-                <Button as={Link} to="/sign-in" size="large">
+                <Button as={Link} to="/sign-in" size="large" secondary>
                   Sign in <Icon name="sign in" />
                 </Button>
               </Menu.Item>
               <Menu.Item>
-                <Button as={Link} to="/sign-up" size="large" primary>
+                <Button as={Link} to="/sign-up" size="large">
                   Get started <Icon name="send" />
                 </Button>
               </Menu.Item>

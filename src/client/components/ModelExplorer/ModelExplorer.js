@@ -45,7 +45,9 @@ class ModelExplorer extends Component {
   cacheExpiration = this.props.cacheExpiration;
 
   getInitialState() {
-    const { location: { pathname } } = this.props;
+    const {
+      location: { pathname }
+    } = this.props;
 
     const isViewMyPieces = pathname.includes("view-my-pieces");
     const splitPath = pathname.split("/");

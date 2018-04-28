@@ -156,7 +156,7 @@ export default class InputDropdown extends Component {
       return;
     }
 
-    onSubmit(valueToSubmit, label);
+    setTimeout(() => onSubmit(valueToSubmit, label), 0);
   };
 
   checkDropdownStatus = () => {

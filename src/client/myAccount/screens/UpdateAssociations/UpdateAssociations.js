@@ -59,7 +59,7 @@ export default class UpdateAssociations extends Component {
 
     if (!value) return;
 
-    if (window.confirm(`Disassociate with ${label}?`)) {
+    if (window.confirm(`Dissociate with ${label}?`)) {
       await API.disassociateShopWithBrand(id, value);
 
       window.location.reload();
