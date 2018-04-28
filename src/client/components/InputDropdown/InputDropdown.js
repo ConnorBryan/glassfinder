@@ -30,7 +30,7 @@ const Styles = styled.div`
   input {
     width: 100%;
     height: 100%;
-    border: 1px solid white;
+    border: 1px solid #555;
     background: black;
     color: white;
     font-size: 1.66rem;
@@ -42,7 +42,7 @@ const Styles = styled.div`
     margin: 0 !important;
     width: 5rem !important;
     height: ${props => `${props.height} !important`};
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
     border-left: none !important;
     border-radius: 0 !important;
   }
@@ -51,7 +51,7 @@ const Styles = styled.div`
     position: absolute;
     top: ${props => props.height};
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid #555;
     background: black;
     color: white;
     height: 115px;
@@ -62,7 +62,7 @@ const Styles = styled.div`
     top: ${props => props.height};
     width: 100%;
     list-style-type: none;
-    border: 1px solid #ccc;
+    border: 1px solid #555;
     background: black;
     color: white;
     margin: 0;
@@ -98,6 +98,7 @@ export default class InputDropdown extends Component {
     hideIfEmptyCollection: PropTypes.bool,
     emptyCollectionMessage: PropTypes.string,
     service: PropTypes.func,
+    additionalClearButtonFunctionality: PropTypes.func,
     onSubmit: PropTypes.func.isRequired
   };
 
@@ -111,7 +112,8 @@ export default class InputDropdown extends Component {
     filtered: true,
     hideIfEmptyCollection: false,
     emptyCollectionMessage: "",
-    service: () => Promise.resolve([])
+    service: () => Promise.resolve([]),
+    additionalClearButtonFunctionality: () => {}
   };
 
   state = {
@@ -175,7 +177,8 @@ export default class InputDropdown extends Component {
     setTimeout(() => onSubmit(valueToSubmit, label), 0);
   };
 
-  handleClear = () => this.setValue("");
+  handleClear = () =>
+    this.setValue("") || this.props.additionalClearButtonFunctionality();
 
   checkDropdownStatus = () => {
     const { minimumCharactersForDropdown } = this.props;
@@ -263,7 +266,6 @@ export default class InputDropdown extends Component {
           <div className="wrapper">
             <div className="input-wrapper">
               <input
-                ref={node => (this.input = node)}
                 type="text"
                 placeholder={placeholder}
                 value={value}

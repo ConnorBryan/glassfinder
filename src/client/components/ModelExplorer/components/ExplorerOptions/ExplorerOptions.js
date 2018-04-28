@@ -79,7 +79,7 @@ function ExplorerOptions({
       {options}
     </Sidebar>
   ) : (
-    <Menu style={{ margin: 0, width: "50vw" }} vertical inverted>
+    <Menu style={{ margin: 0, width: "100vw" }} vertical inverted>
       {options}
     </Menu>
   );

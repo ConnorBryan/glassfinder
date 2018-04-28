@@ -15,7 +15,7 @@ function ExplorerMap({ compact, visible }) {
       <ShopMap />
     </Sidebar>
   ) : (
-    <Segment style={{ width: "50vw" }} className="ExplorerMap" inverted>
+    <Segment className="ExplorerMap" inverted>
       <ShopMap />
     </Segment>
   );

@@ -63,8 +63,12 @@ class Layout extends Component {
   state = { showNavbarBorder: false };
 
   componentWillReceiveProps(nextProps) {
-    const { location: { pathname: currentPathname } } = this.props;
-    const { location: { pathname: nextPathname } } = nextProps;
+    const {
+      location: { pathname: currentPathname }
+    } = this.props;
+    const {
+      location: { pathname: nextPathname }
+    } = nextProps;
 
     if (currentPathname !== nextPathname) {
       window.scrollTo(0, 0);
@@ -183,7 +187,7 @@ class Layout extends Component {
               floated="right"
               content="Back to top"
               onClick={scrollToTop}
-              primary
+              secondary
             />
           </Container>
         </Segment>

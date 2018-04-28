@@ -36,9 +36,6 @@ const Styles = styled.div`
     display: flex;
     align-items: flex-start;
   }
-
-  .explorer-wrapper {
-  }
 `;
 
 class ModelExplorer extends Component {
@@ -251,9 +248,9 @@ class ModelExplorer extends Component {
               style={{ backgroundColor: "#1b1c1d" }}
             >
               {map}
-              {options}
             </div>
-            <div className="explorer-wrapper">{explorer}</div>
+            <div style={{ backgroundColor: "#1b1c1d" }}>{options}</div>
+            <div>{explorer}</div>
           </Sidebar.Pushable>
         </Container>
       </Styles>

@@ -1,15 +1,22 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Container, Segment, Menu } from "semantic-ui-react";
+import { Container, Segment, Menu, Button, Icon } from "semantic-ui-react";
 import styled from "styled-components";
+import Aux from "react-aux";
 
 import { retrieveFromCache, removeFromCache, updateCache } from "../../../util";
 import API from "../../services";
 import InputDropdown from "../InputDropdown";
+import { filter } from "minimatch";
 
 const Styles = styled.div`
+  .map-wrapper,
   #map {
     min-height: 50vh !important;
+  }
+
+  .map-wrapper {
+    min-width: 450px;
   }
 
   .item {
@@ -18,7 +25,7 @@ const Styles = styled.div`
   }
 
   .menu {
-    border: 1px solid white !important;
+    border: 1px solid #555 !important;
   }
 
   .filter-input {
@@ -37,14 +44,12 @@ const Styles = styled.div`
 class ShopMap extends Component {
   state = {
     markers: [],
-    allBrands: [],
     shopToBrands: {},
     filteredBrand: null
   };
 
   componentDidMount() {
     window.google.maps ? this.initMap() : (window.initMap = this.initMap);
-    this.loadAllBrands();
     this.loadShopToBrands();
   }
 
@@ -53,7 +58,7 @@ class ShopMap extends Component {
     const defaultCenter = { lat: -37.774929, lng: -122.419416 };
 
     this.map = new window.google.maps.Map(map, {
-      zoom: 8,
+      zoom: 3,
       center: defaultCenter
     });
 
@@ -78,12 +83,6 @@ class ShopMap extends Component {
     });
 
     this.setState({ markers: finalMarkers }, this.addMarkersToMap);
-  };
-
-  loadAllBrands = async () => {
-    const allBrands = await API.retrieveAllBrands();
-
-    this.setState({ allBrands });
   };
 
   loadShopToBrands = async () => {
@@ -122,6 +121,9 @@ class ShopMap extends Component {
       this.addMarkersToMap
     );
 
+  clearFilteredBrand = () =>
+    this.setState({ filteredBrand: null }, this.addMarkersToMap);
+
   addMarkersToMap = () => {
     const { markers, filteredBrand, shopToBrands } = this.state;
 
@@ -147,34 +149,70 @@ class ShopMap extends Component {
   };
 
   render() {
-    const { allBrands, filteredBrand } = this.state;
+    const { filteredBrand } = this.state;
 
     return (
       <Styles>
-        <Container>
-          <Segment attached="top" id="map" />
-          <Menu attached="bottom" widths={1} inverted>
-            <Menu.Item
-              content="Find my location"
-              icon="map pin"
-              onClick={this.findMyLocation}
+        <Container style={{ display: "flex", alignItems: "center" }}>
+          <div className="filter-input">
+            <h2>Filter map pins by brand</h2>
+            <p>
+              Select a brand from this dropdown to only display shops that carry
+              that brand.
+            </p>
+            <InputDropdown
+              placeholder="Enter a brand to filter the map."
+              minimumCharactersForDropdown={0}
+              width="40rem"
+              service={API.retrieveAllBrands}
+              onSubmit={this.handleFilteredBrandChange}
+              additionalClearButtonFunctionality={this.clearFilteredBrand}
             />
-          </Menu>
+            <Segment
+              style={{
+                textAlign: "center",
+                fontSize: "1.3rem",
+                marginTop: "3rem",
+                border: "1px solid #555"
+              }}
+              inverted
+            >
+              {filteredBrand === null ? (
+                <em>Showing all shops.</em>
+              ) : (
+                <Aux>
+                  <em>Showing shops that carry products by {filteredBrand}.</em>
+                  <br />
+                  <Button
+                    style={{ marginTop: "1.5rem" }}
+                    onClick={this.clearFilteredBrand}
+                    fluid
+                    secondary
+                  >
+                    <Icon name="close" /> Clear
+                  </Button>
+                </Aux>
+              )}
+            </Segment>
+          </div>
+          <div>
+            <div className="map-wrapper">
+              <Segment attached="top" id="map" />
+              <Menu
+                style={{ textAlign: "center" }}
+                attached="bottom"
+                inverted
+                vertical
+                fluid
+              >
+                <Menu.Item
+                  content="Find my location"
+                  onClick={this.findMyLocation}
+                />
+              </Menu>
+            </div>
+          </div>
         </Container>
-        <div className="filter-input">
-          <h2>Filter map pins by brand</h2>
-          <p>
-            Select a brand from this dropdown to only display shops that carry
-            that brand.
-          </p>
-          <InputDropdown
-            placeholder="Enter a brand to filter the map."
-            minimumCharactersForDropdown={0}
-            width="40rem"
-            service={API.retrieveAllBrands}
-            onSubmit={this.handleFilteredBrandChange}
-          />
-        </div>
       </Styles>
     );
   }
