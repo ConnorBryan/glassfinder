@@ -45,6 +45,8 @@ class ModelExplorer extends Component {
   cacheKey = this.props.cacheKey;
   cacheExpiration = this.props.cacheExpiration;
 
+  collectionItemsContainer = null;
+
   getInitialState() {
     const {
       location: { pathname }
@@ -167,6 +169,7 @@ class ModelExplorer extends Component {
 
     const explorer = (
       <Explorer
+        setRef={node => (this.collectionItemsContainer = node)}
         {...{
           compact,
           title: viewingDetail ? detailTitle : title,
@@ -187,6 +190,7 @@ class ModelExplorer extends Component {
     const options = (
       <ExplorerOptions
         {...{ compact, perPage, totalModels }}
+        collectionItemsContainer={this.collectionItemsContainer}
         visible={showingSettings}
         sort={this.setModels}
         toggle={this.toggleSettings}
