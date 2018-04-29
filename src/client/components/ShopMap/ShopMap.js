@@ -45,12 +45,24 @@ class ShopMap extends Component {
   state = {
     markers: [],
     shopToBrands: {},
-    filteredBrand: null
+    filteredBrand: null,
+    filteredBrandLabels: {}
   };
 
   componentDidMount() {
     window.google.maps ? this.initMap() : (window.initMap = this.initMap);
     this.loadShopToBrands();
+  }
+
+  componentDidUpdate() {
+    const { filteredBrand, filteredBrandLabels } = this.state;
+    const label = filteredBrandLabels[filteredBrand];
+
+    console.log("CDU Label", label);
+
+    if (filteredBrand !== null && !label) {
+      this.translateIdToLabel(filteredBrand);
+    }
   }
 
   initMap = async () => {
@@ -89,6 +101,24 @@ class ShopMap extends Component {
     const shopToBrands = await API.getAllShopToBrands();
 
     this.setState({ shopToBrands });
+  };
+
+  translateIdToLabel = async id => {
+    const { filteredBrandLabels } = this.state;
+
+    let label = filteredBrandLabels[id] || "";
+
+    if (!label) {
+      const brand = await API.getBrand(id);
+
+      label = brand.name;
+
+      this.setState({
+        filteredBrandLabels: { ...filteredBrandLabels, [id]: label }
+      });
+    }
+
+    return label || "";
   };
 
   cacheMarkers = markers => {
@@ -149,7 +179,8 @@ class ShopMap extends Component {
   };
 
   render() {
-    const { filteredBrand } = this.state;
+    const { filteredBrand, filteredBrandLabels } = this.state;
+    const filteredBrandLabel = filteredBrandLabels[filteredBrand];
 
     return (
       <Styles>
@@ -181,7 +212,9 @@ class ShopMap extends Component {
                 <em>Showing all shops.</em>
               ) : (
                 <Aux>
-                  <em>Showing shops that carry products by {filteredBrand}.</em>
+                  <em>
+                    Showing shops that carry products by {filteredBrandLabel}.
+                  </em>
                   <br />
                   <Button
                     style={{ marginTop: "1.5rem" }}

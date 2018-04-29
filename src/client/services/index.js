@@ -736,4 +736,20 @@ export default class API {
       return false;
     }
   }
+
+  static async getBrand(id) {
+    try {
+      const url = `${config.API_ROOT}/brands/${id}`;
+      const {
+        data: {
+          payload: { brand }
+        }
+      } = await axios.get(url);
+
+      return brand;
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+  }
 }
