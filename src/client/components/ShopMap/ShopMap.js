@@ -106,7 +106,7 @@ class ShopMap extends Component {
   translateIdToLabel = async id => {
     const { filteredBrandLabels } = this.state;
 
-    let label = filteredBrandLabels[id] || "";
+    let label = filteredBrandLabels[id];
 
     if (!label) {
       const brand = await API.getBrand(id);
@@ -186,12 +186,9 @@ class ShopMap extends Component {
       <Styles>
         <Container style={{ display: "flex", alignItems: "center" }}>
           <div className="filter-input">
-            <h2>Filter map pins by brand</h2>
-            <p>
-              Select a brand from this dropdown to only display shops that carry
-              that brand.
-            </p>
             <InputDropdown
+              inputLabel="Filter map pins by brand"
+              inputDescription="Select a brand from this dropdown to only display shops that carry that brand."
               placeholder="Enter a brand to filter the map."
               minimumCharactersForDropdown={0}
               width="40rem"
@@ -213,7 +210,8 @@ class ShopMap extends Component {
               ) : (
                 <Aux>
                   <em>
-                    Showing shops that carry products by {filteredBrandLabel}.
+                    Showing shops that carry products by{" "}
+                    <strong>{filteredBrandLabel}</strong>.
                   </em>
                   <br />
                   <Button

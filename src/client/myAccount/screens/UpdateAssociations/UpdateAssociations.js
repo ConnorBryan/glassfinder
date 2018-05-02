@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Formik, Field } from "formik";
-import { Loader, Segment } from "semantic-ui-react";
+import { Container, Loader, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
 import API from "../../../services";
@@ -15,18 +15,13 @@ const Styles = styled.div`
     letter-spacing: 0.2rem;
   }
 
-  .dropdown-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-  }
-
   .dropdown-segment {
-    margin: 0 !important;
+    margin: 0 auto !important;
+    margin-bottom: 3rem !important;
     padding: 2rem !important;
-    max-width: 50rem !important;
     font-size: 1.2rem !important;
     border: 1px solid #555 !important;
+    max-width: 60vw;
 
     p {
       height: 5rem !important;
@@ -74,7 +69,7 @@ export default class UpdateAssociations extends Component {
 
     return (
       <Styles>
-        <div className="dropdown-wrapper">
+        <Container>
           <Segment className="dropdown-segment" inverted>
             <h2>Associate with a brand</h2>
             <p>
@@ -106,7 +101,7 @@ export default class UpdateAssociations extends Component {
               onSubmit={this.handleDissociateBrandChange}
             />
           </Segment>
-        </div>
+        </Container>
       </Styles>
     );
   }

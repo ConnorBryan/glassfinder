@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Button, Loader } from "semantic-ui-react";
+import Aux from "react-aux";
+
+import { fancy } from "../../styles/snippets";
 
 const Styles = styled.div`
   .empty-collection-message-wrapper {
@@ -9,6 +12,17 @@ const Styles = styled.div`
     align-items: center;
     height: ${props => props.height};
     font-size: 1.4rem;
+  }
+
+  .input-label {
+    font-size: 1.7rem;
+    ${fancy};
+  }
+
+  .input-description {
+    font-size: 1.2rem;
+    margin: 1rem 0 2rem 0;
+    color: white;
   }
 
   .wrapper {
@@ -69,7 +83,7 @@ const Styles = styled.div`
     padding: 0;
     max-height: 230px;
     overflow-y: auto;
-    z-index: 1;
+    z-index: 5;
 
     li {
       margin: 0;
@@ -88,6 +102,8 @@ const Styles = styled.div`
 
 export default class InputDropdown extends Component {
   static propTypes = {
+    inputLabel: PropTypes.string,
+    inputDescription: PropTypes.string,
     width: PropTypes.string,
     height: PropTypes.string,
     minimumCharactersForDropdown: PropTypes.number,
@@ -99,13 +115,16 @@ export default class InputDropdown extends Component {
     emptyCollectionMessage: PropTypes.string,
     service: PropTypes.func,
     additionalClearButtonFunctionality: PropTypes.func,
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    onNoMatchSubmit: PropTypes.func
   };
 
   static defaultProps = {
+    inputLabel: "",
+    inputDescription: "",
     width: "40rem",
     height: "5rem",
-    minimumCharactersForDropdown: 2,
+    minimumCharactersForDropdown: 0,
     valueProperty: "id",
     labelProperty: "name",
     placeholder: "",
@@ -113,7 +132,8 @@ export default class InputDropdown extends Component {
     hideIfEmptyCollection: false,
     emptyCollectionMessage: "",
     service: () => Promise.resolve([]),
-    additionalClearButtonFunctionality: () => {}
+    additionalClearButtonFunctionality: () => {},
+    onNoMatchSubmit: () => {}
   };
 
   state = {
@@ -164,21 +184,31 @@ export default class InputDropdown extends Component {
     }
   };
 
-  handleSubmit = () => {
-    const { onSubmit } = this.props;
+  handleSubmit = e => {
+    const { onSubmit, onNoMatchSubmit } = this.props;
     const { value: label } = this.state;
     const labelToValueDictionary = this.getLabelToValueDictionary();
     const valueToSubmit = labelToValueDictionary[label];
 
+    e && e.preventDefault();
+
     if (typeof valueToSubmit === "undefined") {
+      onNoMatchSubmit(label);
       return;
     }
 
     setTimeout(() => onSubmit(valueToSubmit, label), 0);
   };
 
-  handleClear = () =>
-    this.setValue("") || this.props.additionalClearButtonFunctionality();
+  handleClear = e => {
+    const { additionalClearButtonFunctionality } = this.props;
+
+    e.preventDefault();
+
+    this.setValue("");
+
+    additionalClearButtonFunctionality();
+  };
 
   checkDropdownStatus = () => {
     const { minimumCharactersForDropdown } = this.props;
@@ -232,6 +262,8 @@ export default class InputDropdown extends Component {
 
   render() {
     const {
+      inputLabel,
+      inputDescription,
       service,
       onSubmit,
       placeholder,
@@ -263,36 +295,44 @@ export default class InputDropdown extends Component {
             <em>{emptyCollectionMessage}</em>
           </div>
         ) : (
-          <div className="wrapper">
-            <div className="input-wrapper">
-              <input
-                type="text"
-                placeholder={placeholder}
-                value={value}
-                onChange={this.handleInputChange}
-                onFocus={this.handleInputFocus}
-                onBlur={this.handleInputBlur}
-                onKeyDown={this.handleInputKeydown}
-                onClick={this.handleInputFocus}
+          <Aux>
+            {inputLabel && <label className="input-label">{inputLabel}</label>}
+            {inputDescription && (
+              <section className="input-description">
+                {inputDescription}
+              </section>
+            )}
+            <div className="wrapper">
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  placeholder={placeholder}
+                  value={value}
+                  onChange={this.handleInputChange}
+                  onFocus={this.handleInputFocus}
+                  onBlur={this.handleInputBlur}
+                  onKeyDown={this.handleInputKeydown}
+                  onClick={this.handleInputFocus}
+                />
+                {isFocused &&
+                  dropdownVisible &&
+                  collection.length > 0 &&
+                  dropdownContent}
+              </div>
+              <Button
+                secondary
+                title="Submit"
+                icon="chevron right"
+                onClick={this.handleSubmit}
               />
-              {isFocused &&
-                dropdownVisible &&
-                collection.length > 0 &&
-                dropdownContent}
+              <Button
+                secondary
+                title="Clear"
+                icon="trash"
+                onClick={this.handleClear}
+              />
             </div>
-            <Button
-              secondary
-              title="Submit"
-              icon="chevron right"
-              onClick={this.handleSubmit}
-            />
-            <Button
-              secondary
-              title="Clear"
-              icon="trash"
-              onClick={this.handleClear}
-            />
-          </div>
+          </Aux>
         )}
       </Styles>
     );

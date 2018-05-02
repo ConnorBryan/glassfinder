@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Formik, Field } from "formik";
 import styled from "styled-components";
-import { Dropdown, Loader } from "semantic-ui-react";
+import { Container, Segment, Dropdown, Loader } from "semantic-ui-react";
 
 import API from "../../../services";
 import ImageUpload from "../../../components/ImageUpload";
+import InputDropdown from "../../../components/InputDropdown";
 
 /** */
 export class InputWithDropdown extends Component {
@@ -40,6 +41,12 @@ const Styles = styled.div`
       display: block;
       color: white;
     }
+  }
+
+  .form-segment {
+    padding: 2rem !important;
+    border: 1px solid #555 !important;
+    margin-bottom: 3rem !important;
   }
 `;
 
@@ -139,38 +146,6 @@ class Wizard extends Component {
 }
 
 export default class UploadPiece extends Component {
-  state = {
-    loading: true,
-    originalArtists: [],
-    artists: [],
-    originalBrands: [],
-    brands: []
-  };
-
-  componentDidMount() {
-    this.fetchArtistsAndBrands();
-  }
-
-  fetchArtistsAndBrands = async () => {
-    const [artists, brands] = await Promise.all([
-      API.retrieveAllArtists(),
-      API.retrieveAllBrands()
-    ]);
-    const formattedArtists = this.formatData(artists);
-    const formattedBrands = this.formatData(brands);
-
-    this.setState(
-      {
-        loading: false,
-        artists: formattedArtists,
-        originalArtists: formattedArtists,
-        brands: formattedBrands,
-        originalBrands: formattedBrands
-      },
-      () => console.log(this.state)
-    );
-  };
-
   formatData = data =>
     data.map(datum => ({
       key: datum.name,
@@ -179,163 +154,181 @@ export default class UploadPiece extends Component {
     }));
 
   render() {
-    const { loading, artists, brands } = this.state;
-
-    if (loading) return <Loader>Loading...</Loader>;
-
     return (
-      <div className="UploadPiece">
-        <Wizard
-          initialValues={{
-            name: "",
-            description: "",
-            maker: "",
-            price: "",
-            location: "",
-            artist: "",
-            artistEntry: "",
-            brand: "",
-            brandEntry: "",
-            image: ""
-          }}
-          onSubmit={values => {
-            sleep(300).then(() => {
-              const { account: { id } } = this.props;
-              const finalValues = { ...values, id };
-              // window.alert(JSON.stringify(values, null, 2));
-              // actions.setSubmitting(false);
-              API.uploadPiece(finalValues)
-                .then(() => console.log("Done!"))
-                .catch(err => console.error(err));
-            });
-          }}
-        >
-          {/* Page 1: Basic Information */}
-          <Wizard.Page>
-            <fieldset>
-              <label>Name</label>
-              <Field
-                name="name"
-                component="input"
-                type="text"
-                placeholder="Name"
-                validate={required}
-              />
-            </fieldset>
-            <fieldset>
-              <label>Description</label>
-              <Field
-                name="description"
-                component="textarea"
-                placeholder="Description"
-                validate={required}
-              />
-            </fieldset>
-            <fieldset>
-              <label>Maker</label>
-              <Field
-                name="maker"
-                component="input"
-                type="text"
-                placeholder="Maker"
-                validate={required}
-              />
-            </fieldset>
-            <fieldset>
-              <label>Price</label>
-              <Field
-                name="price"
-                component="input"
-                type="number"
-                placeholder="13.37"
-                validate={required}
-              />
-            </fieldset>
-            <fieldset>
-              <label>Location</label>
-              <Field
-                name="location"
-                component="input"
-                type="text"
-                placeholder="Location"
-                validate={required}
-              />
-            </fieldset>
-          </Wizard.Page>
-          {/* Page 2: Association */}
-          <Wizard.Page>
-            <fieldset>
-              <label>Artist</label>
-              <Field
-                name="artist"
-                render={renderProps => {
-                  const onChange = artist =>
-                    renderProps.form.setValues({
-                      ...renderProps.form.values,
-                      artist
-                    });
+      <Container>
+        <div className="UploadPiece">
+          <Wizard
+            initialValues={{
+              name: "",
+              description: "",
+              maker: "",
+              price: "",
+              location: "",
+              artist: "",
+              artistEntry: "",
+              brand: "",
+              brandEntry: "",
+              image: ""
+            }}
+            onSubmit={values => {
+              sleep(300).then(() => {
+                const {
+                  account: { id }
+                } = this.props;
+                const finalValues = { ...values, id };
+                // window.alert(JSON.stringify(values, null, 2));
+                // actions.setSubmitting(false);
+                API.uploadPiece(finalValues)
+                  .then(() => console.log("Done!"))
+                  .catch(err => console.error(err));
+              });
+            }}
+          >
+            {/* Page 1: Basic Information */}
+            <Wizard.Page>
+              <fieldset>
+                <label>Name</label>
+                <Field
+                  name="name"
+                  component="input"
+                  type="text"
+                  placeholder="Name"
+                  validate={required}
+                />
+              </fieldset>
+              <fieldset>
+                <label>Description</label>
+                <Field
+                  name="description"
+                  component="textarea"
+                  placeholder="Description"
+                  validate={required}
+                />
+              </fieldset>
+              <fieldset>
+                <label>Maker</label>
+                <Field
+                  name="maker"
+                  component="input"
+                  type="text"
+                  placeholder="Maker"
+                  validate={required}
+                />
+              </fieldset>
+              <fieldset>
+                <label>Price</label>
+                <Field
+                  name="price"
+                  component="input"
+                  type="number"
+                  placeholder="13.37"
+                  validate={required}
+                />
+              </fieldset>
+              <fieldset>
+                <label>Location</label>
+                <Field
+                  name="location"
+                  component="input"
+                  type="text"
+                  placeholder="Location"
+                  validate={required}
+                />
+              </fieldset>
+            </Wizard.Page>
+            {/* Page 2: Association */}
+            <Wizard.Page>
+              <Segment className="form-segment" inverted>
+                <Field
+                  name="artist"
+                  render={renderProps => {
+                    const handleSubmit = artist =>
+                      renderProps.form.setValues({
+                        ...renderProps.form.values,
+                        artist,
+                        artistEntry: ""
+                      });
+                    const handleNoMatchSubmit = artistEntry =>
+                      renderProps.form.setValues({
+                        ...renderProps.form.values,
+                        artist: "",
+                        artistEntry
+                      });
+                    const additionalClearButtonFunctionality = () =>
+                      renderProps.form.setValues({
+                        ...renderProps.form.values,
+                        artist: "",
+                        artistEntry: ""
+                      });
 
-                  return (
-                    <InputWithDropdown
-                      term="artist"
-                      onChange={onChange}
-                      options={artists}
-                    />
-                  );
-                }}
-              />
-            </fieldset>
-            <fieldset>
-              <label>Artist Entry</label>
-              <Field
-                name="artistEntry"
-                component="input"
-                type="text"
-                placeholder="Enter an artist..."
-              />
-            </fieldset>
-            <fieldset>
-              <label>Brand</label>
-              <Field
-                name="brand"
-                render={renderProps => {
-                  const onChange = brand =>
-                    renderProps.form.setValues({
-                      ...renderProps.form.values,
-                      brand
-                    });
+                    return (
+                      <InputDropdown
+                        inputLabel="Artist"
+                        inputDescription="Select an artist with a Glassfinder account to provide credit and to have the piece show up on their profile. If they do not have a Glassfinder account, simply enter their name and press <Enter>."
+                        placeholder="Select an artist."
+                        service={API.retrieveAllArtists}
+                        onSubmit={handleSubmit}
+                        onNoMatchSubmit={handleNoMatchSubmit}
+                        additionalClearButtonFunctionality={
+                          additionalClearButtonFunctionality
+                        }
+                      />
+                    );
+                  }}
+                />
+              </Segment>
+              <Segment className="form-segment" inverted>
+                <Field
+                  name="brand"
+                  render={renderProps => {
+                    const handleSubmit = brand =>
+                      renderProps.form.setValues({
+                        ...renderProps.form.values,
+                        brand,
+                        brandEntry: ""
+                      });
+                    const handleNoMatchSubmit = brandEntry =>
+                      renderProps.form.setValues({
+                        ...renderProps.form.values,
+                        brand: "",
+                        brandEntry
+                      });
+                    const additionalClearButtonFunctionality = () =>
+                      renderProps.form.setValues({
+                        ...renderProps.form.values,
+                        brand: "",
+                        brandEntry: ""
+                      });
 
-                  return (
-                    <InputWithDropdown
-                      term="brand"
-                      onChange={onChange}
-                      options={brands}
-                    />
-                  );
-                }}
+                    return (
+                      <InputDropdown
+                        inputLabel="Brand"
+                        inputDescription="Select a brand with a Glassfinder account to provide further information for users. If the brand does not have a Glassfinder account, simply enter their name and press <Enter>."
+                        placeholder="Select a brand."
+                        service={API.retrieveAllBrands}
+                        onSubmit={handleSubmit}
+                        onNoMatchSubmit={handleNoMatchSubmit}
+                        additionalClearButtonFunctionality={
+                          additionalClearButtonFunctionality
+                        }
+                      />
+                    );
+                  }}
+                />
+              </Segment>
+            </Wizard.Page>
+            {/* Page 3: Association */}
+            <Wizard.Page>
+              <ImageUpload
+                onSubmit={image =>
+                  (window.GLASSFINDER_GLOBAL_SHARE.imageUpload = image)
+                }
+                initialImage="https://placehold.it/300x300"
               />
-            </fieldset>
-            <fieldset>
-              <label>Brand Entry</label>
-              <Field
-                name="brandEntry"
-                component="input"
-                type="text"
-                placeholder="Enter a brand..."
-              />
-            </fieldset>
-          </Wizard.Page>
-          {/* Page 3: Association */}
-          <Wizard.Page>
-            <ImageUpload
-              onSubmit={image =>
-                (window.GLASSFINDER_GLOBAL_SHARE.imageUpload = image)
-              }
-              initialImage="https://placehold.it/300x300"
-            />
-          </Wizard.Page>
-        </Wizard>
-      </div>
+            </Wizard.Page>
+          </Wizard>
+        </div>
+      </Container>
     );
   }
 }
