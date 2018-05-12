@@ -60,7 +60,14 @@ function AbstractFormField({
     ...field,
     error: !!(touched[field.name] && errors[field.name]),
     value: values[field.name],
-    onChange: handleChange
+    onChange: handleChange,
+    onBlur: () => {
+      const name = field.name;
+      const value = values[name];
+      const format = field.format || (value => value);
+
+      setFieldValue(name, format(value));
+    }
   };
   const [, options] = inputProps.options || [];
   const inputTypes = {

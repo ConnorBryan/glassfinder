@@ -19,7 +19,7 @@ export const passwordAgain = Yup.mixed().test(
 
 export const phone = Yup.string()
   .matches(
-    /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/,
+    /^(\+\d{1,2}\s)?\(?\d{3}\)?\d{3}\d{4}$/,
     "A valid phone number is required."
   )
   .required("A valid phone number is required.");

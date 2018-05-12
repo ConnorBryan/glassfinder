@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import Yup from "yup";
+import { parseNumber } from "libphonenumber-js";
 
 import * as config from "../../../../config";
 import API from "../../../services";
@@ -38,7 +39,8 @@ const FIELDS = [
     label: "Phone number",
     placeholder: "Enter the business phone number",
     value: "",
-    validation: Validators.phone
+    validation: Validators.phone,
+    format: value => parseNumber(value, "US").phone || ""
   },
   {
     name: "street",
@@ -94,17 +96,14 @@ function BecomeAShop({
 }) {
   if (!account) return <Redirect to="/sign-in" />;
 
+  window.format = parseNumber;
+
   const onSubmit = async values => {
     const { street, city, state, zip } = values;
     const address = window.encodeURIComponent(
       `${street}, ${city}, ${state} ${zip}`
     );
     const coordinates = await API.transformAddressToCoordinates(address);
-    // TODO: Google API bullshit
-    // const coordinates = {
-    //   lat: 0,
-    //   lng: 0
-    // };
 
     if (coordinates) {
       const { lat, lng } = coordinates;
