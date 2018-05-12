@@ -1,52 +1,74 @@
 import React, { Component } from "react";
 import { Formik, Field } from "formik";
 import styled from "styled-components";
-import { Container, Segment, Dropdown, Loader } from "semantic-ui-react";
+import {
+  Form,
+  Container,
+  Segment,
+  Dropdown,
+  Loader,
+  Menu
+} from "semantic-ui-react";
 
 import API from "../../../services";
+import { fancy, evenBiggerText } from "../../../styles/snippets";
 import ImageUpload from "../../../components/ImageUpload";
 import InputDropdown from "../../../components/InputDropdown";
 
-/** */
-export class InputWithDropdown extends Component {
-  render() {
-    const { term, onChange, options } = this.props;
-
-    return (
-      <Dropdown
-        placeholder={`Enter ${term}`}
-        fluid
-        search
-        onChange={(event, data) => onChange(data.value)}
-        noResultsMessage={`No ${term}s found. Enter the artist in in the input below.`}
-        options={options}
-      />
-    );
-  }
-}
-
-/** */
-
 const Styles = styled.div`
+  border: 1px solid #555 !important;
+  background: #1b1c1d !important;
   margin: 0 10vw;
 
-  pre {
-    color: white;
+  @media (max-width: 450px) {
+    margin: 0 !important;
   }
 
-  fieldset {
-    border: none;
+  .title {
+    ${fancy} font-size: 1.7rem;
+    color: white !important;
+  }
 
-    label {
-      display: block;
-      color: white;
+  .description {
+    font-size: 1.2rem;
+    color: white !important;
+  }
+
+  .menu-nav {
+    margin-top: 3rem !important;
+
+    .item {
+      ${fancy} &:hover {
+        cursor: pointer;
+      }
+      border: 1px solid #555 !important;
+      border-left: none !important;
+      border-right: none !important;
     }
   }
 
-  .form-segment {
-    padding: 2rem !important;
-    border: 1px solid #555 !important;
-    margin-bottom: 3rem !important;
+  .segment {
+    border: none !important;
+    color: white !important;
+
+    label {
+      display: block;
+      ${fancy};
+      ${evenBiggerText};
+      margin-bottom: 1.5rem !important;
+    }
+
+    input,
+    textarea {
+      border: 1px solid #555 !important;
+      background-color: transparent !important;
+      border: 1px solid #555 !important;
+      color: white !important;
+
+      &:focus {
+        border: 1px solid #555 !important;
+      }
+    }
   }
 `;
 
@@ -71,21 +93,20 @@ window.GLASSFINDER_GLOBAL_SHARE = {
 class Wizard extends Component {
   static Page = ({ children }) => children;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      page: 0,
-      values: props.initialValues
-    };
-  }
+  state = {
+    page: 0,
+    values: this.props.initialValues
+  };
 
-  next = values =>
+  next = values => {
     this.setState(prevState => ({
       page: Math.min(prevState.page + 1, this.props.children.length - 1),
       values
     }));
+  };
 
-  previous = () =>
+  previous = e =>
+    e.preventDefault() ||
     this.setState(prevState => ({
       page: Math.max(prevState.page - 1, 0)
     }));
@@ -101,9 +122,7 @@ class Wizard extends Component {
       image: window.GLASSFINDER_GLOBAL_SHARE.imageUpload || values.image || ""
     };
 
-    return isLastPage
-      ? onSubmit(finalValues)
-      : this.next(finalValues) || bag.setSubmitting(false);
+    return isLastPage ? onSubmit(finalValues) : this.next(finalValues);
   };
 
   render() {
@@ -111,6 +130,7 @@ class Wizard extends Component {
     const { page, values } = this.state;
     const activePage = React.Children.toArray(children)[page];
     const isLastPage = page === React.Children.count(children) - 1;
+    const menuWidth = page === 0 ? 1 : 2;
 
     return (
       <Styles>
@@ -121,23 +141,43 @@ class Wizard extends Component {
           validate={this.validate}
           onSubmit={this.handleSubmit}
           render={({ values, handleSubmit, isSubmitting, handleReset }) => (
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={e => this.handleSubmit(values)}>
+              <Segment inverted>
+                <h2 className="title">Upload a piece</h2>
+                <p className="description">
+                  Fill out the information on these three pages to add a piece
+                  to your collection. When users visit your page, they will be
+                  able to see the piece you have added.
+                </p>
+              </Segment>
+
               {activePage}
-              <section className="buttons">
+
+              <Menu
+                className="menu-nav"
+                size="large"
+                widths={menuWidth}
+                inverted
+                fluid
+              >
                 {page > 0 && (
-                  <button type="button" onClick={this.previous}>
+                  <Menu.Item as="button" onClick={this.previous}>
                     Previous
-                  </button>
+                  </Menu.Item>
                 )}
-                {!isLastPage && <button type="submit">Next</button>}
+                {!isLastPage && (
+                  <Menu.Item as="button" type="submit">
+                    Next
+                  </Menu.Item>
+                )}
                 {isLastPage && (
-                  <button type="submit" disabled={isSubmitting}>
+                  <Menu.Item as="button" type="submit" disabled={isSubmitting}>
                     Finish
-                  </button>
+                  </Menu.Item>
                 )}
-              </section>
+              </Menu>
               <pre>{JSON.stringify(values, null, 2)}</pre>
-            </form>
+            </Form>
           )}
         />
       </Styles>
@@ -186,55 +226,57 @@ export default class UploadPiece extends Component {
           >
             {/* Page 1: Basic Information */}
             <Wizard.Page>
-              <fieldset>
-                <label>Name</label>
-                <Field
-                  name="name"
-                  component="input"
-                  type="text"
-                  placeholder="Name"
-                  validate={required}
-                />
-              </fieldset>
-              <fieldset>
-                <label>Description</label>
-                <Field
-                  name="description"
-                  component="textarea"
-                  placeholder="Description"
-                  validate={required}
-                />
-              </fieldset>
-              <fieldset>
-                <label>Maker</label>
-                <Field
-                  name="maker"
-                  component="input"
-                  type="text"
-                  placeholder="Maker"
-                  validate={required}
-                />
-              </fieldset>
-              <fieldset>
-                <label>Price</label>
-                <Field
-                  name="price"
-                  component="input"
-                  type="number"
-                  placeholder="13.37"
-                  validate={required}
-                />
-              </fieldset>
-              <fieldset>
-                <label>Location</label>
-                <Field
-                  name="location"
-                  component="input"
-                  type="text"
-                  placeholder="Location"
-                  validate={required}
-                />
-              </fieldset>
+              <Segment.Group>
+                <Segment inverted>
+                  <label>Name</label>
+                  <Field
+                    name="name"
+                    component="input"
+                    type="text"
+                    placeholder="Name"
+                    validate={required}
+                  />
+                </Segment>
+                <Segment inverted>
+                  <label>Description</label>
+                  <Field
+                    name="description"
+                    component="textarea"
+                    placeholder="Description"
+                    validate={required}
+                  />
+                </Segment>
+                <Segment inverted>
+                  <label>Maker</label>
+                  <Field
+                    name="maker"
+                    component="input"
+                    type="text"
+                    placeholder="Maker"
+                    validate={required}
+                  />
+                </Segment>
+                <Segment inverted>
+                  <label>Price</label>
+                  <Field
+                    name="price"
+                    component="input"
+                    type="number"
+                    placeholder="13.37"
+                    validate={required}
+                  />
+                </Segment>
+                <Segment inverted>
+                  <label>Location</label>
+                  <Field
+                    name="location"
+                    component="input"
+                    type="text"
+                    placeholder="Location"
+                    validate={required}
+                  />
+                </Segment>
+              </Segment.Group>
             </Wizard.Page>
             {/* Page 2: Association */}
             <Wizard.Page>
@@ -317,7 +359,7 @@ export default class UploadPiece extends Component {
                 />
               </Segment>
             </Wizard.Page>
-            {/* Page 3: Association */}
+            {/* Page 3: Image Upload */}
             <Wizard.Page>
               <ImageUpload
                 onSubmit={image =>
