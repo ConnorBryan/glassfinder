@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Formik, Field } from "formik";
 import styled from "styled-components";
@@ -13,6 +14,7 @@ import {
 import Yup from "yup";
 import accounting from "accounting";
 import _ from "lodash";
+import Aux from "react-aux";
 
 import * as config from "../../../../config";
 import API from "../../../services";
@@ -43,6 +45,10 @@ const Styles = styled.div`
   .description {
     font-size: 1.2rem;
     color: white !important;
+  }
+
+  .loader-wrapper {
+    margin: 5rem 0 !important;
   }
 
   .menu-nav {
@@ -104,6 +110,18 @@ window.GLASSFINDER_GLOBAL_SHARE = {
 };
 
 class Wizard extends Component {
+  static propTypes = {
+    title: PropTypes.string,
+    description: PropTypes.string,
+    loading: PropTypes.bool
+  };
+
+  static defaultProps = {
+    title: "Upload a piece",
+    description:
+      "Fill out the information on these three pages to add a piece to your collection. When users visit your page, they will be able to see the piece you have added."
+  };
+
   static Page = ({ children }) => children;
 
   constructor(props) {
@@ -112,6 +130,10 @@ class Wizard extends Component {
       page: 0,
       values: props.initialValues
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ values: nextProps.initialValues });
   }
 
   next = values => {
@@ -175,7 +197,7 @@ class Wizard extends Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { title, description, loading, children } = this.props;
     const { page, values } = this.state;
     const activePage = React.Children.toArray(children)[page];
     const isLastPage = page === React.Children.count(children) - 1;
@@ -186,7 +208,7 @@ class Wizard extends Component {
         <Formik
           className="Wizard"
           initialValues={values}
-          enableReinitialize={false}
+          enableReinitialize={true}
           validationSchema={this.validationSchema}
           onSubmit={this.handleSubmit}
           render={props => (
@@ -194,43 +216,46 @@ class Wizard extends Component {
               onSubmit={e => e.preventDefault() || this.handleSubmit(props)}
             >
               <Segment inverted>
-                <h2 className="title">Upload a piece</h2>
-                <p className="description">
-                  Fill out the information on these three pages to add a piece
-                  to your collection. When users visit your page, they will be
-                  able to see the piece you have added.
-                </p>
+                <h2 className="title">{title}</h2>
+                <p className="description">{description}</p>
               </Segment>
 
-              {activePage}
-
-              <Menu
-                className="menu-nav"
-                size="large"
-                widths={menuWidth}
-                inverted
-                fluid
-              >
-                {page > 0 && (
-                  <Menu.Item as="button" onClick={this.previous}>
-                    Previous
-                  </Menu.Item>
-                )}
-                {!isLastPage && (
-                  <Menu.Item as="button" type="submit">
-                    Next
-                  </Menu.Item>
-                )}
-                {isLastPage && (
-                  <Menu.Item
-                    as="button"
-                    type="submit"
-                    disabled={props.isSubmitting}
+              {loading ? (
+                <Segment className="loader-wrapper" basic>
+                  <Loader active />
+                </Segment>
+              ) : (
+                <Aux>
+                  {activePage}
+                  <Menu
+                    className="menu-nav"
+                    size="large"
+                    widths={menuWidth}
+                    inverted
+                    fluid
                   >
-                    Finish
-                  </Menu.Item>
-                )}
-              </Menu>
+                    {page > 0 && (
+                      <Menu.Item as="button" onClick={this.previous}>
+                        Previous
+                      </Menu.Item>
+                    )}
+                    {!isLastPage && (
+                      <Menu.Item as="button" type="submit">
+                        Next
+                      </Menu.Item>
+                    )}
+                    {isLastPage && (
+                      <Menu.Item
+                        as="button"
+                        type="submit"
+                        disabled={props.isSubmitting}
+                      >
+                        Finish
+                      </Menu.Item>
+                    )}
+                  </Menu>
+                </Aux>
+              )}
             </Form>
           )}
         />
@@ -240,6 +265,20 @@ class Wizard extends Component {
 }
 
 class UploadPiece extends Component {
+  static defaultProps = {
+    initialValues: {
+      name: "",
+      description: "",
+      price: "",
+      location: "",
+      artist: "",
+      artistEntry: "",
+      brand: "",
+      brandEntry: "",
+      image: ""
+    }
+  };
+
   formatData = data =>
     data.map(datum => ({
       key: datum.name,
@@ -247,53 +286,51 @@ class UploadPiece extends Component {
       text: datum.name
     }));
 
-  render() {
+  handleSubmit = async values => {
     const { history, displayNotification } = this.props;
+
+    try {
+      const {
+        account: { id }
+      } = this.props;
+      const finalValues = { id, ...values };
+
+      if (!id) {
+        history.replace("/");
+      }
+
+      const { id: pieceId } = await API.uploadPiece(finalValues);
+
+      displayNotification(
+        "Succesfully uploaded your new piece. You will be redirected soon."
+      );
+
+      setTimeout(
+        () => history.push(`/my-account/view-my-pieces/${pieceId}`),
+        config.NOTIFICATION_TIMEOUT + 500
+      );
+    } catch (e) {
+      displayNotification(
+        "There was an issue creating your new piece. Please try again later."
+      );
+
+      setTimeout(
+        () => history.push(`/my-account/view-my-pieces`),
+        config.NOTIFICATION_TIMEOUT + 500
+      );
+    }
+  };
+
+  render() {
+    const { history, initialValues, onSubmit } = this.props;
 
     return (
       <Container>
         <div className="UploadPiece">
           <Wizard
-            initialValues={{
-              name: "",
-              description: "",
-              price: "",
-              location: "",
-              artist: "",
-              artistEntry: "",
-              brand: "",
-              brandEntry: "",
-              image: ""
-            }}
-            onSubmit={async values => {
-              await sleep(300);
-
-              try {
-                const {
-                  account: { id }
-                } = this.props;
-                const finalValues = { id, ...values };
-
-                if (!id) {
-                  history.replace("/");
-                }
-
-                const { id: pieceId } = await API.uploadPiece(finalValues);
-
-                displayNotification(
-                  "Succesfully uploaded your new piece. You will be redirected soon."
-                );
-
-                setTimeout(
-                  () => history.push(`/my-account/view-my-pieces/${pieceId}`),
-                  config.NOTIFICATION_TIMEOUT + 500
-                );
-              } catch (e) {
-                displayNotification(
-                  "There was an issue creating your new piece. Please try again later."
-                );
-              }
-            }}
+            {...this.props}
+            initialValues={initialValues}
+            onSubmit={onSubmit || this.handleSubmit}
           >
             {/* Page 1: Basic Information */}
             <Wizard.Page>
@@ -446,7 +483,7 @@ class UploadPiece extends Component {
                 render={({ form, form: { setFieldValue, submitForm } }) => (
                   <ImageUpload
                     onSubmit={image => setFieldValue("image", image)}
-                    initialImage="https://placehold.it/300x300"
+                    initialImage={initialValues.image}
                     submitImmediately
                   />
                 )}
