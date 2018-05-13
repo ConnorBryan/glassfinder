@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { Formik, Field } from "formik";
-import { Container, Loader, Segment } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
 import API from "../../../services";
 import InputDropdown from "../../../components/InputDropdown";
-import { InputWithDropdown } from "../_UploadPiece";
 
 const Styles = styled.div`
   color: white;

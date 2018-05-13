@@ -5,7 +5,6 @@ class Explorer extends Component {
   render() {
     const {
       setRef,
-      compact,
       title,
       loadFirstPage,
       loadPreviousPage,
@@ -14,7 +13,6 @@ class Explorer extends Component {
       currentPage,
       totalPages,
       renderItems,
-      resource,
       loading,
       models
     } = this.props;

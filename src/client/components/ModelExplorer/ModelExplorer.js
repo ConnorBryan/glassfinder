@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Sidebar, Segment, Menu, Container, Icon } from "semantic-ui-react";
 import styled from "styled-components";
-import Aux from "react-aux";
 
 import * as config from "../../../config";
 import { centered, fancy } from "../../styles/snippets";

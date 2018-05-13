@@ -4,10 +4,8 @@ import { Container, Segment, Menu, Button, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 import Aux from "react-aux";
 
-import { retrieveFromCache, removeFromCache, updateCache } from "../../../util";
 import API from "../../services";
 import InputDropdown from "../InputDropdown";
-import { filter } from "minimatch";
 
 const Styles = styled.div`
   .map-wrapper,
@@ -57,8 +55,6 @@ class ShopMap extends Component {
   componentDidUpdate() {
     const { filteredBrand, filteredBrandLabels } = this.state;
     const label = filteredBrandLabels[filteredBrand];
-
-    console.log("CDU Label", label);
 
     if (filteredBrand !== null && !label) {
       this.translateIdToLabel(filteredBrand);
@@ -119,13 +115,6 @@ class ShopMap extends Component {
     }
 
     return label || "";
-  };
-
-  cacheMarkers = markers => {
-    updateCache({
-      markers: JSON.stringify(markers),
-      markersExpiration: new Date().getTime() + 10000
-    });
   };
 
   panToLocation = ({ coords: { latitude: lat, longitude: lng } }) => {

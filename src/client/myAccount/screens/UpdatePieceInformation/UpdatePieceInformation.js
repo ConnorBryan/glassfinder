@@ -1,57 +1,9 @@
 import React, { Component } from "react";
-import { withRouter, Redirect } from "react-router-dom";
-import { Loader } from "semantic-ui-react";
-import Yup from "yup";
+import { withRouter } from "react-router-dom";
 
 import * as config from "../../../../config";
 import API from "../../../services";
-import FormScreen from "../../../components/FormScreen";
-import UploadPiece from "../_UploadPiece";
-
-const FIELDS = [
-  {
-    name: "name",
-    type: "text",
-    label: "Name",
-    placeholder: "Enter name",
-    value: "",
-    validation: Yup.string().required("A name is required.")
-  },
-  {
-    name: "maker",
-    type: "text",
-    label: "Maker",
-    placeholder: "Enter maker",
-    value: "",
-    validation: Yup.string().required("A maker is required.")
-  },
-  {
-    name: "price",
-    type: "number",
-    label: "Price",
-    placeholder: "Enter price",
-    value: "",
-    validation: Yup.number()
-      .positive("A price must be a positive amount.")
-      .required("A price is required.")
-  },
-  {
-    name: "description",
-    type: "textarea",
-    label: "Description",
-    placeholder: "Enter description",
-    value: "",
-    validation: Yup.string().required("A description is required.")
-  },
-  {
-    name: "location",
-    type: "text",
-    label: "Location",
-    placeholder: "Enter location",
-    value: "",
-    validation: Yup.string().required("A location is required.")
-  }
-];
+import UploadPiece from "../UploadPiece";
 
 class UpdatePieceInformation extends Component {
   state = {
