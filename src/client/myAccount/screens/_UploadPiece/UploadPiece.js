@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { Formik, Field } from "formik";
 import styled from "styled-components";
 import {
@@ -13,6 +14,7 @@ import Yup from "yup";
 import accounting from "accounting";
 import _ from "lodash";
 
+import * as config from "../../../../config";
 import API from "../../../services";
 import { fancy, evenBiggerText } from "../../../styles/snippets";
 import ImageUpload from "../../../components/ImageUpload";
@@ -138,7 +140,7 @@ class Wizard extends Component {
       .max(1000000.0, "A piece cannot cost more than a million bucks.")
       .required("A piece must have a price."),
     location: Yup.string()
-      .max(1, "A piece's location must be fewer than 100 characters.")
+      .max(100, "A piece's location must be fewer than 100 characters.")
       .required("A piece must have a location.")
   });
 
@@ -146,34 +148,28 @@ class Wizard extends Component {
     const { children, onSubmit } = this.props;
     const { page } = this.state;
     const isLastPage = page === React.Children.count(children) - 1;
-    const finalValues = {
-      ...values,
-      image: window.GLASSFINDER_GLOBAL_SHARE.imageUpload || values.image || ""
-    };
 
     // Don't allow progress past first page if any values are missing,
-    for (const field of [
-      values.name,
-      values.description,
-      values.price,
-      values.location
-    ]) {
-      if (!field) {
-        setTouched({
-          name: true,
-          description: true,
-          price: true,
-          location: true
-        });
+    for (const field of ["name", "description", "price", "location"]) {
+      // Workaround for submitting with submitForm()
+      if (values && errors) {
+        if (!values[field] || errors[field]) {
+          setTouched({
+            name: true,
+            description: true,
+            price: true,
+            location: true
+          });
 
-        return window.scrollTo({ top: 0 });
+          return window.scrollTo({ top: 0 });
+        }
       }
     }
 
     if (isLastPage) {
-      onSubmit(finalValues);
+      onSubmit(values);
     } else {
-      this.next(finalValues);
+      this.next(values);
       setSubmitting(false);
     }
   };
@@ -235,7 +231,6 @@ class Wizard extends Component {
                   </Menu.Item>
                 )}
               </Menu>
-              <pre>{JSON.stringify(props.values, null, 2)}</pre>
             </Form>
           )}
         />
@@ -244,7 +239,7 @@ class Wizard extends Component {
   }
 }
 
-export default class UploadPiece extends Component {
+class UploadPiece extends Component {
   formatData = data =>
     data.map(datum => ({
       key: datum.name,
@@ -253,6 +248,8 @@ export default class UploadPiece extends Component {
     }));
 
   render() {
+    const { history, displayNotification } = this.props;
+
     return (
       <Container>
         <div className="UploadPiece">
@@ -268,18 +265,34 @@ export default class UploadPiece extends Component {
               brandEntry: "",
               image: ""
             }}
-            onSubmit={values => {
-              sleep(300).then(() => {
+            onSubmit={async values => {
+              await sleep(300);
+
+              try {
                 const {
                   account: { id }
                 } = this.props;
-                const finalValues = { ...values, id };
-                // window.alert(JSON.stringify(values, null, 2));
-                // actions.setSubmitting(false);
-                API.uploadPiece(finalValues)
-                  .then(() => console.log("Done!"))
-                  .catch(err => console.error(err));
-              });
+                const finalValues = { id, ...values };
+
+                if (!id) {
+                  history.replace("/");
+                }
+
+                const { id: pieceId } = await API.uploadPiece(finalValues);
+
+                displayNotification(
+                  "Succesfully uploaded your new piece. You will be redirected soon."
+                );
+
+                setTimeout(
+                  () => history.push(`/my-account/view-my-pieces/${pieceId}`),
+                  config.NOTIFICATION_TIMEOUT + 500
+                );
+              } catch (e) {
+                displayNotification(
+                  "There was an issue creating your new piece. Please try again later."
+                );
+              }
             }}
           >
             {/* Page 1: Basic Information */}
@@ -428,11 +441,15 @@ export default class UploadPiece extends Component {
             </Wizard.Page>
             {/* Page 3: Image Upload */}
             <Wizard.Page>
-              <ImageUpload
-                onSubmit={image =>
-                  (window.GLASSFINDER_GLOBAL_SHARE.imageUpload = image)
-                }
-                initialImage="https://placehold.it/300x300"
+              <Field
+                name="image"
+                render={({ form, form: { setFieldValue, submitForm } }) => (
+                  <ImageUpload
+                    onSubmit={image => setFieldValue("image", image)}
+                    initialImage="https://placehold.it/300x300"
+                    submitImmediately
+                  />
+                )}
               />
             </Wizard.Page>
           </Wizard>
@@ -441,3 +458,5 @@ export default class UploadPiece extends Component {
     );
   }
 }
+
+export default withRouter(UploadPiece);

@@ -31,7 +31,6 @@ function create(req, res) {
     const {
       name,
       description,
-      maker,
       price,
       location,
       artist,
@@ -45,7 +44,6 @@ function create(req, res) {
       userId,
       name,
       description,
-      maker,
       price,
       location,
       image
@@ -71,7 +69,6 @@ function create(req, res) {
       image,
       name,
       description,
-      maker,
       price,
       location,
       artistId: artist || null,
@@ -194,7 +191,9 @@ function uploadImage(req, res) {
         return error(res, err.toString());
       }
 
-      const { file: { key } } = req;
+      const {
+        file: { key }
+      } = req;
       const updatedPiece = await piece.update({
         image: `${config.PIECE_IMAGES_SPACES_URL}/${key}`
       });

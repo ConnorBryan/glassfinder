@@ -3,7 +3,6 @@ export default (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     image: DataTypes.STRING,
     description: DataTypes.TEXT,
-    maker: DataTypes.STRING,
     price: DataTypes.DOUBLE,
     location: DataTypes.STRING,
     artistEntry: DataTypes.STRING,

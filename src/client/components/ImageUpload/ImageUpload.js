@@ -22,7 +22,7 @@ const Styles = styled.div`
   .ImageUpload-content {
     border: 1px solid #555 !important;
     min-height: 30vh !important;
-    ${slightlyBiggerText} ${centered};
+    ${slightlyBiggerText} ${centered}
 
     > .segment {
       padding-top: 0 !important;
@@ -37,6 +37,7 @@ const Styles = styled.div`
 export default class ImageUpload extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
+    submitImmediately: PropTypes.bool,
     initialImage: PropTypes.string
   };
 
@@ -61,12 +62,16 @@ export default class ImageUpload extends Component {
   isValid = () => !!this.state.image;
 
   uploadImage = async () => {
+    const { submitImmediately } = this.props;
     const { image } = this.state;
 
     if (this.isValid()) {
       const imagePath = await API.genericImageUpload(image);
 
-      return this.setState({ imagePath, ready: true });
+      this.setState(
+        { imagePath, ready: true },
+        submitImmediately && this.finish
+      );
     }
   };
 
@@ -80,6 +85,7 @@ export default class ImageUpload extends Component {
   };
 
   render() {
+    const { submitImmediately } = this.props;
     const { image, imagePath, initiallyHadImage, ready } = this.state;
 
     const formContentText = image ? (
@@ -116,27 +122,35 @@ export default class ImageUpload extends Component {
       formContentText
     );
 
-    const actions = ready ? (
-      <Menu className="ImageUpload-menu" inverted widths={1}>
-        <Menu.Item icon="checkmark" content="Finish" onClick={this.finish} />
-      </Menu>
-    ) : (
-      <Aux>
-        <Menu className="ImageUpload-menu" widths={2} inverted>
-          {uploadButton}
-          {clearButton}
+    let actions;
+
+    if (ready && submitImmediately) {
+      actions = null;
+    } else if (ready) {
+      actions = (
+        <Menu className="ImageUpload-menu" inverted widths={1}>
+          <Menu.Item icon="checkmark" content="Finish" onClick={this.finish} />
         </Menu>
-        {initiallyHadImage && (
-          <Menu className="ImageUpload-menu" widths={1} inverted>
-            <Menu.Item
-              icon="checkmark"
-              content="Keep current image"
-              onClick={this.finish}
-            />
+      );
+    } else {
+      actions = (
+        <Aux>
+          <Menu className="ImageUpload-menu" widths={2} inverted>
+            {uploadButton}
+            {clearButton}
           </Menu>
-        )}
-      </Aux>
-    );
+          {initiallyHadImage && (
+            <Menu className="ImageUpload-menu" widths={1} inverted>
+              <Menu.Item
+                icon="checkmark"
+                content="Keep current image"
+                onClick={this.finish}
+              />
+            </Menu>
+          )}
+        </Aux>
+      );
+    }
 
     return (
       <Styles>
