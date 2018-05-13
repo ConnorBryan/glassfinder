@@ -9,6 +9,9 @@ import {
   Loader,
   Menu
 } from "semantic-ui-react";
+import Yup from "yup";
+import accounting from "accounting";
+import _ from "lodash";
 
 import API from "../../../services";
 import { fancy, evenBiggerText } from "../../../styles/snippets";
@@ -22,6 +25,12 @@ const Styles = styled.div`
 
   @media (max-width: 450px) {
     margin: 0 !important;
+  }
+
+  .error {
+    display: block;
+    color: indianred;
+    margin-top: 0.66rem;
   }
 
   .title {
@@ -80,7 +89,9 @@ function Error({ name }) {
     <Field
       {...{ name }}
       render={({ form: { touched, errors } }) =>
-        touched[name] && errors[name] ? <span>{errors[name]}</span> : null
+        touched[name] && errors[name] ? (
+          <span className="error">{errors[name]}</span>
+        ) : null
       }
     />
   );
@@ -93,10 +104,13 @@ window.GLASSFINDER_GLOBAL_SHARE = {
 class Wizard extends Component {
   static Page = ({ children }) => children;
 
-  state = {
-    page: 0,
-    values: this.props.initialValues
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: 0,
+      values: props.initialValues
+    };
+  }
 
   next = values => {
     this.setState(prevState => ({
@@ -111,9 +125,24 @@ class Wizard extends Component {
       page: Math.max(prevState.page - 1, 0)
     }));
 
-  validate = values => ({});
+  validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .max(100, "Piece names must be fewer than 100 characters.")
+      .required("A piece must have a name."),
+    description: Yup.string()
+      .max(500, "Piece descriptions must be fewer than 500 characters.")
+      .required("A piece must have a description."),
+    price: Yup.number()
+      .positive("A piece cannot have a negative price.")
+      .min(1.0, "A piece cannot be listed for free.")
+      .max(1000000.0, "A piece cannot cost more than a million bucks.")
+      .required("A piece must have a price."),
+    location: Yup.string()
+      .max(1, "A piece's location must be fewer than 100 characters.")
+      .required("A piece must have a location.")
+  });
 
-  handleSubmit = (values, bag) => {
+  handleSubmit = ({ values, errors, setTouched, setSubmitting }) => {
     const { children, onSubmit } = this.props;
     const { page } = this.state;
     const isLastPage = page === React.Children.count(children) - 1;
@@ -122,7 +151,31 @@ class Wizard extends Component {
       image: window.GLASSFINDER_GLOBAL_SHARE.imageUpload || values.image || ""
     };
 
-    return isLastPage ? onSubmit(finalValues) : this.next(finalValues);
+    // Don't allow progress past first page if any values are missing,
+    for (const field of [
+      values.name,
+      values.description,
+      values.price,
+      values.location
+    ]) {
+      if (!field) {
+        setTouched({
+          name: true,
+          description: true,
+          price: true,
+          location: true
+        });
+
+        return window.scrollTo({ top: 0 });
+      }
+    }
+
+    if (isLastPage) {
+      onSubmit(finalValues);
+    } else {
+      this.next(finalValues);
+      setSubmitting(false);
+    }
   };
 
   render() {
@@ -138,10 +191,12 @@ class Wizard extends Component {
           className="Wizard"
           initialValues={values}
           enableReinitialize={false}
-          validate={this.validate}
+          validationSchema={this.validationSchema}
           onSubmit={this.handleSubmit}
-          render={({ values, handleSubmit, isSubmitting, handleReset }) => (
-            <Form onSubmit={e => this.handleSubmit(values)}>
+          render={props => (
+            <Form
+              onSubmit={e => e.preventDefault() || this.handleSubmit(props)}
+            >
               <Segment inverted>
                 <h2 className="title">Upload a piece</h2>
                 <p className="description">
@@ -171,12 +226,16 @@ class Wizard extends Component {
                   </Menu.Item>
                 )}
                 {isLastPage && (
-                  <Menu.Item as="button" type="submit" disabled={isSubmitting}>
+                  <Menu.Item
+                    as="button"
+                    type="submit"
+                    disabled={props.isSubmitting}
+                  >
                     Finish
                   </Menu.Item>
                 )}
               </Menu>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
+              <pre>{JSON.stringify(props.values, null, 2)}</pre>
             </Form>
           )}
         />
@@ -201,7 +260,6 @@ export default class UploadPiece extends Component {
             initialValues={{
               name: "",
               description: "",
-              maker: "",
               price: "",
               location: "",
               artist: "",
@@ -234,8 +292,8 @@ export default class UploadPiece extends Component {
                     component="input"
                     type="text"
                     placeholder="Name"
-                    validate={required}
                   />
+                  <Error name="name" />
                 </Segment>
                 <Segment inverted>
                   <label>Description</label>
@@ -243,28 +301,37 @@ export default class UploadPiece extends Component {
                     name="description"
                     component="textarea"
                     placeholder="Description"
-                    validate={required}
                   />
-                </Segment>
-                <Segment inverted>
-                  <label>Maker</label>
-                  <Field
-                    name="maker"
-                    component="input"
-                    type="text"
-                    placeholder="Maker"
-                    validate={required}
-                  />
+                  <Error name="description" />
                 </Segment>
                 <Segment inverted>
                   <label>Price</label>
                   <Field
                     name="price"
-                    component="input"
                     type="number"
                     placeholder="13.37"
-                    validate={required}
+                    render={({
+                      field,
+                      field: { value },
+                      form: { setFieldValue }
+                    }) => (
+                      <input
+                        type="number"
+                        {...field}
+                        step="0.01"
+                        onBlur={() =>
+                          setFieldValue(
+                            "price",
+                            accounting.toFixed(
+                              _.clamp(value, 1.0, 1000000.0),
+                              2
+                            )
+                          )
+                        }
+                      />
+                    )}
                   />
+                  <Error name="price" />
                 </Segment>
                 <Segment inverted>
                   <label>Location</label>
@@ -273,8 +340,8 @@ export default class UploadPiece extends Component {
                     component="input"
                     type="text"
                     placeholder="Location"
-                    validate={required}
                   />
+                  <Error name="location" />
                 </Segment>
               </Segment.Group>
             </Wizard.Page>
