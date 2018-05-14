@@ -21,7 +21,7 @@ class Purchase extends Component {
       <Styles>
         <Container>
           <ScreenHeader
-            icon="users"
+            icon="dollar"
             title="Purchase a piece"
             description="We are still developing this functionality. Stay tuned for more information!"
           />

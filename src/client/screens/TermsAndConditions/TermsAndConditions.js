@@ -34,7 +34,6 @@ function TermsAndConditions() {
           <Segment
             className="TermsAndConditions-content"
             attached="bottom"
-            fluid
             inverted
           >
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero
