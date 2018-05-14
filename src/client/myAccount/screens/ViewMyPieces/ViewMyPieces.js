@@ -115,7 +115,14 @@ export function MyPieceDetail({ verbiage, history, id }) {
   return <ModelDetail {...props} />;
 }
 
-export default function MyPieceExplorer({ verbiage, history, account }) {
+export default function MyPieceExplorer({
+  verbiage,
+  history,
+  match: {
+    params: { id }
+  },
+  account
+}) {
   if (!account || !account.id) return <Redirect to="/sign-in" />;
 
   const props = {
@@ -130,6 +137,7 @@ export default function MyPieceExplorer({ verbiage, history, account }) {
         <MyPieceThing {...{ verbiage, history }} key={index} {...model} />
       )),
 
+    shouldRenderItems: !id,
     detailTitle: `Pictures`,
     fetchDetailModels: async () => ({
       page: [],
@@ -232,7 +240,9 @@ export function MyPiecesViewer({ verbiage, account, history }) {
                         content={`${verbiage.ViewMyPieces_madeBy} ${maker}`}
                       />
                       <Item.Extra
-                        content={`${verbiage.ViewMyPieces_locatedAt} ${location}`}
+                        content={`${
+                          verbiage.ViewMyPieces_locatedAt
+                        } ${location}`}
                       />
                     </Item.Content>
                   </Item>

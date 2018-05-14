@@ -56,7 +56,19 @@ export class ArtistExplorer extends Component {
 
   fetchCreditedPieces = async () => {
     try {
-      const id = this.props.location.pathname.split("/")[2];
+      const {
+        match: {
+          params: { id }
+        }
+      } = this.props;
+
+      if (!id) {
+        return this.setState({
+          loadingCreditedPieces: false,
+          creditedPieces: []
+        });
+      }
+
       const fromArtist = await API.getCreditedPieces(id);
 
       this.setState({

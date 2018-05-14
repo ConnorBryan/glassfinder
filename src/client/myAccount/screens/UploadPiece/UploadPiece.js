@@ -261,9 +261,9 @@ class UploadPiece extends Component {
       description: "",
       price: "",
       location: "",
-      artist: "",
+      artistId: "",
       artistEntry: "",
-      brand: "",
+      brandId: "",
       brandEntry: "",
       image: ""
     }
@@ -391,22 +391,22 @@ class UploadPiece extends Component {
                 <Field
                   name="artist"
                   render={renderProps => {
-                    const handleSubmit = artist =>
+                    const handleSubmit = artistId =>
                       renderProps.form.setValues({
                         ...renderProps.form.values,
-                        artist,
+                        artistId,
                         artistEntry: ""
                       });
                     const handleNoMatchSubmit = artistEntry =>
                       renderProps.form.setValues({
                         ...renderProps.form.values,
-                        artist: "",
+                        artistId: "",
                         artistEntry
                       });
                     const additionalClearButtonFunctionality = () =>
                       renderProps.form.setValues({
                         ...renderProps.form.values,
-                        artist: "",
+                        artistId: "",
                         artistEntry: ""
                       });
 
@@ -430,22 +430,22 @@ class UploadPiece extends Component {
                 <Field
                   name="brand"
                   render={renderProps => {
-                    const handleSubmit = brand =>
+                    const handleSubmit = brandId =>
                       renderProps.form.setValues({
                         ...renderProps.form.values,
-                        brand,
+                        brandId,
                         brandEntry: ""
                       });
                     const handleNoMatchSubmit = brandEntry =>
                       renderProps.form.setValues({
                         ...renderProps.form.values,
-                        brand: "",
+                        brandId: "",
                         brandEntry
                       });
                     const additionalClearButtonFunctionality = () =>
                       renderProps.form.setValues({
                         ...renderProps.form.values,
-                        brand: "",
+                        brandId: "",
                         brandEntry: ""
                       });
 

@@ -33,9 +33,9 @@ function create(req, res) {
       description,
       price,
       location,
-      artist,
+      artistId,
       artistEntry = "",
-      brand,
+      brandId,
       brandEntry = "",
       image
     } = req.body;
@@ -71,9 +71,9 @@ function create(req, res) {
       description,
       price,
       location,
-      artistId: artist || null,
+      artistId,
       artistEntry,
-      brandId: brand || null,
+      brandId,
       brandEntry
     });
 

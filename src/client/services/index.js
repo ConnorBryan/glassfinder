@@ -457,9 +457,9 @@ export default class API {
     price,
     description,
     location,
-    artist,
+    artistId,
     artistEntry,
-    brand,
+    brandId,
     brandEntry,
     image
   }) {
@@ -475,9 +475,9 @@ export default class API {
         price,
         description,
         location,
-        artist,
+        artistId: artistId ? parseInt(artistId, 10) : null,
         artistEntry,
-        brand,
+        brandId: brandId ? parseInt(brandId, 10) : null,
         brandEntry,
         image
       });

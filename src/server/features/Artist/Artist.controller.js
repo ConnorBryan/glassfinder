@@ -94,7 +94,7 @@ async function getPiecesForArtist(req, res) {
     // All Pieces that are credited to the Artist
     const artistsPieces = await Piece.findAll({ where: { artistId: id } });
 
-    return success(res, "Derpa derp", {
+    return success(res, "Successfully retrieved all pieces for Artist", {
       fromUser: usersPieces,
       fromArtist: artistsPieces
     });

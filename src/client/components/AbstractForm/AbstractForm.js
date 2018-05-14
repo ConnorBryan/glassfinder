@@ -177,7 +177,7 @@ function AbstractForm({ fields, onSubmit, actions, sendText }) {
             </Menu>
             {actions &&
               actions.map((action, index) => (
-                <Menu attached="bottom" inverted widths={1}>
+                <Menu key={index} attached="bottom" inverted widths={1}>
                   <Menu.Item {...action} />
                 </Menu>
               ))}
