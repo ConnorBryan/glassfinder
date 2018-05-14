@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Responsive, Container, Divider } from "semantic-ui-react";
+import { Responsive, Container, Segment, Divider } from "semantic-ui-react";
 import Aux from "react-aux";
 import styled from "styled-components";
 
 import * as config from "../../config";
+import { fancy } from "../styles/snippets";
 import ScreenHeader from "../components/ScreenHeader";
 import Thing from "../components/Thing";
 import ModelExplorer from "../components/ModelExplorer";
@@ -103,31 +104,47 @@ export class ArtistExplorer extends Component {
         models.map((model, index) => <PieceThing key={index} {...model} />)
     };
     const CreditedPieces = styled.div`
+      margin-top: 5rem;
       color: white;
+
+      .container {
+        border: 1px solid #555 !important;
+      }
+
+      h1 {
+        ${fancy};
+      }
+
+      p {
+        font-size: 1.2rem !important;
+      }
     `;
+    const creditedPiecesComponent = (
+      <CreditedPieces>
+        <Container>
+          <Segment inverted>
+            <h1>Credited Pieces</h1>
+            <p>
+              These are pieces that this artist has created, but are currently
+              for sale by a shop.
+            </p>
+            {creditedPieces.map(piece => (
+              <PieceThing key={piece.name} {...piece} />
+            ))}
+          </Segment>
+        </Container>
+      </CreditedPieces>
+    );
+
     return (
       <Aux>
         <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
           <ModelExplorer compact {...props} />
-          {creditedPieces.length > 0 && (
-            <CreditedPieces>
-              <h1>Credited Pieces</h1>
-              {creditedPieces.map(piece => (
-                <PieceThing key={piece.name} {...piece} />
-              ))}
-            </CreditedPieces>
-          )}
+          {creditedPieces.length > 0 && creditedPiecesComponent}
         </Responsive>
         <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <ModelExplorer {...props} />
-          {creditedPieces.length > 0 && (
-            <CreditedPieces>
-              <h1>Credited Pieces</h1>
-              {creditedPieces.map(piece => (
-                <PieceThing key={piece.name} {...piece} />
-              ))}
-            </CreditedPieces>
-          )}
+          {creditedPieces.length > 0 && creditedPiecesComponent}
         </Responsive>
       </Aux>
     );
@@ -152,7 +169,12 @@ export function ArtistViewer({ verbiage }) {
   };
 
   return (
-    <Container>
+    <Container
+      style={{
+        borderLeft: "1px solid #555",
+        borderRight: "1px solid #555"
+      }}
+    >
       <ScreenHeader
         icon={config.ICON_SET[config.LINK_TYPES.ARTIST]}
         title={verbiage.ExploreArtists_title}

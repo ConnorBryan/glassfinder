@@ -74,7 +74,11 @@ function PieceDetail({ id }) {
   return <ModelDetail {...props} />;
 }
 
-export function PieceExplorer() {
+export function PieceExplorer({
+  match: {
+    params: { id }
+  }
+}) {
   const props = {
     icon: config.ICON_SET[config.LINK_TYPES.PIECE],
     title: `Explore ${config.LINK_TYPES_TO_RESOURCES[config.LINK_TYPES.PIECE]}`,
@@ -85,7 +89,7 @@ export function PieceExplorer() {
     renderItems: (models = []) =>
       models.map((model, index) => <PieceThing key={index} {...model} />),
 
-    shouldRenderItems: false,
+    shouldRenderItems: !id,
     detailTitle: `Pictures`,
     fetchDetailModels: async () => ({
       page: [],
