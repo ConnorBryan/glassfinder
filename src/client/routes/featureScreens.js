@@ -9,6 +9,7 @@ import {
   BrandExplorer,
   PieceExplorer
 } from "../features";
+import Purchase from "../screens/Purchase";
 
 export default [
   // Shops
@@ -57,5 +58,10 @@ export default [
     path: "/pieces/:id?",
     exact: true,
     component: PieceExplorer
+  },
+  {
+    path: "/pieces/:id/purchase",
+    exact: false,
+    component: Purchase
   }
 ];

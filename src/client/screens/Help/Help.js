@@ -100,7 +100,7 @@ class Help extends Component {
       <Styles>
         <Container>
           <ScreenHeader
-            icon="question mark"
+            icon="question"
             title={verbiage.Help_title}
             description={verbiage.Help_description}
           />

@@ -85,6 +85,7 @@ export function PieceExplorer() {
     renderItems: (models = []) =>
       models.map((model, index) => <PieceThing key={index} {...model} />),
 
+    shouldRenderItems: false,
     detailTitle: `Pictures`,
     fetchDetailModels: async () => ({
       page: [],

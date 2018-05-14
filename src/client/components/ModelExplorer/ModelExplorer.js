@@ -38,6 +38,10 @@ const Styles = styled.div`
 `;
 
 class ModelExplorer extends Component {
+  static defaultProps = {
+    shouldRenderItems: true
+  };
+
   state = this.getInitialState();
 
   resource = this.props.resource;
@@ -141,6 +145,7 @@ class ModelExplorer extends Component {
       compact,
       icon,
       title,
+      shouldRenderItems,
       detailTitle,
       renderItems,
       renderDetailItems,
@@ -166,7 +171,7 @@ class ModelExplorer extends Component {
       <ExplorerMap visible={showingMap} {...{ compact }} />
     );
 
-    const explorer = (
+    const explorer = shouldRenderItems ? (
       <Explorer
         setRef={node => (this.collectionItemsContainer = node)}
         {...{
@@ -184,9 +189,9 @@ class ModelExplorer extends Component {
           models
         }}
       />
-    );
+    ) : null;
 
-    const options = (
+    const options = shouldRenderItems ? (
       <ExplorerOptions
         {...{ compact, perPage, totalModels }}
         collectionItemsContainer={this.collectionItemsContainer}
@@ -194,7 +199,7 @@ class ModelExplorer extends Component {
         sort={this.setModels}
         toggle={this.toggleSettings}
       />
-    );
+    ) : null;
 
     return (
       <Styles {...{ compact }}>
